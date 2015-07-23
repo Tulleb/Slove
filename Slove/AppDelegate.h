@@ -8,12 +8,14 @@
 
 #import <UIKit/UIKit.h>
 #import "SLVNavigationViewController.h"
+#import "User.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) SLVNavigationViewController *currentNavigationController;
+@property (strong, nonatomic) User *currentUser;
 
 @end
 

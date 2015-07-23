@@ -16,10 +16,22 @@
 #import "SLVViewController.h"
 #import "SLVNavigationViewController.h"
 #import "SLVTools.h"
+#import "SLVLogger.h"
 #import "NSString+Tools.h"
 
 // Singleton
 #define ApplicationDelegate	((AppDelegate *)[[UIApplication sharedApplication] delegate])
+
+// Server
+#define SERVER_ADDRESS	@"http://slove.co"
+#define REQUEST_TIMEOUT	10
+
+// Log
+#define SLVLog(s, ...)		[[SLVLogger sharedStore] logFile:__FILE__ lineNumber:__LINE__ format:(s), ##__VA_ARGS__]
+#define LOG_SEPARATOR		@" - "
+#define LOG_ERROR			[NSString stringWithFormat:@"Error%@", LOG_SEPARATOR]
+#define LOG_WARNING			[NSString stringWithFormat:@"Warning%@", LOG_SEPARATOR]
+#define LOG_DETAIL			[NSString stringWithFormat:@"Detail%@", LOG_SEPARATOR]
 
 // Device and iOS version
 #define IS_IOS6					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 6)

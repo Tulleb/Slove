@@ -8,6 +8,7 @@
 
 #import "AppDelegate.h"
 #import "ConnectionViewController.h"
+#import "HomeViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
@@ -22,6 +23,9 @@
 	[FBSDKLoginButton class];
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	// TODO: get last User from NSUserDefault and check if connected
+	
 	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[ConnectionViewController alloc] init]];
 	self.currentNavigationController.navigationBarHidden = YES;
 	self.window.rootViewController = self.currentNavigationController;
@@ -58,5 +62,8 @@
 												sourceApplication:sourceApplication
 													   annotation:annotation];
 }
+
+
+#pragma mark - Custom methods
 
 @end

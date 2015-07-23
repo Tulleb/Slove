@@ -12,7 +12,7 @@
 
 + (NSString *)createFolder:(NSString *)folderName {
 	if (!folderName) {
-		NSLog(@"[%@] No folder name defined", self.class);
+		SLVLog(@"[%@] No folder name defined", self.class);
 		return nil;
 	}
 	NSString *path;
@@ -24,7 +24,7 @@
 									   withIntermediateDirectories:NO
 														attributes:nil
 															 error:&error]) {
-			NSLog(@"[%@] Create directory error: %@", self.class, error);
+			SLVLog(@"[%@] Create directory error: %@", self.class, error);
 		}
 	}
 	path = [[paths objectAtIndex:0] stringByAppendingPathComponent:folderName];
@@ -56,7 +56,7 @@
 	NSString *filePath = [documentsPath stringByAppendingPathComponent:fileName];
 	NSError *error;
 	if (![fileManager removeItemAtPath:filePath error:&error]) {
-		NSLog(@"[%@] Could not delete file %@", self.class, [error localizedDescription]);
+		SLVLog(@"[%@] Could not delete file %@", self.class, [error localizedDescription]);
 	}
 }
 

@@ -7,6 +7,7 @@
 //
 
 #import "ConnectionViewController.h"
+#import "PhoneNumberViewController.h"
 
 @interface ConnectionViewController ()
 
@@ -15,11 +16,15 @@
 @implementation ConnectionViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
-//	FBSDKLoginButton *loginButton = [[FBSDKLoginButton alloc] init];
-//	loginButton.center = self.facebookConnectButtonMask.center;
-//	[self.view addSubview:loginButton];
+	if ([FBSDKAccessToken currentAccessToken]) {
+		[self.navigationController pushViewController:[[PhoneNumberViewController alloc] init] animated:YES];
+	}
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,6 +36,16 @@
 }
 
 - (IBAction)subscribeAction:(id)sender {
+}
+
+
+#pragma mark - FBSDKLoginButtonDelegate
+
+- (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
+	// TODO: request get user
+	if () {
+		<#statements#>
+	}
 }
 
 @end
