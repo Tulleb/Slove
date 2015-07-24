@@ -11,6 +11,7 @@
 #import "HomeViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 @interface AppDelegate ()
 
@@ -20,6 +21,19 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	// [Optional] Power your app with Local Datastore. For more info, go to
+	// https://parse.com/docs/ios_guide#localdatastore/iOS
+	[Parse enableLocalDatastore];
+ 
+	// Initialize Parse.
+	[Parse setApplicationId:@"bNqrmF49ncJ0LYgfGIFZmReRkqKLFWtuCt2XJQFy"
+				  clientKey:@"pJ5C1IkUz8hKdXd5pb3sZyDroMu6XfjhRgNiLO5q"];
+ 
+	// [Optional] Track statistics around application opens.
+	[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+	
+	[PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+
 	[FBSDKLoginButton class];
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -63,7 +77,19 @@
 													   annotation:annotation];
 }
 
+- (void)setCurrentUser:(PFUser *)currentUser {
+	_currentUser = currentUser;
+	
+//	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+//	self.window.rootViewController = self.currentNavigationController;
+}
+
 
 #pragma mark - Custom methods
+
+- (void)userIsConnected {
+	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+	self.window.rootViewController = self.currentNavigationController;
+}
 
 @end

@@ -24,12 +24,12 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Slove-FBSDKShareKit.xcscheme</key>
+		<key>Pods-Slove-Parse.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
 		</dict>
-		<key>Pods-Slove-JSONModel.xcscheme</key>
+		<key>Pods-Slove-ParseFacebookUtilsV4.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -42,37 +42,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>205402DFD8082A0F7D791F8B</key>
+		<key>087DD31950296FECE7D65D09</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>33050D09753AB4BBAECC5CBD</key>
+		<key>52A7C47DBAE27AAF0E87629C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9EE9539D406D602BC8E387BC</key>
+		<key>5DC2D4718141AC9083729D41</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>AA961AFE53F0E29465463F49</key>
+		<key>811983D3F6082D0E41ED111C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>B19E3749BECFB7C56CF7D708</key>
+		<key>97E6D421CF5B37E03E07402E</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D06767016E105AF54AF82ABA</key>
+		<key>A2553CAA29F246760EBAD3CB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5F8EF3DBAEF047D78927B17</key>
+		<key>E9AF1F17E2D77878974427E4</key>
 		<dict>
 			<key>primary</key>
 			<true/>

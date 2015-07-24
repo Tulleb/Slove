@@ -7,7 +7,16 @@
 //
 
 #import "Route.h"
+#import <Parse/PFObject+Subclass.h>
 
 @implementation Route
+
++ (void)load {
+	[self registerSubclass];
+}
+
++ (NSString *)parseClassName {
+	return @"Armor";
+}
 
 @end

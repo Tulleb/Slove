@@ -12,6 +12,7 @@
 
 @interface ConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate>
 
+@property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 

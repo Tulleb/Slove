@@ -6,11 +6,11 @@
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "ActiveBaseRecord.h"
-
-@interface Route : ActiveBaseRecord
+@interface Route : PFObject<PFSubclassing>
 
 @property (nonatomic, strong) NSString *stringURL;
 @property (nonatomic, strong) NSString *method;
+
++ (NSString *)parseClassName;
 
 @end

@@ -18,6 +18,7 @@
 #import "SLVTools.h"
 #import "SLVLogger.h"
 #import "NSString+Tools.h"
+#import <Parse/Parse.h>
 
 // Singleton
 #define ApplicationDelegate	((AppDelegate *)[[UIApplication sharedApplication] delegate])

@@ -90,15 +90,17 @@
 #define COCOAPODS_VERSION_MINOR_FBSDKLoginKit 4
 #define COCOAPODS_VERSION_PATCH_FBSDKLoginKit 0
 
-// FBSDKShareKit
-#define COCOAPODS_POD_AVAILABLE_FBSDKShareKit
-#define COCOAPODS_VERSION_MAJOR_FBSDKShareKit 4
-#define COCOAPODS_VERSION_MINOR_FBSDKShareKit 4
-#define COCOAPODS_VERSION_PATCH_FBSDKShareKit 0
+// Parse
+#define COCOAPODS_POD_AVAILABLE_Parse
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.7.5.3.
 
-// JSONModel
-#define COCOAPODS_POD_AVAILABLE_JSONModel
-#define COCOAPODS_VERSION_MAJOR_JSONModel 1
-#define COCOAPODS_VERSION_MINOR_JSONModel 1
-#define COCOAPODS_VERSION_PATCH_JSONModel 0
+// ParseFacebookUtilsV4
+#define COCOAPODS_POD_AVAILABLE_ParseFacebookUtilsV4
+// This library does not follow semantic-versioning,
+// so we were not able to define version macros.
+// Please contact the author.
+// Version: 1.7.5.3.
 

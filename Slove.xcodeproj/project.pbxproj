@@ -12,7 +12,6 @@
 		C44224F41B5BE7D600389210 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C44224F31B5BE7D600389210 /* Images.xcassets */; };
 		C44224F71B5BE7D600389210 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44224F51B5BE7D600389210 /* LaunchScreen.xib */; };
 		C44225031B5BE7D600389210 /* SloveTests.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225021B5BE7D600389210 /* SloveTests.m */; };
-		C44225181B5BEEE300389210 /* ActiveBaseRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225171B5BEEE300389210 /* ActiveBaseRecord.m */; };
 		C442251D1B5BF12800389210 /* SLVTools.m in Sources */ = {isa = PBXBuildFile; fileRef = C442251C1B5BF12800389210 /* SLVTools.m */; };
 		C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225201B5BF20A00389210 /* NSString+Tools.m */; };
 		C44225251B5BF5C900389210 /* SLVNavigationViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225231B5BF5C900389210 /* SLVNavigationViewController.m */; };
@@ -29,9 +28,8 @@
 		C4A48DA81B61531A00CEBA25 /* ConfirmationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DA61B61531A00CEBA25 /* ConfirmationCodeViewController.m */; };
 		C4A48DA91B61531A00CEBA25 /* ConfirmationCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48DA71B61531A00CEBA25 /* ConfirmationCodeViewController.xib */; };
 		C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DAC1B61552F00CEBA25 /* SLVNetworking.m */; };
-		C4A48DB01B6155BD00CEBA25 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DAF1B6155BD00CEBA25 /* Route.m */; };
 		C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */; };
-		C4A48DB81B6157D000CEBA25 /* User.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DB71B6157D000CEBA25 /* User.m */; };
+		C4A48DBB1B62C73B00CEBA25 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DBA1B62C73B00CEBA25 /* Route.m */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -59,8 +57,6 @@
 		C44224FC1B5BE7D600389210 /* SloveTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SloveTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		C44225011B5BE7D600389210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C44225021B5BE7D600389210 /* SloveTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SloveTests.m; sourceTree = "<group>"; };
-		C44225161B5BEEE300389210 /* ActiveBaseRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActiveBaseRecord.h; sourceTree = "<group>"; };
-		C44225171B5BEEE300389210 /* ActiveBaseRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActiveBaseRecord.m; sourceTree = "<group>"; };
 		C442251A1B5BF0E000389210 /* SLVPrefixHeader.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SLVPrefixHeader.pch; sourceTree = "<group>"; };
 		C442251B1B5BF12800389210 /* SLVTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVTools.h; sourceTree = "<group>"; };
 		C442251C1B5BF12800389210 /* SLVTools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVTools.m; sourceTree = "<group>"; };
@@ -88,12 +84,10 @@
 		C4A48DA71B61531A00CEBA25 /* ConfirmationCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmationCodeViewController.xib; sourceTree = "<group>"; };
 		C4A48DAB1B61552F00CEBA25 /* SLVNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVNetworking.h; sourceTree = "<group>"; };
 		C4A48DAC1B61552F00CEBA25 /* SLVNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVNetworking.m; sourceTree = "<group>"; };
-		C4A48DAE1B6155BD00CEBA25 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		C4A48DAF1B6155BD00CEBA25 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 		C4A48DB31B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeoutAFHTTPRequestSerializer.h; sourceTree = "<group>"; };
 		C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeoutAFHTTPRequestSerializer.m; sourceTree = "<group>"; };
-		C4A48DB61B6157D000CEBA25 /* User.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = User.h; sourceTree = "<group>"; };
-		C4A48DB71B6157D000CEBA25 /* User.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = User.m; sourceTree = "<group>"; };
+		C4A48DB91B62C73B00CEBA25 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
+		C4A48DBA1B62C73B00CEBA25 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -196,12 +190,8 @@
 		C44225151B5BEEBB00389210 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C44225161B5BEEE300389210 /* ActiveBaseRecord.h */,
-				C44225171B5BEEE300389210 /* ActiveBaseRecord.m */,
-				C4A48DAE1B6155BD00CEBA25 /* Route.h */,
-				C4A48DAF1B6155BD00CEBA25 /* Route.m */,
-				C4A48DB61B6157D000CEBA25 /* User.h */,
-				C4A48DB71B6157D000CEBA25 /* User.m */,
+				C4A48DB91B62C73B00CEBA25 /* Route.h */,
+				C4A48DBA1B62C73B00CEBA25 /* Route.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -437,9 +427,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4A48DB81B6157D000CEBA25 /* User.m in Sources */,
 				C4A48DA81B61531A00CEBA25 /* ConfirmationCodeViewController.m in Sources */,
-				C44225181B5BEEE300389210 /* ActiveBaseRecord.m in Sources */,
 				C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */,
 				C44225251B5BF5C900389210 /* SLVNavigationViewController.m in Sources */,
 				C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */,
@@ -452,7 +440,7 @@
 				C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */,
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
-				C4A48DB01B6155BD00CEBA25 /* Route.m in Sources */,
+				C4A48DBB1B62C73B00CEBA25 /* Route.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
