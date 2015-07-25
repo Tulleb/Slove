@@ -1,20 +1,22 @@
 //
-//  HomeViewController.m
+//  SLVHomeViewController.m
 //  Slove
 //
 //  Created by Guillaume Bellut on 23/07/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "HomeViewController.h"
+#import "SLVHomeViewController.h"
 
-@interface HomeViewController ()
+@interface SLVHomeViewController ()
 
 @end
 
-@implementation HomeViewController
+@implementation SLVHomeViewController
 
 - (void)viewDidLoad {
+	self.appName = @"Slove";
+	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
 }

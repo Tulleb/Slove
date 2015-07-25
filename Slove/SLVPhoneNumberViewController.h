@@ -1,5 +1,5 @@
 //
-//  PhoneNumberViewController.h
+//  SLVPhoneNumberViewController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 23/07/2015.
@@ -8,7 +8,7 @@
 
 #import "SLVViewController.h"
 
-@interface PhoneNumberViewController : SLVViewController
+@interface SLVPhoneNumberViewController : SLVViewController
 
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
 

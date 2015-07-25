@@ -18,18 +18,20 @@
 		C44225261B5BF5C900389210 /* SLVNavigationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44225241B5BF5C900389210 /* SLVNavigationViewController.xib */; };
 		C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225281B5BF5DB00389210 /* SLVViewController.m */; };
 		C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44225291B5BF5DB00389210 /* SLVViewController.xib */; };
-		C44225301B5BF76100389210 /* ConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C442252E1B5BF76100389210 /* ConnectionViewController.m */; };
-		C44225311B5BF76100389210 /* ConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C442252F1B5BF76100389210 /* ConnectionViewController.xib */; };
-		C4A48D9B1B6149EC00CEBA25 /* HomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48D991B6149EC00CEBA25 /* HomeViewController.m */; };
-		C4A48D9C1B6149EC00CEBA25 /* HomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48D9A1B6149EC00CEBA25 /* HomeViewController.xib */; };
+		C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C442252E1B5BF76100389210 /* SLVConnectionViewController.m */; };
+		C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */; };
+		C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */; };
+		C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */; };
+		C4A48D9B1B6149EC00CEBA25 /* SLVHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */; };
+		C4A48D9C1B6149EC00CEBA25 /* SLVHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */; };
 		C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48D9E1B61505300CEBA25 /* SLVLogger.m */; };
-		C4A48DA31B61519000CEBA25 /* PhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DA11B61519000CEBA25 /* PhoneNumberViewController.m */; };
-		C4A48DA41B61519000CEBA25 /* PhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48DA21B61519000CEBA25 /* PhoneNumberViewController.xib */; };
-		C4A48DA81B61531A00CEBA25 /* ConfirmationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DA61B61531A00CEBA25 /* ConfirmationCodeViewController.m */; };
-		C4A48DA91B61531A00CEBA25 /* ConfirmationCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48DA71B61531A00CEBA25 /* ConfirmationCodeViewController.xib */; };
+		C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DA11B61519000CEBA25 /* SLVPhoneNumberViewController.m */; };
+		C4A48DA41B61519000CEBA25 /* SLVPhoneNumberViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48DA21B61519000CEBA25 /* SLVPhoneNumberViewController.xib */; };
+		C4A48DA81B61531A00CEBA25 /* SLVConfirmationCodeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DA61B61531A00CEBA25 /* SLVConfirmationCodeViewController.m */; };
+		C4A48DA91B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48DA71B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib */; };
 		C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DAC1B61552F00CEBA25 /* SLVNetworking.m */; };
 		C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */; };
-		C4A48DBB1B62C73B00CEBA25 /* Route.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DBA1B62C73B00CEBA25 /* Route.m */; };
+		C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -68,26 +70,29 @@
 		C44225271B5BF5DB00389210 /* SLVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVViewController.h; sourceTree = "<group>"; };
 		C44225281B5BF5DB00389210 /* SLVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVViewController.m; sourceTree = "<group>"; };
 		C44225291B5BF5DB00389210 /* SLVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVViewController.xib; sourceTree = "<group>"; };
-		C442252D1B5BF76100389210 /* ConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConnectionViewController.h; sourceTree = "<group>"; };
-		C442252E1B5BF76100389210 /* ConnectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConnectionViewController.m; sourceTree = "<group>"; };
-		C442252F1B5BF76100389210 /* ConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConnectionViewController.xib; sourceTree = "<group>"; };
-		C4A48D981B6149EC00CEBA25 /* HomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HomeViewController.h; sourceTree = "<group>"; };
-		C4A48D991B6149EC00CEBA25 /* HomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HomeViewController.m; sourceTree = "<group>"; };
-		C4A48D9A1B6149EC00CEBA25 /* HomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = HomeViewController.xib; sourceTree = "<group>"; };
+		C442252D1B5BF76100389210 /* SLVConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVConnectionViewController.h; sourceTree = "<group>"; };
+		C442252E1B5BF76100389210 /* SLVConnectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVConnectionViewController.m; sourceTree = "<group>"; };
+		C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVConnectionViewController.xib; sourceTree = "<group>"; };
+		C49A82341B639DF60061BA1B /* SLVUsernameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVUsernameViewController.h; sourceTree = "<group>"; };
+		C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVUsernameViewController.m; sourceTree = "<group>"; };
+		C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVUsernameViewController.xib; sourceTree = "<group>"; };
+		C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVHomeViewController.h; sourceTree = "<group>"; };
+		C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVHomeViewController.m; sourceTree = "<group>"; };
+		C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVHomeViewController.xib; sourceTree = "<group>"; };
 		C4A48D9D1B61505300CEBA25 /* SLVLogger.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVLogger.h; sourceTree = "<group>"; };
 		C4A48D9E1B61505300CEBA25 /* SLVLogger.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVLogger.m; sourceTree = "<group>"; };
-		C4A48DA01B61519000CEBA25 /* PhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PhoneNumberViewController.h; sourceTree = "<group>"; };
-		C4A48DA11B61519000CEBA25 /* PhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PhoneNumberViewController.m; sourceTree = "<group>"; };
-		C4A48DA21B61519000CEBA25 /* PhoneNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PhoneNumberViewController.xib; sourceTree = "<group>"; };
-		C4A48DA51B61531A00CEBA25 /* ConfirmationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ConfirmationCodeViewController.h; sourceTree = "<group>"; };
-		C4A48DA61B61531A00CEBA25 /* ConfirmationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ConfirmationCodeViewController.m; sourceTree = "<group>"; };
-		C4A48DA71B61531A00CEBA25 /* ConfirmationCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ConfirmationCodeViewController.xib; sourceTree = "<group>"; };
+		C4A48DA01B61519000CEBA25 /* SLVPhoneNumberViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVPhoneNumberViewController.h; sourceTree = "<group>"; };
+		C4A48DA11B61519000CEBA25 /* SLVPhoneNumberViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVPhoneNumberViewController.m; sourceTree = "<group>"; };
+		C4A48DA21B61519000CEBA25 /* SLVPhoneNumberViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVPhoneNumberViewController.xib; sourceTree = "<group>"; };
+		C4A48DA51B61531A00CEBA25 /* SLVConfirmationCodeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVConfirmationCodeViewController.h; sourceTree = "<group>"; };
+		C4A48DA61B61531A00CEBA25 /* SLVConfirmationCodeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVConfirmationCodeViewController.m; sourceTree = "<group>"; };
+		C4A48DA71B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVConfirmationCodeViewController.xib; sourceTree = "<group>"; };
 		C4A48DAB1B61552F00CEBA25 /* SLVNetworking.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVNetworking.h; sourceTree = "<group>"; };
 		C4A48DAC1B61552F00CEBA25 /* SLVNetworking.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVNetworking.m; sourceTree = "<group>"; };
 		C4A48DB31B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TimeoutAFHTTPRequestSerializer.h; sourceTree = "<group>"; };
 		C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeoutAFHTTPRequestSerializer.m; sourceTree = "<group>"; };
-		C4A48DB91B62C73B00CEBA25 /* Route.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Route.h; sourceTree = "<group>"; };
-		C4A48DBA1B62C73B00CEBA25 /* Route.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Route.m; sourceTree = "<group>"; };
+		C4A48DB91B62C73B00CEBA25 /* SLVRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRoute.h; sourceTree = "<group>"; };
+		C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRoute.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,8 +195,8 @@
 		C44225151B5BEEBB00389210 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				C4A48DB91B62C73B00CEBA25 /* Route.h */,
-				C4A48DBA1B62C73B00CEBA25 /* Route.m */,
+				C4A48DB91B62C73B00CEBA25 /* SLVRoute.h */,
+				C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -224,9 +229,12 @@
 			isa = PBXGroup;
 			children = (
 				C4A48DAA1B61531E00CEBA25 /* Phone */,
-				C442252D1B5BF76100389210 /* ConnectionViewController.h */,
-				C442252E1B5BF76100389210 /* ConnectionViewController.m */,
-				C442252F1B5BF76100389210 /* ConnectionViewController.xib */,
+				C442252D1B5BF76100389210 /* SLVConnectionViewController.h */,
+				C442252E1B5BF76100389210 /* SLVConnectionViewController.m */,
+				C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */,
+				C49A82341B639DF60061BA1B /* SLVUsernameViewController.h */,
+				C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */,
+				C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */,
 			);
 			name = Connection;
 			sourceTree = "<group>";
@@ -234,12 +242,12 @@
 		C4A48DAA1B61531E00CEBA25 /* Phone */ = {
 			isa = PBXGroup;
 			children = (
-				C4A48DA01B61519000CEBA25 /* PhoneNumberViewController.h */,
-				C4A48DA11B61519000CEBA25 /* PhoneNumberViewController.m */,
-				C4A48DA21B61519000CEBA25 /* PhoneNumberViewController.xib */,
-				C4A48DA51B61531A00CEBA25 /* ConfirmationCodeViewController.h */,
-				C4A48DA61B61531A00CEBA25 /* ConfirmationCodeViewController.m */,
-				C4A48DA71B61531A00CEBA25 /* ConfirmationCodeViewController.xib */,
+				C4A48DA01B61519000CEBA25 /* SLVPhoneNumberViewController.h */,
+				C4A48DA11B61519000CEBA25 /* SLVPhoneNumberViewController.m */,
+				C4A48DA21B61519000CEBA25 /* SLVPhoneNumberViewController.xib */,
+				C4A48DA51B61531A00CEBA25 /* SLVConfirmationCodeViewController.h */,
+				C4A48DA61B61531A00CEBA25 /* SLVConfirmationCodeViewController.m */,
+				C4A48DA71B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib */,
 			);
 			name = Phone;
 			sourceTree = "<group>";
@@ -271,9 +279,9 @@
 		C4A4DC761B6149290020BF3A /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C4A48D981B6149EC00CEBA25 /* HomeViewController.h */,
-				C4A48D991B6149EC00CEBA25 /* HomeViewController.m */,
-				C4A48D9A1B6149EC00CEBA25 /* HomeViewController.xib */,
+				C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */,
+				C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */,
+				C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -370,13 +378,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				C44224F71B5BE7D600389210 /* LaunchScreen.xib in Resources */,
-				C4A48DA41B61519000CEBA25 /* PhoneNumberViewController.xib in Resources */,
+				C4A48DA41B61519000CEBA25 /* SLVPhoneNumberViewController.xib in Resources */,
 				C44224F41B5BE7D600389210 /* Images.xcassets in Resources */,
+				C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
 				C44225261B5BF5C900389210 /* SLVNavigationViewController.xib in Resources */,
-				C44225311B5BF76100389210 /* ConnectionViewController.xib in Resources */,
-				C4A48DA91B61531A00CEBA25 /* ConfirmationCodeViewController.xib in Resources */,
-				C4A48D9C1B6149EC00CEBA25 /* HomeViewController.xib in Resources */,
+				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
+				C4A48DA91B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib in Resources */,
+				C4A48D9C1B6149EC00CEBA25 /* SLVHomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,20 +436,21 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C4A48DA81B61531A00CEBA25 /* ConfirmationCodeViewController.m in Sources */,
+				C4A48DA81B61531A00CEBA25 /* SLVConfirmationCodeViewController.m in Sources */,
 				C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */,
 				C44225251B5BF5C900389210 /* SLVNavigationViewController.m in Sources */,
 				C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */,
 				C442251D1B5BF12800389210 /* SLVTools.m in Sources */,
-				C44225301B5BF76100389210 /* ConnectionViewController.m in Sources */,
-				C4A48D9B1B6149EC00CEBA25 /* HomeViewController.m in Sources */,
+				C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */,
+				C4A48D9B1B6149EC00CEBA25 /* SLVHomeViewController.m in Sources */,
+				C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */,
 				C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */,
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,
-				C4A48DA31B61519000CEBA25 /* PhoneNumberViewController.m in Sources */,
+				C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */,
 				C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */,
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
-				C4A48DBB1B62C73B00CEBA25 /* Route.m in Sources */,
+				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

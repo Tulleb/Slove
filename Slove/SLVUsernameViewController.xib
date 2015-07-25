@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVUsernameViewController">
+            <connections>
+                <outlet property="errorLabel" destination="QsE-H1-Xlb" id="sFj-24-3iv"/>
+                <outlet property="usernameField" destination="frY-nd-WA2" id="6Ce-aj-FZG"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your username :" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eva-6h-Jx8">
+                    <rect key="frame" x="90" y="255" width="200" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="200" id="1u7-SK-dqq"/>
+                        <constraint firstAttribute="height" constant="21" id="WCI-BH-ORN"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="frY-nd-WA2">
+                    <rect key="frame" x="311" y="251" width="200" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="1pJ-rL-d0g"/>
+                        <constraint firstAttribute="width" constant="200" id="L1F-Eb-Lay"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="send"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qc7-M3-GHW">
+                    <rect key="frame" x="272" y="289" width="56" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="jkN-Gq-Nc9"/>
+                        <constraint firstAttribute="width" constant="56" id="sIc-Xv-Tdv"/>
+                    </constraints>
+                    <state key="normal" title="Confirm">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="confirmAction:" destination="-1" eventType="touchUpInside" id="O9L-gX-dSX"/>
+                    </connections>
+                </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QsE-H1-Xlb">
+                    <rect key="frame" x="150" y="327" width="300" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="300" id="5Oz-47-KGA"/>
+                        <constraint firstAttribute="height" constant="21" id="smW-EN-DC3"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
+            </subviews>
+            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="centerY" secondItem="eva-6h-Jx8" secondAttribute="centerY" constant="34.5" id="10V-WO-t48"/>
+                <constraint firstAttribute="centerX" secondItem="QsE-H1-Xlb" secondAttribute="centerX" id="1q4-ps-Hdj"/>
+                <constraint firstAttribute="centerX" secondItem="qc7-M3-GHW" secondAttribute="centerX" id="LJQ-Tj-abz"/>
+                <constraint firstAttribute="centerY" secondItem="frY-nd-WA2" secondAttribute="centerY" constant="34" id="XcM-fW-Or2"/>
+                <constraint firstAttribute="centerY" secondItem="qc7-M3-GHW" secondAttribute="centerY" constant="-4" id="dbJ-cP-s31"/>
+                <constraint firstAttribute="centerY" secondItem="QsE-H1-Xlb" secondAttribute="centerY" constant="-37.5" id="nDJ-zT-WDg"/>
+                <constraint firstAttribute="centerX" secondItem="eva-6h-Jx8" secondAttribute="centerX" constant="110" id="sfA-E2-VQY"/>
+                <constraint firstAttribute="centerX" secondItem="frY-nd-WA2" secondAttribute="centerX" constant="-111" id="uss-82-ag2"/>
+            </constraints>
+        </view>
+    </objects>
+</document>

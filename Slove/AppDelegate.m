@@ -7,8 +7,8 @@
 //
 
 #import "AppDelegate.h"
-#import "ConnectionViewController.h"
-#import "HomeViewController.h"
+#import "SLVConnectionViewController.h"
+#import "SLVHomeViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
@@ -36,12 +36,13 @@
 
 	[FBSDKLoginButton class];
 	
+	SLVLog(@"%@test", SLV_ERROR);
+	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// TODO: get last User from NSUserDefault and check if connected
 	
-	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[ConnectionViewController alloc] init]];
-	self.currentNavigationController.navigationBarHidden = YES;
+	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
 	[self.window makeKeyAndVisible];
 	
@@ -77,18 +78,12 @@
 													   annotation:annotation];
 }
 
-- (void)setCurrentUser:(PFUser *)currentUser {
-	_currentUser = currentUser;
-	
-//	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
-//	self.window.rootViewController = self.currentNavigationController;
-}
-
 
 #pragma mark - Custom methods
 
 - (void)userIsConnected {
-	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[HomeViewController alloc] init]];
+	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
+	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
 }
 

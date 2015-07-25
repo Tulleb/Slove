@@ -14,7 +14,6 @@
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SLVNavigationViewController *currentNavigationController;
-@property (strong, nonatomic) PFUser *currentUser;
 
 - (void)userIsConnected;
 

@@ -1,5 +1,5 @@
 //
-//  HomeViewController.h
+//  SLVHomeViewController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 23/07/2015.
@@ -8,6 +8,6 @@
 
 #import "SLVViewController.h"
 
-@interface HomeViewController : SLVViewController
+@interface SLVHomeViewController : SLVViewController
 
 @end

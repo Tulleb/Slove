@@ -10,7 +10,7 @@
 
 @implementation SLVNetworking
 
-- (AFHTTPRequestOperation *)executeRequestWithRoute:(Route *)route parameters:(NSDictionary *)parameters files:(NSArray *)files contentTypes:(NSSet *)contentTypes andDelegate:(id<MEPHTTPDelegate>)delegate {
+- (AFHTTPRequestOperation *)executeRequestWithRoute:(SLVRoute *)route parameters:(NSDictionary *)parameters files:(NSArray *)files contentTypes:(NSSet *)contentTypes andDelegate:(id<MEPHTTPDelegate>)delegate {
 	NSURL *baseURL = [NSURL URLWithString:SERVER_ADDRESS];
 	NSURL *url = [NSURL URLWithString:route.stringURL relativeToURL:baseURL];
 	
@@ -34,7 +34,7 @@
 					[delegate requestFinished:operation withResponseObject:responseObject parameters:blockParams andFiles:blockFiles];
 				}
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				SLVLog(@"%@Request '%@' failed with error: %@", LOG_ERROR, route.stringURL, error);
+				SLVLog(@"%@Request '%@' failed with error: %@", SLV_ERROR, route.stringURL, error);
 				
 				if ([delegate respondsToSelector:@selector(requestFailed:withError:parameters:andFiles:)]) {
 					[delegate requestFailed:operation withError:error parameters:blockParams andFiles:blockFiles];
@@ -53,7 +53,7 @@
 						[formData appendPartWithFileURL:pathURL name:[dic objectForKey:@"name"] error:&error];
 						
 						if (error) {
-							SLVLog(@"%@Failed to add file '%@' with name '%@': %@", LOG_ERROR, [dic objectForKey:@"path"], [dic objectForKey:@"name"], error);
+							SLVLog(@"%@Failed to add file '%@' with name '%@': %@", SLV_ERROR, [dic objectForKey:@"path"], [dic objectForKey:@"name"], error);
 						}
 					}
 				}
@@ -64,7 +64,7 @@
 					[delegate requestFinished:operation withResponseObject:responseObject parameters:blockParams andFiles:blockFiles];
 				}
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				SLVLog(@"%@Request '%@' failed with error: %@", LOG_ERROR, route.stringURL, error);
+				SLVLog(@"%@Request '%@' failed with error: %@", SLV_ERROR, route.stringURL, error);
 				
 				if ([delegate respondsToSelector:@selector(requestFailed:withError:parameters:andFiles:)]) {
 					[delegate requestFailed:operation withError:error parameters:blockParams andFiles:blockFiles];
@@ -81,14 +81,14 @@
 					[delegate requestFinished:operation withResponseObject:responseObject parameters:blockParams andFiles:blockFiles];
 				}
 			} failure:^(AFHTTPRequestOperation *operation, NSError *error) {
-				SLVLog(@"%@Request '%@' failed with error: %@", LOG_ERROR, route.stringURL, error);
+				SLVLog(@"%@Request '%@' failed with error: %@", SLV_ERROR, route.stringURL, error);
 				
 				if ([delegate respondsToSelector:@selector(requestFailed:withError:parameters:andFiles:)]) {
 					[delegate requestFailed:operation withError:error parameters:blockParams andFiles:blockFiles];
 				}
 			}];
 		} else {
-			SLVLog(@"%@Request method '%@' unknown", LOG_ERROR, route.method);
+			SLVLog(@"%@Request method '%@' unknown", SLV_ERROR, route.method);
 		}
 	}
 	

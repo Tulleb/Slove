@@ -1,5 +1,5 @@
 //
-//  ConnectionViewController.h
+//  SLVConnectionViewController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 19/07/2015.
@@ -10,7 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
-@interface ConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate>
+@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate>
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
 @property (strong, nonatomic) IBOutlet UITextField *emailField;

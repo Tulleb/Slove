@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <AFNetworking/AFHTTPRequestOperationManager.h>
 #import "TimeoutAFHTTPRequestSerializer.h"
-#import "Route.h"
+#import "SLVRoute.h"
 
 
 @protocol MEPHTTPDelegate <NSObject>
@@ -22,6 +22,6 @@
 
 @interface SLVNetworking : NSObject
 
-- (AFHTTPRequestOperation *)executeRequestWithRoute:(Route *)route parameters:(NSDictionary *)parameters files:(NSArray *)files contentTypes:(NSSet *)contentTypes andDelegate:(id<MEPHTTPDelegate>)delegate;
+- (AFHTTPRequestOperation *)executeRequestWithRoute:(SLVRoute *)route parameters:(NSDictionary *)parameters files:(NSArray *)files contentTypes:(NSSet *)contentTypes andDelegate:(id<MEPHTTPDelegate>)delegate;
 
 @end

@@ -6,17 +6,19 @@
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "Route.h"
+#import "SLVRoute.h"
 #import <Parse/PFObject+Subclass.h>
 
-@implementation Route
+@implementation SLVRoute
+
+@synthesize stringURL, method;
 
 + (void)load {
 	[self registerSubclass];
 }
 
 + (NSString *)parseClassName {
-	return @"Armor";
+	return @"Route";
 }
 
 @end

@@ -1,5 +1,5 @@
 //
-//  ConfirmationCodeViewController.h
+//  SLVConfirmationCodeViewController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 23/07/2015.
@@ -8,7 +8,7 @@
 
 #import "SLVViewController.h"
 
-@interface ConfirmationCodeViewController : SLVViewController
+@interface SLVConfirmationCodeViewController : SLVViewController
 
 @property (strong, nonatomic) IBOutlet UITextField *confirmationNumberField;
 

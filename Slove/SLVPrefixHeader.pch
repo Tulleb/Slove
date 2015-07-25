@@ -29,10 +29,10 @@
 
 // Log
 #define SLVLog(s, ...)		[[SLVLogger sharedStore] logFile:__FILE__ lineNumber:__LINE__ format:(s), ##__VA_ARGS__]
-#define LOG_SEPARATOR		@" - "
-#define LOG_ERROR			[NSString stringWithFormat:@"Error%@", LOG_SEPARATOR]
-#define LOG_WARNING			[NSString stringWithFormat:@"Warning%@", LOG_SEPARATOR]
-#define LOG_DETAIL			[NSString stringWithFormat:@"Detail%@", LOG_SEPARATOR]
+#define SLV_SEPARATOR		@": "
+#define SLV_ERROR			[NSString stringWithFormat:@"Error%@", SLV_SEPARATOR]
+#define SLV_WARNING			[NSString stringWithFormat:@"Warning%@", SLV_SEPARATOR]
+#define SLV_DETAIL			[NSString stringWithFormat:@"Detail%@", SLV_SEPARATOR]
 
 // Device and iOS version
 #define IS_IOS6					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 6)
@@ -62,5 +62,9 @@
 #define GRAY		[UIColor grayColor]
 #define LIGHT_GRAY	[UIColor lightGrayColor]
 #define BLUE_IOS	[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
+
+// Username
+#define USERNAME_EMPTY_PREFIX			@"empty#"
+#define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
 
 #endif

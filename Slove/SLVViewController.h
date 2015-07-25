@@ -10,4 +10,6 @@
 
 @interface SLVViewController : UIViewController
 
+@property (nonatomic, strong) NSString * appName;
+
 @end
