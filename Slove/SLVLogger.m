@@ -30,10 +30,10 @@
 	
 	NSString *text = [NSString stringWithFormat:@"%s:%d - %@\n", [[file lastPathComponent] UTF8String], lineNumber, print];
 	
-	NSDate *today = [NSDate date];
-	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
-	[dateFormat setDateFormat:@"dd/MM/yyyy hh:mm:ss"];
-	NSString *dateString = [dateFormat stringFromDate:today];
+//	NSDate *today = [NSDate date];
+//	NSDateFormatter *dateFormat = [[NSDateFormatter alloc] init];
+//	[dateFormat setDateFormat:@"dd/MM/yyyy hh:mm:ss"];
+//	NSString *dateString = [dateFormat stringFromDate:today];
 //	NSString *textWithDate = [NSString stringWithFormat:@"%@ %@", dateString, text];
 	
 	//NSLog handles synchronization issues

@@ -36,8 +36,6 @@
 
 	[FBSDKLoginButton class];
 	
-	SLVLog(@"%@test", SLV_ERROR);
-	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	// TODO: get last User from NSUserDefault and check if connected

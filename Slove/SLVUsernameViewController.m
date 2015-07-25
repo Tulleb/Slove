@@ -28,58 +28,27 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
-	if([self validateUsername]) {
-		[self registerUsername];
-	}
-}
-
-- (BOOL)validateUsername {
 	self.errorLabel.hidden = YES;
-	self.errorLabel.text = @"";
 	
-	if (![self usernameIsValid]) {
-		self.errorLabel.text = @"Can only contains alphanumerical and _ characters!";
+	self.usernameField.text = [SLVTools trimUsername:self.usernameField.text];
+	
+	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
+	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
 		self.errorLabel.hidden = NO;
+		self.errorLabel.text = answer;
 		
-		return NO;
+		return;
 	}
 	
-	if (![self usernameIsFree]) {
-		self.errorLabel.text = @"Username already exists!";
-		self.errorLabel.hidden = NO;
-		
-		return NO;
-	}
+	[self saveUsername];
 	
-	return YES;
+	[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
 }
 
-- (BOOL)usernameIsValid {
-	return YES;
-}
-
-- (BOOL)usernameIsFree {
-	PFQuery *query = [PFUser query];
-	[query whereKey:@"username" equalTo:self.usernameField.text];
-	NSArray *foundUsers = [query findObjects];
-	
-	if (foundUsers && [foundUsers count] > 0) {
-		SLVLog(@"%@Retrieved %lu users name %@", SLV_WARNING, (unsigned long)[foundUsers count], self.usernameField.text);
-		return NO;
-	}
-	
-	return YES;
-}
-
-- (void)registerUsername {
+- (void)saveUsername {
 	PFUser *user = [PFUser currentUser];
 	user[@"username"] = self.usernameField.text;
 	[user saveInBackground];
-	
-	if (user) {
-		
-	}
-	[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
 }
 
 @end

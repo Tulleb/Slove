@@ -7,6 +7,7 @@
 //
 
 #import "SLVPhoneNumberViewController.h"
+#import "SLVConfirmationCodeViewController.h"
 
 @interface SLVPhoneNumberViewController ()
 
@@ -27,7 +28,22 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
+	NSError *error;
 	
+	NSDictionary *response = [PFCloud callFunction:PHONENUMBER_SEND_FUNCTION
+		   withParameters:@{@"phoneNumber" : self.phoneNumberField.text}
+					error:&error];
+	
+	if (!error) {
+		if ([response objectForKey:@"body"]) {
+			NSLog(@"Received message: '%@'", [response objectForKey:@"body"]);
+		}
+		
+		[self.navigationController pushViewController:[[SLVConfirmationCodeViewController alloc] initWithPhoneNumber:self.phoneNumberField.text] animated:YES];
+	} else {
+		// TODO: Handle errors
+		SLVLog(@"%@%@", SLV_ERROR, error.description);
+	}
 }
 
 @end

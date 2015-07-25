@@ -13,10 +13,8 @@
 @interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate>
 
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
-@property (strong, nonatomic) IBOutlet UITextField *emailField;
-@property (strong, nonatomic) IBOutlet UITextField *passwordField;
 
 - (IBAction)connectAction:(id)sender;
-- (IBAction)subscribeAction:(id)sender;
+- (IBAction)registerAction:(id)sender;
 
 @end

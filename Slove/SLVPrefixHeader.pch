@@ -63,8 +63,19 @@
 #define LIGHT_GRAY	[UIColor lightGrayColor]
 #define BLUE_IOS	[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
 
+// Field validation
+#define VALIDATION_ANSWER_KEY			@"OK"
+#define VALIDATION_USERNAME_MIN_LENGTH	2
+#define VALIDATION_USERNAME_MAX_LENGTH	16
+#define VALIDATION_PASSWORD_MIN_LENGTH	8
+#define VALIDATION_PASSWORD_MAX_LENGTH	64
+
 // Username
 #define USERNAME_EMPTY_PREFIX			@"empty#"
 #define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
+
+// Phone Number
+#define PHONENUMBER_SEND_FUNCTION		@"sendPhoneCode"
+#define PHONENUMBER_CONFIRM_FUNCTION	@"confirmPhoneCode"
 
 #endif

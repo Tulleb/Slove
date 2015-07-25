@@ -15,5 +15,10 @@
 + (NSString *)generateId;
 + (NSString*)applicationDocumentsDirectory;
 + (void)removeFile:(NSString *)fileName;
++ (NSString *)trimUsername:(NSString *)username;
++ (NSString *)validateUsername:(NSString *)username;
++ (NSString *)validateEmail:(NSString *)email;
++ (NSString *)validatePassword:(NSString *)password;
++ (NSString *)validateConditions:(BOOL)conditions;
 
 @end

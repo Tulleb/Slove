@@ -9,6 +9,8 @@
 #import "SLVConnectionViewController.h"
 #import "SLVUsernameViewController.h"
 #import "SLVHomeViewController.h"
+#import "SLVPhoneNumberViewController.h"
+#import "SLVRegisterViewController.h"
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 @interface SLVConnectionViewController ()
@@ -26,6 +28,10 @@
 	
 	if ([FBSDKAccessToken currentAccessToken]) {
 		[self loggedWithFacebook];
+	} else {
+		if ([PFUser currentUser]) {
+			[self loggedWithoutFacebook];
+		}
 	}
 }
 
@@ -42,8 +48,8 @@
 	
 }
 
-- (IBAction)subscribeAction:(id)sender {
-	
+- (IBAction)registerAction:(id)sender {
+	[self.navigationController pushViewController:[[SLVRegisterViewController alloc] init] animated:YES];
 }
 
 - (void)loggedWithFacebook {
@@ -80,11 +86,22 @@
 															if (!validUsername) {
 																SLVLog(@"%@Username is not valid, going to Username view controller", SLV_WARNING);
 																[self.navigationController pushViewController:[[SLVUsernameViewController alloc] init] animated:YES];
+															} else if ([user objectForKey:@"phoneNumber"] == nil) {
+																[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
 															} else {
 																[ApplicationDelegate userIsConnected];
 															}
 														}
 													}];
+	}
+}
+
+- (void)loggedWithoutFacebook {
+	PFUser *user = [PFUser currentUser];
+	if ([user objectForKey:@"phoneNumber"] == nil) {
+		[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+	} else {
+		[ApplicationDelegate userIsConnected];
 	}
 }
 

@@ -8,10 +8,13 @@
 
 #import "SLVViewController.h"
 
-@interface SLVConfirmationCodeViewController : SLVViewController
+@interface SLVConfirmationCodeViewController : SLVViewController {
+	NSString *currentPhoneNumber;
+}
 
 @property (strong, nonatomic) IBOutlet UITextField *confirmationNumberField;
 
+- (id)initWithPhoneNumber:(NSString *)phoneNumber;
 - (IBAction)confirmAction:(id)sender;
 
 @end

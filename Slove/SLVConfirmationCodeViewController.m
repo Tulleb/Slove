@@ -14,8 +14,18 @@
 
 @implementation SLVConfirmationCodeViewController
 
+- (id)initWithPhoneNumber:(NSString *)phoneNumber {
+	self = [super init];
+	
+	if (self) {
+		currentPhoneNumber = phoneNumber;
+	}
+	
+	return self;
+}
+
 - (void)viewDidLoad {
-	self.appName = @"Phone Number Confirmation";
+	self.appName = @"Confirmation Code";
 	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -27,7 +37,26 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
+	NSError *error;
 	
+	id response = [PFCloud callFunction:PHONENUMBER_CONFIRM_FUNCTION
+						 withParameters:@{@"phoneNumber" : currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
+								  error:&error];
+	
+	if (!error) {
+		[self savePhoneNumber];
+		
+		[ApplicationDelegate userIsConnected];
+	} else {
+		// TODO: Handle errors
+		SLVLog(@"%@%@", SLV_ERROR, error.description);
+	}
+}
+
+- (void)savePhoneNumber {
+	PFUser *user = [PFUser currentUser];
+	user[@"phoneNumber"] = currentPhoneNumber;
+	[user saveInBackground];
 }
 
 @end

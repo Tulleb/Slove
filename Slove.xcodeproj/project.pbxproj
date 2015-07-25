@@ -20,6 +20,8 @@
 		C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44225291B5BF5DB00389210 /* SLVViewController.xib */; };
 		C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C442252E1B5BF76100389210 /* SLVConnectionViewController.m */; };
 		C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */; };
+		C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */; };
+		C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */; };
 		C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */; };
 		C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */; };
 		C4A48D9B1B6149EC00CEBA25 /* SLVHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */; };
@@ -73,6 +75,9 @@
 		C442252D1B5BF76100389210 /* SLVConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVConnectionViewController.h; sourceTree = "<group>"; };
 		C442252E1B5BF76100389210 /* SLVConnectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVConnectionViewController.m; sourceTree = "<group>"; };
 		C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVConnectionViewController.xib; sourceTree = "<group>"; };
+		C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRegisterViewController.h; sourceTree = "<group>"; };
+		C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRegisterViewController.m; sourceTree = "<group>"; };
+		C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVRegisterViewController.xib; sourceTree = "<group>"; };
 		C49A82341B639DF60061BA1B /* SLVUsernameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVUsernameViewController.h; sourceTree = "<group>"; };
 		C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVUsernameViewController.m; sourceTree = "<group>"; };
 		C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVUsernameViewController.xib; sourceTree = "<group>"; };
@@ -232,6 +237,9 @@
 				C442252D1B5BF76100389210 /* SLVConnectionViewController.h */,
 				C442252E1B5BF76100389210 /* SLVConnectionViewController.m */,
 				C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */,
+				C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */,
+				C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */,
+				C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */,
 				C49A82341B639DF60061BA1B /* SLVUsernameViewController.h */,
 				C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */,
 				C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */,
@@ -380,6 +388,7 @@
 				C44224F71B5BE7D600389210 /* LaunchScreen.xib in Resources */,
 				C4A48DA41B61519000CEBA25 /* SLVPhoneNumberViewController.xib in Resources */,
 				C44224F41B5BE7D600389210 /* Images.xcassets in Resources */,
+				C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */,
 				C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
 				C44225261B5BF5C900389210 /* SLVNavigationViewController.xib in Resources */,
@@ -451,6 +460,7 @@
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,
+				C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
