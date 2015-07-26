@@ -37,26 +37,20 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
-	NSError *error;
+	self.errorLabel.hidden = YES;
 	
-	id response = [PFCloud callFunction:PHONENUMBER_CONFIRM_FUNCTION
-						 withParameters:@{@"phoneNumber" : currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
-								  error:&error];
-	
-	if (!error) {
-		[self savePhoneNumber];
-		
-		[ApplicationDelegate userIsConnected];
-	} else {
-		// TODO: Handle errors
-		SLVLog(@"%@%@", SLV_ERROR, error.description);
-	}
-}
-
-- (void)savePhoneNumber {
-	PFUser *user = [PFUser currentUser];
-	user[@"phoneNumber"] = currentPhoneNumber;
-	[user saveInBackground];
+	[PFCloud callFunctionInBackground:PHONENUMBER_CONFIRM_FUNCTION
+					   withParameters:@{@"phoneNumber" : currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
+								block:^(id object, NSError *error){
+									if (!error) {
+										[ApplicationDelegate userIsConnected];
+									} else {
+										self.errorLabel.hidden = NO;
+										self.errorLabel.text = error.localizedDescription;
+										SLVLog(@"%@%@", SLV_ERROR, error.description);
+										[ParseErrorHandlingController handleParseError:error];
+									}
+								}];
 }
 
 @end

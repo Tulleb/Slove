@@ -13,6 +13,7 @@
 }
 
 @property (strong, nonatomic) IBOutlet UITextField *confirmationNumberField;
+@property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 
 - (id)initWithPhoneNumber:(NSString *)phoneNumber;
 - (IBAction)confirmAction:(id)sender;

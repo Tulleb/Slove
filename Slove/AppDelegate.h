@@ -16,6 +16,7 @@
 @property (strong, nonatomic) SLVNavigationViewController *currentNavigationController;
 
 - (void)userIsConnected;
+- (void)userIsDisconnected;
 
 @end
 

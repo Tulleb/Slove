@@ -1,22 +1,29 @@
 //
-//  SLVRegisterViewController.m
+//  SLVLogInViewController.m
 //  Slove
 //
-//  Created by Guillaume Bellut on 25/07/2015.
+//  Created by Guillaume Bellut on 26/07/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "SLVRegisterViewController.h"
-#import "SLVPhoneNumberViewController.h"
+#import "SLVLogInViewController.h"
 
-@interface SLVRegisterViewController ()
+@interface SLVLogInViewController ()
 
 @end
 
-@implementation SLVRegisterViewController
+@implementation SLVLogInViewController
+
+- (id)initWithForcedLogIn {
+	self = [super init];
+	if (self) {
+		[self.navigationItem setHidesBackButton:YES];
+	}
+	return self;
+}
 
 - (void)viewDidLoad {
-	self.appName = @"Register";
+	self.appName = @"Log In";
 	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -30,66 +37,26 @@
 	[self initTapToDismiss];
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[self.navigationItem setHidesBackButton:NO];
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-- (IBAction)conditionsAction:(id)sender {
-	conditionsAccepted = !conditionsAccepted;
-	
-	if (conditionsAccepted) {
-		[self.conditionsButton setTitle:@"OK" forState:UIControlStateNormal];
-	} else {
-		[self.conditionsButton setTitle:@"KO" forState:UIControlStateNormal];
-	}
-}
-
-- (void)trimUsernameField {
-	NSString *trimmedUsername = [self.usernameField.text stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceCharacterSet]];
-	self.usernameField.text = trimmedUsername;
-}
-
-- (IBAction)registerAction:(id)sender {
+- (IBAction)logInAction:(id)sender {
 	[self hideKeyboard];
 	
-	self.errorLabel.hidden = YES;
-	
-	self.usernameField.text = [SLVTools trimUsername:self.usernameField.text];
-	
-	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
-		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
-		
-		return;
-	}
-	
-	answer = [SLVTools validateEmail:self.emailField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
-		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
-		
-		return;
-	}
-	
-	answer = [SLVTools validatePassword:self.passwordField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
-		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
-		
-		return;
-	}
-	
-	answer = [SLVTools validateConditions:conditionsAccepted];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
-		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
-		
-		return;
-	}
-	
-	[self registerUser];
+	[PFUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(PFUser *user, NSError *error) {
+		if (!error) {
+			[ApplicationDelegate userIsConnected];
+		} else {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
 }
 
 - (void)observeKeyboard {
@@ -104,7 +71,7 @@
 	CGRect keyboardFrame = [kbFrame CGRectValue];
  
 	CGFloat height = keyboardFrame.size.height;
-
+	
 	self.keyboardConstraint.constant += height;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
@@ -137,32 +104,14 @@
 	}
 }
 
-- (void)registerUser {
-	PFUser *user = [PFUser user];
-	user.username = self.usernameField.text;
-	user.password = self.passwordField.text;
-	user.email = self.emailField.text;
-	
-	[user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		if (!error) {
-			[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
-}
-
 
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	if (textField == self.usernameField) {
-		[self.emailField becomeFirstResponder];
-	} else if (textField == self.emailField) {
 		[self.passwordField becomeFirstResponder];
 	} else if (textField == self.passwordField) {
-		[textField resignFirstResponder];
+		[self logInAction:self.logInButton];
 	}
 	
 	return YES;

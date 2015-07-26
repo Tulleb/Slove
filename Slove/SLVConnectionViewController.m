@@ -11,6 +11,7 @@
 #import "SLVHomeViewController.h"
 #import "SLVPhoneNumberViewController.h"
 #import "SLVRegisterViewController.h"
+#import "SLVLogInViewController.h"
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 @interface SLVConnectionViewController ()
@@ -24,14 +25,19 @@
 	
 	[super viewDidLoad];
 	
+	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
+	
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email"];
 	
 	if ([FBSDKAccessToken currentAccessToken]) {
 		[self loggedWithFacebook];
-	} else {
-		if ([PFUser currentUser]) {
-			[self loggedWithoutFacebook];
-		}
+	} else if ([PFUser currentUser]) {
+		[self loggedWithoutFacebook];
 	}
 }
 
@@ -45,7 +51,7 @@
 }
 
 - (IBAction)connectAction:(id)sender {
-	
+	[self.navigationController pushViewController:[[SLVLogInViewController alloc] init] animated:YES];
 }
 
 - (IBAction)registerAction:(id)sender {
@@ -60,8 +66,9 @@
 		
 		[PFFacebookUtils logInInBackgroundWithAccessToken:accessToken
 													block:^(PFUser *user, NSError *error) {
-														if (!user) {
-															SLVLog(@"%@Can't log in with Facebook", SLV_ERROR);
+														if (error) {
+															SLVLog(@"%@%@", SLV_ERROR, error.description);
+															[ParseErrorHandlingController handleParseError:error];
 														} else {
 															SLVLog(@"User '%@' logged in through Facebook", user.username);
 															
@@ -75,6 +82,7 @@
 																[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 																	if (error) {
 																		SLVLog(@"%@%@", SLV_ERROR, error.description);
+																		[ParseErrorHandlingController handleParseError:error];
 																	}
 																	
 																	validUsername = ![self usernameIsUndefined];
@@ -86,7 +94,7 @@
 															if (!validUsername) {
 																SLVLog(@"%@Username is not valid, going to Username view controller", SLV_WARNING);
 																[self.navigationController pushViewController:[[SLVUsernameViewController alloc] init] animated:YES];
-															} else if ([user objectForKey:@"phoneNumber"] == nil) {
+															} else if ([user objectForKey:@"phoneNumber"] == nil || [[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
 																[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
 															} else {
 																[ApplicationDelegate userIsConnected];
@@ -168,7 +176,12 @@
 				SLVLog(@"%@Can't access Facebook user's email", SLV_WARNING);
 			}
 			
-			[user saveInBackground];
+			[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				if (error) {
+					SLVLog(@"%@%@", SLV_ERROR, error.description);
+					[ParseErrorHandlingController handleParseError:error];
+				}
+			}];
 		}
 		
 		if (error) {
@@ -203,7 +216,12 @@
 						user[@"pictureUrl"] = url;
 						SLVLog(@"User's profile picture retrieved from Facebook");
 						
-						[user saveInBackground];
+						[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+							if (error) {
+								SLVLog(@"%@%@", SLV_ERROR, error.description);
+								[ParseErrorHandlingController handleParseError:error];
+							}
+						}];
 					} else {
 						SLVLog(@"User already has a picture profile recorded in Slove");
 					}
@@ -245,7 +263,12 @@
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {
 	SLVLog(@"User '%@' logged out through Facebook", [PFUser currentUser].username);
-	[PFUser logOutInBackground];
+	[PFUser logOutInBackgroundWithBlock:^(NSError *error) {
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
 }
 
 @end

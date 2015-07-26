@@ -28,22 +28,24 @@
 }
 
 - (IBAction)confirmAction:(id)sender {
-	NSError *error;
+	self.errorLabel.hidden = YES;
 	
-	NSDictionary *response = [PFCloud callFunction:PHONENUMBER_SEND_FUNCTION
-		   withParameters:@{@"phoneNumber" : self.phoneNumberField.text}
-					error:&error];
-	
-	if (!error) {
-		if ([response objectForKey:@"body"]) {
-			NSLog(@"Received message: '%@'", [response objectForKey:@"body"]);
-		}
-		
-		[self.navigationController pushViewController:[[SLVConfirmationCodeViewController alloc] initWithPhoneNumber:self.phoneNumberField.text] animated:YES];
-	} else {
-		// TODO: Handle errors
-		SLVLog(@"%@%@", SLV_ERROR, error.description);
-	}
+	[PFCloud callFunctionInBackground:PHONENUMBER_SEND_FUNCTION
+					   withParameters:@{@"phoneNumber" : self.phoneNumberField.text}
+								block:^(id object, NSError *error){
+									if (!error) {
+										if ([object objectForKey:@"body"]) {
+											NSLog(@"Received message: '%@'", [object objectForKey:@"body"]);
+										}
+										
+										[self.navigationController pushViewController:[[SLVConfirmationCodeViewController alloc] initWithPhoneNumber:self.phoneNumberField.text] animated:YES];
+									} else {
+										self.errorLabel.hidden = NO;
+										self.errorLabel.text = error.localizedDescription;
+										SLVLog(@"%@%@", SLV_ERROR, error.description);
+										[ParseErrorHandlingController handleParseError:error];
+									}
+								}];
 }
 
 @end

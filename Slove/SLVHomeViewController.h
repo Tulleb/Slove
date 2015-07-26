@@ -10,4 +10,6 @@
 
 @interface SLVHomeViewController : SLVViewController
 
+- (IBAction)disconnectAction:(id)sender;
+
 @end

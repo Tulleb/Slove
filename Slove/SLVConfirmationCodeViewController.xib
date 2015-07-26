@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVConfirmationCodeViewController">
             <connections>
                 <outlet property="confirmationNumberField" destination="3mv-FO-Tfy" id="7o6-tf-Ked"/>
+                <outlet property="errorLabel" destination="ul7-UK-rUJ" id="YHp-O6-w9v"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -51,14 +52,26 @@
                         <action selector="confirmAction:" destination="-1" eventType="touchUpInside" id="NZz-ZG-xVD"/>
                     </connections>
                 </button>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ul7-UK-rUJ">
+                    <rect key="frame" x="171" y="237" width="259" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="21" id="8fu-hm-IXe"/>
+                        <constraint firstAttribute="width" constant="259" id="d7A-Ze-tNa"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="3mv-FO-Tfy" secondAttribute="centerX" constant="-111" id="2ga-fP-Pin"/>
+                <constraint firstAttribute="centerY" secondItem="ul7-UK-rUJ" secondAttribute="centerY" constant="52.5" id="2hD-fr-9tw"/>
                 <constraint firstAttribute="centerY" secondItem="drx-fv-KsK" secondAttribute="centerY" constant="-19" id="Iag-rP-5ob"/>
                 <constraint firstAttribute="centerY" secondItem="3mv-FO-Tfy" secondAttribute="centerY" constant="19" id="JmH-Bq-CIG"/>
                 <constraint firstAttribute="centerX" secondItem="drx-fv-KsK" secondAttribute="centerX" id="WNb-2t-NXM"/>
                 <constraint firstAttribute="centerY" secondItem="IkK-Yq-Acy" secondAttribute="centerY" constant="19.5" id="hFq-e9-Yvd"/>
+                <constraint firstAttribute="centerX" secondItem="ul7-UK-rUJ" secondAttribute="centerX" id="r1B-jR-3ht"/>
                 <constraint firstAttribute="centerX" secondItem="IkK-Yq-Acy" secondAttribute="centerX" constant="110" id="yO4-Jv-C8A"/>
             </constraints>
         </view>

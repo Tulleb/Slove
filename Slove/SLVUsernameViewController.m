@@ -48,7 +48,12 @@
 - (void)saveUsername {
 	PFUser *user = [PFUser currentUser];
 	user[@"username"] = self.usernameField.text;
-	[user saveInBackground];
+	[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
 }
 
 @end

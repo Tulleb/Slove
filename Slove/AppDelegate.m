@@ -85,4 +85,10 @@
 	self.window.rootViewController = self.currentNavigationController;
 }
 
+- (void)userIsDisconnected {
+	SLVLog(@"User disconnected from Slove");
+	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+	self.window.rootViewController = self.currentNavigationController;
+}
+
 @end

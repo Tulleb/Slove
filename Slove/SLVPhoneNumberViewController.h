@@ -11,6 +11,7 @@
 @interface SLVPhoneNumberViewController : SLVViewController
 
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
+@property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 
 - (IBAction)confirmAction:(id)sender;
 

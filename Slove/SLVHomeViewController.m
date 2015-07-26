@@ -7,6 +7,7 @@
 //
 
 #import "SLVHomeViewController.h"
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 @interface SLVHomeViewController ()
 
@@ -24,6 +25,21 @@
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (IBAction)disconnectAction:(id)sender {
+	if ([FBSDKAccessToken currentAccessToken]) {
+		[FBSDKAccessToken setCurrentAccessToken:nil];
+	}
+	
+	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
+	
+	[ApplicationDelegate userIsDisconnected];
 }
 
 @end

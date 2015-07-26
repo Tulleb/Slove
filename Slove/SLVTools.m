@@ -77,7 +77,7 @@
 	}
 	
 	if (![self usernameIsValid:username]) {
-		return @"Your username can only contains alphanumerical and _ characters";
+		return @"Your username can only contains lower alphanumerical and _ characters";
 	}
 	
 	if (![self usernameIsFree:username]) {
