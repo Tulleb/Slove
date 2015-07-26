@@ -42,7 +42,7 @@
 	//--------------------------------------
 	// You may want this if the logout button is inaccessible in the UI.
 	//
-	[ApplicationDelegate userIsDisconnected];
+	[ApplicationDelegate userDisconnected];
 }
 
 @end

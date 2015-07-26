@@ -58,7 +58,7 @@
 	self.usernameField.text = [SLVTools trimUsername:self.usernameField.text];
 	
 	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
+	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = answer;
 		
@@ -66,7 +66,7 @@
 	}
 	
 	answer = [SLVTools validateEmail:self.emailField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
+	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = answer;
 		
@@ -74,7 +74,7 @@
 	}
 	
 	answer = [SLVTools validatePassword:self.passwordField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
+	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = answer;
 		
@@ -82,7 +82,7 @@
 	}
 	
 	answer = [SLVTools validateConditions:conditionsAccepted];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
+	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = answer;
 		
@@ -145,7 +145,9 @@
 	
 	[user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		if (!error) {
-			[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+			SLVPhoneNumberViewController *viewController = [[SLVPhoneNumberViewController alloc] init];
+			viewController.backButtonType = kBackToRoot;
+			[self.navigationController pushViewController:viewController animated:YES];
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];

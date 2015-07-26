@@ -7,6 +7,7 @@
 //
 
 #import "SLVLogInViewController.h"
+#import "SLVPhoneNumberViewController.h"
 
 @interface SLVLogInViewController ()
 
@@ -47,12 +48,35 @@
 }
 
 - (IBAction)logInAction:(id)sender {
+	self.errorLabel.hidden = YES;
 	[self hideKeyboard];
+	
+	NSString *answer = [SLVTools usernameIsFilled:self.usernameField.text];
+	if (answer) {
+		self.errorLabel.hidden = NO;
+		self.errorLabel.text = answer;
+		
+		return;
+	}
+	
+	answer = [SLVTools passwordIsFilled:self.passwordField.text];
+	if (answer) {
+		self.errorLabel.hidden = NO;
+		self.errorLabel.text = answer;
+		
+		return;
+	}
 	
 	[PFUser logInWithUsernameInBackground:self.usernameField.text password:self.passwordField.text block:^(PFUser *user, NSError *error) {
 		if (!error) {
-			[ApplicationDelegate userIsConnected];
+			if ([user objectForKey:@"phoneNumber"] == nil) {
+				[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+			} else {
+				[ApplicationDelegate userConnected];
+			}
 		} else {
+			self.errorLabel.hidden = NO;
+			self.errorLabel.text = @"Login doesn't match with password";
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}

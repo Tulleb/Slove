@@ -33,7 +33,7 @@
 	self.usernameField.text = [SLVTools trimUsername:self.usernameField.text];
 	
 	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
-	if(![answer isEqualToString:VALIDATION_ANSWER_KEY]) {
+	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = answer;
 		

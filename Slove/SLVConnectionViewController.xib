@@ -3,11 +3,13 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVConnectionViewController">
             <connections>
                 <outlet property="facebookLoginButton" destination="52w-aG-mhA" id="OhB-8Y-D5F"/>
+                <outlet property="logoImageView" destination="ciF-cz-sED" id="uVr-mQ-YMr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -56,6 +58,12 @@
                         <outlet property="delegate" destination="-1" id="Jsc-W8-Dcv"/>
                     </connections>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ciF-cz-sED">
+                    <rect key="frame" x="0.0" y="107" width="600" height="236"/>
+                    <constraints>
+                        <constraint firstAttribute="width" secondItem="ciF-cz-sED" secondAttribute="height" multiplier="150:59" id="Rwf-ec-RLL"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -63,6 +71,9 @@
                 <constraint firstItem="BsU-eu-MlJ" firstAttribute="top" secondItem="5vX-GM-vt0" secondAttribute="bottom" constant="8" id="6zH-Oe-WUD"/>
                 <constraint firstAttribute="centerX" secondItem="BsU-eu-MlJ" secondAttribute="centerX" id="752-VR-U4Q"/>
                 <constraint firstAttribute="centerX" secondItem="52w-aG-mhA" secondAttribute="centerX" id="AKX-lz-Zyj"/>
+                <constraint firstAttribute="centerY" secondItem="ciF-cz-sED" secondAttribute="centerY" constant="75" id="KNO-DH-Z1Z"/>
+                <constraint firstAttribute="trailing" secondItem="ciF-cz-sED" secondAttribute="trailing" id="isJ-XF-O7i"/>
+                <constraint firstItem="ciF-cz-sED" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="lht-fP-uxJ"/>
                 <constraint firstItem="5vX-GM-vt0" firstAttribute="top" secondItem="52w-aG-mhA" secondAttribute="bottom" constant="8" id="pS7-F2-nai"/>
                 <constraint firstAttribute="bottom" secondItem="BsU-eu-MlJ" secondAttribute="bottom" constant="8" id="uQc-60-ANE"/>
                 <constraint firstItem="BsU-eu-MlJ" firstAttribute="top" secondItem="5vX-GM-vt0" secondAttribute="bottom" constant="8" id="vKb-Oc-FdB"/>

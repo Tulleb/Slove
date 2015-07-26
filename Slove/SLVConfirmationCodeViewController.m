@@ -43,7 +43,7 @@
 					   withParameters:@{@"phoneNumber" : currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
 								block:^(id object, NSError *error){
 									if (!error) {
-										[ApplicationDelegate userIsConnected];
+										[ApplicationDelegate userConnected];
 									} else {
 										self.errorLabel.hidden = NO;
 										self.errorLabel.text = error.localizedDescription;

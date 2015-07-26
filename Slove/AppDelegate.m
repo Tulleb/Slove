@@ -79,16 +79,23 @@
 
 #pragma mark - Custom methods
 
-- (void)userIsConnected {
+- (void)userConnected {
 	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
 	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
+	
+	userIsConnected = YES;
 }
 
-- (void)userIsDisconnected {
+- (void)userDisconnected {
 	SLVLog(@"User disconnected from Slove");
-	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
-	self.window.rootViewController = self.currentNavigationController;
+	
+	if (userIsConnected) {
+		self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+		self.window.rootViewController = self.currentNavigationController;
+	}
+	
+	userIsConnected = NO;
 }
 
 @end

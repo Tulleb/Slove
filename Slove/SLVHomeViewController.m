@@ -33,13 +33,13 @@
 	}
 	
 	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
-		if (error) {
+		if (!error) {
+			[ApplicationDelegate userDisconnected];
+		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}
 	}];
-	
-	[ApplicationDelegate userIsDisconnected];
 }
 
 @end

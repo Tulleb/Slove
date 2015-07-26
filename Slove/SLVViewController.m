@@ -14,9 +14,22 @@
 
 @implementation SLVViewController
 
+- (id)init {
+	self = [super init];
+	if (self) {
+		self.backButtonType = kBackToPrevious;
+	}
+	return self;
+}
+
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self animateImages];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -31,4 +44,10 @@
 		self.title = _appName;
 	}
 }
+
+// Subclassed method
+- (void)animateImages {
+	
+}
+
 @end

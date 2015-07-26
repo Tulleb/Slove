@@ -68,111 +68,154 @@
 }
 
 + (NSString *)validateUsername:(NSString *)username {
-	if (![self usernameIsFilled:username]) {
+	NSString *validationString;
+	
+	validationString = [self usernameIsFilled:username];
+	if (validationString) {
+		return validationString;
+	}
+	
+	validationString = [self usernameSize:username];
+	if (validationString) {
+		return validationString;
+	}
+	
+	validationString = [self usernameIsValid:username];
+	if (validationString) {
+		return validationString;
+	}
+	
+	validationString = [self usernameIsFree:username];
+	if (validationString) {
+		return validationString;
+	}
+	
+	return nil;
+}
+
++ (NSString *)usernameIsFilled:(NSString *)username {
+	if (username && ![username isEqualToString:@""]) {
+		return nil;
+	} else {
 		return @"Your username is empty";
 	}
-	
-	if (![self usernameSize:username]) {
+}
+
++ (NSString *)usernameSize:(NSString *)username {
+	if ([username length] >= VALIDATION_USERNAME_MIN_LENGTH && [username length] <= VALIDATION_USERNAME_MAX_LENGTH) {
+		return nil;
+	} else {
 		return [NSString stringWithFormat:@"Your username must contains between %d and %d characters", VALIDATION_USERNAME_MIN_LENGTH, VALIDATION_USERNAME_MAX_LENGTH];
 	}
-	
-	if (![self usernameIsValid:username]) {
+}
+
++ (NSString *)usernameIsValid:(NSString *)username {
+	NSCharacterSet *alphaSet = [NSCharacterSet characterSetWithCharactersInString:USERNAME_ACCEPTED_CHARACTERS];
+	if ([[username stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""]) {
+		return nil;
+	} else {
 		return @"Your username can only contains lower alphanumerical and _ characters";
 	}
-	
-	if (![self usernameIsFree:username]) {
-		return @"This username already exists";
-	}
-	
-	return VALIDATION_ANSWER_KEY;
 }
 
-+ (BOOL)usernameIsFilled:(NSString *)username {
-	return (username && ![username isEqualToString:@""]);
-}
-
-+ (BOOL)usernameSize:(NSString *)username {
-	return ([username length] >= VALIDATION_USERNAME_MIN_LENGTH && [username length] <= VALIDATION_USERNAME_MAX_LENGTH);
-}
-
-+ (BOOL)usernameIsValid:(NSString *)username {
-	NSCharacterSet *alphaSet = [NSCharacterSet characterSetWithCharactersInString:USERNAME_ACCEPTED_CHARACTERS];
-	return [[username stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""];
-}
-
-+ (BOOL)usernameIsFree:(NSString *)username {
++ (NSString *)usernameIsFree:(NSString *)username {
 	PFQuery *query = [PFUser query];
 	[query whereKey:@"username" equalTo:username];
 	NSArray *foundUsers = [query findObjects];
 	
 	if (foundUsers && [foundUsers count] > 0) {
 		SLVLog(@"%@Retrieved %lu users named %@", SLV_WARNING, (unsigned long)[foundUsers count], username);
-		return NO;
+		return @"This username already exists";
 	}
 	
-	return YES;
+	return nil;
 }
 
 + (NSString *)validateEmail:(NSString *)email {
-	if (![self emailIsFilled:email]) {
+	NSString *validationString;
+	
+	validationString = [self emailIsFilled:email];
+	if (validationString) {
+		return validationString;
+	}
+	
+	validationString = [self emailIsValid:email];
+	if (validationString) {
+		return validationString;
+	}
+	
+	validationString = [self emailIsFree:email];
+	if (validationString) {
+		return validationString;
+	}
+	
+	return nil;
+}
+
++ (NSString *)emailIsFilled:(NSString *)email {
+	if (email && ![email isEqualToString:@""]) {
+		return nil;
+	} else {
 		return @"Your email is empty";
 	}
-	
-	if (![self emailIsValid:email]) {
-		return @"Your email is invalid";
-	}
-	
-	if (![self emailIsFree:email]) {
-		return @"This email already exists";
-	}
-	
-	return VALIDATION_ANSWER_KEY;
 }
 
-+ (BOOL)emailIsFilled:(NSString *)email {
-	return (email && ![email isEqualToString:@""]);
-}
-
-+ (BOOL)emailIsValid:(NSString *)email {
++ (NSString *)emailIsValid:(NSString *)email {
 	BOOL stricterFilter = NO; // Discussion http://blog.logichigh.com/2010/09/02/validating-an-e-mail-address/
 	NSString *stricterFilterString = @"^[A-Z0-9a-z\\._%+-]+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2,4}$";
 	NSString *laxString = @"^.+@([A-Za-z0-9-]+\\.)+[A-Za-z]{2}[A-Za-z]*$";
 	NSString *emailRegex = stricterFilter ? stricterFilterString : laxString;
 	NSPredicate *emailTest = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", emailRegex];
-	return [emailTest evaluateWithObject:email];
+	if ([emailTest evaluateWithObject:email]) {
+		return nil;
+	} else {
+		return @"Your email is invalid";
+	}
 }
 
-+ (BOOL)emailIsFree:(NSString *)email {
++ (NSString *)emailIsFree:(NSString *)email {
 	PFQuery *query = [PFUser query];
 	[query whereKey:@"email" equalTo:email];
 	NSArray *foundUsers = [query findObjects];
 	
 	if (foundUsers && [foundUsers count] > 0) {
 		SLVLog(@"%@Retrieved %lu users with email %@", SLV_WARNING, (unsigned long)[foundUsers count], email);
-		return NO;
+		return @"This email already exists";
 	}
 	
-	return YES;
+	return nil;
 }
 
 + (NSString *)validatePassword:(NSString *)password {
-	if (![self passwordIsFilled:password]) {
+	NSString *validationString;
+	
+	validationString = [self passwordIsFilled:password];
+	if (validationString) {
+		return validationString;
+	}
+	
+	validationString = [self passwordSize:password];
+	if (validationString) {
+		return validationString;
+	}
+	
+	return nil;
+}
+
++ (NSString *)passwordIsFilled:(NSString *)password {
+	if (password && ![password isEqualToString:@""]) {
+		return nil;
+	} else {
 		return @"Your password is empty";
 	}
-	
-	if (![self passwordSize:password]) {
+}
+
++ (NSString *)passwordSize:(NSString *)password {
+	if ([password length] >= VALIDATION_PASSWORD_MIN_LENGTH && [password length] <= VALIDATION_PASSWORD_MAX_LENGTH) {
+		return nil;
+	} else {
 		return [NSString stringWithFormat:@"Your password must contains between %d and %d characters", VALIDATION_PASSWORD_MIN_LENGTH, VALIDATION_PASSWORD_MAX_LENGTH];
 	}
-	
-	return VALIDATION_ANSWER_KEY;
-}
-
-+ (BOOL)passwordIsFilled:(NSString *)password {
-	return (password && ![password isEqualToString:@""]);
-}
-
-+ (BOOL)passwordSize:(NSString *)password {
-	return ([password length] >= VALIDATION_PASSWORD_MIN_LENGTH && [password length] <= VALIDATION_PASSWORD_MAX_LENGTH);
 }
 
 + (NSString *)validateConditions:(BOOL)conditions {
@@ -180,7 +223,7 @@
 		return @"You must accept our terms of service to continue";
 	}
 	
-	return VALIDATION_ANSWER_KEY;
+	return nil;
 }
 
 @end

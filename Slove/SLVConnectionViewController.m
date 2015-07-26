@@ -26,19 +26,19 @@
 	[super viewDidLoad];
 	
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
-		if (error) {
+		if (!error) {
+			self.facebookLoginButton.readPermissions = @[@"public_profile", @"email"];
+			
+			if ([FBSDKAccessToken currentAccessToken]) {
+				[self loggedWithFacebook];
+			} else if ([PFUser currentUser]) {
+				[self loggedWithoutFacebook];
+			}
+		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}
 	}];
-	
-	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email"];
-	
-	if ([FBSDKAccessToken currentAccessToken]) {
-		[self loggedWithFacebook];
-	} else if ([PFUser currentUser]) {
-		[self loggedWithoutFacebook];
-	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -97,7 +97,7 @@
 															} else if ([user objectForKey:@"phoneNumber"] == nil || [[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
 																[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
 															} else {
-																[ApplicationDelegate userIsConnected];
+																[ApplicationDelegate userConnected];
 															}
 														}
 													}];
@@ -109,7 +109,7 @@
 	if ([user objectForKey:@"phoneNumber"] == nil) {
 		[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
 	} else {
-		[ApplicationDelegate userIsConnected];
+		[ApplicationDelegate userConnected];
 	}
 }
 
@@ -253,6 +253,38 @@
 	
 	NSString *usernamePrefix = [username substringToIndex:[USERNAME_EMPTY_PREFIX length]];
 	return ([usernamePrefix isEqualToString:USERNAME_EMPTY_PREFIX]);
+}
+
+- (void)animateImages {
+	self.logoImageView.animationImages = [NSArray arrayWithObjects:
+										  [UIImage imageNamed:@"anim_logo00@3x.png"],
+										  [UIImage imageNamed:@"anim_logo01@3x.png"],
+										  [UIImage imageNamed:@"anim_logo02@3x.png"],
+										  [UIImage imageNamed:@"anim_logo03@3x.png"],
+										  [UIImage imageNamed:@"anim_logo04@3x.png"],
+										  [UIImage imageNamed:@"anim_logo05@3x.png"],
+										  [UIImage imageNamed:@"anim_logo06@3x.png"],
+										  [UIImage imageNamed:@"anim_logo07@3x.png"],
+										  [UIImage imageNamed:@"anim_logo08@3x.png"],
+										  [UIImage imageNamed:@"anim_logo09@3x.png"],
+										  [UIImage imageNamed:@"anim_logo10@3x.png"],
+										  [UIImage imageNamed:@"anim_logo11@3x.png"],
+										  [UIImage imageNamed:@"anim_logo12@3x.png"],
+										  [UIImage imageNamed:@"anim_logo13@3x.png"],
+										  [UIImage imageNamed:@"anim_logo14@3x.png"],
+										  [UIImage imageNamed:@"anim_logo15@3x.png"],
+										  [UIImage imageNamed:@"anim_logo16@3x.png"],
+										  [UIImage imageNamed:@"anim_logo17@3x.png"],
+										  [UIImage imageNamed:@"anim_logo18@3x.png"],
+										  [UIImage imageNamed:@"anim_logo19@3x.png"],
+										  [UIImage imageNamed:@"anim_logo20@3x.png"],
+										  [UIImage imageNamed:@"anim_logo21@3x.png"],
+										  [UIImage imageNamed:@"anim_logo22@3x.png"],
+										  [UIImage imageNamed:@"anim_logo23@3x.png"], nil];
+	
+	self.logoImageView.animationDuration = 1;
+	self.logoImageView.animationRepeatCount = 0;
+	[self.logoImageView startAnimating];
 }
 
 #pragma mark - FBSDKLoginButtonDelegate

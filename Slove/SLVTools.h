@@ -17,8 +17,17 @@
 + (void)removeFile:(NSString *)fileName;
 + (NSString *)trimUsername:(NSString *)username;
 + (NSString *)validateUsername:(NSString *)username;
++ (NSString *)usernameIsFilled:(NSString *)username;
++ (NSString *)usernameSize:(NSString *)username;
++ (NSString *)usernameIsValid:(NSString *)username;
++ (NSString *)usernameIsFree:(NSString *)username;
 + (NSString *)validateEmail:(NSString *)email;
++ (NSString *)emailIsFilled:(NSString *)email;
++ (NSString *)emailIsValid:(NSString *)email;
++ (NSString *)emailIsFree:(NSString *)email;
 + (NSString *)validatePassword:(NSString *)password;
++ (NSString *)passwordIsFilled:(NSString *)password;
++ (NSString *)passwordSize:(NSString *)password;
 + (NSString *)validateConditions:(BOOL)conditions;
 
 @end
