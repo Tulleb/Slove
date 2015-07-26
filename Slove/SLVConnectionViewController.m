@@ -43,6 +43,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	
+	ApplicationDelegate.currentNavigationController.navigationBarHidden = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	ApplicationDelegate.currentNavigationController.navigationBarHidden = NO;
 }
 
 - (void)didReceiveMemoryWarning {
