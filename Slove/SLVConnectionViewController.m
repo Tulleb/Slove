@@ -56,6 +56,15 @@
 	ApplicationDelegate.currentNavigationController.navigationBarHidden = NO;
 }
 
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	CGFloat bodyViewHeight = SCREEN_HEIGHT - self.footerViewHeightConstraint.constant;
+	
+	self.logoViewHeightConstraint.constant = bodyViewHeight * 0.7;
+	self.subtitleViewHeightConstraint.constant = bodyViewHeight * 0.3;
+}
+
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

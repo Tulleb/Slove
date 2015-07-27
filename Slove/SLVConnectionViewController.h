@@ -17,6 +17,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *subtitleUpperLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subtitleLowerLabel;
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *logoViewHeightConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *subtitleViewHeightConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *footerViewHeightConstraint;
 
 - (IBAction)connectAction:(id)sender;
 - (IBAction)registerAction:(id)sender;
