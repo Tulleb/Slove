@@ -103,7 +103,7 @@
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
                                 <constraint firstAttribute="centerX" secondItem="qYo-xw-fVx" secondAttribute="centerX" id="AmF-sm-sFo"/>
                                 <constraint firstAttribute="height" relation="lessThanOrEqual" constant="108" id="K5U-kU-KCq"/>
@@ -111,7 +111,8 @@
                                 <constraint firstAttribute="centerY" secondItem="QBe-D8-xQz" secondAttribute="centerY" constant="10" id="WAe-Dd-vow"/>
                                 <constraint firstAttribute="centerY" secondItem="qYo-xw-fVx" secondAttribute="centerY" constant="-11" id="eQJ-de-ivc"/>
                                 <constraint firstItem="qYo-xw-fVx" firstAttribute="top" secondItem="QBe-D8-xQz" secondAttribute="bottom" id="gHQ-3r-wem"/>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="42" id="rQl-KW-U04"/>
+                                <constraint firstAttribute="height" priority="250" constant="102" id="lxN-J1-bua"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="rQl-KW-U04"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGt-yv-GwA">
@@ -138,13 +139,17 @@
                             <constraints>
                                 <constraint firstItem="ciF-cz-sED" firstAttribute="leading" secondItem="zGt-yv-GwA" secondAttribute="leading" id="DPN-8P-REA"/>
                                 <constraint firstAttribute="centerY" secondItem="ciF-cz-sED" secondAttribute="centerY" id="Vr1-Uq-kck"/>
-                                <constraint firstAttribute="width" secondItem="zGt-yv-GwA" secondAttribute="height" multiplier="150:79" id="Wic-Lq-JsI"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="276" id="fgF-yB-xqy"/>
                                 <constraint firstAttribute="bottom" secondItem="QRp-0J-pQ2" secondAttribute="bottom" id="twk-gJ-s9N"/>
                                 <constraint firstItem="QRp-0J-pQ2" firstAttribute="top" secondItem="ciF-cz-sED" secondAttribute="bottom" id="xdm-7U-HZu"/>
                                 <constraint firstAttribute="trailing" secondItem="ciF-cz-sED" secondAttribute="trailing" id="zY0-dt-inT"/>
                                 <constraint firstAttribute="centerX" secondItem="QRp-0J-pQ2" secondAttribute="centerX" id="zsG-DO-dtu"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="twk-gJ-s9N"/>
+                                </mask>
+                            </variation>
                         </view>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
