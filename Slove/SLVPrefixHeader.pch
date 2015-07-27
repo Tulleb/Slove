@@ -14,7 +14,7 @@
 
 #import "AppDelegate.h"
 #import "SLVViewController.h"
-#import "SLVNavigationViewController.h"
+#import "SLVNavigationController.h"
 #import "SLVTools.h"
 #import "SLVLogger.h"
 #import "NSString+Tools.h"
@@ -63,6 +63,12 @@
 #define GRAY		[UIColor grayColor]
 #define LIGHT_GRAY	[UIColor lightGrayColor]
 #define BLUE_IOS	[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
+
+// Font
+#define DEFAULT_FONT		@"Nunito-Regular"
+#define DEFAULT_FONT_BOLD	@"Nunito-Bold"
+#define DEFAULT_FONT_LIGHT	@"Nunito-Light"
+#define DEFAULT_FONT_SIZE	17
 
 // Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2

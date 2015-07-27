@@ -24,6 +24,8 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+	
+	[self setStyle:self.view];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -42,6 +44,24 @@
 	
 	if (_appName && ![_appName isEqualToString:@""]) {
 		self.title = _appName;
+	}
+}
+
+- (void)setStyle:(UIView *)view {
+	for (UIView *subview in view.subviews) {
+		if (subview.tag >= 0) {
+			if ([subview isKindOfClass:[UILabel class]]) {
+				UILabel *label = (UILabel *)subview;
+				
+				label.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+			} else if ([subview isKindOfClass:[UIButton class]]) {
+				UIButton *button = (UIButton *)subview;
+				
+				button.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+			}
+			
+			[self setStyle:subview];
+		}
 	}
 }
 

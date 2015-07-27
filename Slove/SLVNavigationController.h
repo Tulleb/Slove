@@ -1,5 +1,5 @@
 //
-//  SLVNavigationViewController.h
+//  SLVNavigationController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 19/07/2015.
@@ -8,6 +8,6 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SLVNavigationViewController : UINavigationController
+@interface SLVNavigationController : UINavigationController
 
 @end

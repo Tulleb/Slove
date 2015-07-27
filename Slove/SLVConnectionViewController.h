@@ -13,6 +13,9 @@
 @interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UILabel *subtitleUpperLabel;
+@property (strong, nonatomic) IBOutlet UILabel *subtitleLowerLabel;
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
 
 - (IBAction)connectAction:(id)sender;

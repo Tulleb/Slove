@@ -1,18 +1,18 @@
 //
-//  SLVNavigationViewController.m
+//  SLVNavigationController.m
 //  Slove
 //
 //  Created by Guillaume Bellut on 19/07/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "SLVNavigationViewController.h"
+#import "SLVNavigationController.h"
 
-@interface SLVNavigationViewController ()
+@interface SLVNavigationController ()
 
 @end
 
-@implementation SLVNavigationViewController
+@implementation SLVNavigationController
 
 - (void)viewDidLoad {
     [super viewDidLoad];

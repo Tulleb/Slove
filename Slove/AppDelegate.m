@@ -40,8 +40,9 @@
 	
 	// TODO: get last User from NSUserDefault and check if connected
 	
-	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
+	[self.window addSubview:self.currentNavigationController.view];
 	[self.window makeKeyAndVisible];
 	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -81,7 +82,7 @@
 
 - (void)userConnected {
 	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
-	self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
+	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
 	
 	userIsConnected = YES;
@@ -91,7 +92,7 @@
 	SLVLog(@"User disconnected from Slove");
 	
 	if (userIsConnected) {
-		self.currentNavigationController = [[SLVNavigationViewController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 		self.window.rootViewController = self.currentNavigationController;
 	}
 	

@@ -45,5 +45,11 @@
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Nunito-Regular.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>Nunito-Bold.ttf</string>
+	</array>
 </dict>
 </plist>

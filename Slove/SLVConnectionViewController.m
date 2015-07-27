@@ -25,9 +25,12 @@
 	
 	[super viewDidLoad];
 	
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:45];
+	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
-			self.facebookLoginButton.readPermissions = @[@"public_profile", @"email"];
+			self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 			
 			if ([FBSDKAccessToken currentAccessToken]) {
 				[self loggedWithFacebook];

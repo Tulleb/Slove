@@ -10,6 +10,9 @@
             <connections>
                 <outlet property="facebookLoginButton" destination="52w-aG-mhA" id="OhB-8Y-D5F"/>
                 <outlet property="logoImageView" destination="ciF-cz-sED" id="uVr-mQ-YMr"/>
+                <outlet property="subtitleLowerLabel" destination="qYo-xw-fVx" id="36q-DO-VMv"/>
+                <outlet property="subtitleUpperLabel" destination="QBe-D8-xQz" id="Ae7-bD-E4K"/>
+                <outlet property="titleLabel" destination="QRp-0J-pQ2" id="4A6-LD-eCr"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -78,28 +81,28 @@
                     <rect key="frame" x="0.0" y="0.0" width="600" height="418"/>
                     <subviews>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M6u-y9-qIV">
-                            <rect key="frame" x="0.0" y="316" width="600" height="102"/>
+                            <rect key="frame" x="0.0" y="332" width="600" height="86"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slove is the messaging app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBe-D8-xQz">
-                                    <rect key="frame" x="175" y="31" width="250" height="21"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="21" id="Fik-js-PbJ"/>
-                                        <constraint firstAttribute="width" constant="250" id="cD4-sk-A5y"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYo-xw-fVx">
-                                    <rect key="frame" x="175" y="52" width="250" height="21"/>
+                                    <rect key="frame" x="8" y="43.5" width="584" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="EdY-Lb-mnY"/>
-                                        <constraint firstAttribute="width" constant="250" id="n4u-ku-ef1"/>
+                                        <constraint firstAttribute="width" constant="584" id="n4u-ku-ef1"/>
                                     </constraints>
                                     <string key="text">to share love with your friends
 </string>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slove is the messaging app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBe-D8-xQz">
+                                    <rect key="frame" x="8" y="22" width="584" height="21"/>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="21" id="Fik-js-PbJ"/>
+                                        <constraint firstAttribute="width" constant="584" id="cD4-sk-A5y"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="17"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -111,29 +114,29 @@
                                 <constraint firstAttribute="centerY" secondItem="QBe-D8-xQz" secondAttribute="centerY" constant="10" id="WAe-Dd-vow"/>
                                 <constraint firstAttribute="centerY" secondItem="qYo-xw-fVx" secondAttribute="centerY" constant="-11" id="eQJ-de-ivc"/>
                                 <constraint firstItem="qYo-xw-fVx" firstAttribute="top" secondItem="QBe-D8-xQz" secondAttribute="bottom" id="gHQ-3r-wem"/>
-                                <constraint firstAttribute="height" priority="250" constant="102" id="lxN-J1-bua"/>
+                                <constraint firstAttribute="height" priority="250" constant="86" id="lxN-J1-bua"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="60" id="rQl-KW-U04"/>
                             </constraints>
                         </view>
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGt-yv-GwA">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="316"/>
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="332"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRp-0J-pQ2">
-                                    <rect key="frame" x="250" y="276" width="100" height="40"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="100" id="8Kr-nd-MnB"/>
-                                        <constraint firstAttribute="height" constant="40" id="xpV-z3-t1O"/>
-                                    </constraints>
-                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
-                                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                                    <nil key="highlightedColor"/>
-                                </label>
                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ciF-cz-sED">
-                                    <rect key="frame" x="0.0" y="40" width="600" height="236"/>
+                                    <rect key="frame" x="0.0" y="48" width="600" height="236"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="ciF-cz-sED" secondAttribute="height" multiplier="150:59" id="Rwf-ec-RLL"/>
                                     </constraints>
                                 </imageView>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRp-0J-pQ2">
+                                    <rect key="frame" x="8" y="292" width="584" height="50"/>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="584" id="8Kr-nd-MnB"/>
+                                        <constraint firstAttribute="height" constant="50" id="xpV-z3-t1O"/>
+                                    </constraints>
+                                    <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="24"/>
+                                    <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <constraints>
@@ -141,7 +144,7 @@
                                 <constraint firstAttribute="centerY" secondItem="ciF-cz-sED" secondAttribute="centerY" id="Vr1-Uq-kck"/>
                                 <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="276" id="fgF-yB-xqy"/>
                                 <constraint firstAttribute="bottom" secondItem="QRp-0J-pQ2" secondAttribute="bottom" id="twk-gJ-s9N"/>
-                                <constraint firstItem="QRp-0J-pQ2" firstAttribute="top" secondItem="ciF-cz-sED" secondAttribute="bottom" id="xdm-7U-HZu"/>
+                                <constraint firstItem="QRp-0J-pQ2" firstAttribute="top" secondItem="ciF-cz-sED" secondAttribute="bottom" constant="8" id="xdm-7U-HZu"/>
                                 <constraint firstAttribute="trailing" secondItem="ciF-cz-sED" secondAttribute="trailing" id="zY0-dt-inT"/>
                                 <constraint firstAttribute="centerX" secondItem="QRp-0J-pQ2" secondAttribute="centerX" id="zsG-DO-dtu"/>
                             </constraints>
