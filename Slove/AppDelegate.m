@@ -7,6 +7,11 @@
 //
 
 #import "AppDelegate.h"
+#import "SLVConnectionViewController.h"
+#import "SLVHomeViewController.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 
 @interface AppDelegate ()
 
@@ -16,8 +21,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-	// Override point for customization after application launch.
-	return YES;
+	// [Optional] Power your app with Local Datastore. For more info, go to
+	// https://parse.com/docs/ios_guide#localdatastore/iOS
+	[Parse enableLocalDatastore];
+ 
+	// Initialize Parse.
+	[Parse setApplicationId:@"bNqrmF49ncJ0LYgfGIFZmReRkqKLFWtuCt2XJQFy"
+				  clientKey:@"pJ5C1IkUz8hKdXd5pb3sZyDroMu6XfjhRgNiLO5q"];
+ 
+	// [Optional] Track statistics around application opens.
+	[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
+	
+	[PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
+
+	[FBSDKLoginButton class];
+	
+	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
+	
+	// TODO: get last User from NSUserDefault and check if connected
+	
+	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+	self.window.rootViewController = self.currentNavigationController;
+	self.currentNavigationController.bottomNavigationBarView.hidden = YES;
+	[self.window addSubview:self.currentNavigationController.view];
+	[self.window makeKeyAndVisible];
+	
+	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application {
@@ -35,11 +64,45 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	// Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+	[FBSDKAppEvents activateApp];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
 	// Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (BOOL)application:(UIApplication *)application openURL:(NSURL *)url sourceApplication:(NSString *)sourceApplication annotation:(id)annotation {
+	return [[FBSDKApplicationDelegate sharedInstance] application:application
+														  openURL:url
+												sourceApplication:sourceApplication
+													   annotation:annotation];
+}
+
+
+#pragma mark - Custom methods
+
+- (void)userConnected {
+	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
+	
+	if (!self.userIsConnected) {
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
+		self.currentNavigationController.bottomNavigationBarView.hidden = NO;
+		self.window.rootViewController = self.currentNavigationController;
+	}
+
+	self.userIsConnected = YES;
+}
+
+- (void)userDisconnected {
+	SLVLog(@"User disconnected from Slove");
+	
+	if (self.userIsConnected) {
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+		self.currentNavigationController.bottomNavigationBarView.hidden = YES;
+		self.window.rootViewController = self.currentNavigationController;
+	}
+	
+	self.userIsConnected = NO;
 }
 
 @end
