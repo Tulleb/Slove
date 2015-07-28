@@ -496,6 +496,7 @@
 				TargetAttributes = {
 					C44224E21B5BE7D600389210 = {
 						CreatedOnToolsVersion = 6.4;
+						DevelopmentTeam = 9E43V6CC9L;
 					};
 					C44224FB1B5BE7D600389210 = {
 						CreatedOnToolsVersion = 6.4;
@@ -753,6 +754,7 @@
 			baseConfigurationReference = 56E026E5988632AACB633B7D /* Pods-Slove.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Slove/SLVPrefixHeader.pch;
 				INFOPLIST_FILE = Slove/Info.plist;
@@ -767,6 +769,7 @@
 			baseConfigurationReference = 8E2687E97BE04A9CA518E4AB /* Pods-Slove.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = Slove/SLVPrefixHeader.pch;
 				INFOPLIST_FILE = Slove/Info.plist;
