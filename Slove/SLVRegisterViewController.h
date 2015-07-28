@@ -8,7 +8,7 @@
 
 #import "SLVViewController.h"
 
-@interface SLVRegisterViewController : SLVViewController<UITextFieldDelegate> {
+@interface SLVRegisterViewController : SLVViewController <UITextFieldDelegate> {
 	BOOL conditionsAccepted;
 }
 

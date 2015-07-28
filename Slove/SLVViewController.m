@@ -25,7 +25,12 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	[self setStyle:self.view];
+	[SLVViewController setStyle:self.view];
+	
+	// To substract the navigation bar height from the view
+	if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -47,7 +52,7 @@
 	}
 }
 
-- (void)setStyle:(UIView *)view {
++ (void)setStyle:(UIView *)view {
 	for (UIView *subview in view.subviews) {
 		if (subview.tag >= 0) {
 			if ([subview isKindOfClass:[UILabel class]]) {
