@@ -1,0 +1,89 @@
+//
+//  SLVPrefixHeader.pch
+//  Slove
+//
+//  Created by Guillaume Bellut on 19/07/2015.
+//  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
+//
+
+#ifndef Slove_SLVPrefixHeader_pch
+#define Slove_SLVPrefixHeader_pch
+
+// Include any system framework and library headers here that should be included in all compilation units.
+// You will also need to set the Prefix Header build setting of one or more of your targets to reference this file.
+
+#import "AppDelegate.h"
+#import "SLVViewController.h"
+#import "SLVNavigationController.h"
+#import "SLVTools.h"
+#import "SLVLogger.h"
+#import "NSString+Tools.h"
+#import <Parse/Parse.h>
+#import "ParseErrorHandlingController.h"
+
+// Singleton
+#define ApplicationDelegate	((AppDelegate *)[[UIApplication sharedApplication] delegate])
+
+// Server
+#define SERVER_ADDRESS	@"http://slove.co"
+#define REQUEST_TIMEOUT	10
+
+// Log
+#define SLVLog(s, ...)		[[SLVLogger sharedStore] logFile:__FILE__ lineNumber:__LINE__ format:(s), ##__VA_ARGS__]
+#define SLV_SEPARATOR		@": "
+#define SLV_ERROR			[NSString stringWithFormat:@"Error%@", SLV_SEPARATOR]
+#define SLV_WARNING			[NSString stringWithFormat:@"Warning%@", SLV_SEPARATOR]
+#define SLV_DETAIL			[NSString stringWithFormat:@"Detail%@", SLV_SEPARATOR]
+
+// Device and iOS version
+#define IS_IOS6					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 6)
+#define IS_IOS7					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 7)
+#define IS_IOS8					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 8)
+#define IS_SUP_IOS7				(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) >= 7)
+#define IS_IPAD					(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
+#define IS_IPHONE				(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
+#define IS_3INCH5				([UIScreen mainScreen].bounds.size.height == 480)
+#define IS_4INCH				([UIScreen mainScreen].bounds.size.height == 568)
+#define IS_4INCH7				([UIScreen mainScreen].bounds.size.height == 667.0)
+#define IS_5INCH5				([UIScreen mainScreen].bounds.size.height == 736.0)
+#define IS_RETINA				([[UIScreen mainScreen] scale] == 2.0)
+
+// Screen size
+#define SCREEN_SIZE		[[UIScreen mainScreen] bounds].size
+#define SCREEN_WIDTH	[[UIScreen mainScreen] bounds].size.width
+#define SCREEN_HEIGHT	[[UIScreen mainScreen] bounds].size.height
+
+// Color
+#define CLEAR			[UIColor clearColor]
+#define BLACK			[UIColor blackColor]
+#define WHITE			[UIColor whiteColor]
+#define RED				[UIColor redColor]
+#define BLUE			[UIColor blueColor]
+#define GREEN			[UIColor greenColor]
+#define GRAY			[UIColor grayColor]
+#define LIGHT_GRAY		[UIColor lightGrayColor]
+#define DARK_GRAY		[UIColor darkGrayColor]
+#define VERY_LIGHT_GRAY [UIColor groupTableViewBackgroundColor]
+#define BLUE_IOS		[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
+
+// Font
+#define DEFAULT_FONT		@"Nunito-Regular"
+#define DEFAULT_FONT_BOLD	@"Nunito-Bold"
+#define DEFAULT_FONT_LIGHT	@"Nunito-Light"
+#define DEFAULT_FONT_SIZE	17
+
+// Field validation
+#define VALIDATION_USERNAME_MIN_LENGTH	2
+#define VALIDATION_USERNAME_MAX_LENGTH	16
+#define VALIDATION_PASSWORD_MIN_LENGTH	6
+#define VALIDATION_PASSWORD_MAX_LENGTH	64
+
+// Username
+#define USERNAME_EMPTY_PREFIX			@"empty#"
+#define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
+
+// Phone Number
+#define PHONENUMBER_SEND_FUNCTION		@"sendPhoneCode"
+#define PHONENUMBER_CONFIRM_FUNCTION	@"confirmPhoneCode"
+
+#endif

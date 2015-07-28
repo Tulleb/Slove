@@ -7,11 +7,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "SLVNavigationController.h"
+#import <Parse/PFUser.h>
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) SLVNavigationController *currentNavigationController;
+@property (nonatomic) BOOL userIsConnected;
 
+- (void)userConnected;
+- (void)userDisconnected;
 
 @end
 
