@@ -54,15 +54,17 @@
 #define SCREEN_HEIGHT	[[UIScreen mainScreen] bounds].size.height
 
 // Color
-#define CLEAR		[UIColor clearColor]
-#define BLACK		[UIColor blackColor]
-#define WHITE		[UIColor whiteColor]
-#define RED			[UIColor redColor]
-#define BLUE		[UIColor blueColor]
-#define GREEN		[UIColor greenColor]
-#define GRAY		[UIColor grayColor]
-#define LIGHT_GRAY	[UIColor lightGrayColor]
-#define BLUE_IOS	[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
+#define CLEAR			[UIColor clearColor]
+#define BLACK			[UIColor blackColor]
+#define WHITE			[UIColor whiteColor]
+#define RED				[UIColor redColor]
+#define BLUE			[UIColor blueColor]
+#define GREEN			[UIColor greenColor]
+#define GRAY			[UIColor grayColor]
+#define LIGHT_GRAY		[UIColor lightGrayColor]
+#define DARK_GRAY		[UIColor darkGrayColor]
+#define VERY_LIGHT_GRAY [UIColor groupTableViewBackgroundColor]
+#define BLUE_IOS		[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
 
 // Font
 #define DEFAULT_FONT		@"Nunito-Regular"

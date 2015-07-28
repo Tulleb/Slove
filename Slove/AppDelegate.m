@@ -42,6 +42,7 @@
 	
 	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
+	self.currentNavigationController.bottomNavigationBarView.hidden = YES;
 	[self.window addSubview:self.currentNavigationController.view];
 	[self.window makeKeyAndVisible];
 	
@@ -82,21 +83,26 @@
 
 - (void)userConnected {
 	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
-	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
-	self.window.rootViewController = self.currentNavigationController;
 	
-	userIsConnected = YES;
+	if (!self.userIsConnected) {
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
+		self.currentNavigationController.bottomNavigationBarView.hidden = NO;
+		self.window.rootViewController = self.currentNavigationController;
+	}
+
+	self.userIsConnected = YES;
 }
 
 - (void)userDisconnected {
 	SLVLog(@"User disconnected from Slove");
 	
-	if (userIsConnected) {
+	if (self.userIsConnected) {
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+		self.currentNavigationController.bottomNavigationBarView.hidden = YES;
 		self.window.rootViewController = self.currentNavigationController;
 	}
 	
-	userIsConnected = NO;
+	self.userIsConnected = NO;
 }
 
 @end
