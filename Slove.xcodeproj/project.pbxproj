@@ -15,7 +15,6 @@
 		C442251D1B5BF12800389210 /* SLVTools.m in Sources */ = {isa = PBXBuildFile; fileRef = C442251C1B5BF12800389210 /* SLVTools.m */; };
 		C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225201B5BF20A00389210 /* NSString+Tools.m */; };
 		C44225251B5BF5C900389210 /* SLVNavigationController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225231B5BF5C900389210 /* SLVNavigationController.m */; };
-		C44225261B5BF5C900389210 /* SLVNavigationController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44225241B5BF5C900389210 /* SLVNavigationController.xib */; };
 		C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44225281B5BF5DB00389210 /* SLVViewController.m */; };
 		C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44225291B5BF5DB00389210 /* SLVViewController.xib */; };
 		C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C442252E1B5BF76100389210 /* SLVConnectionViewController.m */; };
@@ -23,6 +22,7 @@
 		C44DCC941B682086009BDAB2 /* SLVAddressBookContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC931B682086009BDAB2 /* SLVAddressBookContact.m */; };
 		C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */; };
 		C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */; };
+		C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C458F6FE1B6A320E0075B8EF /* Localizable.strings */; };
 		C4665B0E1B67AD7500E63B5A /* Default-480h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */; };
 		C4665B0F1B67AD7500E63B5A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */; };
 		C4665B171B67AD8000E63B5A /* slove_logo_29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */; };
@@ -112,7 +112,6 @@
 		C44225201B5BF20A00389210 /* NSString+Tools.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+Tools.m"; sourceTree = "<group>"; };
 		C44225221B5BF5C900389210 /* SLVNavigationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVNavigationController.h; sourceTree = "<group>"; };
 		C44225231B5BF5C900389210 /* SLVNavigationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVNavigationController.m; sourceTree = "<group>"; };
-		C44225241B5BF5C900389210 /* SLVNavigationController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVNavigationController.xib; sourceTree = "<group>"; };
 		C44225271B5BF5DB00389210 /* SLVViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVViewController.h; sourceTree = "<group>"; };
 		C44225281B5BF5DB00389210 /* SLVViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVViewController.m; sourceTree = "<group>"; };
 		C44225291B5BF5DB00389210 /* SLVViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVViewController.xib; sourceTree = "<group>"; };
@@ -124,6 +123,11 @@
 		C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVContactTableViewCell.h; sourceTree = "<group>"; };
 		C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVContactTableViewCell.m; sourceTree = "<group>"; };
 		C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVContactTableViewCell.xib; sourceTree = "<group>"; };
+		C458F7031B6A32D40075B8EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C458F7041B6A62410075B8EF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		C458F7051B6A62410075B8EF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		C458F7061B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		C458F7071B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-480h@2x.png"; path = "Assets/Launch Image/Default-480h@2x.png"; sourceTree = "<group>"; };
 		C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Assets/Launch Image/Default-568h@2x.png"; sourceTree = "<group>"; };
 		C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_29@2x.png"; path = "Assets/App Icon/slove_logo_29@2x.png"; sourceTree = "<group>"; };
@@ -259,6 +263,7 @@
 				C44224E71B5BE7D600389210 /* Info.plist */,
 				C44224E81B5BE7D600389210 /* main.m */,
 				C442251A1B5BF0E000389210 /* SLVPrefixHeader.pch */,
+				C458F6FE1B6A320E0075B8EF /* Localizable.strings */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
@@ -441,7 +446,6 @@
 			children = (
 				C44225221B5BF5C900389210 /* SLVNavigationController.h */,
 				C44225231B5BF5C900389210 /* SLVNavigationController.m */,
-				C44225241B5BF5C900389210 /* SLVNavigationController.xib */,
 				C44225271B5BF5DB00389210 /* SLVViewController.h */,
 				C44225281B5BF5DB00389210 /* SLVViewController.m */,
 				C44225291B5BF5DB00389210 /* SLVViewController.xib */,
@@ -567,6 +571,8 @@
 			knownRegions = (
 				en,
 				Base,
+				fr,
+				"pt-BR",
 			);
 			mainGroup = C44224DA1B5BE7D600389210;
 			productRefGroup = C44224E41B5BE7D600389210 /* Products */;
@@ -607,7 +613,6 @@
 				C498E8671B652877002B0A4E /* anim_logo06@3x.png in Resources */,
 				C498E8601B652877002B0A4E /* anim_logo13@3x.png in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
-				C44225261B5BF5C900389210 /* SLVNavigationController.xib in Resources */,
 				C498E8621B652877002B0A4E /* anim_logo15@3x.png in Resources */,
 				C498E8691B652877002B0A4E /* anim_logo03@3x.png in Resources */,
 				C4C927541B66CDA5000ABA7A /* Nunito-Bold.ttf in Resources */,
@@ -619,6 +624,7 @@
 				C4665B191B67AD8000E63B5A /* slove_logo_40@2x.png in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
 				C498E86C1B652877002B0A4E /* anim_logo00@3x.png in Resources */,
+				C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */,
 				C498E8681B652877002B0A4E /* anim_logo07@3x.png in Resources */,
 				C4665B0E1B67AD7500E63B5A /* Default-480h@2x.png in Resources */,
 				C498E85E1B652877002B0A4E /* anim_logo18@3x.png in Resources */,
@@ -730,8 +736,20 @@
 			isa = PBXVariantGroup;
 			children = (
 				C44224F61B5BE7D600389210 /* Base */,
+				C458F7041B6A62410075B8EF /* fr */,
+				C458F7061B6A62630075B8EF /* pt-BR */,
 			);
 			name = LaunchScreen.xib;
+			sourceTree = "<group>";
+		};
+		C458F6FE1B6A320E0075B8EF /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				C458F7031B6A32D40075B8EF /* Base */,
+				C458F7051B6A62410075B8EF /* fr */,
+				C458F7071B6A62630075B8EF /* pt-BR */,
+			);
+			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

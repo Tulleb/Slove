@@ -25,7 +25,7 @@
 }
 
 - (void)viewDidLoad {
-	self.appName = @"Confirmation Code";
+	self.appName = @"confirmation_code";
 	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -46,7 +46,7 @@
 										[ApplicationDelegate userConnected];
 									} else {
 										self.errorLabel.hidden = NO;
-										self.errorLabel.text = error.localizedDescription;
+										self.errorLabel.text = NSLocalizedString(error.localizedDescription, nil);
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
 										[ParseErrorHandlingController handleParseError:error];
 									}

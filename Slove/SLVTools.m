@@ -97,7 +97,7 @@
 	if (username && ![username isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"Your username is empty";
+		return @"username_empty_error";
 	}
 }
 
@@ -105,7 +105,7 @@
 	if ([username length] >= VALIDATION_USERNAME_MIN_LENGTH && [username length] <= VALIDATION_USERNAME_MAX_LENGTH) {
 		return nil;
 	} else {
-		return [NSString stringWithFormat:@"Your username must contains between %d and %d characters", VALIDATION_USERNAME_MIN_LENGTH, VALIDATION_USERNAME_MAX_LENGTH];
+		return @"username_length_error";
 	}
 }
 
@@ -114,7 +114,7 @@
 	if ([[username stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"Your username can only contains lower alphanumerical and _ characters";
+		return @"username_characters_error";
 	}
 }
 
@@ -125,7 +125,7 @@
 	
 	if (foundUsers && [foundUsers count] > 0) {
 		SLVLog(@"%@Retrieved %lu users named %@", SLV_WARNING, (unsigned long)[foundUsers count], username);
-		return @"This username already exists";
+		return @"username_taken_error";
 	}
 	
 	return nil;
@@ -156,7 +156,7 @@
 	if (email && ![email isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"Your email is empty";
+		return @"email_empty_error";
 	}
 }
 
@@ -169,7 +169,7 @@
 	if ([emailTest evaluateWithObject:email]) {
 		return nil;
 	} else {
-		return @"Your email is invalid";
+		return @"email_invalid_error";
 	}
 }
 
@@ -180,7 +180,7 @@
 	
 	if (foundUsers && [foundUsers count] > 0) {
 		SLVLog(@"%@Retrieved %lu users with email %@", SLV_WARNING, (unsigned long)[foundUsers count], email);
-		return @"This email already exists";
+		return @"email_taken_error";
 	}
 	
 	return nil;
@@ -206,7 +206,7 @@
 	if (password && ![password isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"Your password is empty";
+		return @"password_empty_error";
 	}
 }
 
@@ -214,13 +214,13 @@
 	if ([password length] >= VALIDATION_PASSWORD_MIN_LENGTH && [password length] <= VALIDATION_PASSWORD_MAX_LENGTH) {
 		return nil;
 	} else {
-		return [NSString stringWithFormat:@"Your password must contains between %d and %d characters", VALIDATION_PASSWORD_MIN_LENGTH, VALIDATION_PASSWORD_MAX_LENGTH];
+		return @"password_length_error";
 	}
 }
 
 + (NSString *)validateConditions:(BOOL)conditions {
 	if (!conditions) {
-		return @"You must accept our terms of service to continue";
+		return @"accept_conditions_error";
 	}
 	
 	return nil;

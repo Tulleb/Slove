@@ -18,7 +18,7 @@
 @implementation SLVHomeViewController
 
 - (void)viewDidLoad {
-	self.appName = @"Slove";
+	self.appName = @"slove";
 	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.

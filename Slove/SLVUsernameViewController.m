@@ -16,7 +16,7 @@
 @implementation SLVUsernameViewController
 
 - (void)viewDidLoad {
-	self.appName = @"Username";
+	self.appName = @"username";
 	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -35,7 +35,7 @@
 	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}

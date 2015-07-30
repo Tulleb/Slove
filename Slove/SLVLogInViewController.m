@@ -24,7 +24,7 @@
 }
 
 - (void)viewDidLoad {
-	self.appName = @"Log In";
+	self.appName = @"log_in";
 	
     [super viewDidLoad];
 	
@@ -48,7 +48,7 @@
 	NSString *answer = [SLVTools usernameIsFilled:self.usernameField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}
@@ -56,7 +56,7 @@
 	answer = [SLVTools passwordIsFilled:self.passwordField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}
@@ -70,7 +70,7 @@
 			}
 		} else {
 			self.errorLabel.hidden = NO;
-			self.errorLabel.text = @"Login doesn't match with password";
+			self.errorLabel.text = NSLocalizedString(@"login_doesnt_match", nil);
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}

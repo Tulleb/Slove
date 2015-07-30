@@ -1,0 +1,61 @@
+/* 
+  Localizable.strings
+  Slove
+
+  Created by Guillaume Bellut on 30/07/2015.
+  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
+*/
+
+// Misc
+"username_placeholder" = "Username";
+"password_placeholder" = "Password";
+"confirm_button" = "Confirm";
+"access_contact_button" = "Access Contact";
+"activity_button" = "Activity";
+"slove_button" = "Slove";
+"profile_button" = "Profile";
+"username_empty_error" = "Your username is empty";
+"username_length_error" = "Your username must contains between 2 and 16 characters";
+"username_characters_error" = "Your username can only contains lower alphanumerical and _ characters";
+"username_taken_error" = "This username already exists";
+"email_empty_error" = "Your email is empty";
+"email_invalid_error" = "Your email is invalid";
+"email_taken_error" = "This email already exists";
+"password_empty_error" = "Your password is empty";
+"password_length_error" = "Your password must contains between 6 and 64 characters";
+"accept_conditions_error" = "You must accept our terms of service to continue";
+
+// Connection
+"connection_title" = "Connection";
+"slove_title" = "Slove";
+"slove_subtitle_top" = "Slove is the messaging app";
+"slove_subtitle_bottom" = "to share love with your friends";
+"sign_up_email_button" = "Sign up with email";
+"already_have_account_button" = "I already have an account";
+
+// Register
+"register_title" = "Register";
+"email_placeholder" = "Email";
+"terms_of_service_label" = "I agree to the terms of service";
+"register_button" = "Register";
+
+// Log In
+"log_in_title" = "Log In";
+"log_in_button" = "Log in";
+"login_doesnt_match" = "Login doesn't match with password";
+
+// Username
+"username_title" = "Username";
+"your_username_label" = "Your username:";
+
+// Phone Number
+"phone_number_title" = "Phone Number";
+"your_phone_number_label" = "Your phone number:";
+
+// Confirmation Code
+"confirmation_code_title" = "Confirmation Code";
+"your_confirmation_number_label" = "Your confirmation number:";
+
+// Home View
+"slove_title" = "Slove";
+"disconnect_button" = "Disconnect";

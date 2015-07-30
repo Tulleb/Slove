@@ -45,10 +45,10 @@
 }
 
 - (void)setAppName:(NSString *)appName {
-	_appName = appName;
+	_appName = [appName stringByAppendingString:@"_title"];
 	
 	if (_appName && ![_appName isEqualToString:@""]) {
-		self.title = _appName;
+		self.title = NSLocalizedString(_appName, nil);
 	}
 }
 
@@ -59,10 +59,21 @@
 				UILabel *label = (UILabel *)subview;
 				
 				label.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+				label.text = NSLocalizedString(label.text, nil);
 			} else if ([subview isKindOfClass:[UIButton class]]) {
 				UIButton *button = (UIButton *)subview;
 				
 				button.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+				[button setTitle:NSLocalizedString(button.titleLabel.text, nil) forState:UIControlStateNormal];
+			} else if ([subview isKindOfClass:[UITextField class]]) {
+				UITextField *textField = (UITextField *)subview;
+				
+				textField.text = NSLocalizedString(textField.text, nil);
+				textField.placeholder = NSLocalizedString(textField.placeholder, nil);
+			} else if ([subview isKindOfClass:[UITextView class]]) {
+				UITextView *textView = (UITextView *)subview;
+				
+				textView.text = NSLocalizedString(textView.text, nil);
 			}
 			
 			[self setStyle:subview];

@@ -21,7 +21,7 @@
 @implementation SLVConnectionViewController
 
 - (void)viewDidLoad {
-	self.appName = @"Connection";
+	self.appName = @"connection";
 	
 	[super viewDidLoad];
 	

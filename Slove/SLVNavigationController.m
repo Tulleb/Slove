@@ -159,9 +159,9 @@
 	
 	self.bottomNavigationBarView.backgroundColor = VERY_LIGHT_GRAY;
 	
-	[self.activityButton setTitle:@"Activity" forState:UIControlStateNormal];
-	[self.sloveButton setTitle:@"Slove" forState:UIControlStateNormal];
-	[self.profileButton setTitle:@"Profile" forState:UIControlStateNormal];
+	[self.activityButton setTitle:@"activity_button" forState:UIControlStateNormal];
+	[self.sloveButton setTitle:@"slove_button" forState:UIControlStateNormal];
+	[self.profileButton setTitle:@"profile_button" forState:UIControlStateNormal];
 	
 	[self.activityButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
 	[self.sloveButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
@@ -180,13 +180,16 @@
 	[SLVViewController setStyle:self.bottomNavigationBarView];
 }
 
-- (IBAction)activityAction:(id)sender {
+- (void)activityAction:(id)sender {
+	
 }
 
-- (IBAction)sloveAction:(id)sender {
+- (void)sloveAction:(id)sender {
+	
 }
 
-- (IBAction)profileAction:(id)sender {
+- (void)profileAction:(id)sender {
+	
 }
 
 @end

@@ -16,7 +16,7 @@
 @implementation SLVPhoneNumberViewController
 
 - (void)viewDidLoad {
-	self.appName = @"Phone Number";
+	self.appName = @"phone_number";
 	
     [super viewDidLoad];
     // Do any additional setup after loading the view from its nib.
@@ -41,7 +41,7 @@
 										[self.navigationController pushViewController:[[SLVConfirmationCodeViewController alloc] initWithPhoneNumber:self.phoneNumberField.text] animated:YES];
 									} else {
 										self.errorLabel.hidden = NO;
-										self.errorLabel.text = error.localizedDescription;
+										self.errorLabel.text = NSLocalizedString(error.localizedDescription, nil);
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
 										[ParseErrorHandlingController handleParseError:error];
 									}

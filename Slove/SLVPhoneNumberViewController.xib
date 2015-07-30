@@ -17,10 +17,10 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your phone number" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSB-O0-DTD">
-                    <rect key="frame" x="90" y="270" width="200" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="your_phone_number_label" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSB-O0-DTD">
+                    <rect key="frame" x="89" y="270" width="203" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="t5P-38-Ylb"/>
+                        <constraint firstAttribute="width" constant="203" id="t5P-38-Ylb"/>
                         <constraint firstAttribute="height" constant="21" id="zpq-1W-Dpz"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -39,19 +39,6 @@
                         <outlet property="delegate" destination="-1" id="tOp-fr-BrH"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P29-Ed-qdu">
-                    <rect key="frame" x="272" y="304" width="56" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="klJ-cC-Mkv"/>
-                        <constraint firstAttribute="width" constant="56" id="r11-WD-57k"/>
-                    </constraints>
-                    <state key="normal" title="Confirm">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="confirmAction:" destination="-1" eventType="touchUpInside" id="Zeg-dg-JY1"/>
-                    </connections>
-                </button>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rts-yN-PLL">
                     <rect key="frame" x="171" y="237" width="259" height="21"/>
                     <constraints>
@@ -62,6 +49,19 @@
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P29-Ed-qdu">
+                    <rect key="frame" x="248" y="304" width="104" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="klJ-cC-Mkv"/>
+                        <constraint firstAttribute="width" constant="104" id="r11-WD-57k"/>
+                    </constraints>
+                    <state key="normal" title="confirm_button">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="confirmAction:" destination="-1" eventType="touchUpInside" id="Zeg-dg-JY1"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
