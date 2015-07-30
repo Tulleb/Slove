@@ -20,15 +20,18 @@
 	
 	[self loadBottomNavigationBar];
 	self.bottomNavigationBarView.translatesAutoresizingMaskIntoConstraints = NO;
+	self.activityButton.translatesAutoresizingMaskIntoConstraints = NO;
+	self.sloveButton.translatesAutoresizingMaskIntoConstraints = NO;
+	self.profileButton.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 	
-	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
 														  attribute:NSLayoutAttributeLeading
 														  relatedBy:NSLayoutRelationEqual
-															 toItem:self.view
+															 toItem:self.bottomNavigationBarView
 														  attribute:NSLayoutAttributeLeading
 														 multiplier:1
 														   constant:0]];
@@ -46,7 +49,6 @@
 														  attribute:NSLayoutAttributeBottom
 														 multiplier:1
 														   constant:0]];
-	
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																			 attribute:NSLayoutAttributeHeight
 																			 relatedBy:NSLayoutRelationEqual
@@ -55,43 +57,99 @@
 																			multiplier:1
 																			  constant:70]];
 	
-//	[self.activityButton addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton attribute:NSLayoutAttributeHeight relatedBy:NSLayoutRelationEqual toItem:nil attribute:NSLayoutAttributeNotAnAttribute multiplier:1 constant:51]];
+	[self.activityButton addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+																	attribute:NSLayoutAttributeHeight
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:nil
+																	attribute:NSLayoutAttributeNotAnAttribute
+																   multiplier:1
+																	 constant:40]];
+	[self.activityButton addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+																	attribute:NSLayoutAttributeWidth
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:nil
+																	attribute:NSLayoutAttributeNotAnAttribute
+																   multiplier:1
+																	 constant:100]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+																	attribute:NSLayoutAttributeLeading
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:self.bottomNavigationBarView
+																	attribute:NSLayoutAttributeLeading
+																   multiplier:1
+																	 constant:8]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+																	attribute:NSLayoutAttributeCenterY
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:self.bottomNavigationBarView
+																	attribute:NSLayoutAttributeCenterY
+																   multiplier:1
+																	 constant:0]];
+	
+	[self.sloveButton addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveButton
+																 attribute:NSLayoutAttributeHeight
+																 relatedBy:NSLayoutRelationEqual
+																	toItem:nil
+																 attribute:NSLayoutAttributeNotAnAttribute
+																multiplier:1
+																  constant:40]];
+	[self.sloveButton addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveButton
+																 attribute:NSLayoutAttributeWidth
+																 relatedBy:NSLayoutRelationEqual
+																	toItem:nil
+																 attribute:NSLayoutAttributeNotAnAttribute
+																multiplier:1
+																  constant:100]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
+																	attribute:NSLayoutAttributeCenterY
+																	relatedBy:NSLayoutRelationEqual
+																	toItem:self.sloveButton
+																	attribute:NSLayoutAttributeCenterY
+																multiplier:1
+																	 constant:0]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
+																	attribute:NSLayoutAttributeCenterX
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:self.sloveButton
+																	attribute:NSLayoutAttributeCenterX
+																   multiplier:1
+																	 constant:0]];
+	
+
+	[self.profileButton addConstraint:[NSLayoutConstraint constraintWithItem:self.profileButton
+																   attribute:NSLayoutAttributeHeight
+																   relatedBy:NSLayoutRelationEqual
+																	  toItem:nil
+																   attribute:NSLayoutAttributeNotAnAttribute
+																  multiplier:1
+																	constant:40]];
+	[self.profileButton addConstraint:[NSLayoutConstraint constraintWithItem:self.profileButton
+																   attribute:NSLayoutAttributeWidth
+																   relatedBy:NSLayoutRelationEqual
+																	  toItem:nil
+																   attribute:NSLayoutAttributeNotAnAttribute
+																  multiplier:1
+																	constant:100]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
+																   attribute:NSLayoutAttributeTrailing
+																   relatedBy:NSLayoutRelationEqual
+																	  toItem:self.profileButton
+																   attribute:NSLayoutAttributeTrailing
+																  multiplier:1
+																	constant:8]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
+																	attribute:NSLayoutAttributeCenterY
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:self.profileButton
+																	attribute:NSLayoutAttributeCenterY
+																   multiplier:1
+																	 constant:0]];
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-//- (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//	[super pushViewController:viewController animated:animated];
-//	
-//	self.bottomNavigationBarView.hidden = !ApplicationDelegate.userIsConnected;
-//}
-//
-//- (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
-//	NSArray *viewControllers = [super popToRootViewControllerAnimated:animated];
-//	
-//	self.bottomNavigationBarView.hidden = !ApplicationDelegate.userIsConnected;
-//	
-//	return viewControllers;
-//}
-//
-//- (NSArray *)popToViewController:(UIViewController *)viewController animated:(BOOL)animated {
-//	NSArray *viewControllers = [super popToViewController:viewController animated:animated];
-//	
-//	self.bottomNavigationBarView.hidden = !ApplicationDelegate.userIsConnected;
-//	
-//	return viewControllers;
-//}
-//
-//- (UIViewController *)popViewControllerAnimated:(BOOL)animated {
-//	UIViewController *viewController = [super popViewControllerAnimated:animated];
-//	
-//	self.bottomNavigationBarView.hidden = !ApplicationDelegate.userIsConnected;
-//	
-//	return viewController;
-//}
 
 - (void)loadBottomNavigationBar {
 	self.bottomNavigationBarView = [[UIView alloc] init];
@@ -101,11 +159,25 @@
 	
 	self.bottomNavigationBarView.backgroundColor = VERY_LIGHT_GRAY;
 	
-//	[self.bottomNavigationBarView addSubview:self.activityButton];
-//	[self.bottomNavigationBarView addSubview:self.sloveButton];
-//	[self.bottomNavigationBarView addSubview:self.profileButton];
+	[self.activityButton setTitle:@"Activity" forState:UIControlStateNormal];
+	[self.sloveButton setTitle:@"Slove" forState:UIControlStateNormal];
+	[self.profileButton setTitle:@"Profile" forState:UIControlStateNormal];
+	
+	[self.activityButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
+	[self.sloveButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
+	[self.profileButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
+	
+	self.activityButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	self.sloveButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
+	
+	[self.bottomNavigationBarView addSubview:self.activityButton];
+	[self.bottomNavigationBarView addSubview:self.sloveButton];
+	[self.bottomNavigationBarView addSubview:self.profileButton];
 	
 	[self.view addSubview:self.bottomNavigationBarView];
+	
+	[SLVViewController setStyle:self.bottomNavigationBarView];
 }
 
 - (IBAction)activityAction:(id)sender {

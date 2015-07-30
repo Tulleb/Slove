@@ -8,7 +8,7 @@
 
 #import "SLVViewController.h"
 
-@interface SLVLogInViewController : SLVViewController<UITextFieldDelegate>
+@interface SLVLogInViewController : SLVViewController <UITextFieldDelegate>
 
 @property (strong, nonatomic) IBOutlet UITextField *usernameField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;

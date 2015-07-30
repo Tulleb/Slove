@@ -20,6 +20,9 @@
 		C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44225291B5BF5DB00389210 /* SLVViewController.xib */; };
 		C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C442252E1B5BF76100389210 /* SLVConnectionViewController.m */; };
 		C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */; };
+		C44DCC941B682086009BDAB2 /* SLVAddressBookContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC931B682086009BDAB2 /* SLVAddressBookContact.m */; };
+		C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */; };
+		C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */; };
 		C4665B0E1B67AD7500E63B5A /* Default-480h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */; };
 		C4665B0F1B67AD7500E63B5A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */; };
 		C4665B171B67AD8000E63B5A /* slove_logo_29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */; };
@@ -116,6 +119,11 @@
 		C442252D1B5BF76100389210 /* SLVConnectionViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVConnectionViewController.h; sourceTree = "<group>"; };
 		C442252E1B5BF76100389210 /* SLVConnectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVConnectionViewController.m; sourceTree = "<group>"; };
 		C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVConnectionViewController.xib; sourceTree = "<group>"; };
+		C44DCC921B682086009BDAB2 /* SLVAddressBookContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVAddressBookContact.h; sourceTree = "<group>"; };
+		C44DCC931B682086009BDAB2 /* SLVAddressBookContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVAddressBookContact.m; sourceTree = "<group>"; };
+		C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVContactTableViewCell.h; sourceTree = "<group>"; };
+		C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVContactTableViewCell.m; sourceTree = "<group>"; };
+		C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVContactTableViewCell.xib; sourceTree = "<group>"; };
 		C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-480h@2x.png"; path = "Assets/Launch Image/Default-480h@2x.png"; sourceTree = "<group>"; };
 		C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Assets/Launch Image/Default-568h@2x.png"; sourceTree = "<group>"; };
 		C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_29@2x.png"; path = "Assets/App Icon/slove_logo_29@2x.png"; sourceTree = "<group>"; };
@@ -288,6 +296,8 @@
 			children = (
 				C4A48DB91B62C73B00CEBA25 /* SLVRoute.h */,
 				C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */,
+				C44DCC921B682086009BDAB2 /* SLVAddressBookContact.h */,
+				C44DCC931B682086009BDAB2 /* SLVAddressBookContact.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -447,6 +457,9 @@
 				C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */,
 				C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */,
 				C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */,
+				C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */,
+				C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */,
+				C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -615,6 +628,7 @@
 				C4665B181B67AD8000E63B5A /* slove_logo_29@3x.png in Resources */,
 				C498E86A1B652877002B0A4E /* anim_logo04@3x.png in Resources */,
 				C498E86E1B652877002B0A4E /* anim_logo02@3x.png in Resources */,
+				C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */,
 				C498E85D1B652877002B0A4E /* anim_logo17@3x.png in Resources */,
 				C4C927561B66CDA5000ABA7A /* Nunito-Regular.ttf in Resources */,
 				C498E8581B652877002B0A4E /* anim_logo19@3x.png in Resources */,
@@ -671,12 +685,14 @@
 			files = (
 				C4A48DA81B61531A00CEBA25 /* SLVConfirmationCodeViewController.m in Sources */,
 				C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */,
+				C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */,
 				C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */,
 				C44225251B5BF5C900389210 /* SLVNavigationController.m in Sources */,
 				C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */,
 				C442251D1B5BF12800389210 /* SLVTools.m in Sources */,
 				C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */,
 				C4A48D9B1B6149EC00CEBA25 /* SLVHomeViewController.m in Sources */,
+				C44DCC941B682086009BDAB2 /* SLVAddressBookContact.m in Sources */,
 				C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */,
 				C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */,
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,

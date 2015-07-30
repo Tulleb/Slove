@@ -18,4 +18,6 @@ typedef enum  {
 @property (nonatomic, strong) NSString * appName;
 @property (nonatomic) BackButtonType backButtonType;
 
++ (void)setStyle:(UIView *)view;
+
 @end

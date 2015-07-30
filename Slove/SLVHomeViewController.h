@@ -7,9 +7,15 @@
 //
 
 #import "SLVViewController.h"
+#import <AddressBookUI/AddressBookUI.h>
 
-@interface SLVHomeViewController : SLVViewController
+@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate>
+
+@property (strong, nonatomic) IBOutlet UIButton *accessContactButton;
+@property (strong, nonatomic) IBOutlet UITableView *addressContactTableView;
+@property (strong, nonatomic) NSArray *addressBook;
 
 - (IBAction)disconnectAction:(id)sender;
+- (IBAction)accessContactAction:(id)sender;
 
 @end

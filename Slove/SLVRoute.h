@@ -6,7 +6,7 @@
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-@interface SLVRoute : PFObject<PFSubclassing>
+@interface SLVRoute : PFObject <PFSubclassing>
 
 @property (nonatomic, strong) NSString *stringURL;
 @property (nonatomic, strong) NSString *method;

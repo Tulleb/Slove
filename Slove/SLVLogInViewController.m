@@ -27,12 +27,6 @@
 	self.appName = @"Log In";
 	
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
-	
-	// To substract the navigation bar height from the view
-	if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-		self.edgesForExtendedLayout = UIRectEdgeNone;
-	}
 	
 	[self observeKeyboard];
 	[self initTapToDismiss];
