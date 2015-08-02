@@ -45,7 +45,7 @@
 }
 
 - (void)setAppName:(NSString *)appName {
-	_appName = [appName stringByAppendingString:@"_title"];
+	_appName = [NSString stringWithFormat:@"title_%@", appName];
 	
 	if (_appName && ![_appName isEqualToString:@""]) {
 		self.title = NSLocalizedString(_appName, nil);
@@ -60,11 +60,13 @@
 				
 				label.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 				label.text = NSLocalizedString(label.text, nil);
+				label.adjustsFontSizeToFitWidth = YES;
 			} else if ([subview isKindOfClass:[UIButton class]]) {
 				UIButton *button = (UIButton *)subview;
 				
 				button.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 				[button setTitle:NSLocalizedString(button.titleLabel.text, nil) forState:UIControlStateNormal];
+				button.titleLabel.adjustsFontSizeToFitWidth = YES;
 			} else if ([subview isKindOfClass:[UITextField class]]) {
 				UITextField *textField = (UITextField *)subview;
 				

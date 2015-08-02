@@ -7,6 +7,8 @@
 //
 
 #import "SLVTools.h"
+#import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
+#import "SLVCountryCodeData.h"
 
 @implementation SLVTools
 
@@ -97,7 +99,7 @@
 	if (username && ![username isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"username_empty_error";
+		return @"error_username_empty";
 	}
 }
 
@@ -105,7 +107,7 @@
 	if ([username length] >= VALIDATION_USERNAME_MIN_LENGTH && [username length] <= VALIDATION_USERNAME_MAX_LENGTH) {
 		return nil;
 	} else {
-		return @"username_length_error";
+		return @"error_username_length";
 	}
 }
 
@@ -114,7 +116,7 @@
 	if ([[username stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"username_characters_error";
+		return @"error_username_characters";
 	}
 }
 
@@ -125,7 +127,7 @@
 	
 	if (foundUsers && [foundUsers count] > 0) {
 		SLVLog(@"%@Retrieved %lu users named %@", SLV_WARNING, (unsigned long)[foundUsers count], username);
-		return @"username_taken_error";
+		return @"error_username_taken";
 	}
 	
 	return nil;
@@ -156,7 +158,7 @@
 	if (email && ![email isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"email_empty_error";
+		return @"error_email_empty";
 	}
 }
 
@@ -169,7 +171,7 @@
 	if ([emailTest evaluateWithObject:email]) {
 		return nil;
 	} else {
-		return @"email_invalid_error";
+		return @"error_email_invalid";
 	}
 }
 
@@ -180,7 +182,7 @@
 	
 	if (foundUsers && [foundUsers count] > 0) {
 		SLVLog(@"%@Retrieved %lu users with email %@", SLV_WARNING, (unsigned long)[foundUsers count], email);
-		return @"email_taken_error";
+		return @"error_email_taken";
 	}
 	
 	return nil;
@@ -206,7 +208,7 @@
 	if (password && ![password isEqualToString:@""]) {
 		return nil;
 	} else {
-		return @"password_empty_error";
+		return @"error_password_empty";
 	}
 }
 
@@ -214,16 +216,34 @@
 	if ([password length] >= VALIDATION_PASSWORD_MIN_LENGTH && [password length] <= VALIDATION_PASSWORD_MAX_LENGTH) {
 		return nil;
 	} else {
-		return @"password_length_error";
+		return @"error_password_length";
 	}
 }
 
 + (NSString *)validateConditions:(BOOL)conditions {
 	if (!conditions) {
-		return @"accept_conditions_error";
+		return @"error_accept_conditions";
 	}
 	
 	return nil;
+}
+
++ (NSString *)formatPhoneNumber:(NSString *)phoneNumber withCountryCodeData:(SLVCountryCodeData *)countryCodeData {
+	NBPhoneNumberUtil *phoneUtil = [[NBPhoneNumberUtil alloc] init];
+	NSError *error = nil;
+	NBPhoneNumber *myNumber;
+	
+	if (countryCodeData) {
+		myNumber = [phoneUtil parse:phoneNumber defaultRegion:countryCodeData.ISOCode error:&error];
+	} else {
+		myNumber = [phoneUtil parse:phoneNumber defaultRegion:nil error:&error];
+	}
+	
+	if (error) {
+		return @"error_phone_number_format";
+	}
+	
+	return [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&error];
 }
 
 @end

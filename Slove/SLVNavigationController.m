@@ -159,9 +159,9 @@
 	
 	self.bottomNavigationBarView.backgroundColor = VERY_LIGHT_GRAY;
 	
-	[self.activityButton setTitle:@"activity_button" forState:UIControlStateNormal];
-	[self.sloveButton setTitle:@"slove_button" forState:UIControlStateNormal];
-	[self.profileButton setTitle:@"profile_button" forState:UIControlStateNormal];
+	[self.activityButton setTitle:@"button_activity" forState:UIControlStateNormal];
+	[self.sloveButton setTitle:@"button_slove" forState:UIControlStateNormal];
+	[self.profileButton setTitle:@"button_profile" forState:UIControlStateNormal];
 	
 	[self.activityButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
 	[self.sloveButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];

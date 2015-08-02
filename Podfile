@@ -8,6 +8,7 @@ target 'Slove' do
 #	pod 'FBSDKCoreKit'
 	pod 'Parse', '~> 1.7'
 	pod 'ParseFacebookUtilsV4', '~> 1.7'
+	pod 'libPhoneNumber-iOS', '~> 0.8'
 end
 
 target 'SloveTests' do

@@ -72,6 +72,15 @@
 #define DEFAULT_FONT_LIGHT	@"Nunito-Light"
 #define DEFAULT_FONT_SIZE	17
 
+// Animation
+#define SHORT_ANIMATION_DURATION        0.2
+#define ANIMATION_DURATION              0.75
+#define LONG_ANIMATION_DURATION         1
+#define VERY_LONG_ANIMATION_DURATION    2
+
+// Connection View
+#define CONNECTION_VIEW_SOUND	@"Congratsbuild2.wav"
+
 // Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2
 #define VALIDATION_USERNAME_MAX_LENGTH	16
@@ -82,8 +91,9 @@
 #define USERNAME_EMPTY_PREFIX			@"empty#"
 #define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
 
-// Phone Number
+// PFCloud
 #define PHONENUMBER_SEND_FUNCTION		@"sendPhoneCode"
 #define PHONENUMBER_CONFIRM_FUNCTION	@"confirmPhoneCode"
+#define SYNCHRONIZE_CONTACTS_FUNCTION	@"getRegisteredContacts"
 
 #endif

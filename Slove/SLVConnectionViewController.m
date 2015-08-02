@@ -48,6 +48,8 @@
 	[super viewWillAppear:animated];
 	
 	ApplicationDelegate.currentNavigationController.navigationBarHidden = YES;
+	
+	[self animateLogoEntrance];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -273,6 +275,29 @@
 	
 	NSString *usernamePrefix = [username substringToIndex:[USERNAME_EMPTY_PREFIX length]];
 	return ([usernamePrefix isEqualToString:USERNAME_EMPTY_PREFIX]);
+}
+
+- (void)animateLogoEntrance {
+	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], CONNECTION_VIEW_SOUND];
+	NSURL *soundUrl = [NSURL fileURLWithPath:path];
+	
+	audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+	[audioPlayer play];
+	SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+	
+//	CGRect logoImageViewFrame = self.logoImageView.frame;
+//	CGPoint logoImageViewCenter = self.logoImageView.center;
+//	
+//	self.logoImageView.frame = CGRectMake(logoImageViewCenter.x, logoImageViewCenter.y, 1, 1);
+//	self.logoImageView.backgroundColor = GREEN;
+//	
+//	[UIView transitionWithView:self.logoImageView
+//					  duration:10
+//					   options:UIViewAnimationOptionCurveEaseIn
+//					animations:^{
+//						self.logoImageView.frame = logoImageViewFrame;
+//					}
+//					completion:nil];
 }
 
 - (void)animateImages {

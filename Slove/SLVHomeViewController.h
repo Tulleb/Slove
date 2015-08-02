@@ -11,11 +11,15 @@
 
 @interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate>
 
-@property (strong, nonatomic) IBOutlet UIButton *accessContactButton;
-@property (strong, nonatomic) IBOutlet UITableView *addressContactTableView;
-@property (strong, nonatomic) NSArray *addressBook;
+@property (strong, nonatomic) IBOutlet UISegmentedControl *filterSegmentedControl;
+@property (strong, nonatomic) IBOutlet UIButton *accessContactsButton;
+@property (strong, nonatomic) IBOutlet UITableView *contactTableView;
+@property (strong, nonatomic) NSArray *unsynchronizedContacts;
+@property (strong, nonatomic) NSArray *synchronizedContacts;
+@property (nonatomic) ABAddressBookRef addressBookRef;
 
 - (IBAction)disconnectAction:(id)sender;
 - (IBAction)accessContactAction:(id)sender;
+- (IBAction)filterChanged:(id)sender;
 
 @end

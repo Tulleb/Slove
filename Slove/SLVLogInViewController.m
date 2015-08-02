@@ -70,7 +70,7 @@
 			}
 		} else {
 			self.errorLabel.hidden = NO;
-			self.errorLabel.text = NSLocalizedString(@"login_doesnt_match", nil);
+			self.errorLabel.text = NSLocalizedString(@"error_login_doesnt_match", nil);
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}
