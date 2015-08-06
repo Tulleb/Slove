@@ -9,17 +9,29 @@
 #import "SLVViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 
+typedef enum  {
+	kFavoriteFilter,
+	kAddressBookFilter,
+	kFacebookFilter
+} FilterSegment;
+
 @interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UISegmentedControl *filterSegmentedControl;
 @property (strong, nonatomic) IBOutlet UIButton *accessContactsButton;
+@property (strong, nonatomic) IBOutlet UIButton *accessFriendsButton;
 @property (strong, nonatomic) IBOutlet UITableView *contactTableView;
-@property (strong, nonatomic) NSArray *unsynchronizedContacts;
-@property (strong, nonatomic) NSArray *synchronizedContacts;
+@property (strong, nonatomic) NSArray *favoriteContacts;
+@property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
+@property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
+@property (strong, nonatomic) NSArray *unsynchronizedFacebookContacts;
+@property (strong, nonatomic) NSArray *synchronizedFacebookContacts;
 @property (nonatomic) ABAddressBookRef addressBookRef;
+@property (nonatomic) FilterSegment currentFilter;
 
 - (IBAction)disconnectAction:(id)sender;
 - (IBAction)accessContactAction:(id)sender;
+- (IBAction)accessFriendsAction:(id)sender;
 - (IBAction)filterChanged:(id)sender;
 
 @end

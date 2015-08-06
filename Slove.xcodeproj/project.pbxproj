@@ -79,6 +79,7 @@
 		C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DAC1B61552F00CEBA25 /* SLVNetworking.m */; };
 		C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */; };
 		C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */; };
+		C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */; };
 		C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */; };
 		C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */; };
 		C4C927541B66CDA5000ABA7A /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927511B66CDA5000ABA7A /* Nunito-Bold.ttf */; };
@@ -203,6 +204,8 @@
 		C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TimeoutAFHTTPRequestSerializer.m; sourceTree = "<group>"; };
 		C4A48DB91B62C73B00CEBA25 /* SLVRoute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRoute.h; sourceTree = "<group>"; };
 		C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRoute.m; sourceTree = "<group>"; };
+		C4A870B31B72C721000A5510 /* SLVFacebookFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVFacebookFriend.h; sourceTree = "<group>"; };
+		C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVFacebookFriend.m; sourceTree = "<group>"; };
 		C4C9274A1B66ABC4000ABA7A /* SLVFacebookInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVFacebookInviteViewController.h; sourceTree = "<group>"; };
 		C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVFacebookInviteViewController.m; sourceTree = "<group>"; };
 		C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVFacebookInviteViewController.xib; sourceTree = "<group>"; };
@@ -453,6 +456,8 @@
 				C44DCC931B682086009BDAB2 /* SLVContact.m */,
 				C49FA8BD1B6D4193009288B9 /* SLVAddressBookContact.h */,
 				C49FA8BE1B6D4193009288B9 /* SLVAddressBookContact.m */,
+				C4A870B31B72C721000A5510 /* SLVFacebookFriend.h */,
+				C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */,
 			);
 			name = Contact;
 			sourceTree = "<group>";
@@ -736,6 +741,7 @@
 				C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */,
 				C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */,
 				C44225251B5BF5C900389210 /* SLVNavigationController.m in Sources */,
+				C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */,
 				C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */,
 				C442251D1B5BF12800389210 /* SLVTools.m in Sources */,
 				C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */,

@@ -377,12 +377,12 @@
 }
 
 - (void)loadDefaultCountryCodeData {
-	NSLocale *locale = [NSLocale currentLocale];
-	NSString *country = [locale displayNameForKey:NSLocaleCountryCode value:[locale localeIdentifier]];
-	
-	if (country) {
+	NSLocale *locale = [NSLocale autoupdatingCurrentLocale];
+	NSString *countryCode = [locale objectForKey:NSLocaleCountryCode];
+
+	if (countryCode) {
 		for (SLVCountryCodeData *countryCodeData in self.countryCodeDatas) {
-			if ([country isEqualToString:countryCodeData.country]) {
+			if ([countryCode isEqualToString:countryCodeData.ISOCode]) {
 				self.userCountryCodeData = countryCodeData;
 				
 				SLVLog(@"Default country code data found and set to '%@'", self.userCountryCodeData.country);
@@ -390,7 +390,7 @@
 		}
 		
 		if (!self.userCountryCodeData) {
-			SLVLog(@"%@No default country code data found for the country '%@'", SLV_WARNING, country);
+			SLVLog(@"%@No default country code data found for the country code '%@'", SLV_WARNING, countryCode);
 		}
 	} else {
 		SLVLog(@"%@No country value found on this device", SLV_WARNING);

@@ -152,7 +152,7 @@
 - (void)getPublicInformationsFromFacebook {
 	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
 
-	[params setObject:@"first_name,last_name,email" forKey:@"fields"];
+	[params setObject:@"first_name, last_name, email" forKey:@"fields"];
 
 	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
