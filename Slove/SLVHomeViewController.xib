@@ -11,6 +11,7 @@
                 <outlet property="accessFriendsButton" destination="a8T-Hh-1aR" id="OJJ-fi-Ajx"/>
                 <outlet property="contactTableView" destination="xJv-gE-cQk" id="VMm-5g-LfT"/>
                 <outlet property="filterSegmentedControl" destination="JsE-LJ-YJJ" id="COY-IU-hof"/>
+                <outlet property="loadingLabel" destination="Lx0-ET-2jz" id="xi0-9i-DtW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -86,6 +87,16 @@
                         <action selector="filterChanged:" destination="-1" eventType="valueChanged" id="d6e-lh-z2y"/>
                     </connections>
                 </segmentedControl>
+                <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label_loading" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Lx0-ET-2jz">
+                    <rect key="frame" x="250" y="256" width="101" height="21"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="101" id="Nei-RU-pjB"/>
+                        <constraint firstAttribute="height" constant="21" id="OJC-GB-HuL"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
@@ -93,6 +104,7 @@
                 <constraint firstItem="JsE-LJ-YJJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4lW-V3-mPr"/>
                 <constraint firstAttribute="centerY" secondItem="v7s-nI-aeS" secondAttribute="centerY" id="9fk-bB-72E"/>
                 <constraint firstAttribute="centerX" secondItem="v7s-nI-aeS" secondAttribute="centerX" id="BNH-Lh-OOK"/>
+                <constraint firstAttribute="centerX" secondItem="Lx0-ET-2jz" secondAttribute="centerX" id="Bsf-Hc-e4c"/>
                 <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
                 <constraint firstAttribute="centerX" secondItem="do4-zi-ITR" secondAttribute="centerX" id="KkS-7o-hic"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="JsE-LJ-YJJ" secondAttribute="bottom" id="NZM-Rs-By5"/>
@@ -101,6 +113,7 @@
                 <constraint firstAttribute="centerY" secondItem="do4-zi-ITR" secondAttribute="centerY" constant="-38" id="Z78-Vm-gZZ"/>
                 <constraint firstAttribute="centerY" secondItem="a8T-Hh-1aR" secondAttribute="centerY" constant="-76" id="cjf-sA-1jC"/>
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>
+                <constraint firstAttribute="centerY" secondItem="Lx0-ET-2jz" secondAttribute="centerY" constant="34" id="kHu-go-TGM"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pKZ-dy-vWM"/>
                 <constraint firstAttribute="centerX" secondItem="JsE-LJ-YJJ" secondAttribute="centerX" id="uJ1-ni-9xB"/>
                 <constraint firstAttribute="trailing" secondItem="JsE-LJ-YJJ" secondAttribute="trailing" id="zVi-Al-6Sv"/>

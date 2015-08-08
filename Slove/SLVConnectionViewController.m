@@ -49,7 +49,7 @@
 	
 	ApplicationDelegate.currentNavigationController.navigationBarHidden = YES;
 	
-	[self animateLogoEntrance];
+//	[self animateLogoEntrance];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

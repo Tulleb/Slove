@@ -18,6 +18,7 @@ typedef enum  {
 @interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate>
 
 @property (strong, nonatomic) IBOutlet UISegmentedControl *filterSegmentedControl;
+@property (strong, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (strong, nonatomic) IBOutlet UIButton *accessContactsButton;
 @property (strong, nonatomic) IBOutlet UIButton *accessFriendsButton;
 @property (strong, nonatomic) IBOutlet UITableView *contactTableView;
@@ -26,8 +27,11 @@ typedef enum  {
 @property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *unsynchronizedFacebookContacts;
 @property (strong, nonatomic) NSArray *synchronizedFacebookContacts;
+@property (nonatomic) BOOL readyToDownload;
+@property (nonatomic) BOOL pictureDownloaded;
 @property (nonatomic) ABAddressBookRef addressBookRef;
 @property (nonatomic) FilterSegment currentFilter;
+@property (nonatomic) int percentage;
 
 - (IBAction)disconnectAction:(id)sender;
 - (IBAction)accessContactAction:(id)sender;

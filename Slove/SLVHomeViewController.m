@@ -153,10 +153,7 @@
 
 - (void)friendsAccessGranted {
 	self.accessFriendsButton.hidden = YES;
-	
-	if (!self.unsynchronizedFacebookContacts) {
-		[self loadFriends];
-	}
+	[self loadFriends];
 }
 
 - (void)loadContacts {
@@ -257,25 +254,53 @@
 										  id result,
 										  NSError *error) {
 		if (result) {
-			NSMutableArray *friends = [[NSMutableArray alloc] init];
+			NSMutableArray *friends = [self.unsynchronizedFacebookContacts mutableCopy];
+			
+			if (!friends) {
+				friends = [[NSMutableArray alloc] init];
+			}
+			
 			NSArray *data = [result objectForKey:@"data"];
 			
 			for (NSDictionary *friendDic in data) {
+				NSString *taggableId = [friendDic objectForKey:@"id"];
 				NSString *name = [friendDic objectForKey:@"name"];
-				NSString *pictureString;
+				NSString *pictureURLString;
 				
 				NSDictionary *pictureDic = [friendDic objectForKey:@"picture"];
 				if (pictureDic) {
 					NSDictionary *pictureData = [pictureDic objectForKey:@"data"];
 					if (pictureData) {
-						pictureString = [pictureData objectForKey:@"url"];
+						pictureURLString = [pictureData objectForKey:@"url"];
 					}
 				}
 				
-				if (name) {
+				if (taggableId && name) {
 					SLVFacebookFriend *friend = [[SLVFacebookFriend alloc] init];
+					friend.taggableId = taggableId;
 					friend.fullName = name;
-					friend.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pictureString]]];
+					
+					for (SLVFacebookFriend *recordedFriend in friends) {
+						if ([friend.fullName isEqualToString:recordedFriend.fullName]) {
+							friend = recordedFriend;
+							[friends removeObject:friend];
+							
+							break;
+						}
+					}
+					
+					UIImage *previousPicture = [SLVTools loadImageWithName:friend.fullName];
+					if (!previousPicture) {
+						if (pictureURLString) {
+							if (![pictureURLString isEqualToString:friend.pictureURLString]) {
+								friend.pictureURLString = pictureURLString;
+								friend.pictureDownloaded = NO;
+							}
+						}
+					} else {
+						friend.picture = previousPicture;
+						friend.pictureDownloaded = YES;
+					}
 					
 					[friends addObject:friend];
 				}
@@ -284,12 +309,54 @@
 			self.unsynchronizedFacebookContacts = [friends sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
 				return [a.fullName caseInsensitiveCompare:b.fullName];
 			}];
+			
+			[self downloadPictures];
+			[self.contactTableView reloadData];
 		}
 		
 		if (error) {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		}
 	}];
+}
+
+- (void)downloadPictures {
+	BOOL downloadNeeded = NO;
+	
+	for (SLVFacebookFriend *friend in self.unsynchronizedFacebookContacts) {
+		if (!friend.pictureDownloaded) {
+			downloadNeeded = YES;
+			break;
+		}
+	}
+	
+	if (!downloadNeeded) {
+		return;
+	}
+	
+	self.loadingLabel.hidden = NO;
+	int previousPercentage = -1;
+	
+	for (SLVFacebookFriend *friend in self.unsynchronizedFacebookContacts) {
+		if (!friend.pictureDownloaded) {
+			int percentage = (int)((([self.unsynchronizedFacebookContacts indexOfObject:friend] + 1) / (float)([self.unsynchronizedFacebookContacts count])) * 100);
+			if ((percentage % 10 == 0) && (percentage != previousPercentage)) {
+				previousPercentage = percentage;
+				SLVLog(@"Loading contact... %d%%", percentage);
+			}
+			
+			self.loadingLabel.text = [NSString stringWithFormat:@"%@ %d%%", NSLocalizedString(@"label_loading", nil), percentage];
+			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
+			
+			UIImage *picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:friend.pictureURLString]]];
+			[SLVTools saveImage:picture withName:friend.fullName];
+			friend.picture = picture;
+			
+			friend.pictureDownloaded = YES;
+		}
+	}
+	
+	self.loadingLabel.hidden = YES;
 }
 
 - (void)loadSloveFriends {
@@ -379,6 +446,8 @@
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
 										[ParseErrorHandlingController handleParseError:error];
 									}
+									
+									[self.contactTableView reloadData];
 								}];
 }
 

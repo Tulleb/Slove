@@ -11,7 +11,7 @@
 @implementation SLVFacebookFriend
 
 - (NSString *)description {
-	return [[super description] stringByAppendingString:[NSString stringWithFormat:@"Facebook ID = %@\n", self.facebookId]];
+	return [[super description] stringByAppendingString:[NSString stringWithFormat:@"Facebook ID = %@\n Taggable ID = %@\n PictureURLString = %@\n PictureDownloaded = %d", self.facebookId, self.taggableId, self.pictureURLString, self.pictureDownloaded]];
 }
 
 @end

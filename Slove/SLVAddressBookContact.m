@@ -14,7 +14,7 @@
 	NSString *phoneNumbers = @"Phone numbers =\n";
 	
 	for (NSString *phoneNumber in self.phoneNumbers) {
-		phoneNumbers = [phoneNumbers stringByAppendingString:[NSString stringWithFormat:@"%@\n", phoneNumber]];
+		phoneNumbers = [phoneNumbers stringByAppendingString:[NSString stringWithFormat:@"PhoneNumber = %@\n", phoneNumber]];
 	}
 	
 	return [[super description] stringByAppendingString:phoneNumbers];

@@ -11,7 +11,7 @@
 @implementation SLVContact
 
 - (NSString *)description {
-	return [NSString stringWithFormat:@"%@:\nUsername = %@,\nFull name = %@,\nPhone number = %@\n", [self class], self.username, self.fullName, self.phoneNumber];
+	return [NSString stringWithFormat:@"%@:\nUsername = %@\nFull name = %@\nPhone number = %@\n", [self class], self.username, self.fullName, self.phoneNumber];
 }
 
 @end

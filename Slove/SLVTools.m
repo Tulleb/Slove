@@ -47,7 +47,7 @@
 	return [[NSString stringWithFormat:@"%f", CACurrentMediaTime()] MD5];
 }
 
-+ (NSString*)applicationDocumentsDirectory {
++ (NSString *)applicationDocumentsDirectory {
 	return [NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES) lastObject];
 }
 
@@ -59,6 +59,40 @@
 	NSError *error;
 	if (![fileManager removeItemAtPath:filePath error:&error]) {
 		SLVLog(@"[%@] Could not delete file %@", self.class, [error localizedDescription]);
+	}
+}
+
++ (void)saveImage:(UIImage *)image withName:(NSString *)name {
+	if (image && name && ![name isEqualToString:@""]) {
+		NSString *documentsDirectory = [SLVTools applicationDocumentsDirectory];
+		
+		NSError *error;
+		NSString *folder = [documentsDirectory stringByAppendingPathComponent:@"/cache"];
+		if (![[NSFileManager defaultManager] fileExistsAtPath:folder]) {
+			[[NSFileManager defaultManager] createDirectoryAtPath:folder withIntermediateDirectories:NO attributes:nil error:&error];
+			
+			if (error) {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+			}
+		}
+		
+		NSString *path = [folder stringByAppendingPathComponent:[NSString stringWithFormat:@"/%@", name]];
+		NSData *data = UIImagePNGRepresentation(image);
+		[data writeToFile:path atomically:YES];
+	} else {
+		SLVLog(@"%@Trying to save an empty image or an image without name", SLV_WARNING);
+	}
+}
+
++ (UIImage *)loadImageWithName:(NSString *)name {
+	if (name && ![name isEqualToString:@""]) {
+		NSString *documentsDirectory = [SLVTools applicationDocumentsDirectory];
+		NSString* path = [documentsDirectory stringByAppendingPathComponent:[NSString stringWithFormat:@"cache/%@", name]];
+		UIImage* image = [UIImage imageWithContentsOfFile:path];
+		return image;
+	} else {
+		SLVLog(@"%@Trying to load an image without name", SLV_WARNING);
+		return nil;
 	}
 }
 
