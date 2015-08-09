@@ -11,7 +11,6 @@
 @interface SLVFacebookFriend : SLVContact
 
 @property (nonatomic, strong) NSString *facebookId;
-@property (nonatomic, strong) NSString *taggableId;
 @property (nonatomic, strong) NSString *pictureURLString;
 @property (nonatomic) BOOL pictureDownloaded;
 

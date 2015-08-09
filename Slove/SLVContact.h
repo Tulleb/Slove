@@ -14,5 +14,6 @@
 @property (nonatomic, strong) NSString *fullName;
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) UIImage *picture;
+@property (nonatomic, strong) NSNumber *sloveCounter;
 
 @end

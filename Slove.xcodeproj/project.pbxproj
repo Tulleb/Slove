@@ -85,6 +85,8 @@
 		C4C927541B66CDA5000ABA7A /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927511B66CDA5000ABA7A /* Nunito-Bold.ttf */; };
 		C4C927551B66CDA5000ABA7A /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927521B66CDA5000ABA7A /* Nunito-Light.ttf */; };
 		C4C927561B66CDA5000ABA7A /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927531B66CDA5000ABA7A /* Nunito-Regular.ttf */; };
+		C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */; };
+		C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -212,6 +214,9 @@
 		C4C927511B66CDA5000ABA7A /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Bold.ttf"; path = "Assets/Font/Nunito/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		C4C927521B66CDA5000ABA7A /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Light.ttf"; path = "Assets/Font/Nunito/Nunito-Light.ttf"; sourceTree = "<group>"; };
 		C4C927531B66CDA5000ABA7A /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "Assets/Font/Nunito/Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		C4ED80471B7802A6005E84E4 /* SLVProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVProfileViewController.h; sourceTree = "<group>"; };
+		C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVProfileViewController.m; sourceTree = "<group>"; };
+		C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVProfileViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -310,6 +315,7 @@
 			isa = PBXGroup;
 			children = (
 				C442252C1B5BF6CD00389210 /* Connection */,
+				C4ED80461B780274005E84E4 /* Profile */,
 				C4A4DC761B6149290020BF3A /* Home */,
 				C44224F31B5BE7D600389210 /* Images.xcassets */,
 				C44224F51B5BE7D600389210 /* LaunchScreen.xib */,
@@ -541,6 +547,16 @@
 			name = Nunito;
 			sourceTree = "<group>";
 		};
+		C4ED80461B780274005E84E4 /* Profile */ = {
+			isa = PBXGroup;
+			children = (
+				C4ED80471B7802A6005E84E4 /* SLVProfileViewController.h */,
+				C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */,
+				C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */,
+			);
+			name = Profile;
+			sourceTree = "<group>";
+		};
 		C6B0BBE6B229A7F5CD217DA8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -637,6 +653,7 @@
 			files = (
 				C498E8661B652877002B0A4E /* anim_logo09@3x.png in Resources */,
 				C498E83C1B64F2C8002B0A4E /* SLVLogInViewController.xib in Resources */,
+				C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */,
 				C4C927551B66CDA5000ABA7A /* Nunito-Light.ttf in Resources */,
 				C458F70C1B6BD5DA0075B8EF /* Congratsbuild1.wav in Resources */,
 				C4665B1D1B67AD8000E63B5A /* slove_logo_600.png in Resources */,
@@ -756,6 +773,7 @@
 				C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */,
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
+				C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */,
 				C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */,
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,
 				C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */,

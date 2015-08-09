@@ -138,7 +138,7 @@
 - (void)getInformationsFromFacebook {
 	PFUser *user = [PFUser currentUser];
 	
-	if (![user objectForKey:@"email"] || ![user objectForKey:@"firstName"] || ![user objectForKey:@"lastName"]) {
+	if ([[user objectForKey:@"facebookId"] length] == 0 || [[user objectForKey:@"email"] length] == 0 || [[user objectForKey:@"firstName"] length] == 0 || [[user objectForKey:@"lastName"] length] == 0) {
 		SLVLog(@"Trying to get some account information from Facebook...");
 		[self getPublicInformationsFromFacebook];
 	}
@@ -165,8 +165,19 @@
 		if (result) {
 			PFUser *user = [PFUser currentUser];
 			
+			if ([result objectForKey:@"id"]) {
+				if ([[user objectForKey:@"facebookId"] length] == 0) {
+					user[@"facebookId"] = [result objectForKey:@"id"];
+					SLVLog(@"User's Facebook ID retrieved from Facebook");
+				} else {
+					SLVLog(@"User already has a Facebook ID recorded in Slove");
+				}
+			} else {
+				SLVLog(@"%@Can't access Facebook user's Facebook ID", SLV_WARNING);
+			}
+			
 			if ([result objectForKey:@"first_name"]) {
-				if (![user objectForKey:@"firstName"]) {
+				if ([[user objectForKey:@"firstName"] length] == 0) {
 					user[@"firstName"] = [result objectForKey:@"first_name"];
 					SLVLog(@"User's first name retrieved from Facebook");
 				} else {
@@ -177,7 +188,7 @@
 			}
 			
 			if ([result objectForKey:@"last_name"]) {
-				if (![user objectForKey:@"lastName"]) {
+				if ([[user objectForKey:@"lastName"] length] == 0) {
 					user[@"lastName"] = [result objectForKey:@"last_name"];
 					SLVLog(@"User's last name retrieved from Facebook");
 				} else {
@@ -188,7 +199,7 @@
 			}
 			
 			if ([result objectForKey:@"email"]) {
-				if (![user objectForKey:@"email"]) {
+				if ([[user objectForKey:@"email"] length] == 0) {
 					user[@"email"] = [result objectForKey:@"email"];
 					SLVLog(@"User's email retrieved from Facebook");
 				} else {
@@ -262,7 +273,9 @@
 }
 
 - (void)facebookProfileUpdated:(NSNotification *)notification {
-	[self getInformationsFromFacebook];
+	if ([PFUser currentUser]) {
+		[self getInformationsFromFacebook];
+	}
 }
 
 - (BOOL)usernameIsUndefined {

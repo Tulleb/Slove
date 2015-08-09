@@ -96,5 +96,6 @@
 #define PHONENUMBER_CONFIRM_FUNCTION	@"confirmPhoneCode"
 #define SYNCHRONIZE_CONTACTS_FUNCTION	@"getRegisteredContacts"
 #define SYNCHRONIZE_FRIENDS_FUNCTION	@"getRegisteredFriends"
+#define SEND_SLOVE_FUNCTION				@"sendSlove"
 
 #endif

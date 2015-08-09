@@ -25,8 +25,7 @@ typedef enum  {
 @property (strong, nonatomic) NSArray *favoriteContacts;
 @property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
-@property (strong, nonatomic) NSArray *unsynchronizedFacebookContacts;
-@property (strong, nonatomic) NSArray *synchronizedFacebookContacts;
+@property (strong, nonatomic) NSArray *facebookFriends;
 @property (nonatomic) BOOL readyToDownload;
 @property (nonatomic) BOOL pictureDownloaded;
 @property (nonatomic) ABAddressBookRef addressBookRef;
