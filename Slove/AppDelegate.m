@@ -39,6 +39,14 @@
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
 	
+	UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+													UIUserNotificationTypeBadge |
+													UIUserNotificationTypeSound);
+	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+																			 categories:nil];
+	[application registerUserNotificationSettings:settings];
+	[application registerForRemoteNotifications];
+	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
@@ -77,6 +85,22 @@
 														  openURL:url
 												sourceApplication:sourceApplication
 													   annotation:annotation];
+}
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken {
+	// Store the deviceToken in the current installation and save it to Parse.
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	[currentInstallation setDeviceTokenFromData:deviceToken];
+	currentInstallation.channels = @[@"global"];
+	[currentInstallation saveInBackground];
+	
+	SLVLog(@"Device registered for push notifications");
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+	[PFPush handlePush:userInfo];
+	
+	SLVLog(@"Received a push notification");
 }
 
 
