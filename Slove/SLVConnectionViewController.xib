@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
-        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVConnectionViewController">
@@ -34,7 +34,7 @@
                                 <constraint firstAttribute="height" constant="50" id="NpT-Gg-Ou9"/>
                                 <constraint firstAttribute="width" constant="200" id="rjh-hH-IKJ"/>
                             </constraints>
-                            <state key="normal" title="Sign up with email">
+                            <state key="normal" title="button_sign_up_email">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -54,12 +54,8 @@
                             </connections>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BsU-eu-MlJ">
-                            <rect key="frame" x="200" y="124" width="200" height="50"/>
-                            <constraints>
-                                <constraint firstAttribute="height" constant="50" id="6zt-vN-Hqv"/>
-                                <constraint firstAttribute="width" constant="200" id="Fea-Mo-rVM"/>
-                            </constraints>
-                            <state key="normal" title="I already have an account">
+                            <rect key="frame" x="198" y="124" width="205" height="50"/>
+                            <state key="normal" title="button_already_have_account">
                                 <color key="titleColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                 <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                             </state>
@@ -68,14 +64,14 @@
                             </connections>
                         </button>
                     </subviews>
-                    <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
+                    <color key="backgroundColor" red="0.93725490196078431" green="0.93725490196078431" blue="0.95686274509803926" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
-                        <constraint firstAttribute="bottom" secondItem="BsU-eu-MlJ" secondAttribute="bottom" constant="8" id="AIB-kC-adn"/>
+                        <constraint firstItem="BsU-eu-MlJ" firstAttribute="centerX" secondItem="5vX-GM-vt0" secondAttribute="centerX" id="6Bi-5l-BFN"/>
                         <constraint firstItem="52w-aG-mhA" firstAttribute="top" secondItem="nR9-ED-ZIj" secondAttribute="top" constant="8" id="D0L-oq-eBM"/>
-                        <constraint firstAttribute="centerX" secondItem="BsU-eu-MlJ" secondAttribute="centerX" id="IIW-X4-0Mt"/>
+                        <constraint firstItem="BsU-eu-MlJ" firstAttribute="top" secondItem="5vX-GM-vt0" secondAttribute="bottom" constant="8" symbolic="YES" id="EgC-ma-ksQ"/>
                         <constraint firstAttribute="centerX" secondItem="52w-aG-mhA" secondAttribute="centerX" id="Iyx-nz-vg7"/>
                         <constraint firstAttribute="centerX" secondItem="5vX-GM-vt0" secondAttribute="centerX" id="WC7-h6-YXr"/>
-                        <constraint firstItem="BsU-eu-MlJ" firstAttribute="top" secondItem="5vX-GM-vt0" secondAttribute="bottom" constant="8" id="hal-6B-XsR"/>
+                        <constraint firstItem="BsU-eu-MlJ" firstAttribute="bottom" secondItem="nR9-ED-ZIj" secondAttribute="bottomMargin" id="e0N-xO-uPD"/>
                         <constraint firstItem="5vX-GM-vt0" firstAttribute="top" secondItem="52w-aG-mhA" secondAttribute="bottom" constant="8" id="jnG-32-qJx"/>
                         <constraint firstAttribute="height" constant="182" id="uD0-7S-1bY"/>
                     </constraints>
@@ -86,13 +82,13 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zGt-yv-GwA">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="332"/>
                             <subviews>
-                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ciF-cz-sED">
+                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ciF-cz-sED">
                                     <rect key="frame" x="0.0" y="48" width="600" height="236"/>
                                     <constraints>
                                         <constraint firstAttribute="width" secondItem="ciF-cz-sED" secondAttribute="height" multiplier="150:59" id="Rwf-ec-RLL"/>
                                     </constraints>
                                 </imageView>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRp-0J-pQ2">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="title_slove" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QRp-0J-pQ2">
                                     <rect key="frame" x="8" y="282" width="584" height="50"/>
                                     <constraints>
                                         <constraint firstAttribute="width" constant="584" id="8Kr-nd-MnB"/>
@@ -117,19 +113,17 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="M6u-y9-qIV">
                             <rect key="frame" x="0.0" y="332" width="600" height="86"/>
                             <subviews>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYo-xw-fVx">
-                                    <rect key="frame" x="8" y="43.5" width="584" height="21"/>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="subtitle_slove_bottom" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qYo-xw-fVx">
+                                    <rect key="frame" x="8" y="44" width="584" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="EdY-Lb-mnY"/>
                                         <constraint firstAttribute="width" constant="584" id="n4u-ku-ef1"/>
                                     </constraints>
-                                    <string key="text">to share love with your friends
-</string>
                                     <fontDescription key="fontDescription" name="HelveticaNeue-Bold" family="Helvetica Neue" pointSize="17"/>
                                     <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="calibratedWhite"/>
                                     <nil key="highlightedColor"/>
                                 </label>
-                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Slove is the messaging app" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBe-D8-xQz">
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subtitle_slove_top" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBe-D8-xQz">
                                     <rect key="frame" x="8" y="22" width="584" height="21"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="21" id="Fik-js-PbJ"/>

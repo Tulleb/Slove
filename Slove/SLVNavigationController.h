@@ -10,13 +10,13 @@
 
 @interface SLVNavigationController : UINavigationController
 
-@property (strong, nonatomic) IBOutlet UIView *bottomNavigationBarView;
-@property (strong, nonatomic) IBOutlet UIButton *activityButton;
-@property (strong, nonatomic) IBOutlet UIButton *sloveButton;
-@property (strong, nonatomic) IBOutlet UIButton *profileButton;
+@property (strong, nonatomic) UIView *bottomNavigationBarView;
+@property (strong, nonatomic) UIButton *activityButton;
+@property (strong, nonatomic) UIButton *sloveButton;
+@property (strong, nonatomic) UIButton *profileButton;
 
-- (IBAction)activityAction:(id)sender;
-- (IBAction)sloveAction:(id)sender;
-- (IBAction)profileAction:(id)sender;
+- (void)activityAction:(id)sender;
+- (void)sloveAction:(id)sender;
+- (void)profileAction:(id)sender;
 
 @end

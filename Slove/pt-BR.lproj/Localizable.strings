@@ -1,0 +1,80 @@
+/*
+ Localizable.strings
+ Slove
+ 
+ Created by Guillaume Bellut on 30/07/2015.
+ Copyright (c) 2015 Tulleb's Corp. All rights reserved.
+ */
+
+// Misc
+"title_slove" = "Slove";
+"placeholder_username" = "Nome de Usuário";
+"placeholder_password" = "Senha";
+"button_confirm" = "validar";
+"button_access_contact" = "Exibir contatos";
+"button_activity" = "atividade";
+"button_slove" = "slove";
+"button_profile" = "perfil";
+"error_username_empty" = "Bem então? Esqueceu-se de dar o seu Nome de Usuário";
+"error_username_length" = "Seu apelido é demasiado longo ou muito curto (2 a 16 caracteres)";
+"error_username_characters" = "Somente letras e números agradar :)";
+"error_username_taken" = "Este nome de usuário já está tomado! Sniff ...";
+"error_email_empty" = "Esqueceu o endereço email!";
+"error_email_invalid" = "Você tem certeza que é um endereço e-mail?";
+"error_email_taken" = "O e-mail já está sendo usado!";
+"error_password_empty" = "Você não inseriu a senha";
+"error_password_length" = "Sua senha deve ter pelo menos 6 caracteres";
+"error_accept_conditions" = "Você deve aceitar os TOS para continuar";
+"error_missing_param" = "Faltando parâmetro na consulta";
+"error_param_is_not_an_array" = "Parâmetro não é bom";
+"ok" = "Tà";
+
+// Connection
+"title_connection" = "Conexão";
+"subtitle_slove_top" = "Slove is the messaging app";
+"subtitle_slove_bottom" = "to share love with people you care about";
+"button_sign_up_email" = "Registe-se com o e-mail";
+"button_already_have_account" = "Eu já tenho uma conta";
+
+// Register
+"title_register" = "Registrar";
+"placeholder_email" = "o email";
+"label_terms_of_service" = "Eu aceito os Termos de Serviço";
+"button_register" = "Registrar";
+
+// Log In
+"title_log_in" = "Entrar";
+"button_log_in" = "entrar";
+"button_password_forgot" = "Esqueci minha senha";
+
+
+// Username
+"title_username" = "Nome de utilizador";
+"label_your_username" = "Seu nome de usuário:";
+
+// Phone Number
+"title_phone_number" = "Número De Telefone";
+"label_your_phone_number" = "Seu número de telefone:";
+"error_phone_number_format" = "Formatos de número de telefone desconhecido";
+"error_phone_number_already_used" = "Este número de telefone tem-se já usado";
+"error_failed_to_send" = "Ooops!! A mensagen não pôde ser enviada";
+
+// Confirmation Code
+"title_confirmation_code" = "Código De Confirmação";
+"label_your_confirmation_number" = "O seu número de confirmação:";
+"error_codes_dont_match" = "Esta confirmação não coincide com o nosso recorde";
+
+// Home View
+"button_disconnect" = "sair";
+"button_access_contacts" = "acesso Contactos";
+"button_facebook_friends" = "seus Amigos";
+"section_slovers" = "Slovers";
+"section_invite_on_slove" = "Convida você ESLOV";
+"label_several_phone_numbers" = "Vários números de telefone";
+"label_loading" = "Carregando ...";
+"segment_favorite" = "favoritos";
+"segment_address_book" = "contatos telefônicos";
+"segment_facebook" = "amigos do Facebook";
+
+
+// Profile

@@ -34,6 +34,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Slove-libPhoneNumber-iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Slove.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -42,37 +47,42 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>087DD31950296FECE7D65D09</key>
+		<key>0741DE8EF7A4A430393F0B97</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>52A7C47DBAE27AAF0E87629C</key>
+		<key>13E2106C9A6943330BD6EBEC</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5DC2D4718141AC9083729D41</key>
+		<key>35A872EF3FC437774D1EA9C0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>811983D3F6082D0E41ED111C</key>
+		<key>48FD888D6E769B6834DD1309</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>97E6D421CF5B37E03E07402E</key>
+		<key>7BD6359FAD610A44F37555FE</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>A2553CAA29F246760EBAD3CB</key>
+		<key>933899397CB4352036CC2143</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>E9AF1F17E2D77878974427E4</key>
+		<key>9EC3B8AF2463D371AC695195</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>CE470CB04FB293CCCA6BB16B</key>
 		<dict>
 			<key>primary</key>
 			<true/>

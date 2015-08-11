@@ -7,6 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVPhoneNumberViewController">
             <connections>
+                <outlet property="countryPickerView" destination="AhZ-bm-Zqz" id="DMm-9c-YH1"/>
                 <outlet property="errorLabel" destination="rts-yN-PLL" id="2Gf-5m-JUh"/>
                 <outlet property="phoneNumberField" destination="I7X-fX-3OF" id="PgL-zT-UgI"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
@@ -17,10 +18,10 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your phone number" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSB-O0-DTD">
-                    <rect key="frame" x="90" y="270" width="200" height="21"/>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label_your_phone_number" textAlignment="right" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cSB-O0-DTD">
+                    <rect key="frame" x="89" y="270" width="203" height="21"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="200" id="t5P-38-Ylb"/>
+                        <constraint firstAttribute="width" constant="203" id="t5P-38-Ylb"/>
                         <constraint firstAttribute="height" constant="21" id="zpq-1W-Dpz"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -39,19 +40,6 @@
                         <outlet property="delegate" destination="-1" id="tOp-fr-BrH"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P29-Ed-qdu">
-                    <rect key="frame" x="272" y="304" width="56" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="klJ-cC-Mkv"/>
-                        <constraint firstAttribute="width" constant="56" id="r11-WD-57k"/>
-                    </constraints>
-                    <state key="normal" title="Confirm">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="confirmAction:" destination="-1" eventType="touchUpInside" id="Zeg-dg-JY1"/>
-                    </connections>
-                </button>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rts-yN-PLL">
                     <rect key="frame" x="171" y="237" width="259" height="21"/>
                     <constraints>
@@ -62,12 +50,38 @@
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="P29-Ed-qdu">
+                    <rect key="frame" x="248" y="304" width="104" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="klJ-cC-Mkv"/>
+                        <constraint firstAttribute="width" constant="104" id="r11-WD-57k"/>
+                    </constraints>
+                    <state key="normal" title="button_confirm">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="confirmAction:" destination="-1" eventType="touchUpInside" id="Zeg-dg-JY1"/>
+                    </connections>
+                </button>
+                <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AhZ-bm-Zqz">
+                    <rect key="frame" x="0.0" y="67" width="600" height="162"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="162" id="p7H-nu-7Ug"/>
+                    </constraints>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="I1I-b5-J2f"/>
+                        <outlet property="delegate" destination="-1" id="5eX-5g-aUW"/>
+                    </connections>
+                </pickerView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="I7X-fX-3OF" secondAttribute="centerX" constant="-111" id="08T-J7-L2Q"/>
                 <constraint firstAttribute="centerX" secondItem="P29-Ed-qdu" secondAttribute="centerX" id="H41-xm-a8b"/>
                 <constraint firstAttribute="centerY" secondItem="cSB-O0-DTD" secondAttribute="centerY" constant="19.5" id="L8d-gX-uKT"/>
+                <constraint firstAttribute="centerY" secondItem="AhZ-bm-Zqz" secondAttribute="centerY" constant="152" id="Ncp-3k-1i1"/>
+                <constraint firstItem="AhZ-bm-Zqz" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="aAE-OO-9MY"/>
+                <constraint firstAttribute="trailing" secondItem="AhZ-bm-Zqz" secondAttribute="trailing" id="eYi-r7-aVA"/>
                 <constraint firstAttribute="centerX" secondItem="rts-yN-PLL" secondAttribute="centerX" id="gw7-xz-LD8"/>
                 <constraint firstAttribute="centerY" secondItem="P29-Ed-qdu" secondAttribute="centerY" constant="-19" id="hl1-mr-fK0"/>
                 <constraint firstAttribute="centerX" secondItem="cSB-O0-DTD" secondAttribute="centerX" constant="110" id="qcL-cV-fwJ"/>

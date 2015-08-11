@@ -15,6 +15,8 @@
 + (NSString *)generateId;
 + (NSString*)applicationDocumentsDirectory;
 + (void)removeFile:(NSString *)fileName;
++ (void)saveImage:(UIImage *)image withName:(NSString *)name;
++ (UIImage *)loadImageWithName:(NSString *)name;
 + (NSString *)trimUsername:(NSString *)username;
 + (NSString *)validateUsername:(NSString *)username;
 + (NSString *)usernameIsFilled:(NSString *)username;
@@ -29,5 +31,6 @@
 + (NSString *)passwordIsFilled:(NSString *)password;
 + (NSString *)passwordSize:(NSString *)password;
 + (NSString *)validateConditions:(BOOL)conditions;
++ (NSString *)formatPhoneNumber:(NSString *)phoneNumber withCountryCodeData:(SLVCountryCodeData *)countryCodeData;
 
 @end

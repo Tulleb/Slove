@@ -16,7 +16,7 @@
 @implementation SLVRegisterViewController
 
 - (void)viewDidLoad {
-	self.appName = @"Register";
+	self.appName = @"register";
 	
     [super viewDidLoad];
 	
@@ -54,7 +54,7 @@
 	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}
@@ -62,7 +62,7 @@
 	answer = [SLVTools validateEmail:self.emailField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}
@@ -70,7 +70,7 @@
 	answer = [SLVTools validatePassword:self.passwordField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}
@@ -78,7 +78,7 @@
 	answer = [SLVTools validateConditions:conditionsAccepted];
 	if (answer) {
 		self.errorLabel.hidden = NO;
-		self.errorLabel.text = answer;
+		self.errorLabel.text = NSLocalizedString(answer, nil);
 		
 		return;
 	}

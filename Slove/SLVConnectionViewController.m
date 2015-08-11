@@ -21,7 +21,7 @@
 @implementation SLVConnectionViewController
 
 - (void)viewDidLoad {
-	self.appName = @"Connection";
+	self.appName = @"connection";
 	
 	[super viewDidLoad];
 	
@@ -48,6 +48,8 @@
 	[super viewWillAppear:animated];
 	
 	ApplicationDelegate.currentNavigationController.navigationBarHidden = YES;
+	
+//	[self animateLogoEntrance];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -136,7 +138,7 @@
 - (void)getInformationsFromFacebook {
 	PFUser *user = [PFUser currentUser];
 	
-	if (![user objectForKey:@"email"] || ![user objectForKey:@"firstName"] || ![user objectForKey:@"lastName"]) {
+	if ([[user objectForKey:@"facebookId"] length] == 0 || [[user objectForKey:@"email"] length] == 0 || [[user objectForKey:@"firstName"] length] == 0 || [[user objectForKey:@"lastName"] length] == 0) {
 		SLVLog(@"Trying to get some account information from Facebook...");
 		[self getPublicInformationsFromFacebook];
 	}
@@ -150,7 +152,7 @@
 - (void)getPublicInformationsFromFacebook {
 	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
 
-	[params setObject:@"first_name,last_name,email" forKey:@"fields"];
+	[params setObject:@"first_name, last_name, email" forKey:@"fields"];
 
 	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
@@ -163,8 +165,19 @@
 		if (result) {
 			PFUser *user = [PFUser currentUser];
 			
+			if ([result objectForKey:@"id"]) {
+				if ([[user objectForKey:@"facebookId"] length] == 0) {
+					user[@"facebookId"] = [result objectForKey:@"id"];
+					SLVLog(@"User's Facebook ID retrieved from Facebook");
+				} else {
+					SLVLog(@"User already has a Facebook ID recorded in Slove");
+				}
+			} else {
+				SLVLog(@"%@Can't access Facebook user's Facebook ID", SLV_WARNING);
+			}
+			
 			if ([result objectForKey:@"first_name"]) {
-				if (![user objectForKey:@"firstName"]) {
+				if ([[user objectForKey:@"firstName"] length] == 0) {
 					user[@"firstName"] = [result objectForKey:@"first_name"];
 					SLVLog(@"User's first name retrieved from Facebook");
 				} else {
@@ -175,7 +188,7 @@
 			}
 			
 			if ([result objectForKey:@"last_name"]) {
-				if (![user objectForKey:@"lastName"]) {
+				if ([[user objectForKey:@"lastName"] length] == 0) {
 					user[@"lastName"] = [result objectForKey:@"last_name"];
 					SLVLog(@"User's last name retrieved from Facebook");
 				} else {
@@ -186,7 +199,7 @@
 			}
 			
 			if ([result objectForKey:@"email"]) {
-				if (![user objectForKey:@"email"]) {
+				if ([[user objectForKey:@"email"] length] == 0) {
 					user[@"email"] = [result objectForKey:@"email"];
 					SLVLog(@"User's email retrieved from Facebook");
 				} else {
@@ -260,7 +273,9 @@
 }
 
 - (void)facebookProfileUpdated:(NSNotification *)notification {
-	[self getInformationsFromFacebook];
+	if ([PFUser currentUser]) {
+		[self getInformationsFromFacebook];
+	}
 }
 
 - (BOOL)usernameIsUndefined {
@@ -273,6 +288,29 @@
 	
 	NSString *usernamePrefix = [username substringToIndex:[USERNAME_EMPTY_PREFIX length]];
 	return ([usernamePrefix isEqualToString:USERNAME_EMPTY_PREFIX]);
+}
+
+- (void)animateLogoEntrance {
+	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], CONNECTION_VIEW_SOUND];
+	NSURL *soundUrl = [NSURL fileURLWithPath:path];
+	
+	audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+	[audioPlayer play];
+	SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+	
+//	CGRect logoImageViewFrame = self.logoImageView.frame;
+//	CGPoint logoImageViewCenter = self.logoImageView.center;
+//	
+//	self.logoImageView.frame = CGRectMake(logoImageViewCenter.x, logoImageViewCenter.y, 1, 1);
+//	self.logoImageView.backgroundColor = GREEN;
+//	
+//	[UIView transitionWithView:self.logoImageView
+//					  duration:10
+//					   options:UIViewAnimationOptionCurveEaseIn
+//					animations:^{
+//						self.logoImageView.frame = logoImageViewFrame;
+//					}
+//					completion:nil];
 }
 
 - (void)animateImages {

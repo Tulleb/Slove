@@ -9,8 +9,11 @@
 #import "SLVViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <AVFoundation/AVFoundation.h>
 
-@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate>
+@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate> {
+	AVAudioPlayer *audioPlayer;
+}
 
 @property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
