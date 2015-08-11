@@ -23,25 +23,29 @@
 "error_email_invalid" = "Your email is invalid";
 "error_email_taken" = "This email already exists";
 "error_password_empty" = "Your password is empty";
-"error_password_length" = "Your password must contains between 6 and 64 characters";
+"error_password_length" = "Your password must contains at least 6 characters";
 "error_accept_conditions" = "You must accept our terms of service to continue";
+"error_missing_param" = "There is a missing parameter";
+"error_param_is_not_an_array" = "Invalid parameter";
+"ok" = "Ok";
 
 // Connection
 "title_connection" = "Connection";
 "subtitle_slove_top" = "Slove is the messaging app";
-"subtitle_slove_bottom" = "to share love with your friends";
+"subtitle_slove_bottom" = "to share love with people you care about";
 "button_sign_up_email" = "Sign up with email";
 "button_already_have_account" = "I already have an account";
 
 // Register
-"title_register" = "Register";
+"title_register" = "Sign in";
 "placeholder_email" = "Email";
 "label_terms_of_service" = "I agree to the terms of service";
-"button_register" = "Register";
+"button_register" = "Sign in";
 
 // Log In
 "title_log_in" = "Log In";
 "button_log_in" = "Log in";
+"button_password_forgot" = "I forgot my password";
 "error_login_doesnt_match" = "Login doesn't match with password";
 
 // Username
@@ -52,17 +56,26 @@
 "title_phone_number" = "Phone Number";
 "label_your_phone_number" = "Your phone number:";
 "error_phone_number_format" = "Unknown phone number format";
+"error_phone_number_already_used" = "This phone number has already been used";
+"error_failed_to_send" = "The text message couldn't be sent";
 
 // Confirmation Code
 "title_confirmation_code" = "Confirmation Code";
 "label_your_confirmation_number" = "Your confirmation number:";
+"error_codes_dont_match" = "This confirmation does not match our record";
 
 // Home View
-"button_disconnect" = "Disconnect";
+"button_disconnect" = "Log out";
 "button_access_contacts" = "Access Contacts";
-"section_slovers" = "Slovers in my address book";
+"button_facebook_friends" = "Your Friends";
+"section_slovers" = "Slovers";
 "section_invite_on_slove" = "Invite on Slove";
 "label_several_phone_numbers" = "Several phone numbers";
-"segment_favorite" = "Favorite";
+"label_loading" = "Loading…";
+"segment_favorite" = "Favorites";
 "segment_address_book" = "Phone contacts";
 "segment_facebook" = "Facebook friends";
+"error_no_user_found_for_supplied_numbers" = "No user found";
+
+// Profile
+"title_profile" = "Profile";

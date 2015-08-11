@@ -8,61 +8,74 @@
 
 // Misc
 "title_slove" = "Slove";
-"placeholder_username" = "Username";
-"placeholder_password" = "Password";
-"button_confirm" = "Confirm";
-"button_access_contact" = "Access Contact";
-"button_activity" = "Activity";
+"placeholder_username" = "Nom d'utilisateur";
+"placeholder_password" = "Mot de passe";
+"button_confirm" = "Valider";
+"button_access_contact" = "Accèder aux contacts";
+"button_activity" = "Activité";
 "button_slove" = "Slove";
 "button_profile" = "Profile";
-"error_username_empty" = "Your username is empty";
-"error_username_length" = "Your username must contains between 2 and 16 characters";
-"error_username_characters" = "Your username can only contains lower alphanumerical and _ characters";
-"error_username_taken" = "This username already exists";
-"error_email_empty" = "Your email is empty";
-"error_email_invalid" = "Your email is invalid";
-"error_email_taken" = "This email already exists";
-"error_password_empty" = "Your password is empty";
-"error_password_length" = "Your password must contains between 6 and 64 characters";
-"error_accept_conditions" = "You must accept our terms of service to continue";
+"error_username_empty" = "Bah alors ? Vous avez oublié de donner votre pseudo";
+"error_username_length" = "Votre pseudo est trop long ou trop court (entre 2 et 16 caractères)";
+"error_username_characters" = "Seulement des lettres et des nombres pour le pseudo svp :)";
+"error_username_taken" = "Ce pseudo est déjà pris ! Sniff…";
+"error_email_empty" = "Vous avez oublié l'email !";
+"error_email_invalid" = "Vous êtes sûr(e) que c'est une adresse email ?";
+"error_email_taken" = "Cet email est déjà utilisé ! ";
+"error_password_empty" = "Vous n'avez pas rentré de mot de passe";
+"error_password_length" = "Votre mot de passe doit contenir au moins 6 caractères";
+"error_accept_conditions" = "Vous devez accepter les CGU pour continuer";
+"error_missing_param" = "Paramètre manquant dans la requête";
+"error_param_is_not_an_array" = "Paramètre invalide";
+"ok" = "D'accord";
 
 // Connection
-"title_connection" = "Connection";
+"title_connection" = "Connexion";
 "subtitle_slove_top" = "Slove is the messaging app";
-"subtitle_slove_bottom" = "to share love with your friends";
-"button_sign_up_email" = "Sign up with email";
-"button_already_have_account" = "I already have an account";
+"subtitle_slove_bottom" = "to share love with people you care about";
+"button_sign_up_email" = "S'enregistrer avec un email";
+"button_already_have_account" = "J'ai déjà un compte";
 
 // Register
-"title_register" = "Register";
+"title_register" = "S'enregistrer";
 "placeholder_email" = "Email";
-"label_terms_of_service" = "I agree to the terms of service";
-"button_register" = "Register";
+"label_terms_of_service" = "J'accepte les CGU";
+"button_register" = "S'enregistrer";
 
 // Log In
-"title_log_in" = "Log In";
-"button_log_in" = "Log in";
-"error_login_doesnt_match" = "Login doesn't match with password";
+"title_log_in" = "Se connecter";
+"button_log_in" = "Se connecter";
+"button_password_forgot" = "J'ai oublié mon mot de passe";
+"error_login_doesnt_match" = "Login ou mot de passe invalide";
 
 // Username
-"title_username" = "Username";
-"label_your_username" = "Your username:";
+"title_username" = "nom d'utilisateur";
+"label_your_username" = "Votre nom d'utilisateur";
 
 // Phone Number
-"title_phone_number" = "Phone Number";
-"label_your_phone_number" = "Your phone number:";
-"error_phone_number_format" = "Unknown phone number format";
+"title_phone_number" = "Numéro de téléphone";
+"label_your_phone_number" = "Votre numéro de téléphone";
+"error_phone_number_format" = "Ce format de numéro est invalide";
+"error_phone_number_already_used" = "Ce numéro de téléphone a déjà été utilisé";
+"error_failed_to_send" = "Oups ! Le SMS n'a pu être envoyé";
 
 // Confirmation Code
-"title_confirmation_code" = "Confirmation Code";
-"label_your_confirmation_number" = "Your confirmation number:";
+"title_confirmation_code" = "Code de confirmation";
+"label_your_confirmation_number" = "Votre numéro de confirmation";
+"error_codes_dont_match" = "Le code de vérification ne correspond pas à celui envoyé. Réessayez";
 
 // Home View
-"button_disconnect" = "Disconnect";
-"button_access_contacts" = "Access Contacts";
-"section_slovers" = "Slovers in my address book";
-"section_invite_on_slove" = "Invite on Slove";
-"label_several_phone_numbers" = "Several phone numbers";
-"segment_favorite" = "Favorite";
-"segment_address_book" = "Phone contacts";
-"segment_facebook" = "Facebook friends";
+"button_disconnect" = "Se deconnecter";
+"button_access_contacts" = "Accéder aux contacts";
+"button_facebook_friends" = "Vos amis";
+"section_slovers" = "Slovers";
+"section_invite_on_slove" = "Inviter sur Slove";
+"label_several_phone_numbers" = "Plusieurs numéros";
+"label_loading" = "Chargement";
+"segment_favorite" = "Favoris";
+"segment_address_book" = "Contacts répertoire";
+"segment_facebook" = "Vos amis Facebook";
+"error_no_user_found_for_supplied_numbers" = "Aucun utilisateur trouvé ";
+
+// Profile
+"title_profile" = "Profil";
