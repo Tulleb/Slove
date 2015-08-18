@@ -58,6 +58,8 @@
 "error_phone_number_format" = "Ce format de numéro est invalide";
 "error_phone_number_already_used" = "Ce numéro de téléphone a déjà été utilisé";
 "error_failed_to_send" = "Oups ! Le SMS n'a pu être envoyé";
+"???" = "Le code ne corespond pas à celui envoyé";
+"[error certificate for this server]" = "Oups! Il semble que vous avez été déconnecté. Identifiez-vous de nouveau pour confirmer votre numéro de téléphone";
 
 // Confirmation Code
 "title_confirmation_code" = "Code de confirmation";
@@ -79,3 +81,6 @@
 
 // Profile
 "title_profile" = "Profil";
+
+// Sloved
+
