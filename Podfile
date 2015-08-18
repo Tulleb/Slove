@@ -9,6 +9,7 @@ target 'Slove' do
 	pod 'Parse', '~> 1.7'
 	pod 'ParseFacebookUtilsV4', '~> 1.7'
 	pod 'libPhoneNumber-iOS', '~> 0.8'
+	pod 'JSONModel'
 end
 
 target 'SloveTests' do

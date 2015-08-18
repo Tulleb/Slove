@@ -280,4 +280,8 @@
 	return [phoneUtil format:myNumber numberFormat:NBEPhoneNumberFormatE164 error:&error];
 }
 
++ (BOOL)checkConnection {
+	return NO;
+}
+
 @end

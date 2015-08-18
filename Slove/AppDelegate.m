@@ -12,6 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
+#import "SLVSlovedViewController.h"
 
 @interface AppDelegate ()
 
@@ -98,7 +99,20 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
-	[PFPush handlePush:userInfo];
+	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
+	if (sloverDic) {
+		NSError *error;
+		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
+		
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+		} else {
+			SLVSlovedViewController *presentedViewController = [[SLVSlovedViewController alloc] initWithContact:slover];
+			[self.currentNavigationController presentViewController:presentedViewController animated:YES completion:nil];
+		}
+	} else {
+		[PFPush handlePush:userInfo];
+	}
 	
 	SLVLog(@"Received a push notification");
 }
@@ -108,6 +122,10 @@
 
 - (void)userConnected {
 	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
+	
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+	currentInstallation.channels = @[@"global", [PFUser currentUser].username];
+	[currentInstallation saveInBackground];
 	
 	if (!self.userIsConnected) {
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];

@@ -27,11 +27,10 @@
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:45];
 	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 	
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
-			self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
-			
 			if ([FBSDKAccessToken currentAccessToken]) {
 				[self loggedWithFacebook];
 			} else if ([PFUser currentUser]) {
@@ -42,20 +41,24 @@
 			[ParseErrorHandlingController handleParseError:error];
 		}
 	}];
+	
+	if (![SLVTools checkConnection]) {
+		// TODO: exit app
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	ApplicationDelegate.currentNavigationController.navigationBarHidden = YES;
+	self.navigationController.navigationBarHidden = YES;
 	
 //	[self animateLogoEntrance];
 }
 
-- (void)viewWillDisappear:(BOOL)animated {
-	[super viewWillDisappear:animated];
+- (void)viewDidDisappear:(BOOL)animated {
+	[super viewDidDisappear:animated];
 	
-	ApplicationDelegate.currentNavigationController.navigationBarHidden = NO;
+	self.navigationController.navigationBarHidden = NO;
 }
 
 - (void)viewWillLayoutSubviews {

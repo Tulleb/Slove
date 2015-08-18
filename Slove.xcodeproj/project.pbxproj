@@ -22,53 +22,24 @@
 		C44DCC941B682086009BDAB2 /* SLVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC931B682086009BDAB2 /* SLVContact.m */; };
 		C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */; };
 		C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */; };
+		C44EB1A51B7D46CF001DC989 /* SLVSlovedViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C44EB1A31B7D46CF001DC989 /* SLVSlovedViewController.m */; };
+		C44EB1A61B7D46CF001DC989 /* SLVSlovedViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44EB1A41B7D46CF001DC989 /* SLVSlovedViewController.xib */; };
 		C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C458F6FE1B6A320E0075B8EF /* Localizable.strings */; };
-		C458F70B1B6BD5DA0075B8EF /* Congratsbuild2.wav in Resources */ = {isa = PBXBuildFile; fileRef = C458F7091B6BD5DA0075B8EF /* Congratsbuild2.wav */; };
-		C458F70C1B6BD5DA0075B8EF /* Congratsbuild1.wav in Resources */ = {isa = PBXBuildFile; fileRef = C458F70A1B6BD5DA0075B8EF /* Congratsbuild1.wav */; };
 		C458F70E1B6BD7B20075B8EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */; };
-		C4665B0E1B67AD7500E63B5A /* Default-480h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */; };
-		C4665B0F1B67AD7500E63B5A /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */; };
-		C4665B171B67AD8000E63B5A /* slove_logo_29@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */; };
-		C4665B181B67AD8000E63B5A /* slove_logo_29@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B111B67AD8000E63B5A /* slove_logo_29@3x.png */; };
-		C4665B191B67AD8000E63B5A /* slove_logo_40@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B121B67AD8000E63B5A /* slove_logo_40@2x.png */; };
-		C4665B1A1B67AD8000E63B5A /* slove_logo_40@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B131B67AD8000E63B5A /* slove_logo_40@3x.png */; };
-		C4665B1B1B67AD8000E63B5A /* slove_logo_60@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B141B67AD8000E63B5A /* slove_logo_60@2x.png */; };
-		C4665B1C1B67AD8000E63B5A /* slove_logo_60@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B151B67AD8000E63B5A /* slove_logo_60@3x.png */; };
-		C4665B1D1B67AD8000E63B5A /* slove_logo_600.png in Resources */ = {isa = PBXBuildFile; fileRef = C4665B161B67AD8000E63B5A /* slove_logo_600.png */; };
 		C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */; };
 		C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */; };
 		C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E8311B64F1FE002B0A4E /* ParseErrorHandlingController.m */; };
 		C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E8391B64F2C8002B0A4E /* SLVLogInViewController.m */; };
 		C498E83C1B64F2C8002B0A4E /* SLVLogInViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E83A1B64F2C8002B0A4E /* SLVLogInViewController.xib */; };
-		C498E8571B652877002B0A4E /* anim_logo23@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E83F1B652876002B0A4E /* anim_logo23@3x.png */; };
-		C498E8581B652877002B0A4E /* anim_logo19@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8401B652876002B0A4E /* anim_logo19@3x.png */; };
-		C498E8591B652877002B0A4E /* anim_logo20@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8411B652876002B0A4E /* anim_logo20@3x.png */; };
-		C498E85A1B652877002B0A4E /* anim_logo21@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8421B652876002B0A4E /* anim_logo21@3x.png */; };
-		C498E85B1B652877002B0A4E /* anim_logo22@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8431B652876002B0A4E /* anim_logo22@3x.png */; };
-		C498E85C1B652877002B0A4E /* anim_logo16@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8441B652876002B0A4E /* anim_logo16@3x.png */; };
-		C498E85D1B652877002B0A4E /* anim_logo17@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8451B652876002B0A4E /* anim_logo17@3x.png */; };
-		C498E85E1B652877002B0A4E /* anim_logo18@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8461B652876002B0A4E /* anim_logo18@3x.png */; };
-		C498E85F1B652877002B0A4E /* anim_logo12@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8471B652876002B0A4E /* anim_logo12@3x.png */; };
-		C498E8601B652877002B0A4E /* anim_logo13@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8481B652876002B0A4E /* anim_logo13@3x.png */; };
-		C498E8611B652877002B0A4E /* anim_logo14@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8491B652876002B0A4E /* anim_logo14@3x.png */; };
-		C498E8621B652877002B0A4E /* anim_logo15@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E84A1B652876002B0A4E /* anim_logo15@3x.png */; };
-		C498E8631B652877002B0A4E /* anim_logo10@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E84B1B652876002B0A4E /* anim_logo10@3x.png */; };
-		C498E8641B652877002B0A4E /* anim_logo11@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E84C1B652877002B0A4E /* anim_logo11@3x.png */; };
-		C498E8651B652877002B0A4E /* anim_logo08@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E84D1B652877002B0A4E /* anim_logo08@3x.png */; };
-		C498E8661B652877002B0A4E /* anim_logo09@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E84E1B652877002B0A4E /* anim_logo09@3x.png */; };
-		C498E8671B652877002B0A4E /* anim_logo06@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E84F1B652877002B0A4E /* anim_logo06@3x.png */; };
-		C498E8681B652877002B0A4E /* anim_logo07@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8501B652877002B0A4E /* anim_logo07@3x.png */; };
-		C498E8691B652877002B0A4E /* anim_logo03@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8511B652877002B0A4E /* anim_logo03@3x.png */; };
-		C498E86A1B652877002B0A4E /* anim_logo04@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8521B652877002B0A4E /* anim_logo04@3x.png */; };
-		C498E86B1B652877002B0A4E /* anim_logo05@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8531B652877002B0A4E /* anim_logo05@3x.png */; };
-		C498E86C1B652877002B0A4E /* anim_logo00@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8541B652877002B0A4E /* anim_logo00@3x.png */; };
-		C498E86D1B652877002B0A4E /* anim_logo01@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8551B652877002B0A4E /* anim_logo01@3x.png */; };
-		C498E86E1B652877002B0A4E /* anim_logo02@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C498E8561B652877002B0A4E /* anim_logo02@3x.png */; };
 		C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */; };
 		C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */; };
 		C49FA8BF1B6D4193009288B9 /* SLVAddressBookContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C49FA8BE1B6D4193009288B9 /* SLVAddressBookContact.m */; };
 		C49FA8C21B6EB1B6009288B9 /* SLVCountryCodeData.m in Sources */ = {isa = PBXBuildFile; fileRef = C49FA8C11B6EB1B6009288B9 /* SLVCountryCodeData.m */; };
 		C49FA8C41B6EB5A4009288B9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49FA8C31B6EB5A4009288B9 /* CoreTelephony.framework */; };
+		C4A2488B1B8110BC004B9D43 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = C4A2488A1B8110BC004B9D43 /* Assets */; };
+		C4A2488F1B81130A004B9D43 /* SLVInteractionPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A2488D1B81130A004B9D43 /* SLVInteractionPopupViewController.m */; };
+		C4A248901B81130A004B9D43 /* SLVInteractionPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A2488E1B81130A004B9D43 /* SLVInteractionPopupViewController.xib */; };
+		C4A248951B8117ED004B9D43 /* SLVPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A248931B8117ED004B9D43 /* SLVPopupViewController.m */; };
 		C4A48D9B1B6149EC00CEBA25 /* SLVHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */; };
 		C4A48D9C1B6149EC00CEBA25 /* SLVHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */; };
 		C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48D9E1B61505300CEBA25 /* SLVLogger.m */; };
@@ -82,9 +53,6 @@
 		C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */; };
 		C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */; };
 		C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */; };
-		C4C927541B66CDA5000ABA7A /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927511B66CDA5000ABA7A /* Nunito-Bold.ttf */; };
-		C4C927551B66CDA5000ABA7A /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927521B66CDA5000ABA7A /* Nunito-Light.ttf */; };
-		C4C927561B66CDA5000ABA7A /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C927531B66CDA5000ABA7A /* Nunito-Regular.ttf */; };
 		C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */; };
 		C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
@@ -132,23 +100,15 @@
 		C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVContactTableViewCell.h; sourceTree = "<group>"; };
 		C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVContactTableViewCell.m; sourceTree = "<group>"; };
 		C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVContactTableViewCell.xib; sourceTree = "<group>"; };
+		C44EB1A21B7D46CF001DC989 /* SLVSlovedViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVSlovedViewController.h; sourceTree = "<group>"; };
+		C44EB1A31B7D46CF001DC989 /* SLVSlovedViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVSlovedViewController.m; sourceTree = "<group>"; };
+		C44EB1A41B7D46CF001DC989 /* SLVSlovedViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVSlovedViewController.xib; sourceTree = "<group>"; };
 		C458F7031B6A32D40075B8EF /* Base */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = Base; path = Base.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C458F7041B6A62410075B8EF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C458F7051B6A62410075B8EF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C458F7061B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C458F7071B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
-		C458F7091B6BD5DA0075B8EF /* Congratsbuild2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Congratsbuild2.wav; path = Assets/Sound/Congratsbuild2.wav; sourceTree = "<group>"; };
-		C458F70A1B6BD5DA0075B8EF /* Congratsbuild1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Congratsbuild1.wav; path = Assets/Sound/Congratsbuild1.wav; sourceTree = "<group>"; };
 		C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-480h@2x.png"; path = "Assets/Launch Image/Default-480h@2x.png"; sourceTree = "<group>"; };
-		C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "Default-568h@2x.png"; path = "Assets/Launch Image/Default-568h@2x.png"; sourceTree = "<group>"; };
-		C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_29@2x.png"; path = "Assets/App Icon/slove_logo_29@2x.png"; sourceTree = "<group>"; };
-		C4665B111B67AD8000E63B5A /* slove_logo_29@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_29@3x.png"; path = "Assets/App Icon/slove_logo_29@3x.png"; sourceTree = "<group>"; };
-		C4665B121B67AD8000E63B5A /* slove_logo_40@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_40@2x.png"; path = "Assets/App Icon/slove_logo_40@2x.png"; sourceTree = "<group>"; };
-		C4665B131B67AD8000E63B5A /* slove_logo_40@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_40@3x.png"; path = "Assets/App Icon/slove_logo_40@3x.png"; sourceTree = "<group>"; };
-		C4665B141B67AD8000E63B5A /* slove_logo_60@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_60@2x.png"; path = "Assets/App Icon/slove_logo_60@2x.png"; sourceTree = "<group>"; };
-		C4665B151B67AD8000E63B5A /* slove_logo_60@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "slove_logo_60@3x.png"; path = "Assets/App Icon/slove_logo_60@3x.png"; sourceTree = "<group>"; };
-		C4665B161B67AD8000E63B5A /* slove_logo_600.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = slove_logo_600.png; path = "Assets/App Icon/slove_logo_600.png"; sourceTree = "<group>"; };
 		C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRegisterViewController.h; sourceTree = "<group>"; };
 		C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRegisterViewController.m; sourceTree = "<group>"; };
 		C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVRegisterViewController.xib; sourceTree = "<group>"; };
@@ -157,30 +117,6 @@
 		C498E8381B64F2C8002B0A4E /* SLVLogInViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVLogInViewController.h; sourceTree = "<group>"; };
 		C498E8391B64F2C8002B0A4E /* SLVLogInViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVLogInViewController.m; sourceTree = "<group>"; };
 		C498E83A1B64F2C8002B0A4E /* SLVLogInViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVLogInViewController.xib; sourceTree = "<group>"; };
-		C498E83F1B652876002B0A4E /* anim_logo23@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo23@3x.png"; path = "Assets/Logo/anim_logo23@3x.png"; sourceTree = "<group>"; };
-		C498E8401B652876002B0A4E /* anim_logo19@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo19@3x.png"; path = "Assets/Logo/anim_logo19@3x.png"; sourceTree = "<group>"; };
-		C498E8411B652876002B0A4E /* anim_logo20@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo20@3x.png"; path = "Assets/Logo/anim_logo20@3x.png"; sourceTree = "<group>"; };
-		C498E8421B652876002B0A4E /* anim_logo21@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo21@3x.png"; path = "Assets/Logo/anim_logo21@3x.png"; sourceTree = "<group>"; };
-		C498E8431B652876002B0A4E /* anim_logo22@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo22@3x.png"; path = "Assets/Logo/anim_logo22@3x.png"; sourceTree = "<group>"; };
-		C498E8441B652876002B0A4E /* anim_logo16@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo16@3x.png"; path = "Assets/Logo/anim_logo16@3x.png"; sourceTree = "<group>"; };
-		C498E8451B652876002B0A4E /* anim_logo17@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo17@3x.png"; path = "Assets/Logo/anim_logo17@3x.png"; sourceTree = "<group>"; };
-		C498E8461B652876002B0A4E /* anim_logo18@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo18@3x.png"; path = "Assets/Logo/anim_logo18@3x.png"; sourceTree = "<group>"; };
-		C498E8471B652876002B0A4E /* anim_logo12@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo12@3x.png"; path = "Assets/Logo/anim_logo12@3x.png"; sourceTree = "<group>"; };
-		C498E8481B652876002B0A4E /* anim_logo13@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo13@3x.png"; path = "Assets/Logo/anim_logo13@3x.png"; sourceTree = "<group>"; };
-		C498E8491B652876002B0A4E /* anim_logo14@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo14@3x.png"; path = "Assets/Logo/anim_logo14@3x.png"; sourceTree = "<group>"; };
-		C498E84A1B652876002B0A4E /* anim_logo15@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo15@3x.png"; path = "Assets/Logo/anim_logo15@3x.png"; sourceTree = "<group>"; };
-		C498E84B1B652876002B0A4E /* anim_logo10@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo10@3x.png"; path = "Assets/Logo/anim_logo10@3x.png"; sourceTree = "<group>"; };
-		C498E84C1B652877002B0A4E /* anim_logo11@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo11@3x.png"; path = "Assets/Logo/anim_logo11@3x.png"; sourceTree = "<group>"; };
-		C498E84D1B652877002B0A4E /* anim_logo08@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo08@3x.png"; path = "Assets/Logo/anim_logo08@3x.png"; sourceTree = "<group>"; };
-		C498E84E1B652877002B0A4E /* anim_logo09@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo09@3x.png"; path = "Assets/Logo/anim_logo09@3x.png"; sourceTree = "<group>"; };
-		C498E84F1B652877002B0A4E /* anim_logo06@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo06@3x.png"; path = "Assets/Logo/anim_logo06@3x.png"; sourceTree = "<group>"; };
-		C498E8501B652877002B0A4E /* anim_logo07@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo07@3x.png"; path = "Assets/Logo/anim_logo07@3x.png"; sourceTree = "<group>"; };
-		C498E8511B652877002B0A4E /* anim_logo03@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo03@3x.png"; path = "Assets/Logo/anim_logo03@3x.png"; sourceTree = "<group>"; };
-		C498E8521B652877002B0A4E /* anim_logo04@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo04@3x.png"; path = "Assets/Logo/anim_logo04@3x.png"; sourceTree = "<group>"; };
-		C498E8531B652877002B0A4E /* anim_logo05@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo05@3x.png"; path = "Assets/Logo/anim_logo05@3x.png"; sourceTree = "<group>"; };
-		C498E8541B652877002B0A4E /* anim_logo00@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo00@3x.png"; path = "Assets/Logo/anim_logo00@3x.png"; sourceTree = "<group>"; };
-		C498E8551B652877002B0A4E /* anim_logo01@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo01@3x.png"; path = "Assets/Logo/anim_logo01@3x.png"; sourceTree = "<group>"; };
-		C498E8561B652877002B0A4E /* anim_logo02@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "anim_logo02@3x.png"; path = "Assets/Logo/anim_logo02@3x.png"; sourceTree = "<group>"; };
 		C49A82341B639DF60061BA1B /* SLVUsernameViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVUsernameViewController.h; sourceTree = "<group>"; };
 		C49A82351B639DF60061BA1B /* SLVUsernameViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVUsernameViewController.m; sourceTree = "<group>"; };
 		C49A82361B639DF60061BA1B /* SLVUsernameViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVUsernameViewController.xib; sourceTree = "<group>"; };
@@ -189,6 +125,12 @@
 		C49FA8C01B6EB1B6009288B9 /* SLVCountryCodeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVCountryCodeData.h; sourceTree = "<group>"; };
 		C49FA8C11B6EB1B6009288B9 /* SLVCountryCodeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVCountryCodeData.m; sourceTree = "<group>"; };
 		C49FA8C31B6EB5A4009288B9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		C4A2488A1B8110BC004B9D43 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
+		C4A2488C1B81130A004B9D43 /* SLVInteractionPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVInteractionPopupViewController.h; sourceTree = "<group>"; };
+		C4A2488D1B81130A004B9D43 /* SLVInteractionPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVInteractionPopupViewController.m; sourceTree = "<group>"; };
+		C4A2488E1B81130A004B9D43 /* SLVInteractionPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVInteractionPopupViewController.xib; sourceTree = "<group>"; };
+		C4A248921B8117ED004B9D43 /* SLVPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVPopupViewController.h; sourceTree = "<group>"; };
+		C4A248931B8117ED004B9D43 /* SLVPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVPopupViewController.m; sourceTree = "<group>"; };
 		C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVHomeViewController.h; sourceTree = "<group>"; };
 		C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVHomeViewController.m; sourceTree = "<group>"; };
 		C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVHomeViewController.xib; sourceTree = "<group>"; };
@@ -211,9 +153,6 @@
 		C4C9274A1B66ABC4000ABA7A /* SLVFacebookInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVFacebookInviteViewController.h; sourceTree = "<group>"; };
 		C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVFacebookInviteViewController.m; sourceTree = "<group>"; };
 		C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVFacebookInviteViewController.xib; sourceTree = "<group>"; };
-		C4C927511B66CDA5000ABA7A /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Bold.ttf"; path = "Assets/Font/Nunito/Nunito-Bold.ttf"; sourceTree = "<group>"; };
-		C4C927521B66CDA5000ABA7A /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Light.ttf"; path = "Assets/Font/Nunito/Nunito-Light.ttf"; sourceTree = "<group>"; };
-		C4C927531B66CDA5000ABA7A /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "Assets/Font/Nunito/Nunito-Regular.ttf"; sourceTree = "<group>"; };
 		C4ED80471B7802A6005E84E4 /* SLVProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVProfileViewController.h; sourceTree = "<group>"; };
 		C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVProfileViewController.m; sourceTree = "<group>"; };
 		C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVProfileViewController.xib; sourceTree = "<group>"; };
@@ -273,7 +212,7 @@
 		C44224E51B5BE7D600389210 /* Slove */ = {
 			isa = PBXGroup;
 			children = (
-				C498E83D1B652817002B0A4E /* Assets */,
+				C4A2488A1B8110BC004B9D43 /* Assets */,
 				C442251E1B5BF1AE00389210 /* Category */,
 				C44225191B5BF03F00389210 /* Controller */,
 				C44225151B5BEEBB00389210 /* Model */,
@@ -315,8 +254,8 @@
 			isa = PBXGroup;
 			children = (
 				C442252C1B5BF6CD00389210 /* Connection */,
-				C4ED80461B780274005E84E4 /* Profile */,
 				C4A4DC761B6149290020BF3A /* Home */,
+				C4A248911B81178D004B9D43 /* Popup */,
 				C44224F31B5BE7D600389210 /* Images.xcassets */,
 				C44224F51B5BE7D600389210 /* LaunchScreen.xib */,
 			);
@@ -380,79 +319,14 @@
 			name = Connection;
 			sourceTree = "<group>";
 		};
-		C458F7081B6BD5A30075B8EF /* Sound */ = {
+		C44EB19E1B7D468F001DC989 /* Sloved */ = {
 			isa = PBXGroup;
 			children = (
-				C458F7091B6BD5DA0075B8EF /* Congratsbuild2.wav */,
-				C458F70A1B6BD5DA0075B8EF /* Congratsbuild1.wav */,
+				C44EB1A21B7D46CF001DC989 /* SLVSlovedViewController.h */,
+				C44EB1A31B7D46CF001DC989 /* SLVSlovedViewController.m */,
+				C44EB1A41B7D46CF001DC989 /* SLVSlovedViewController.xib */,
 			);
-			name = Sound;
-			sourceTree = "<group>";
-		};
-		C4665B0A1B67AD5B00E63B5A /* Launch Image */ = {
-			isa = PBXGroup;
-			children = (
-				C4665B0C1B67AD7500E63B5A /* Default-480h@2x.png */,
-				C4665B0D1B67AD7500E63B5A /* Default-568h@2x.png */,
-			);
-			name = "Launch Image";
-			sourceTree = "<group>";
-		};
-		C4665B0B1B67AD6200E63B5A /* App Icon */ = {
-			isa = PBXGroup;
-			children = (
-				C4665B101B67AD8000E63B5A /* slove_logo_29@2x.png */,
-				C4665B111B67AD8000E63B5A /* slove_logo_29@3x.png */,
-				C4665B121B67AD8000E63B5A /* slove_logo_40@2x.png */,
-				C4665B131B67AD8000E63B5A /* slove_logo_40@3x.png */,
-				C4665B141B67AD8000E63B5A /* slove_logo_60@2x.png */,
-				C4665B151B67AD8000E63B5A /* slove_logo_60@3x.png */,
-				C4665B161B67AD8000E63B5A /* slove_logo_600.png */,
-			);
-			name = "App Icon";
-			sourceTree = "<group>";
-		};
-		C498E83D1B652817002B0A4E /* Assets */ = {
-			isa = PBXGroup;
-			children = (
-				C4665B0B1B67AD6200E63B5A /* App Icon */,
-				C4C9274F1B66CD95000ABA7A /* Font */,
-				C4665B0A1B67AD5B00E63B5A /* Launch Image */,
-				C498E83E1B652863002B0A4E /* Logo */,
-				C458F7081B6BD5A30075B8EF /* Sound */,
-			);
-			name = Assets;
-			sourceTree = "<group>";
-		};
-		C498E83E1B652863002B0A4E /* Logo */ = {
-			isa = PBXGroup;
-			children = (
-				C498E83F1B652876002B0A4E /* anim_logo23@3x.png */,
-				C498E8401B652876002B0A4E /* anim_logo19@3x.png */,
-				C498E8411B652876002B0A4E /* anim_logo20@3x.png */,
-				C498E8421B652876002B0A4E /* anim_logo21@3x.png */,
-				C498E8431B652876002B0A4E /* anim_logo22@3x.png */,
-				C498E8441B652876002B0A4E /* anim_logo16@3x.png */,
-				C498E8451B652876002B0A4E /* anim_logo17@3x.png */,
-				C498E8461B652876002B0A4E /* anim_logo18@3x.png */,
-				C498E8471B652876002B0A4E /* anim_logo12@3x.png */,
-				C498E8481B652876002B0A4E /* anim_logo13@3x.png */,
-				C498E8491B652876002B0A4E /* anim_logo14@3x.png */,
-				C498E84A1B652876002B0A4E /* anim_logo15@3x.png */,
-				C498E84B1B652876002B0A4E /* anim_logo10@3x.png */,
-				C498E84C1B652877002B0A4E /* anim_logo11@3x.png */,
-				C498E84D1B652877002B0A4E /* anim_logo08@3x.png */,
-				C498E84E1B652877002B0A4E /* anim_logo09@3x.png */,
-				C498E84F1B652877002B0A4E /* anim_logo06@3x.png */,
-				C498E8501B652877002B0A4E /* anim_logo07@3x.png */,
-				C498E8511B652877002B0A4E /* anim_logo03@3x.png */,
-				C498E8521B652877002B0A4E /* anim_logo04@3x.png */,
-				C498E8531B652877002B0A4E /* anim_logo05@3x.png */,
-				C498E8541B652877002B0A4E /* anim_logo00@3x.png */,
-				C498E8551B652877002B0A4E /* anim_logo01@3x.png */,
-				C498E8561B652877002B0A4E /* anim_logo02@3x.png */,
-			);
-			name = Logo;
+			name = Sloved;
 			sourceTree = "<group>";
 		};
 		C49FA8B91B6D1B33009288B9 /* Contact */ = {
@@ -466,6 +340,17 @@
 				C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */,
 			);
 			name = Contact;
+			sourceTree = "<group>";
+		};
+		C4A248911B81178D004B9D43 /* Popup */ = {
+			isa = PBXGroup;
+			children = (
+				C44EB19E1B7D468F001DC989 /* Sloved */,
+				C4A2488C1B81130A004B9D43 /* SLVInteractionPopupViewController.h */,
+				C4A2488D1B81130A004B9D43 /* SLVInteractionPopupViewController.m */,
+				C4A2488E1B81130A004B9D43 /* SLVInteractionPopupViewController.xib */,
+			);
+			name = Popup;
 			sourceTree = "<group>";
 		};
 		C4A48DAA1B61531E00CEBA25 /* Phone */ = {
@@ -502,6 +387,8 @@
 				C44225291B5BF5DB00389210 /* SLVViewController.xib */,
 				C498E8301B64F1FE002B0A4E /* ParseErrorHandlingController.h */,
 				C498E8311B64F1FE002B0A4E /* ParseErrorHandlingController.m */,
+				C4A248921B8117ED004B9D43 /* SLVPopupViewController.h */,
+				C4A248931B8117ED004B9D43 /* SLVPopupViewController.m */,
 			);
 			name = Template;
 			sourceTree = "<group>";
@@ -509,6 +396,7 @@
 		C4A4DC761B6149290020BF3A /* Home */ = {
 			isa = PBXGroup;
 			children = (
+				C4ED80461B780274005E84E4 /* Profile */,
 				C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */,
 				C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */,
 				C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */,
@@ -527,24 +415,6 @@
 				C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */,
 			);
 			name = Invite;
-			sourceTree = "<group>";
-		};
-		C4C9274F1B66CD95000ABA7A /* Font */ = {
-			isa = PBXGroup;
-			children = (
-				C4C927501B66CD98000ABA7A /* Nunito */,
-			);
-			name = Font;
-			sourceTree = "<group>";
-		};
-		C4C927501B66CD98000ABA7A /* Nunito */ = {
-			isa = PBXGroup;
-			children = (
-				C4C927511B66CDA5000ABA7A /* Nunito-Bold.ttf */,
-				C4C927521B66CDA5000ABA7A /* Nunito-Light.ttf */,
-				C4C927531B66CDA5000ABA7A /* Nunito-Regular.ttf */,
-			);
-			name = Nunito;
 			sourceTree = "<group>";
 		};
 		C4ED80461B780274005E84E4 /* Profile */ = {
@@ -651,57 +521,22 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C498E8661B652877002B0A4E /* anim_logo09@3x.png in Resources */,
 				C498E83C1B64F2C8002B0A4E /* SLVLogInViewController.xib in Resources */,
 				C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */,
-				C4C927551B66CDA5000ABA7A /* Nunito-Light.ttf in Resources */,
-				C458F70C1B6BD5DA0075B8EF /* Congratsbuild1.wav in Resources */,
-				C4665B1D1B67AD8000E63B5A /* slove_logo_600.png in Resources */,
+				C44EB1A61B7D46CF001DC989 /* SLVSlovedViewController.xib in Resources */,
 				C44224F71B5BE7D600389210 /* LaunchScreen.xib in Resources */,
-				C4665B1C1B67AD8000E63B5A /* slove_logo_60@3x.png in Resources */,
-				C4665B171B67AD8000E63B5A /* slove_logo_29@2x.png in Resources */,
-				C498E8611B652877002B0A4E /* anim_logo14@3x.png in Resources */,
-				C498E8571B652877002B0A4E /* anim_logo23@3x.png in Resources */,
 				C4A48DA41B61519000CEBA25 /* SLVPhoneNumberViewController.xib in Resources */,
 				C44224F41B5BE7D600389210 /* Images.xcassets in Resources */,
-				C498E8631B652877002B0A4E /* anim_logo10@3x.png in Resources */,
-				C498E8651B652877002B0A4E /* anim_logo08@3x.png in Resources */,
 				C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */,
-				C498E86B1B652877002B0A4E /* anim_logo05@3x.png in Resources */,
-				C458F70B1B6BD5DA0075B8EF /* Congratsbuild2.wav in Resources */,
-				C498E85C1B652877002B0A4E /* anim_logo16@3x.png in Resources */,
+				C4A248901B81130A004B9D43 /* SLVInteractionPopupViewController.xib in Resources */,
 				C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */,
-				C498E8591B652877002B0A4E /* anim_logo20@3x.png in Resources */,
-				C498E85A1B652877002B0A4E /* anim_logo21@3x.png in Resources */,
-				C498E85B1B652877002B0A4E /* anim_logo22@3x.png in Resources */,
-				C498E8671B652877002B0A4E /* anim_logo06@3x.png in Resources */,
-				C498E8601B652877002B0A4E /* anim_logo13@3x.png in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
-				C498E8621B652877002B0A4E /* anim_logo15@3x.png in Resources */,
-				C498E8691B652877002B0A4E /* anim_logo03@3x.png in Resources */,
-				C4C927541B66CDA5000ABA7A /* Nunito-Bold.ttf in Resources */,
-				C498E86D1B652877002B0A4E /* anim_logo01@3x.png in Resources */,
-				C4665B0F1B67AD7500E63B5A /* Default-568h@2x.png in Resources */,
+				C4A2488B1B8110BC004B9D43 /* Assets in Resources */,
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
-				C498E8641B652877002B0A4E /* anim_logo11@3x.png in Resources */,
-				C4665B1B1B67AD8000E63B5A /* slove_logo_60@2x.png in Resources */,
-				C4665B191B67AD8000E63B5A /* slove_logo_40@2x.png in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
-				C498E86C1B652877002B0A4E /* anim_logo00@3x.png in Resources */,
 				C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */,
-				C498E8681B652877002B0A4E /* anim_logo07@3x.png in Resources */,
-				C4665B0E1B67AD7500E63B5A /* Default-480h@2x.png in Resources */,
-				C498E85E1B652877002B0A4E /* anim_logo18@3x.png in Resources */,
 				C4A48DA91B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib in Resources */,
-				C498E85F1B652877002B0A4E /* anim_logo12@3x.png in Resources */,
-				C4665B1A1B67AD8000E63B5A /* slove_logo_40@3x.png in Resources */,
-				C4665B181B67AD8000E63B5A /* slove_logo_29@3x.png in Resources */,
-				C498E86A1B652877002B0A4E /* anim_logo04@3x.png in Resources */,
-				C498E86E1B652877002B0A4E /* anim_logo02@3x.png in Resources */,
 				C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */,
-				C498E85D1B652877002B0A4E /* anim_logo17@3x.png in Resources */,
-				C4C927561B66CDA5000ABA7A /* Nunito-Regular.ttf in Resources */,
-				C498E8581B652877002B0A4E /* anim_logo19@3x.png in Resources */,
 				C4A48D9C1B6149EC00CEBA25 /* SLVHomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -753,12 +588,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4A2488F1B81130A004B9D43 /* SLVInteractionPopupViewController.m in Sources */,
 				C4A48DA81B61531A00CEBA25 /* SLVConfirmationCodeViewController.m in Sources */,
 				C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */,
 				C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */,
 				C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */,
 				C44225251B5BF5C900389210 /* SLVNavigationController.m in Sources */,
 				C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */,
+				C4A248951B8117ED004B9D43 /* SLVPopupViewController.m in Sources */,
 				C4A48DAD1B61552F00CEBA25 /* SLVNetworking.m in Sources */,
 				C442251D1B5BF12800389210 /* SLVTools.m in Sources */,
 				C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */,
@@ -773,6 +610,7 @@
 				C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */,
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
+				C44EB1A51B7D46CF001DC989 /* SLVSlovedViewController.m in Sources */,
 				C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */,
 				C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */,
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,

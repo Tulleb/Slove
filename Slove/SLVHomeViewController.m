@@ -90,6 +90,7 @@
 
 - (IBAction)filterChanged:(id)sender {
 	self.contactTableView.hidden = NO;
+	[self.loadingIndicator startAnimating];
 	
 	if (sender == self.filterSegmentedControl) {
 		switch (self.filterSegmentedControl.selectedSegmentIndex) {
@@ -97,6 +98,8 @@
 				self.accessContactsButton.hidden = YES;
 				self.accessFriendsButton.hidden = YES;
 				
+				[self.loadingIndicator stopAnimating];
+				[self.contactTableView reloadData];
 				break;
 				
 			case kAddressBookFilter:
@@ -105,6 +108,7 @@
 				if ([self checkAddressBookAccessAuthorization]) {
 					[self contactsAccessGranted];
 				} else {
+					[self.loadingIndicator stopAnimating];
 					self.accessContactsButton.hidden = NO;
 					self.contactTableView.hidden = YES;
 				}
@@ -116,6 +120,7 @@
 				if ([self checkFacebookFriendsAuthorization]) {
 					[self friendsAccessGranted];
 				} else {
+					[self.loadingIndicator stopAnimating];
 					self.accessFriendsButton.hidden = NO;
 					self.contactTableView.hidden = YES;
 				}
@@ -124,8 +129,6 @@
 			default:
 				break;
 		}
-		
-		[self.contactTableView reloadData];
 	}
 }
 
@@ -149,12 +152,21 @@
 	if (!self.unsynchronizedAddressBookContacts) {
 		self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
 		[self loadContacts];
+	} else {
+		[self.loadingIndicator stopAnimating];
+		[self.contactTableView reloadData];
 	}
 }
 
 - (void)friendsAccessGranted {
 	self.accessFriendsButton.hidden = YES;
-	[self loadFriends];
+	
+	if (!self.facebookFriends) {
+		[self loadFriends];
+	} else {
+		[self.loadingIndicator stopAnimating];
+		[self.contactTableView reloadData];
+	}
 }
 
 - (void)loadContacts {
@@ -224,7 +236,11 @@
 				SLVAddressBookContact *cachedContact = [[SLVAddressBookContact alloc] init];
 				cachedContact.phoneNumbers = phoneNumbersString;
 				cachedContact.fullName = fullName;
-				cachedContact.picture = image;
+				if (image) {
+					cachedContact.picture = image;
+				} else {
+					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar_thumb"];
+				}
 				
 				[addressBookBuffer addObject:cachedContact];
 			}
@@ -294,6 +310,9 @@
 							if (![pictureURLString isEqualToString:friend.pictureURLString]) {
 								friend.pictureDownloaded = NO;
 							}
+						} else {
+							friend.picture = [UIImage imageNamed:@"default_avatar.png"];
+							friend.pictureDownloaded = YES;
 						}
 					} else {
 						friend.picture = previousPicture;
@@ -310,8 +329,6 @@
 			
 			[self synchronizeFriends];
 			[self downloadPictures];
-			
-			[self.contactTableView reloadData];
 		}
 		
 		if (error) {
@@ -412,6 +429,7 @@
 											[ParseErrorHandlingController handleParseError:error];
 										}
 										
+										[self.loadingIndicator stopAnimating];
 										[self.contactTableView reloadData];
 									}];
 	}
@@ -470,6 +488,7 @@
 										[ParseErrorHandlingController handleParseError:error];
 									}
 									
+									[self.loadingIndicator stopAnimating];
 									[self.contactTableView reloadData];
 								}];
 }

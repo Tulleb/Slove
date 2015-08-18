@@ -22,6 +22,7 @@ typedef enum  {
 @property (strong, nonatomic) IBOutlet UIButton *accessContactsButton;
 @property (strong, nonatomic) IBOutlet UIButton *accessFriendsButton;
 @property (strong, nonatomic) IBOutlet UITableView *contactTableView;
+@property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (strong, nonatomic) NSArray *favoriteContacts;
 @property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;

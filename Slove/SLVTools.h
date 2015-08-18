@@ -32,5 +32,6 @@
 + (NSString *)passwordSize:(NSString *)password;
 + (NSString *)validateConditions:(BOOL)conditions;
 + (NSString *)formatPhoneNumber:(NSString *)phoneNumber withCountryCodeData:(SLVCountryCodeData *)countryCodeData;
++ (BOOL)checkConnection;
 
 @end

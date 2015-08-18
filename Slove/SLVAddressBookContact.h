@@ -10,6 +10,6 @@
 
 @interface SLVAddressBookContact : SLVContact
 
-@property (nonatomic, strong) NSArray *phoneNumbers;
+@property (nonatomic, strong) NSArray<Optional> *phoneNumbers;
 
 @end
