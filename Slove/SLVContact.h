@@ -7,13 +7,14 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "JSONModel.h"
 
-@interface SLVContact : NSObject
+@interface SLVContact : JSONModel
 
-@property (nonatomic, strong) NSString *phoneNumber;
-@property (nonatomic, strong) NSString *fullName;
+@property (nonatomic, strong) NSString<Optional> *phoneNumber;
+@property (nonatomic, strong) NSString<Optional> *fullName;
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) UIImage *picture;
-@property (nonatomic, strong) NSNumber *sloveCounter;
+@property (nonatomic, strong) UIImage<Optional> *picture;
+@property (nonatomic, strong) NSNumber<Optional> *sloveCounter;
 
 @end

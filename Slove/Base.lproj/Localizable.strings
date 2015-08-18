@@ -58,6 +58,8 @@
 "error_phone_number_format" = "Unknown phone number format";
 "error_phone_number_already_used" = "This phone number has already been used";
 "error_failed_to_send" = "The text message couldn't be sent";
+"???" = "This code does't match our record";
+"[error certificate for this server]" = "Oups! It looks like you got disconnected. Please login to confirm your phone number";
 
 // Confirmation Code
 "title_confirmation_code" = "Confirmation Code";
@@ -79,3 +81,7 @@
 
 // Profile
 "title_profile" = "Profile";
+
+// Sloved
+"label_new_slove_received" = "New Slove received";
+"label_from" = "from";

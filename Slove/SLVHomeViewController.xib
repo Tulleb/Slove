@@ -11,6 +11,7 @@
                 <outlet property="accessFriendsButton" destination="a8T-Hh-1aR" id="OJJ-fi-Ajx"/>
                 <outlet property="contactTableView" destination="xJv-gE-cQk" id="VMm-5g-LfT"/>
                 <outlet property="filterSegmentedControl" destination="JsE-LJ-YJJ" id="COY-IU-hof"/>
+                <outlet property="loadingIndicator" destination="Gsm-xj-cQx" id="K36-EC-fGC"/>
                 <outlet property="loadingLabel" destination="Lx0-ET-2jz" id="xi0-9i-DtW"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -97,12 +98,20 @@
                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <activityIndicatorView hidden="YES" opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="Gsm-xj-cQx">
+                    <rect key="frame" x="290" y="228" width="20" height="20"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="20" id="GOk-7T-Mkk"/>
+                        <constraint firstAttribute="height" constant="20" id="oYJ-v3-S2e"/>
+                    </constraints>
+                </activityIndicatorView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="JsE-LJ-YJJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3dC-TJ-KL8"/>
                 <constraint firstItem="JsE-LJ-YJJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4lW-V3-mPr"/>
                 <constraint firstAttribute="centerY" secondItem="v7s-nI-aeS" secondAttribute="centerY" id="9fk-bB-72E"/>
+                <constraint firstAttribute="centerY" secondItem="Gsm-xj-cQx" secondAttribute="centerY" constant="62" id="Apw-Vs-ZYf"/>
                 <constraint firstAttribute="centerX" secondItem="v7s-nI-aeS" secondAttribute="centerX" id="BNH-Lh-OOK"/>
                 <constraint firstAttribute="centerX" secondItem="Lx0-ET-2jz" secondAttribute="centerX" id="Bsf-Hc-e4c"/>
                 <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
@@ -115,6 +124,7 @@
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>
                 <constraint firstAttribute="centerY" secondItem="Lx0-ET-2jz" secondAttribute="centerY" constant="34" id="kHu-go-TGM"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pKZ-dy-vWM"/>
+                <constraint firstAttribute="centerX" secondItem="Gsm-xj-cQx" secondAttribute="centerX" id="qMP-YO-sJO"/>
                 <constraint firstAttribute="centerX" secondItem="JsE-LJ-YJJ" secondAttribute="centerX" id="uJ1-ni-9xB"/>
                 <constraint firstAttribute="trailing" secondItem="JsE-LJ-YJJ" secondAttribute="trailing" id="zVi-Al-6Sv"/>
             </constraints>

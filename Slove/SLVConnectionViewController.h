@@ -10,8 +10,9 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <AVFoundation/AVFoundation.h>
+#import "SLVInteractionPopupViewController.h"
 
-@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate> {
+@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate, InteractionPopupDelegate> {
 	AVAudioPlayer *audioPlayer;
 }
 

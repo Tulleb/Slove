@@ -58,6 +58,8 @@
 "error_phone_number_format" = "Formatos de número de telefone desconhecido";
 "error_phone_number_already_used" = "Este número de telefone tem-se já usado";
 "error_failed_to_send" = "Ooops!! A mensagen não pôde ser enviada";
+"???" = "Este código não corresponde";
+"[error certificate for this server]" = "Opa! Parece que você foi desconectado. Por favor entre de novo para confirmar o seu número de telefone";
 
 // Confirmation Code
 "title_confirmation_code" = "Código De Confirmação";
@@ -78,3 +80,7 @@
 
 
 // Profile
+
+
+// Sloved
+

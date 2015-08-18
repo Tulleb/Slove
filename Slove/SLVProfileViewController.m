@@ -74,10 +74,8 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	PFUser *user = [PFUser currentUser];
-	
 	[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
-					   withParameters:@{@"slover" : [user objectForKey:@"username"], @"sloved" : self.contact.username}
+					   withParameters:@{@"username" : self.contact.username}
 								block:^(id object, NSError *error){
 									if (!error) {
 										
