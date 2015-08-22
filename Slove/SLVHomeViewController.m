@@ -239,7 +239,7 @@
 				if (image) {
 					cachedContact.picture = image;
 				} else {
-					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar_thumb"];
+					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar"];
 				}
 				
 				[addressBookBuffer addObject:cachedContact];
@@ -311,7 +311,7 @@
 								friend.pictureDownloaded = NO;
 							}
 						} else {
-							friend.picture = [UIImage imageNamed:@"default_avatar.png"];
+							friend.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar"];
 							friend.pictureDownloaded = YES;
 						}
 					} else {

@@ -26,6 +26,7 @@ PODS:
   - Bolts/AppLinks (1.2.0):
     - Bolts/Tasks
   - Bolts/Tasks (1.2.0)
+  - CustomBadge (3.0.0)
   - FBSDKCoreKit (4.4.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc (= 4.4.0)
@@ -49,6 +50,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - CustomBadge (~> 3.0)
   - JSONModel
   - libPhoneNumber-iOS (~> 0.8)
   - Parse (~> 1.7)
@@ -57,6 +59,7 @@ DEPENDENCIES:
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
   Bolts: d176cb1e0012175589e389a9db49b85e27787576
+  CustomBadge: c60738d213e7ef019b0bf1caa7948333f280ea9b
   FBSDKCoreKit: 75bdd75c980e811db218488d99dd93b7740f4474
   FBSDKLoginKit: 02a9254a4c132412fa03577b0d53e936d068a7fb
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d

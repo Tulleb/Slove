@@ -37,9 +37,12 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
-		<string>Nunito-Regular.ttf</string>
-		<string>Nunito-Light.ttf</string>
-		<string>Nunito-Bold.ttf</string>
+		<string>AveriaSansLibre-Regular.ttf</string>
+		<string>AveriaSansLibre-Italic.ttf</string>
+		<string>AveriaSansLibre-Bold.ttf</string>
+		<string>AveriaSansLibre-BoldItalic.ttf</string>
+		<string>AveriaSansLibre-Light.ttf</string>
+		<string>AveriaSansLibre-LightItalic.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

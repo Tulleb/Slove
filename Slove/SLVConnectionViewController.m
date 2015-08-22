@@ -55,10 +55,10 @@
 //	[self animateLogoEntrance];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-	
+- (void)viewWillDisappear:(BOOL)animated {
 	self.navigationController.navigationBarHidden = NO;
+	
+	[super viewWillDisappear:animated];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -294,12 +294,7 @@
 }
 
 - (void)animateLogoEntrance {
-	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], CONNECTION_VIEW_SOUND];
-	NSURL *soundUrl = [NSURL fileURLWithPath:path];
-	
-	audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-	[audioPlayer play];
-	SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+	[SLVTools playSound:CONNECTION_VIEW_SOUND];
 	
 //	CGRect logoImageViewFrame = self.logoImageView.frame;
 //	CGPoint logoImageViewCenter = self.logoImageView.center;
@@ -318,30 +313,30 @@
 
 - (void)animateImages {
 	self.logoImageView.animationImages = [NSArray arrayWithObjects:
-										  [UIImage imageNamed:@"anim_logo00@3x.png"],
-										  [UIImage imageNamed:@"anim_logo01@3x.png"],
-										  [UIImage imageNamed:@"anim_logo02@3x.png"],
-										  [UIImage imageNamed:@"anim_logo03@3x.png"],
-										  [UIImage imageNamed:@"anim_logo04@3x.png"],
-										  [UIImage imageNamed:@"anim_logo05@3x.png"],
-										  [UIImage imageNamed:@"anim_logo06@3x.png"],
-										  [UIImage imageNamed:@"anim_logo07@3x.png"],
-										  [UIImage imageNamed:@"anim_logo08@3x.png"],
-										  [UIImage imageNamed:@"anim_logo09@3x.png"],
-										  [UIImage imageNamed:@"anim_logo10@3x.png"],
-										  [UIImage imageNamed:@"anim_logo11@3x.png"],
-										  [UIImage imageNamed:@"anim_logo12@3x.png"],
-										  [UIImage imageNamed:@"anim_logo13@3x.png"],
-										  [UIImage imageNamed:@"anim_logo14@3x.png"],
-										  [UIImage imageNamed:@"anim_logo15@3x.png"],
-										  [UIImage imageNamed:@"anim_logo16@3x.png"],
-										  [UIImage imageNamed:@"anim_logo17@3x.png"],
-										  [UIImage imageNamed:@"anim_logo18@3x.png"],
-										  [UIImage imageNamed:@"anim_logo19@3x.png"],
-										  [UIImage imageNamed:@"anim_logo20@3x.png"],
-										  [UIImage imageNamed:@"anim_logo21@3x.png"],
-										  [UIImage imageNamed:@"anim_logo22@3x.png"],
-										  [UIImage imageNamed:@"anim_logo23@3x.png"], nil];
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo00"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo01"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo02"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo03"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo04"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo05"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo06"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo07"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo08"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo09"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo10"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo11"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo12"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo13"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo14"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo15"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo16"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo17"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo18"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo19"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo20"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo21"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo22"],
+										  [UIImage imageNamed:@"Assets/Animation/anim_logo/anim_logo23"], nil];
 	
 	self.logoImageView.animationDuration = 1;
 	self.logoImageView.animationRepeatCount = 0;

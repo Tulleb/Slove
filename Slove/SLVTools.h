@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface SLVTools : NSObject
 
@@ -33,5 +34,6 @@
 + (NSString *)validateConditions:(BOOL)conditions;
 + (NSString *)formatPhoneNumber:(NSString *)phoneNumber withCountryCodeData:(SLVCountryCodeData *)countryCodeData;
 + (BOOL)checkConnection;
++ (void)playSound:(NSString *)soundName;
 
 @end

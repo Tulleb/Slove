@@ -40,19 +40,23 @@
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
 	
-	UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-													UIUserNotificationTypeBadge |
-													UIUserNotificationTypeSound);
-	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-																			 categories:nil];
-	[application registerUserNotificationSettings:settings];
-	[application registerForRemoteNotifications];
+	if (IS_IOS7) {
+		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+	} else {
+		UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+														UIUserNotificationTypeBadge |
+														UIUserNotificationTypeSound);
+		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+																				 categories:nil];
+		[application registerUserNotificationSettings:settings];
+		[application registerForRemoteNotifications];
+	}
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
-	self.currentNavigationController.bottomNavigationBarView.hidden = YES;
+	[self.currentNavigationController hideBottomNavigationBar];
 	[self.window addSubview:self.currentNavigationController.view];
 	[self.window makeKeyAndVisible];
 	
@@ -129,7 +133,7 @@
 	
 	if (!self.userIsConnected) {
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
-		self.currentNavigationController.bottomNavigationBarView.hidden = NO;
+		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
 	}
 
@@ -141,7 +145,7 @@
 	
 	if (self.userIsConnected) {
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
-		self.currentNavigationController.bottomNavigationBarView.hidden = YES;
+		[self.currentNavigationController hideBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
 	}
 	

@@ -284,4 +284,13 @@
 	return NO;
 }
 
++ (void)playSound:(NSString *)soundName {
+	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], soundName];
+	NSURL *soundUrl = [NSURL fileURLWithPath:path];
+	
+	AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
+	[audioPlayer play];
+	SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+}
+
 @end

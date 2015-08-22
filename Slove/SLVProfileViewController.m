@@ -62,6 +62,12 @@
 	}
 }
 
+- (void)viewDidDisappear:(BOOL)animated {
+	self.navigationController.navigationBarHidden = NO;
+	
+	[super viewDidDisappear:animated];
+}
+
 - (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
 	

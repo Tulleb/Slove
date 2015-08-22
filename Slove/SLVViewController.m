@@ -26,14 +26,14 @@
     [super viewDidLoad];
 	
 	[SLVViewController setStyle:self.view];
-	
-	// To substract the navigation bar height from the view
-	if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-		self.edgesForExtendedLayout = UIRectEdgeNone;
-	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+	// To substract the navigation bar height from the view
+	if ([self respondsToSelector:@selector(edgesForExtendedLayout)] && !self.navigationController.navigationBarHidden) {
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+	}
+	
 	[super viewWillAppear:animated];
 	
 	[self animateImages];
@@ -76,6 +76,26 @@
 				UITextView *textView = (UITextView *)subview;
 				
 				textView.text = NSLocalizedString(textView.text, nil);
+			} else if ([subview isKindOfClass:[UISegmentedControl class]]) {
+				UISegmentedControl *segmentedControl = (UISegmentedControl *)subview;
+				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_SMALL_FONT_SIZE];
+				NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+				[segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+				segmentedControl.apportionsSegmentWidthsByContent = YES;
+				
+				for (int i = 0; i < segmentedControl.numberOfSegments; i++) {
+					[segmentedControl setTitle:NSLocalizedString([segmentedControl titleForSegmentAtIndex:i], nil) forSegmentAtIndex:i];
+				}
+				
+//				for (UIView *segmentView in segmentedControl.subviews) {
+//					for (UIView *segmentSubview in segmentView.subviews) {
+//						if ([segmentSubview isKindOfClass:[UILabel class]]) {
+//							UILabel *segmentLabel = (UILabel *)segmentSubview;
+//							segmentLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+//							segmentLabel.adjustsFontSizeToFitWidth = YES;
+//						}
+//					}
+//				}
 			}
 			
 			[self setStyle:subview];

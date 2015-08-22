@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "F42FC323D6397B12DB7BEFBF"
+               BlueprintIdentifier = "A5F2EFA108342A07BEDD504E"
                BuildableName = "libPods-Slove-FBSDKCoreKit.a"
                BlueprintName = "Pods-Slove-FBSDKCoreKit"
                ReferencedContainer = "container:Pods.xcodeproj">

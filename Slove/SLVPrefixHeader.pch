@@ -67,10 +67,22 @@
 #define BLUE_IOS		[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
 
 // Font
-#define DEFAULT_FONT		@"Nunito-Regular"
-#define DEFAULT_FONT_BOLD	@"Nunito-Bold"
-#define DEFAULT_FONT_LIGHT	@"Nunito-Light"
-#define DEFAULT_FONT_SIZE	17
+//#define DEFAULT_FONT				@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Regular.ttf"
+//#define DEFAULT_FONT_ITALIC			@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Italic.ttf"
+//#define DEFAULT_FONT_BOLD			@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Bold.ttf"
+//#define DEFAULT_FONT_BOLD_ITALIC	@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-BoldItalic.ttf"
+//#define DEFAULT_FONT_LIGHT			@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Light.ttf"
+//#define DEFAULT_FONT_LIGHT_ITALIC	@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-LightItalic.ttf"
+#define DEFAULT_FONT_REGULAR		@"AveriaSansLibre-Regular"
+#define DEFAULT_FONT_ITALIC			@"AveriaSansLibre-Italic"
+#define DEFAULT_FONT_BOLD			@"AveriaSansLibre-Bold"
+#define DEFAULT_FONT_BOLD_ITALIC	@"AveriaSansLibre-BoldItalic"
+#define DEFAULT_FONT_LIGHT			@"AveriaSansLibre-Light"
+#define DEFAULT_FONT_LIGHT_ITALIC	@"AveriaSansLibre-LightItalic"
+#define DEFAULT_FONT				DEFAULT_FONT_BOLD
+#define DEFAULT_FONT_SIZE			17
+#define DEFAULT_SMALL_FONT_SIZE		15
+#define DEFAULT_LARGE_FONT_SIZE		20
 
 // Animation
 #define SHORT_ANIMATION_DURATION        0.2
@@ -78,8 +90,12 @@
 #define LONG_ANIMATION_DURATION         1
 #define VERY_LONG_ANIMATION_DURATION    2
 
+// Navigation View
+#define SLOVE_BUTTON_SIZE			75
+#define SLOVE_VIEW_BOTTOM_CONSTANT	15
+
 // Connection View
-#define CONNECTION_VIEW_SOUND	@"Congratsbuild2.wav"
+#define CONNECTION_VIEW_SOUND	@"Assets/Sound/Congratsbuild2.wav"
 
 // Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2
