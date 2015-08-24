@@ -113,6 +113,8 @@
 		} else {
 			SLVSlovedViewController *presentedViewController = [[SLVSlovedViewController alloc] initWithContact:slover];
 			[self.currentNavigationController presentViewController:presentedViewController animated:YES completion:nil];
+			
+			[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 		}
 	} else {
 		[PFPush handlePush:userInfo];
@@ -132,6 +134,7 @@
 	[currentInstallation saveInBackground];
 	
 	if (!self.userIsConnected) {
+		self.currentNavigationController = nil;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
@@ -144,6 +147,7 @@
 	SLVLog(@"User disconnected from Slove");
 	
 	if (self.userIsConnected) {
+		self.currentNavigationController = nil;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 		[self.currentNavigationController hideBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;

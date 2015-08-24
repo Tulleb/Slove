@@ -117,13 +117,8 @@
 			case kFacebookFilter:
 				self.accessContactsButton.hidden = YES;
 				
-				if ([self checkFacebookFriendsAuthorization]) {
-					[self friendsAccessGranted];
-				} else {
-					[self.loadingIndicator stopAnimating];
-					self.accessFriendsButton.hidden = NO;
-					self.contactTableView.hidden = YES;
-				}
+				[self checkFacebookFriendsAuthorization];
+				
 				break;
 				
 			default:
@@ -142,8 +137,36 @@
 	return NO;
 }
 
-- (BOOL)checkFacebookFriendsAuthorization {
-	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
+- (void)checkFacebookFriendsAuthorization {
+	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+								  initWithGraphPath:@"/me/permissions/user_friends"
+								  parameters:nil
+								  HTTPMethod:@"GET"];
+	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+										  id result,
+										  NSError *error) {
+		if (result) {
+			NSArray *data = [result objectForKey:@"data"];
+			
+			for (NSDictionary *permissionDic in data) {
+				if ([[permissionDic objectForKey:@"permission"] isEqualToString:@"user_friends"] && [[permissionDic objectForKey:@"status"] isEqualToString:@"granted"]) {
+					[self friendsAccessGranted];
+				} else {
+					SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
+					[self.loadingIndicator stopAnimating];
+					self.accessFriendsButton.hidden = NO;
+					self.contactTableView.hidden = YES;
+				}
+			}
+		}
+		
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+		}
+	}];
+	
+	// This function sometimes return NO when it shouldn't
+//	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
 }
 
 - (void)contactsAccessGranted {
@@ -580,6 +603,7 @@
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	
 	SLVContact *contact;
+	BOOL isSynchronized = NO;
 	
 	switch (self.filterSegmentedControl.selectedSegmentIndex) {
 		case kFavoriteFilter:
@@ -589,6 +613,7 @@
 		case kAddressBookFilter:
 			if (indexPath.section == 0 && [self.synchronizedAddressBookContacts count] > 0) {
 				contact = [self.synchronizedAddressBookContacts objectAtIndex:indexPath.row];
+				isSynchronized = YES;
 			} else {
 				contact = [self.unsynchronizedAddressBookContacts objectAtIndex:indexPath.row];
 			}
@@ -596,6 +621,7 @@
 			
 		case kFacebookFilter:
 			contact = [self.facebookFriends objectAtIndex:indexPath.row];
+			isSynchronized = YES;
 			break;
 			
 		default:
@@ -607,46 +633,50 @@
 		return cell;
 	}
 	
-	cell.fullNameLabel.text = contact.fullName;
-	cell.pictureImageView.image = contact.picture;
-	
-	if (contact.username && ![contact.username isEqualToString:@""]) {
-		cell.usernameLabel.text = contact.username;
-	} else if ([contact isKindOfClass:[SLVAddressBookContact class]]) {
-		SLVAddressBookContact *addressBookContact = (SLVAddressBookContact *)contact;
+	if (isSynchronized) {
+		cell.titleLabel.text = contact.username;
+		cell.subtitleLabel.text = contact.fullName;
+	} else {
+		cell.titleLabel.text = contact.fullName;
 		
-		if ([addressBookContact.phoneNumbers count] > 1) {
-			cell.usernameLabel.text = NSLocalizedString(@"label_several_phone_numbers", nil);
-		} else {
-			NSDictionary *phoneNumberDic = [addressBookContact.phoneNumbers firstObject];
-			NSString *formatedPhoneNumber = [phoneNumberDic objectForKey:@"formatedPhoneNumber"];
-			NSString *phoneNumber = [phoneNumberDic objectForKey:@"phoneNumber"];
+		if ([contact isKindOfClass:[SLVAddressBookContact class]]) {
+			SLVAddressBookContact *addressBookContact = (SLVAddressBookContact *)contact;
 			
-			if (formatedPhoneNumber && [formatedPhoneNumber length] >= 6) {
-				if ([[formatedPhoneNumber substringToIndex:5] isEqualToString:@"error"]) {
-					cell.usernameLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
-					
-					SLVLog(@"%@Phone number '%@' couldn't be formated with country code '%@'", SLV_ERROR, phoneNumber, ApplicationDelegate.userCountryCodeData);
-				} else {
-					cell.usernameLabel.text = phoneNumber;
-				}
+			if ([addressBookContact.phoneNumbers count] > 1) {
+				cell.subtitleLabel.text = NSLocalizedString(@"label_several_phone_numbers", nil);
 			} else {
-				cell.usernameLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
+				NSDictionary *phoneNumberDic = [addressBookContact.phoneNumbers firstObject];
+				NSString *formatedPhoneNumber = [phoneNumberDic objectForKey:@"formatedPhoneNumber"];
+				NSString *phoneNumber = [phoneNumberDic objectForKey:@"phoneNumber"];
 				
-				SLVLog(@"%@Formated phone number reception for '%@' failed without displaying an error!", SLV_ERROR, phoneNumber);
+				if (formatedPhoneNumber && [formatedPhoneNumber length] >= 6) {
+					if ([[formatedPhoneNumber substringToIndex:5] isEqualToString:@"error"]) {
+						cell.subtitleLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
+						
+						SLVLog(@"%@Phone number '%@' couldn't be formated with country code '%@'", SLV_ERROR, phoneNumber, ApplicationDelegate.userCountryCodeData);
+					} else {
+						cell.subtitleLabel.text = phoneNumber;
+					}
+				} else {
+					cell.subtitleLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
+					
+					SLVLog(@"%@Formated phone number reception for '%@' failed without displaying an error!", SLV_ERROR, phoneNumber);
+				}
 			}
+		} else if ([contact isKindOfClass:[SLVFacebookFriend class]]) {
+			cell.subtitleLabel.text = @"";
 		}
-	} else if ([contact isKindOfClass:[SLVFacebookFriend class]]) {
-		cell.usernameLabel.text = @"";
 	}
 	
+	cell.pictureImageView.image = contact.picture;
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	cell.pictureImageView.layer.cornerRadius = cell.pictureImageView.bounds.size.height / 2;
 	cell.pictureImageView.clipsToBounds = YES;
 	
 	[SLVViewController setStyle:cell];
 	
-	cell.fullNameLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_LARGE_FONT_SIZE];
+	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
 	
 	return cell;
 }

@@ -108,4 +108,24 @@
 	
 }
 
+- (void)loadBackButton {
+	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+	[backButton setTitle:NSLocalizedString(@"Return", nil) forState:UIControlStateNormal];
+	[backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
+	[backButton setTitleColor:BLUE_IOS forState:UIControlStateNormal];
+	[backButton setTitleColor:DARK_GRAY forState:UIControlStateHighlighted];
+	backButton.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+	backButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+	[backButton setImage:[UIImage imageNamed:@"Assets/Button/fleche_retour"] forState:UIControlStateNormal];
+	[backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+	[backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+	backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+	UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+	self.navigationItem.leftBarButtonItem = backButtonItem;
+}
+
+- (void)goBack:(id)sender {
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
 @end

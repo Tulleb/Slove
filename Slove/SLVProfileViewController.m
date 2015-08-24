@@ -25,10 +25,19 @@
 }
 
 - (void)viewDidLoad {
-	self.appName = @"profile";
-	
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+	
+	if (self.contact.username && ![self.contact.username isEqualToString:@""]) {
+		self.title = self.contact.username;
+	} else {
+		self.title = self.contact.fullName;
+	}
+	
+	self.spiraleImageView.image = [UIImage imageNamed:@"Assets/Button/bt_spirale_rotation"];
+	
+	self.spiraleYConstraint.constant = (self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height) / 2;
+	
+	[self loadBackButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -71,7 +80,11 @@
 - (void)viewDidLayoutSubviews {
 	[super viewDidLayoutSubviews];
 	
-	self.pictureImageView.layer.cornerRadius = self.pictureImageView.bounds.size.height / 2;
+	UIImage *_maskingImage = [UIImage imageNamed:@"Assets/Layer/layer_profile_picture"];
+	CALayer *_maskingLayer = [CALayer layer];
+	_maskingLayer.frame = self.pictureImageView.bounds;
+	[_maskingLayer setContents:(id)[_maskingImage CGImage]];
+	[self.pictureImageView.layer setMask:_maskingLayer];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -84,7 +97,7 @@
 					   withParameters:@{@"username" : self.contact.username}
 								block:^(id object, NSError *error){
 									if (!error) {
-										
+										[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 									} else {
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
 										[ParseErrorHandlingController handleParseError:error];

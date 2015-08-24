@@ -22,19 +22,19 @@
                             <constraint firstAttribute="width" secondItem="Fhf-QD-oHP" secondAttribute="height" multiplier="70:69" id="Bwj-Ya-guu"/>
                         </constraints>
                     </imageView>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Contact name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2MY-dY-7zu">
-                        <rect key="frame" x="78" y="8" width="234" height="24"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Subtitle label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIv-rD-KnG">
+                        <rect key="frame" x="78" y="40" width="234" height="21"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="24" id="t6f-Uz-rgA"/>
+                            <constraint firstAttribute="height" constant="21" id="QDh-KV-sBm"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <nil key="highlightedColor"/>
                     </label>
-                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Username" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oIv-rD-KnG">
-                        <rect key="frame" x="78" y="40" width="234" height="21"/>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2MY-dY-7zu">
+                        <rect key="frame" x="78" y="8" width="234" height="24"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="21" id="QDh-KV-sBm"/>
+                            <constraint firstAttribute="height" constant="24" id="t6f-Uz-rgA"/>
                         </constraints>
                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                         <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -54,9 +54,9 @@
                 </constraints>
             </tableViewCellContentView>
             <connections>
-                <outlet property="fullNameLabel" destination="2MY-dY-7zu" id="mSv-Fi-Prg"/>
                 <outlet property="pictureImageView" destination="Fhf-QD-oHP" id="NkB-c4-1eQ"/>
-                <outlet property="usernameLabel" destination="oIv-rD-KnG" id="jwK-9K-de9"/>
+                <outlet property="subtitleLabel" destination="oIv-rD-KnG" id="ETB-7B-JSS"/>
+                <outlet property="titleLabel" destination="2MY-dY-7zu" id="q9N-T8-LKn"/>
             </connections>
             <point key="canvasLocation" x="420" y="350"/>
         </tableViewCell>

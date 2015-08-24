@@ -13,6 +13,8 @@
 
 @property (strong, nonatomic) SLVContact *contact;
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *spiraleImageView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *spiraleYConstraint;
 @property (strong, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *sloveCounterLabel;

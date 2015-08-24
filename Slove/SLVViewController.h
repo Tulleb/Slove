@@ -19,5 +19,6 @@ typedef enum  {
 @property (nonatomic) BackButtonType backButtonType;
 
 + (void)setStyle:(UIView *)view;
+- (void)loadBackButton;
 
 @end
