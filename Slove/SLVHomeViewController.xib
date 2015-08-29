@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
@@ -7,8 +7,6 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVHomeViewController">
             <connections>
-                <outlet property="accessContactsButton" destination="do4-zi-ITR" id="5Zf-th-yvO"/>
-                <outlet property="accessFriendsButton" destination="a8T-Hh-1aR" id="OJJ-fi-Ajx"/>
                 <outlet property="contactTableView" destination="xJv-gE-cQk" id="VMm-5g-LfT"/>
                 <outlet property="filterSegmentedControl" destination="JsE-LJ-YJJ" id="COY-IU-hof"/>
                 <outlet property="loadingIndicator" destination="Gsm-xj-cQx" id="K36-EC-fGC"/>
@@ -40,32 +38,6 @@
                     </state>
                     <connections>
                         <action selector="disconnectAction:" destination="-1" eventType="touchUpInside" id="vPl-yE-sCT"/>
-                    </connections>
-                </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="do4-zi-ITR">
-                    <rect key="frame" x="216" y="323" width="168" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="0gg-yi-1IM"/>
-                        <constraint firstAttribute="width" constant="168" id="gIC-1Q-dAN"/>
-                    </constraints>
-                    <state key="normal" title="button_access_contacts">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="accessContactAction:" destination="-1" eventType="touchUpInside" id="Y84-CI-Ful"/>
-                    </connections>
-                </button>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8T-Hh-1aR">
-                    <rect key="frame" x="215" y="361" width="171" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="171" id="eYg-7z-ZEk"/>
-                        <constraint firstAttribute="height" constant="30" id="zU7-it-LyP"/>
-                    </constraints>
-                    <state key="normal" title="button_facebook_friends">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="accessFriendsAction:" destination="-1" eventType="touchUpInside" id="uKL-qy-bc4"/>
                     </connections>
                 </button>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JsE-LJ-YJJ">
@@ -115,12 +87,8 @@
                 <constraint firstAttribute="centerX" secondItem="v7s-nI-aeS" secondAttribute="centerX" id="BNH-Lh-OOK"/>
                 <constraint firstAttribute="centerX" secondItem="Lx0-ET-2jz" secondAttribute="centerX" id="Bsf-Hc-e4c"/>
                 <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
-                <constraint firstAttribute="centerX" secondItem="do4-zi-ITR" secondAttribute="centerX" id="KkS-7o-hic"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="JsE-LJ-YJJ" secondAttribute="bottom" id="NZM-Rs-By5"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="36" id="UG8-4G-sLC"/>
-                <constraint firstAttribute="centerX" secondItem="a8T-Hh-1aR" secondAttribute="centerX" id="WGM-fI-TiB"/>
-                <constraint firstAttribute="centerY" secondItem="do4-zi-ITR" secondAttribute="centerY" constant="-38" id="Z78-Vm-gZZ"/>
-                <constraint firstAttribute="centerY" secondItem="a8T-Hh-1aR" secondAttribute="centerY" constant="-76" id="cjf-sA-1jC"/>
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>
                 <constraint firstAttribute="centerY" secondItem="Lx0-ET-2jz" secondAttribute="centerY" constant="34" id="kHu-go-TGM"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pKZ-dy-vWM"/>

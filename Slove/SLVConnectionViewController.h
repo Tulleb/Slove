@@ -11,7 +11,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SLVInteractionPopupViewController.h"
 
-@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate, InteractionPopupDelegate>
+@interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate, SLVInteractionPopupDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;

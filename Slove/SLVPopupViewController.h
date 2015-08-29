@@ -10,6 +10,4 @@
 
 @interface SLVPopupViewController : SLVViewController
 
-@property (strong, nonatomic) UIImageView *previousViewScreenshot;
-
 @end

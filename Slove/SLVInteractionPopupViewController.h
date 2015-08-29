@@ -7,27 +7,38 @@
 //
 
 #import "SLVPopupViewController.h"
+@class SLVInteractionPopupViewController;
 
-@protocol InteractionPopupDelegate <NSObject>
+@protocol SLVInteractionPopupDelegate <NSObject>
 
-- (void)soloButtonPressed:(id)sender;
-- (void)buttonAPressed:(id)sender;
-- (void)buttonBPressed:(id)sender;
+- (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup;
+- (void)buttonAPressed:(SLVInteractionPopupViewController *)popup;
+- (void)buttonBPressed:(SLVInteractionPopupViewController *)popup;
+- (void)dismissButtonPressed:(SLVInteractionPopupViewController *)popup;
 
 @end
 
 
 @interface SLVInteractionPopupViewController : SLVPopupViewController
 
+@property (strong, nonatomic) id<SLVInteractionPopupDelegate> delegate;
+@property (strong, nonatomic) IBOutlet UIView *popupView;
+@property (strong, nonatomic) IBOutlet UIImageView *popupImageView;
+@property (strong, nonatomic) IBOutlet UIButton *dismissButton;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *rightBorderConstraint;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *bodyLabel;
 @property (strong, nonatomic) IBOutlet UIButton *soloButton;
 @property (strong, nonatomic) IBOutlet UIButton *buttonA;
 @property (strong, nonatomic) IBOutlet UIButton *buttonB;
+@property (strong, nonatomic) NSString *title;
+@property (strong, nonatomic) NSString *body;
+@property (strong, nonatomic) NSArray *buttonTitles;
 
 - (id)initWithTitle:(NSString *)title body:(NSString *)body andButtonsTitle:(NSArray *)buttonTitles;
 - (IBAction)soloButtonAction:(id)sender;
 - (IBAction)buttonAAction:(id)sender;
 - (IBAction)buttonBAction:(id)sender;
+- (IBAction)dismissAction:(id)sender;
 
 @end

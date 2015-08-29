@@ -219,40 +219,6 @@
 																	 constant:0]];
 }
 
-- (void)presentViewController:(UIViewController *)viewControllerToPresent animated:(BOOL)flag completion:(void (^)(void))completion {
-	if ([viewControllerToPresent isKindOfClass:[SLVPopupViewController class]]) {
-		SLVPopupViewController *popupViewController = (SLVPopupViewController *)viewControllerToPresent;
-		
-		UIView *currentView = self.view;
-		UIGraphicsBeginImageContextWithOptions(currentView.bounds.size, currentView.opaque, 0.0);
-		[currentView.layer renderInContext:UIGraphicsGetCurrentContext()];
-		UIImage *img = UIGraphicsGetImageFromCurrentImageContext();
-		UIGraphicsEndImageContext();
-		
-		[super presentViewController:viewControllerToPresent animated:flag completion:^{
-			popupViewController.previousViewScreenshot.image = img;
-			popupViewController.previousViewScreenshot.hidden = NO;
-			
-			if (completion) {
-				completion();
-			}
-		}];
-	} else {
-		[super presentViewController:viewControllerToPresent animated:flag completion:completion];
-	}
-}
-
-- (void)dismissViewControllerAnimated:(BOOL)flag completion:(void (^)(void))completion {
-	if ([self.presentedViewController isKindOfClass:[SLVPopupViewController class]]) {
-		SLVPopupViewController *popupViewController = (SLVPopupViewController *)self.presentedViewController;
-		
-		popupViewController.previousViewScreenshot.hidden = YES;
-		popupViewController.previousViewScreenshot.image = nil;
-	}
-	
-	[super dismissViewControllerAnimated:flag completion:completion];
-}
-
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
