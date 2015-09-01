@@ -54,6 +54,7 @@
 #define SCREEN_HEIGHT	[[UIScreen mainScreen] bounds].size.height
 
 // Color
+#define MAIN_COLOR		[UIColor colorWithRed:85/255.0 green:160/255.0 blue:254/255.0 alpha:1]
 #define CLEAR			[UIColor clearColor]
 #define BLACK			[UIColor blackColor]
 #define WHITE			[UIColor whiteColor]
@@ -64,7 +65,6 @@
 #define LIGHT_GRAY		[UIColor lightGrayColor]
 #define DARK_GRAY		[UIColor darkGrayColor]
 #define VERY_LIGHT_GRAY [UIColor groupTableViewBackgroundColor]
-#define BLUE_IOS		[UIColor colorWithRed:0.0 green:122.0/255.0 blue:1.0 alpha:1.0]
 
 // Font
 //#define DEFAULT_FONT				@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Regular.ttf"
@@ -95,7 +95,7 @@
 #define SLOVE_VIEW_BOTTOM_CONSTANT	15
 
 // Connection View
-#define CONNECTION_VIEW_SOUND	@"Assets/Sound/Congratsbuild2.wav"
+#define CONNECTION_VIEW_SOUND	@"Congratsbuild2.wav"
 
 // Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2

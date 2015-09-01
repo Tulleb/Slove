@@ -39,21 +39,6 @@
 	// Dispose of any resources that can be recreated.
 }
 
-- (IBAction)disconnectAction:(id)sender {
-	if ([FBSDKAccessToken currentAccessToken]) {
-		[FBSDKAccessToken setCurrentAccessToken:nil];
-	}
-	
-	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
-		if (!error) {
-			[ApplicationDelegate userDisconnected];
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
-}
-
 - (IBAction)filterChanged:(id)sender {
 	self.contactTableView.hidden = NO;
 	[self.loadingIndicator startAnimating];
@@ -106,6 +91,11 @@
 }
 
 - (void)checkFacebookFriendsAuthorization {
+	if (![FBSDKAccessToken currentAccessToken]) {
+		// TODO: Handle facebook connexion
+		return;
+	}
+	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
 								  initWithGraphPath:@"/me/permissions/user_friends"
 								  parameters:nil
@@ -196,15 +186,22 @@
 		if (firstName) {
 			fullName = [fullName stringByAppendingString:firstNameString];
 		}
-		if (lastNameString && ![fullName isEqualToString:@""]) {
-			fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" %@", lastNameString]];
+		if (lastNameString) {
+			if (![fullName isEqualToString:@""]) {
+				fullName = [fullName stringByAppendingString:@" "];
+			}
+			
+			fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@"%@", lastNameString]];
+		}
+		if (organizationString) {
+			if (![fullName isEqualToString:@""]) {
+				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
+			} else {
+				fullName = [fullName stringByAppendingString:organizationString];
+			}
 		}
 		
 		if (![fullName isEqualToString:@""]) {
-			if (organizationString && ![organizationString isEqualToString:@""]	) {
-				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
-			}
-			
 			CFDataRef imageData = ABPersonCopyImageData(contact);
 			UIImage *image = [UIImage imageWithData:(NSData *)CFBridgingRelease(imageData)];
 			

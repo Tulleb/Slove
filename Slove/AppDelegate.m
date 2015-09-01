@@ -107,6 +107,9 @@
 	if (sloverDic) {
 		NSError *error;
 		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
+		if ([sloverDic objectForKey:@"pictureUrl"]) {
+			slover.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]]];
+		}
 		
 		if (error) {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);

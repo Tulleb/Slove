@@ -84,28 +84,28 @@
 														 multiplier:1
 														   constant:0]];
 	
-	[self.activityButton addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+	[self.statisticsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.statisticsButton
 																	attribute:NSLayoutAttributeHeight
 																	relatedBy:NSLayoutRelationEqual
 																	   toItem:nil
 																	attribute:NSLayoutAttributeNotAnAttribute
 																   multiplier:1
 																	 constant:51]];
-	[self.activityButton addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+	[self.statisticsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.statisticsButton
 																	attribute:NSLayoutAttributeWidth
 																	relatedBy:NSLayoutRelationEqual
 																	   toItem:nil
 																	attribute:NSLayoutAttributeNotAnAttribute
 																   multiplier:1
 																	 constant:147]];
-	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.statisticsButton
 																	attribute:NSLayoutAttributeLeading
 																	relatedBy:NSLayoutRelationEqual
 																	   toItem:self.bottomNavigationBarView
 																	attribute:NSLayoutAttributeLeading
 																   multiplier:1
 																	 constant:0]];
-	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.statisticsButton
 																	attribute:NSLayoutAttributeBottom
 																	relatedBy:NSLayoutRelationEqual
 																	   toItem:self.bottomNavigationBarView
@@ -189,14 +189,14 @@
 															  multiplier:1
 																constant:SLOVE_BUTTON_SIZE * 0.05]];
 
-	[self.profileButton addConstraint:[NSLayoutConstraint constraintWithItem:self.profileButton
+	[self.parametersButton addConstraint:[NSLayoutConstraint constraintWithItem:self.parametersButton
 																   attribute:NSLayoutAttributeHeight
 																   relatedBy:NSLayoutRelationEqual
 																	  toItem:nil
 																   attribute:NSLayoutAttributeNotAnAttribute
 																  multiplier:1
 																	constant:51]];
-	[self.profileButton addConstraint:[NSLayoutConstraint constraintWithItem:self.profileButton
+	[self.parametersButton addConstraint:[NSLayoutConstraint constraintWithItem:self.parametersButton
 																   attribute:NSLayoutAttributeWidth
 																   relatedBy:NSLayoutRelationEqual
 																	  toItem:nil
@@ -206,14 +206,14 @@
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																   attribute:NSLayoutAttributeTrailing
 																   relatedBy:NSLayoutRelationEqual
-																	  toItem:self.profileButton
+																	  toItem:self.parametersButton
 																   attribute:NSLayoutAttributeTrailing
 																  multiplier:1
 																	constant:0]];
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																	attribute:NSLayoutAttributeBottom
 																	relatedBy:NSLayoutRelationEqual
-																	   toItem:self.profileButton
+																	   toItem:self.parametersButton
 																	attribute:NSLayoutAttributeBottom
 																   multiplier:1
 																	 constant:0]];
@@ -249,12 +249,17 @@
 }
 
 - (void)homeAction:(id)sender {
+	self.statisticsButton.selected = NO;
+	self.parametersButton.selected = NO;
+	
 	[self popToRootViewControllerAnimated:YES];
 }
 
-- (void)activityAction:(id)sender {
-	self.activityButton.selected = YES;
-	self.profileButton.selected = NO;
+- (void)statisticsAction:(id)sender {
+	if (!self.statisticsButton.selected) {
+		self.statisticsButton.selected = YES;
+		self.parametersButton.selected = NO;
+	}
 }
 
 - (void)sloveAction:(id)sender {
@@ -262,14 +267,24 @@
 		SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
 		[profileViewController sloveAction:sender];
 	} else {
-		self.activityButton.selected = NO;
-		self.profileButton.selected = NO;
+		[self homeAction:self.sloveButton];
 	}
 }
 
-- (void)profileAction:(id)sender {
-	self.activityButton.selected = NO;
-	self.profileButton.selected = YES;
+- (void)parametersAction:(id)sender {
+	if (!self.parametersButton.selected) {
+		self.statisticsButton.selected = NO;
+		self.parametersButton.selected = YES;
+		
+		SLVParametersViewController *parametersViewController = [[SLVParametersViewController alloc] init];
+		
+		[self popToRootViewControllerAnimated:NO];
+		[self pushViewController:parametersViewController animated:YES];
+	}
+}
+
+- (void)goToHome {
+	[self homeAction:nil];
 }
 
 - (void)loadTopNavigationBar {
@@ -284,11 +299,11 @@
 - (void)loadBottomNavigationBar {
 	self.bottomNavigationBarView = [[UIView alloc] init];
 	self.homeButton = [[UIButton alloc] init];
-	self.activityButton = [[UIButton alloc] init];
+	self.statisticsButton = [[UIButton alloc] init];
 	self.sloveView = [[UIView alloc] init];
 	self.sloveButton = [[UIButton alloc] init];
 	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:WHITE withInsetColor:RED withFrameColor:WHITE withFrame:YES withShadow:YES withShining:YES withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
-	self.profileButton = [[UIButton alloc] init];
+	self.parametersButton = [[UIButton alloc] init];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
@@ -297,20 +312,20 @@
 	self.homeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 	[self.homeButton addTarget:self action:@selector(homeAction:) forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.activityButton setTitle:@"button_activity" forState:UIControlStateNormal];
-	[self.activityButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.activityButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
-	self.activityButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
-	[self.activityButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 25)];
-	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity"] forState:UIControlStateNormal];
-	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateHighlighted];
-	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateSelected];
-	[self.activityButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
-	[self.activityButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity"] forState:UIControlStateNormal];
-	[self.activityButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateHighlighted];
-	[self.activityButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateSelected];
-	self.activityButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-	[self.activityButton addTarget:self action:@selector(activityAction:) forControlEvents:UIControlEventTouchUpInside];
+	[self.statisticsButton setTitle:@"button_activity" forState:UIControlStateNormal];
+	[self.statisticsButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.statisticsButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
+	self.statisticsButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
+	[self.statisticsButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 25)];
+	[self.statisticsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity"] forState:UIControlStateNormal];
+	[self.statisticsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateHighlighted];
+	[self.statisticsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateSelected];
+	[self.statisticsButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+	[self.statisticsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity"] forState:UIControlStateNormal];
+	[self.statisticsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateHighlighted];
+	[self.statisticsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateSelected];
+	self.statisticsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+	[self.statisticsButton addTarget:self action:@selector(statisticsAction:) forControlEvents:UIControlEventTouchUpInside];
 	
 	self.sloveView.backgroundColor = CLEAR;
 	
@@ -318,23 +333,23 @@
 	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/bt_slove_slovy_big"] forState:UIControlStateNormal];
 	[self.sloveButton addTarget:self action:@selector(sloveAction:) forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.profileButton setTitle:@"button_profile" forState:UIControlStateNormal];
-	[self.profileButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.profileButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
-	self.profileButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
-	[self.profileButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 70, 0, 0)];
-	[self.profileButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile"] forState:UIControlStateNormal];
-	[self.profileButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateHighlighted];
-	[self.profileButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateSelected];
-	[self.profileButton setImageEdgeInsets:UIEdgeInsetsMake(0, 65, 0, 15)];
-	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile"] forState:UIControlStateNormal];
-	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
-	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];
-	self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-	[self.profileButton addTarget:self action:@selector(profileAction:) forControlEvents:UIControlEventTouchUpInside];
+	[self.parametersButton setTitle:@"button_profile" forState:UIControlStateNormal];
+	[self.parametersButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.parametersButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
+	self.parametersButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
+	[self.parametersButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 70, 0, 0)];
+	[self.parametersButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile"] forState:UIControlStateNormal];
+	[self.parametersButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateHighlighted];
+	[self.parametersButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateSelected];
+	[self.parametersButton setImageEdgeInsets:UIEdgeInsetsMake(0, 65, 0, 15)];
+	[self.parametersButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile"] forState:UIControlStateNormal];
+	[self.parametersButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
+	[self.parametersButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];
+	self.parametersButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+	[self.parametersButton addTarget:self action:@selector(parametersAction:) forControlEvents:UIControlEventTouchUpInside];
 	
-	[self.bottomNavigationBarView addSubview:self.activityButton];
-	[self.bottomNavigationBarView addSubview:self.profileButton];
+	[self.bottomNavigationBarView addSubview:self.statisticsButton];
+	[self.bottomNavigationBarView addSubview:self.parametersButton];
 	
 	[self.view addSubview:self.bottomNavigationBarView];
 	[self.view addSubview:self.homeButton];
@@ -346,11 +361,11 @@
 	
 	self.bottomNavigationBarView.translatesAutoresizingMaskIntoConstraints = NO;
 	self.homeButton.translatesAutoresizingMaskIntoConstraints = NO;
-	self.activityButton.translatesAutoresizingMaskIntoConstraints = NO;
+	self.statisticsButton.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveView.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveButton.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveCounterBadge.translatesAutoresizingMaskIntoConstraints = NO;
-	self.profileButton.translatesAutoresizingMaskIntoConstraints = NO;
+	self.parametersButton.translatesAutoresizingMaskIntoConstraints = NO;
 	
 	self.sloveViewConstraint = [NSLayoutConstraint constraintWithItem:self.view
 															attribute:NSLayoutAttributeBottom
@@ -375,11 +390,11 @@
 																 toItem:self.sloveView
 															  attribute:NSLayoutAttributeCenterY
 															 multiplier:1
-															   constant:0];
+															   constant:-30];
 	
-	[UIView animateWithDuration:ANIMATION_DURATION animations:^{
+	[UIView animateWithDuration:ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
 		[self.view layoutIfNeeded];
-	}];
+	} completion:nil];
 	
 	self.sloveViewIsMoved = YES;
 }
@@ -394,9 +409,9 @@
 															 multiplier:1
 															   constant:15];
 	
-	[UIView animateWithDuration:ANIMATION_DURATION animations:^{
+	[UIView animateWithDuration:ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
 		[self.view layoutIfNeeded];
-	}];
+	} completion:nil];
 	
 	self.sloveViewIsMoved = NO;
 }

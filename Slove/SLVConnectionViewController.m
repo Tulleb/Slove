@@ -29,6 +29,7 @@
 	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 	
+	// This block doesn't trigger when there is no Internet connexion
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
 			if ([FBSDKAccessToken currentAccessToken]) {

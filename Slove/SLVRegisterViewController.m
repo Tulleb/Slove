@@ -140,7 +140,6 @@
 	[user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		if (!error) {
 			SLVPhoneNumberViewController *viewController = [[SLVPhoneNumberViewController alloc] init];
-			viewController.backButtonType = kBackToRoot;
 			[self.navigationController pushViewController:viewController animated:YES];
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);

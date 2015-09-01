@@ -27,19 +27,6 @@
                         <outlet property="delegate" destination="-1" id="hYa-Ju-muX"/>
                     </connections>
                 </tableView>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v7s-nI-aeS">
-                    <rect key="frame" x="236" y="285" width="128" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="Epr-YW-mdD"/>
-                        <constraint firstAttribute="width" constant="128" id="aFw-JT-nGq"/>
-                    </constraints>
-                    <state key="normal" title="button_disconnect">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="disconnectAction:" destination="-1" eventType="touchUpInside" id="vPl-yE-sCT"/>
-                    </connections>
-                </button>
                 <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="bar" selectedSegmentIndex="0" translatesAutoresizingMaskIntoConstraints="NO" id="JsE-LJ-YJJ">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="29"/>
                     <constraints>
@@ -82,9 +69,7 @@
             <constraints>
                 <constraint firstItem="JsE-LJ-YJJ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3dC-TJ-KL8"/>
                 <constraint firstItem="JsE-LJ-YJJ" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="4lW-V3-mPr"/>
-                <constraint firstAttribute="centerY" secondItem="v7s-nI-aeS" secondAttribute="centerY" id="9fk-bB-72E"/>
                 <constraint firstAttribute="centerY" secondItem="Gsm-xj-cQx" secondAttribute="centerY" constant="62" id="Apw-Vs-ZYf"/>
-                <constraint firstAttribute="centerX" secondItem="v7s-nI-aeS" secondAttribute="centerX" id="BNH-Lh-OOK"/>
                 <constraint firstAttribute="centerX" secondItem="Lx0-ET-2jz" secondAttribute="centerX" id="Bsf-Hc-e4c"/>
                 <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="JsE-LJ-YJJ" secondAttribute="bottom" id="NZM-Rs-By5"/>

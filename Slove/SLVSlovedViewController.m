@@ -7,6 +7,7 @@
 //
 
 #import "SLVSlovedViewController.h"
+#import "SLVSloveSentViewController.h"
 
 @interface SLVSlovedViewController ()
 
@@ -24,17 +25,52 @@
 }
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
-	self.usernameLabel.text = self.slover.username;
+	self.pictureImageView.image = self.slover.picture;
+	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/notif_masque"];
+	[self.leftButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_gauche_notif"] forState:UIControlStateNormal];
+	[self.leftButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_gauche_notifclic"] forState:UIControlStateHighlighted];
+	[self.rightButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_droite_notif"] forState:UIControlStateNormal];
+	[self.rightButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_droite_notif_clic"] forState:UIControlStateHighlighted];
+	
+	[self.leftButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.rightButton setTitleColor:WHITE forState:UIControlStateNormal];
+	
+	self.titleLabel.font = [UIFont fontWithName:@"SansitaOne" size:30];
+	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_LARGE_FONT_SIZE];
+	
+	self.subtitleLabel.text = [self.subtitleLabel.text stringByAppendingString:self.slover.username];
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
-- (IBAction)okAction:(id)sender {
+- (IBAction)leftAction:(id)sender {
+	[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
+					   withParameters:@{@"username" : self.slover.username}
+								block:^(id object, NSError *error){
+									if (!error) {
+										[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
+											SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
+											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
+											
+											[SLVTools playSound:CONNECTION_VIEW_SOUND];
+											
+											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+										}];
+									} else {
+										SLVLog(@"%@%@", SLV_ERROR, error.description);
+										[ParseErrorHandlingController handleParseError:error];
+										
+										[[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+									}
+								}];
+}
+
+- (IBAction)rightAction:(id)sender {
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
 }
 

@@ -288,9 +288,14 @@
 	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], soundName];
 	NSURL *soundUrl = [NSURL fileURLWithPath:path];
 	
-	AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-	[audioPlayer play];
-	SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+	NSError *error;
+	AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+	if (error) {
+		SLVLog(@"%@%@", SLV_ERROR, error.description);
+	} else {
+		[audioPlayer play];
+		SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+	}
 }
 
 @end

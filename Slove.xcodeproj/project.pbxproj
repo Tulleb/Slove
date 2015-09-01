@@ -8,13 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		C42C8E9A1B8888EF0079D734 /* Assets in Resources */ = {isa = PBXBuildFile; fileRef = C42C8E981B887C3A0079D734 /* Assets */; };
-		C42C8EA91B8889200079D734 /* OFL.txt in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EA21B8889200079D734 /* OFL.txt */; };
-		C42C8EB11B8889EA0079D734 /* AveriaSansLibre-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EAB1B8889EA0079D734 /* AveriaSansLibre-Bold.ttf */; };
-		C42C8EB21B8889EA0079D734 /* AveriaSansLibre-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EAC1B8889EA0079D734 /* AveriaSansLibre-BoldItalic.ttf */; };
-		C42C8EB31B8889EA0079D734 /* AveriaSansLibre-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EAD1B8889EA0079D734 /* AveriaSansLibre-Italic.ttf */; };
-		C42C8EB41B8889EA0079D734 /* AveriaSansLibre-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EAE1B8889EA0079D734 /* AveriaSansLibre-Light.ttf */; };
-		C42C8EB51B8889EA0079D734 /* AveriaSansLibre-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EAF1B8889EA0079D734 /* AveriaSansLibre-LightItalic.ttf */; };
-		C42C8EB61B8889EA0079D734 /* AveriaSansLibre-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C42C8EB01B8889EA0079D734 /* AveriaSansLibre-Regular.ttf */; };
 		C44224E91B5BE7D600389210 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = C44224E81B5BE7D600389210 /* main.m */; };
 		C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = C44224EB1B5BE7D600389210 /* AppDelegate.m */; };
 		C44224F41B5BE7D600389210 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C44224F31B5BE7D600389210 /* Images.xcassets */; };
@@ -60,8 +53,23 @@
 		C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */; };
 		C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */; };
 		C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */; };
+		C4E9C0F21B9641730071C084 /* SLVSloveSentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E9C0F01B9641730071C084 /* SLVSloveSentViewController.m */; };
+		C4E9C0F31B9641730071C084 /* SLVSloveSentViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F11B9641730071C084 /* SLVSloveSentViewController.xib */; };
+		C4E9C0FA1B96494E0071C084 /* AveriaSansLibre-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F41B96494E0071C084 /* AveriaSansLibre-Bold.ttf */; };
+		C4E9C0FB1B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F51B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf */; };
+		C4E9C0FC1B96494E0071C084 /* AveriaSansLibre-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F61B96494E0071C084 /* AveriaSansLibre-Italic.ttf */; };
+		C4E9C0FD1B96494E0071C084 /* AveriaSansLibre-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F71B96494E0071C084 /* AveriaSansLibre-Light.ttf */; };
+		C4E9C0FE1B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F81B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf */; };
+		C4E9C0FF1B96494E0071C084 /* AveriaSansLibre-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F91B96494E0071C084 /* AveriaSansLibre-Regular.ttf */; };
+		C4E9C1021B96496A0071C084 /* SansitaOne.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C1011B96496A0071C084 /* SansitaOne.ttf */; };
+		C4E9C1051B965BE90071C084 /* Congratsbuild2.wav in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C1041B965BE90071C084 /* Congratsbuild2.wav */; };
+		C4E9C1071B965BF50071C084 /* Congratsbuild1.wav in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C1061B965BF50071C084 /* Congratsbuild1.wav */; };
 		C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */; };
 		C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */; };
+		C4F2CECE1B92101E000AC390 /* SLVParametersViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F2CECC1B92101E000AC390 /* SLVParametersViewController.m */; };
+		C4F2CECF1B92101E000AC390 /* SLVParametersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CECD1B92101E000AC390 /* SLVParametersViewController.xib */; };
+		C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */; };
+		C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -80,13 +88,6 @@
 		56E026E5988632AACB633B7D /* Pods-Slove.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Slove.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Slove/Pods-Slove.debug.xcconfig"; sourceTree = "<group>"; };
 		8E2687E97BE04A9CA518E4AB /* Pods-Slove.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Slove.release.xcconfig"; path = "Pods/Target Support Files/Pods-Slove/Pods-Slove.release.xcconfig"; sourceTree = "<group>"; };
 		C42C8E981B887C3A0079D734 /* Assets */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Assets; sourceTree = "<group>"; };
-		C42C8EA21B8889200079D734 /* OFL.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = OFL.txt; path = Assets/Font/Averia_Sans_Libre/OFL.txt; sourceTree = "<group>"; };
-		C42C8EAB1B8889EA0079D734 /* AveriaSansLibre-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Bold.ttf"; path = "Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Bold.ttf"; sourceTree = "<group>"; };
-		C42C8EAC1B8889EA0079D734 /* AveriaSansLibre-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-BoldItalic.ttf"; path = "Assets/Font/Averia_Sans_Libre/AveriaSansLibre-BoldItalic.ttf"; sourceTree = "<group>"; };
-		C42C8EAD1B8889EA0079D734 /* AveriaSansLibre-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Italic.ttf"; path = "Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Italic.ttf"; sourceTree = "<group>"; };
-		C42C8EAE1B8889EA0079D734 /* AveriaSansLibre-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Light.ttf"; path = "Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Light.ttf"; sourceTree = "<group>"; };
-		C42C8EAF1B8889EA0079D734 /* AveriaSansLibre-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-LightItalic.ttf"; path = "Assets/Font/Averia_Sans_Libre/AveriaSansLibre-LightItalic.ttf"; sourceTree = "<group>"; };
-		C42C8EB01B8889EA0079D734 /* AveriaSansLibre-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Regular.ttf"; path = "Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Regular.ttf"; sourceTree = "<group>"; };
 		C44224E31B5BE7D600389210 /* Slove.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Slove.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C44224E71B5BE7D600389210 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C44224E81B5BE7D600389210 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -167,9 +168,27 @@
 		C4C9274A1B66ABC4000ABA7A /* SLVFacebookInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVFacebookInviteViewController.h; sourceTree = "<group>"; };
 		C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVFacebookInviteViewController.m; sourceTree = "<group>"; };
 		C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVFacebookInviteViewController.xib; sourceTree = "<group>"; };
+		C4E9C0EF1B9641730071C084 /* SLVSloveSentViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVSloveSentViewController.h; sourceTree = "<group>"; };
+		C4E9C0F01B9641730071C084 /* SLVSloveSentViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVSloveSentViewController.m; sourceTree = "<group>"; };
+		C4E9C0F11B9641730071C084 /* SLVSloveSentViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVSloveSentViewController.xib; sourceTree = "<group>"; };
+		C4E9C0F41B96494E0071C084 /* AveriaSansLibre-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Bold.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-Bold.ttf"; sourceTree = "<group>"; };
+		C4E9C0F51B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-BoldItalic.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-BoldItalic.ttf"; sourceTree = "<group>"; };
+		C4E9C0F61B96494E0071C084 /* AveriaSansLibre-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Italic.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-Italic.ttf"; sourceTree = "<group>"; };
+		C4E9C0F71B96494E0071C084 /* AveriaSansLibre-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Light.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-Light.ttf"; sourceTree = "<group>"; };
+		C4E9C0F81B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-LightItalic.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-LightItalic.ttf"; sourceTree = "<group>"; };
+		C4E9C0F91B96494E0071C084 /* AveriaSansLibre-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Regular.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-Regular.ttf"; sourceTree = "<group>"; };
+		C4E9C1011B96496A0071C084 /* SansitaOne.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SansitaOne.ttf; path = "Assets/Font/Sansita One/SansitaOne.ttf"; sourceTree = "<group>"; };
+		C4E9C1041B965BE90071C084 /* Congratsbuild2.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Congratsbuild2.wav; path = Assets/Sound/Congratsbuild2.wav; sourceTree = "<group>"; };
+		C4E9C1061B965BF50071C084 /* Congratsbuild1.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = Congratsbuild1.wav; path = Assets/Sound/Congratsbuild1.wav; sourceTree = "<group>"; };
 		C4ED80471B7802A6005E84E4 /* SLVProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVProfileViewController.h; sourceTree = "<group>"; };
 		C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVProfileViewController.m; sourceTree = "<group>"; };
 		C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVProfileViewController.xib; sourceTree = "<group>"; };
+		C4F2CECB1B92101E000AC390 /* SLVParametersViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVParametersViewController.h; sourceTree = "<group>"; };
+		C4F2CECC1B92101E000AC390 /* SLVParametersViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVParametersViewController.m; sourceTree = "<group>"; };
+		C4F2CECD1B92101E000AC390 /* SLVParametersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVParametersViewController.xib; sourceTree = "<group>"; };
+		C4F2CED11B92173A000AC390 /* SLVUpdateProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVUpdateProfileViewController.h; sourceTree = "<group>"; };
+		C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVUpdateProfileViewController.m; sourceTree = "<group>"; };
+		C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVUpdateProfileViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -207,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				C42C8EAA1B88893E0079D734 /* Averia Sans Libre */,
+				C4E9C1001B9649550071C084 /* Sansita One */,
 			);
 			name = Font;
 			sourceTree = "<group>";
@@ -214,13 +234,12 @@
 		C42C8EAA1B88893E0079D734 /* Averia Sans Libre */ = {
 			isa = PBXGroup;
 			children = (
-				C42C8EAB1B8889EA0079D734 /* AveriaSansLibre-Bold.ttf */,
-				C42C8EAC1B8889EA0079D734 /* AveriaSansLibre-BoldItalic.ttf */,
-				C42C8EAD1B8889EA0079D734 /* AveriaSansLibre-Italic.ttf */,
-				C42C8EAE1B8889EA0079D734 /* AveriaSansLibre-Light.ttf */,
-				C42C8EAF1B8889EA0079D734 /* AveriaSansLibre-LightItalic.ttf */,
-				C42C8EB01B8889EA0079D734 /* AveriaSansLibre-Regular.ttf */,
-				C42C8EA21B8889200079D734 /* OFL.txt */,
+				C4E9C0F41B96494E0071C084 /* AveriaSansLibre-Bold.ttf */,
+				C4E9C0F51B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf */,
+				C4E9C0F61B96494E0071C084 /* AveriaSansLibre-Italic.ttf */,
+				C4E9C0F71B96494E0071C084 /* AveriaSansLibre-Light.ttf */,
+				C4E9C0F81B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf */,
+				C4E9C0F91B96494E0071C084 /* AveriaSansLibre-Regular.ttf */,
 			);
 			name = "Averia Sans Libre";
 			sourceTree = "<group>";
@@ -249,6 +268,7 @@
 			isa = PBXGroup;
 			children = (
 				C42C8E9B1B88890E0079D734 /* Font */,
+				C4E9C1031B965BD50071C084 /* Sound */,
 				C42C8E981B887C3A0079D734 /* Assets */,
 				C442251E1B5BF1AE00389210 /* Category */,
 				C44225191B5BF03F00389210 /* Controller */,
@@ -292,6 +312,7 @@
 			children = (
 				C442252C1B5BF6CD00389210 /* Connection */,
 				C4A4DC761B6149290020BF3A /* Home */,
+				C4F2CECA1B920FF2000AC390 /* Parameters */,
 				C4A248911B81178D004B9D43 /* Popup */,
 				C44224F31B5BE7D600389210 /* Images.xcassets */,
 				C44224F51B5BE7D600389210 /* LaunchScreen.xib */,
@@ -356,16 +377,6 @@
 			name = Connection;
 			sourceTree = "<group>";
 		};
-		C44EB19E1B7D468F001DC989 /* Sloved */ = {
-			isa = PBXGroup;
-			children = (
-				C44EB1A21B7D46CF001DC989 /* SLVSlovedViewController.h */,
-				C44EB1A31B7D46CF001DC989 /* SLVSlovedViewController.m */,
-				C44EB1A41B7D46CF001DC989 /* SLVSlovedViewController.xib */,
-			);
-			name = Sloved;
-			sourceTree = "<group>";
-		};
 		C49FA8B91B6D1B33009288B9 /* Contact */ = {
 			isa = PBXGroup;
 			children = (
@@ -382,10 +393,15 @@
 		C4A248911B81178D004B9D43 /* Popup */ = {
 			isa = PBXGroup;
 			children = (
-				C44EB19E1B7D468F001DC989 /* Sloved */,
 				C4A2488C1B81130A004B9D43 /* SLVInteractionPopupViewController.h */,
 				C4A2488D1B81130A004B9D43 /* SLVInteractionPopupViewController.m */,
 				C4A2488E1B81130A004B9D43 /* SLVInteractionPopupViewController.xib */,
+				C44EB1A21B7D46CF001DC989 /* SLVSlovedViewController.h */,
+				C44EB1A31B7D46CF001DC989 /* SLVSlovedViewController.m */,
+				C44EB1A41B7D46CF001DC989 /* SLVSlovedViewController.xib */,
+				C4E9C0EF1B9641730071C084 /* SLVSloveSentViewController.h */,
+				C4E9C0F01B9641730071C084 /* SLVSloveSentViewController.m */,
+				C4E9C0F11B9641730071C084 /* SLVSloveSentViewController.xib */,
 			);
 			name = Popup;
 			sourceTree = "<group>";
@@ -454,6 +470,23 @@
 			name = Invite;
 			sourceTree = "<group>";
 		};
+		C4E9C1001B9649550071C084 /* Sansita One */ = {
+			isa = PBXGroup;
+			children = (
+				C4E9C1011B96496A0071C084 /* SansitaOne.ttf */,
+			);
+			name = "Sansita One";
+			sourceTree = "<group>";
+		};
+		C4E9C1031B965BD50071C084 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				C4E9C1061B965BF50071C084 /* Congratsbuild1.wav */,
+				C4E9C1041B965BE90071C084 /* Congratsbuild2.wav */,
+			);
+			name = Sound;
+			sourceTree = "<group>";
+		};
 		C4ED80461B780274005E84E4 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
@@ -462,6 +495,19 @@
 				C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */,
 			);
 			name = Profile;
+			sourceTree = "<group>";
+		};
+		C4F2CECA1B920FF2000AC390 /* Parameters */ = {
+			isa = PBXGroup;
+			children = (
+				C4F2CECB1B92101E000AC390 /* SLVParametersViewController.h */,
+				C4F2CECC1B92101E000AC390 /* SLVParametersViewController.m */,
+				C4F2CECD1B92101E000AC390 /* SLVParametersViewController.xib */,
+				C4F2CED11B92173A000AC390 /* SLVUpdateProfileViewController.h */,
+				C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */,
+				C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */,
+			);
+			name = Parameters;
 			sourceTree = "<group>";
 		};
 		C6B0BBE6B229A7F5CD217DA8 /* Pods */ = {
@@ -558,28 +604,33 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C4E9C1071B965BF50071C084 /* Congratsbuild1.wav in Resources */,
 				C42C8E9A1B8888EF0079D734 /* Assets in Resources */,
-				C42C8EB61B8889EA0079D734 /* AveriaSansLibre-Regular.ttf in Resources */,
-				C42C8EB31B8889EA0079D734 /* AveriaSansLibre-Italic.ttf in Resources */,
+				C4F2CECF1B92101E000AC390 /* SLVParametersViewController.xib in Resources */,
 				C498E83C1B64F2C8002B0A4E /* SLVLogInViewController.xib in Resources */,
+				C4E9C0FB1B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf in Resources */,
 				C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */,
+				C4E9C0FD1B96494E0071C084 /* AveriaSansLibre-Light.ttf in Resources */,
 				C44EB1A61B7D46CF001DC989 /* SLVSlovedViewController.xib in Resources */,
 				C44224F71B5BE7D600389210 /* LaunchScreen.xib in Resources */,
 				C4A48DA41B61519000CEBA25 /* SLVPhoneNumberViewController.xib in Resources */,
-				C42C8EA91B8889200079D734 /* OFL.txt in Resources */,
+				C4E9C1021B96496A0071C084 /* SansitaOne.ttf in Resources */,
+				C4E9C0FE1B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf in Resources */,
+				C4E9C0FA1B96494E0071C084 /* AveriaSansLibre-Bold.ttf in Resources */,
+				C4E9C0FC1B96494E0071C084 /* AveriaSansLibre-Italic.ttf in Resources */,
 				C44224F41B5BE7D600389210 /* Images.xcassets in Resources */,
 				C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */,
-				C42C8EB21B8889EA0079D734 /* AveriaSansLibre-BoldItalic.ttf in Resources */,
 				C4A248901B81130A004B9D43 /* SLVInteractionPopupViewController.xib in Resources */,
 				C49A82381B639DF60061BA1B /* SLVUsernameViewController.xib in Resources */,
+				C4E9C0F31B9641730071C084 /* SLVSloveSentViewController.xib in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
-				C42C8EB51B8889EA0079D734 /* AveriaSansLibre-LightItalic.ttf in Resources */,
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
-				C42C8EB41B8889EA0079D734 /* AveriaSansLibre-Light.ttf in Resources */,
+				C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
 				C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */,
-				C42C8EB11B8889EA0079D734 /* AveriaSansLibre-Bold.ttf in Resources */,
 				C4A48DA91B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib in Resources */,
+				C4E9C0FF1B96494E0071C084 /* AveriaSansLibre-Regular.ttf in Resources */,
+				C4E9C1051B965BE90071C084 /* Congratsbuild2.wav in Resources */,
 				C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */,
 				C4A48D9C1B6149EC00CEBA25 /* SLVHomeViewController.xib in Resources */,
 			);
@@ -650,7 +701,9 @@
 				C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */,
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,
 				C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */,
+				C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */,
 				C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */,
+				C4F2CECE1B92101E000AC390 /* SLVParametersViewController.m in Sources */,
 				C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */,
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
@@ -658,6 +711,7 @@
 				C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */,
 				C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */,
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,
+				C4E9C0F21B9641730071C084 /* SLVSloveSentViewController.m in Sources */,
 				C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */,
 				C49FA8C21B6EB1B6009288B9 /* SLVCountryCodeData.m in Sources */,
 			);

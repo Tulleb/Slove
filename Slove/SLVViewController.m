@@ -14,14 +14,6 @@
 
 @implementation SLVViewController
 
-- (id)init {
-	self = [super init];
-	if (self) {
-		self.backButtonType = kBackToPrevious;
-	}
-	return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
@@ -112,7 +104,7 @@
 	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
 	[backButton setTitle:NSLocalizedString(@"Return", nil) forState:UIControlStateNormal];
 	[backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
-	[backButton setTitleColor:BLUE_IOS forState:UIControlStateNormal];
+	[backButton setTitleColor:MAIN_COLOR forState:UIControlStateNormal];
 	[backButton setTitleColor:DARK_GRAY forState:UIControlStateHighlighted];
 	backButton.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 	backButton.titleLabel.adjustsFontSizeToFitWidth = YES;
@@ -126,6 +118,10 @@
 
 - (void)goBack:(id)sender {
 	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)goToHome {
+	[ApplicationDelegate.currentNavigationController goToHome];
 }
 
 @end

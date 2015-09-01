@@ -7,6 +7,7 @@
 //
 
 #import "SLVProfileViewController.h"
+#import "SLVSloveSentViewController.h"
 
 @interface SLVProfileViewController ()
 
@@ -97,6 +98,11 @@
 					   withParameters:@{@"username" : self.contact.username}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
+										[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
+										
+										[SLVTools playSound:CONNECTION_VIEW_SOUND];
+										
 										[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 									} else {
 										SLVLog(@"%@%@", SLV_ERROR, error.description);

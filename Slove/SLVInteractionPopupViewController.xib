@@ -21,7 +21,7 @@
             </connections>
         </placeholder>
         <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
-        <view opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+        <view opaque="NO" clearsContextBeforeDrawing="NO" alpha="0.89999999999999991" contentMode="scaleToFill" id="i5M-Pr-FkT">
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
@@ -142,7 +142,7 @@
                     </constraints>
                 </view>
             </subviews>
-            <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.33333333333333331" green="0.62745098039215685" blue="0.99607843137254903" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="hMV-mn-sqO" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="6VT-ef-aOp"/>
                 <constraint firstAttribute="trailing" secondItem="hMV-mn-sqO" secondAttribute="trailing" id="AW7-3F-Wh0"/>

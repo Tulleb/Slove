@@ -11,6 +11,7 @@
 
 @protocol SLVInteractionPopupDelegate <NSObject>
 
+@optional
 - (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup;
 - (void)buttonAPressed:(SLVInteractionPopupViewController *)popup;
 - (void)buttonBPressed:(SLVInteractionPopupViewController *)popup;
@@ -31,8 +32,8 @@
 @property (strong, nonatomic) IBOutlet UIButton *soloButton;
 @property (strong, nonatomic) IBOutlet UIButton *buttonA;
 @property (strong, nonatomic) IBOutlet UIButton *buttonB;
-@property (strong, nonatomic) NSString *title;
-@property (strong, nonatomic) NSString *body;
+@property (strong, nonatomic) NSString *popupTitle;
+@property (strong, nonatomic) NSString *popupBody;
 @property (strong, nonatomic) NSArray *buttonTitles;
 
 - (id)initWithTitle:(NSString *)title body:(NSString *)body andButtonsTitle:(NSArray *)buttonTitles;

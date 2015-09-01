@@ -17,8 +17,8 @@
 - (id)initWithTitle:(NSString *)title body:(NSString *)body andButtonsTitle:(NSArray *)buttonTitles {
 	self = [super init];
 	if (self) {
-		self.title = title;
-		self.body = body;
+		self.popupTitle = title;
+		self.popupBody = body;
 		self.buttonTitles = buttonTitles;
 	}
 	return self;
@@ -29,8 +29,8 @@
 	
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup"] forState:UIControlStateNormal];
 	
-	self.titleLabel.text = self.title;
-	self.bodyLabel.text = self.body;
+	self.titleLabel.text = self.popupTitle;
+	self.bodyLabel.text = self.popupBody;
 	
 	switch ([self.buttonTitles count]) {
 		case 1: {
