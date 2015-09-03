@@ -57,7 +57,7 @@
 				} else {
 					[self.loadingIndicator stopAnimating];
 					
-					self.addressBookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_addressBookAccess", nil) body:NSLocalizedString(@"popup_body_addressBookAccess", nil) andButtonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil]];
+					self.addressBookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_addressBookAccess", nil) body:NSLocalizedString(@"popup_body_addressBookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 					
 					self.addressBookPopup.delegate = self;
 					
@@ -92,7 +92,15 @@
 
 - (void)checkFacebookFriendsAuthorization {
 	if (![FBSDKAccessToken currentAccessToken]) {
-		// TODO: Handle facebook connexion
+		SLVLog(@"%@Not connected through Facebook", SLV_WARNING);
+		[self.loadingIndicator stopAnimating];
+		
+		self.errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_notConnectedWithFacebook", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+		
+		self.errorPopup.delegate = self;
+		
+		[self presentViewController:self.errorPopup animated:YES completion:nil];
+		
 		return;
 	}
 	
@@ -113,7 +121,7 @@
 					SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
 					[self.loadingIndicator stopAnimating];
 					
-					self.facebookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) andButtonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil]];
+					self.facebookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 					
 					self.facebookPopup.delegate = self;
 					

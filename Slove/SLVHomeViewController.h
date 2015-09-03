@@ -26,6 +26,7 @@ typedef enum  {
 @property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *facebookFriends;
+@property (strong, nonatomic) SLVInteractionPopupViewController *errorPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *addressBookPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *facebookPopup;
 @property (nonatomic) BOOL readyToDownload;

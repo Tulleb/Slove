@@ -390,7 +390,7 @@
 																 toItem:self.sloveView
 															  attribute:NSLayoutAttributeCenterY
 															 multiplier:1
-															   constant:-30];
+															   constant:-(self.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height)];
 	
 	[UIView animateWithDuration:ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
 		[self.view layoutIfNeeded];

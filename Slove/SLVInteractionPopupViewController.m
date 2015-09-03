@@ -14,12 +14,13 @@
 
 @implementation SLVInteractionPopupViewController
 
-- (id)initWithTitle:(NSString *)title body:(NSString *)body andButtonsTitle:(NSArray *)buttonTitles {
+- (id)initWithTitle:(NSString *)title body:(NSString *)body buttonsTitle:(NSArray *)buttonTitles andDismissButton:(BOOL)dismissShouldDisplayed {
 	self = [super init];
 	if (self) {
 		self.popupTitle = title;
 		self.popupBody = body;
 		self.buttonTitles = buttonTitles;
+		self.dismissShouldDisplayed = dismissShouldDisplayed;
 	}
 	return self;
 }
@@ -28,6 +29,8 @@
     [super viewDidLoad];
 	
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup"] forState:UIControlStateNormal];
+	
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_LARGE_FONT_SIZE];
 	
 	self.titleLabel.text = self.popupTitle;
 	self.bodyLabel.text = self.popupBody;
@@ -59,6 +62,8 @@
 	[self.soloButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_popup_clic"] forState:UIControlStateHighlighted];
 	[self.buttonA setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_popup_clic"] forState:UIControlStateHighlighted];
 	[self.buttonB setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_popup_clic"] forState:UIControlStateHighlighted];
+	
+	self.dismissButton.hidden = !self.dismissShouldDisplayed;
 }
 
 - (void)viewWillLayoutSubviews {

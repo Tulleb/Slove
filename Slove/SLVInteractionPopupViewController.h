@@ -35,8 +35,9 @@
 @property (strong, nonatomic) NSString *popupTitle;
 @property (strong, nonatomic) NSString *popupBody;
 @property (strong, nonatomic) NSArray *buttonTitles;
+@property (nonatomic) BOOL dismissShouldDisplayed;
 
-- (id)initWithTitle:(NSString *)title body:(NSString *)body andButtonsTitle:(NSArray *)buttonTitles;
+- (id)initWithTitle:(NSString *)title body:(NSString *)body buttonsTitle:(NSArray *)buttonTitles andDismissButton:(BOOL)dismissShouldDisplayed;
 - (IBAction)soloButtonAction:(id)sender;
 - (IBAction)buttonAAction:(id)sender;
 - (IBAction)buttonBAction:(id)sender;
