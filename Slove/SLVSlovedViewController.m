@@ -37,8 +37,8 @@
 	[self.leftButton setTitleColor:WHITE forState:UIControlStateNormal];
 	[self.rightButton setTitleColor:WHITE forState:UIControlStateNormal];
 	
-	self.titleLabel.font = [UIFont fontWithName:@"SansitaOne" size:30];
-	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_LARGE_FONT_SIZE];
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
 	
 	self.subtitleLabel.text = [self.subtitleLabel.text stringByAppendingString:self.slover.username];
 }

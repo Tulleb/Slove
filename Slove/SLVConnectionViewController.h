@@ -13,14 +13,14 @@
 
 @interface SLVConnectionViewController : SLVViewController <FBSDKLoginButtonDelegate, SLVInteractionPopupDelegate>
 
-@property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *layerImageView;
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subtitleUpperLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subtitleLowerLabel;
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *logoViewHeightConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *subtitleViewHeightConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *footerViewHeightConstraint;
+@property (strong, nonatomic) IBOutlet UIButton *registerButton;
+@property (strong, nonatomic) IBOutlet UIButton *usernameLoginButton;
 
 - (IBAction)connectAction:(id)sender;
 - (IBAction)registerAction:(id)sender;

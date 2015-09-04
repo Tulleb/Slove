@@ -37,6 +37,9 @@
 	<true/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Nunito-Bold.ttf</string>
+		<string>Nunito-Light.ttf</string>
+		<string>Nunito-Regular.ttf</string>
 		<string>SansitaOne.ttf</string>
 		<string>AveriaSansLibre-Regular.ttf</string>
 		<string>AveriaSansLibre-Italic.ttf</string>

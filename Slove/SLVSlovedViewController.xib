@@ -52,7 +52,7 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5c-hu-qF8">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="H5c-hu-qF8">
                             <rect key="frame" x="304" y="416" width="140" height="63"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="63" id="Anb-pO-QeZ"/>
@@ -65,7 +65,7 @@
                                 <action selector="rightAction:" destination="-1" eventType="touchUpInside" id="Ksy-Qd-nhr"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1D-Qp-Srm">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="p1D-Qp-Srm">
                             <rect key="frame" x="156" y="416" width="140" height="63"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="140" id="PuK-Bt-B6G"/>

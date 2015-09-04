@@ -46,7 +46,7 @@
                                 </mask>
                             </variation>
                         </label>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="38c-G7-oY3">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="38c-G7-oY3">
                             <rect key="frame" x="108" y="426" width="150" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="7VB-Q4-blI"/>
@@ -60,7 +60,7 @@
                                 <action selector="buttonAAction:" destination="-1" eventType="touchUpInside" id="8BH-fv-chx"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tL3-TM-Uhi">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tL3-TM-Uhi">
                             <rect key="frame" x="342" y="426" width="150" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="BDh-Vm-ygO"/>
@@ -74,7 +74,7 @@
                                 <action selector="buttonBAction:" destination="-1" eventType="touchUpInside" id="7ge-1n-vod"/>
                             </connections>
                         </button>
-                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJY-7d-bOL">
+                        <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YJY-7d-bOL">
                             <rect key="frame" x="225" y="426" width="150" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="50" id="A7d-bB-7Ho"/>
@@ -88,7 +88,7 @@
                                 <action selector="soloButtonAction:" destination="-1" eventType="touchUpInside" id="g1H-U7-Sdq"/>
                             </connections>
                         </button>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPQ-0u-EGc">
+                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zPQ-0u-EGc">
                             <rect key="frame" x="500" y="0.0" width="50" height="50"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="50" id="Tkt-VD-UTc"/>

@@ -70,7 +70,7 @@
 				textView.text = NSLocalizedString(textView.text, nil);
 			} else if ([subview isKindOfClass:[UISegmentedControl class]]) {
 				UISegmentedControl *segmentedControl = (UISegmentedControl *)subview;
-				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_SMALL_FONT_SIZE];
+				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL];
 				NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
 				[segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
 				segmentedControl.apportionsSegmentWidthsByContent = YES;

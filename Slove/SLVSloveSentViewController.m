@@ -19,8 +19,8 @@
 	
 	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/notif_envoi"];
 	
-	self.titleLabel.font = [UIFont fontWithName:@"SansitaOne" size:30];
-	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_LARGE_FONT_SIZE];
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
 	
 	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
 	tap.delegate = self;
