@@ -33,11 +33,6 @@
 	self.backgroundImageView.image = [UIImage imageNamed:@"Assets/Image/image_fond"];
 	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/masque_coeur_slovy"];
 	
-	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
-	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
-	[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
-	[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
-	
 	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
 	
@@ -62,6 +57,11 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	
+	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
+	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
+	[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
+	[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
 	
 	self.navigationController.navigationBarHidden = YES;
 }

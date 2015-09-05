@@ -22,6 +22,8 @@
 	
     [super viewDidLoad];
 	
+	[self loadBackButton];
+	
 	[self selectDefaultCountry];
 }
 

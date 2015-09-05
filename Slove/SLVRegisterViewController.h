@@ -12,6 +12,7 @@
 	BOOL conditionsAccepted;
 }
 
+@property (strong, nonatomic) IBOutlet UIImageView *bannerImageView;
 @property (strong, nonatomic) IBOutlet UITextField *usernameField;
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;

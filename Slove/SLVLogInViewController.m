@@ -30,6 +30,8 @@
 	
 	[self observeKeyboard];
 	[self initTapToDismiss];
+	
+	[self loadBackButton];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

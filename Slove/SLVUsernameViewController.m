@@ -19,7 +19,8 @@
 	self.appName = @"username";
 	
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+	
+	[self loadBackButton];
 }
 
 - (void)didReceiveMemoryWarning {

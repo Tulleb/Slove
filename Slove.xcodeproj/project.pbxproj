@@ -54,6 +54,7 @@
 		C4C6446A1B9A4D7F0065B2BC /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C644671B9A4D7F0065B2BC /* Nunito-Bold.ttf */; };
 		C4C6446B1B9A4D7F0065B2BC /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C644681B9A4D7F0065B2BC /* Nunito-Light.ttf */; };
 		C4C6446C1B9A4D7F0065B2BC /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C644691B9A4D7F0065B2BC /* Nunito-Regular.ttf */; };
+		C4C644741B9AF72F0065B2BC /* SLVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C644731B9AF72F0065B2BC /* SLVTextField.m */; };
 		C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */; };
 		C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */; };
 		C4E9C0F21B9641730071C084 /* SLVSloveSentViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4E9C0F01B9641730071C084 /* SLVSloveSentViewController.m */; };
@@ -171,6 +172,8 @@
 		C4C644671B9A4D7F0065B2BC /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Bold.ttf"; path = "Assets/Font/Nunito/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		C4C644681B9A4D7F0065B2BC /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Light.ttf"; path = "Assets/Font/Nunito/Nunito-Light.ttf"; sourceTree = "<group>"; };
 		C4C644691B9A4D7F0065B2BC /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "Assets/Font/Nunito/Nunito-Regular.ttf"; sourceTree = "<group>"; };
+		C4C644721B9AF72F0065B2BC /* SLVTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVTextField.h; sourceTree = "<group>"; };
+		C4C644731B9AF72F0065B2BC /* SLVTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVTextField.m; sourceTree = "<group>"; };
 		C4C9274A1B66ABC4000ABA7A /* SLVFacebookInviteViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVFacebookInviteViewController.h; sourceTree = "<group>"; };
 		C4C9274B1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVFacebookInviteViewController.m; sourceTree = "<group>"; };
 		C4C9274C1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVFacebookInviteViewController.xib; sourceTree = "<group>"; };
@@ -277,7 +280,6 @@
 				C42C8E9B1B88890E0079D734 /* Font */,
 				C4E9C1031B965BD50071C084 /* Sound */,
 				C42C8E981B887C3A0079D734 /* Assets */,
-				C442251E1B5BF1AE00389210 /* Category */,
 				C44225191B5BF03F00389210 /* Controller */,
 				C44225151B5BEEBB00389210 /* Model */,
 				C442250C1B5BED5B00389210 /* View */,
@@ -342,8 +344,10 @@
 		C44225191B5BF03F00389210 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				C4A48DB21B61572800CEBA25 /* Template */,
+				C442251E1B5BF1AE00389210 /* Category */,
 				C4A48DB11B61571000CEBA25 /* Networking */,
+				C4C644711B9AF6EE0065B2BC /* Override */,
+				C4A48DB21B61572800CEBA25 /* Template */,
 				C44224EA1B5BE7D600389210 /* AppDelegate.h */,
 				C44224EB1B5BE7D600389210 /* AppDelegate.m */,
 				C442251B1B5BF12800389210 /* SLVTools.h */,
@@ -475,6 +479,15 @@
 				C4C644691B9A4D7F0065B2BC /* Nunito-Regular.ttf */,
 			);
 			name = Nunito;
+			sourceTree = "<group>";
+		};
+		C4C644711B9AF6EE0065B2BC /* Override */ = {
+			isa = PBXGroup;
+			children = (
+				C4C644721B9AF72F0065B2BC /* SLVTextField.h */,
+				C4C644731B9AF72F0065B2BC /* SLVTextField.m */,
+			);
+			name = Override;
 			sourceTree = "<group>";
 		};
 		C4C927491B66AB9F000ABA7A /* Invite */ = {
@@ -719,6 +732,7 @@
 				C44DCC941B682086009BDAB2 /* SLVContact.m in Sources */,
 				C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */,
 				C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */,
+				C4C644741B9AF72F0065B2BC /* SLVTextField.m in Sources */,
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,
 				C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */,
 				C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */,

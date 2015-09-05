@@ -30,7 +30,7 @@
 	
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup"] forState:UIControlStateNormal];
 	
-	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_LARGE];
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
 	
 	self.titleLabel.text = self.popupTitle;
 	self.bodyLabel.text = self.popupBody;

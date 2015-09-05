@@ -79,8 +79,8 @@
 #define DEFAULT_FONT_BOLD_ITALIC		@"AveriaSansLibre-BoldItalic"
 #define DEFAULT_FONT_LIGHT				@"AveriaSansLibre-Light"
 #define DEFAULT_FONT_LIGHT_ITALIC		@"AveriaSansLibre-LightItalic"
-#define DEFAULT_FONT_TITLE				@"SansitaOne"
 #define DEFAULT_FONT					DEFAULT_FONT_REGULAR
+#define DEFAULT_FONT_TITLE				@"SansitaOne"
 #define DEFAULT_FONT_SIZE				17
 #define DEFAULT_FONT_SIZE_SMALL			15
 #define DEFAULT_FONT_SIZE_LARGE			20

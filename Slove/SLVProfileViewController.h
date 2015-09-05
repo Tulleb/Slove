@@ -8,8 +8,9 @@
 
 #import "SLVViewController.h"
 #import "SLVContact.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SLVProfileViewController : SLVViewController
+@interface SLVProfileViewController : SLVViewController <MFMessageComposeViewControllerDelegate>
 
 @property (strong, nonatomic) SLVContact *contact;
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;

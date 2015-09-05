@@ -8,6 +8,8 @@
 
 #import "SLVProfileViewController.h"
 #import "SLVSloveSentViewController.h"
+#import "SLVInteractionPopupViewController.h"
+#import "SLVAddressBookContact.h"
 
 @interface SLVProfileViewController ()
 
@@ -94,21 +96,52 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
-					   withParameters:@{@"username" : self.contact.username}
-								block:^(id object, NSError *error){
-									if (!error) {
-										SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
-										[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
-										
-										[SLVTools playSound:CONNECTION_VIEW_SOUND];
-										
-										[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-									} else {
-										SLVLog(@"%@%@", SLV_ERROR, error.description);
-										[ParseErrorHandlingController handleParseError:error];
-									}
-								}];
+	if (!self.contact.username) {
+		if(![MFMessageComposeViewController canSendText]) {
+			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+			[self presentViewController:errorPopup animated:YES completion:nil];
+			
+			return;
+		}
+		
+		NSMutableArray *recipents = [[NSMutableArray alloc] init];
+		SLVAddressBookContact *addressBookContact = (SLVAddressBookContact *)self.contact;
+		for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
+			[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
+		}
+		
+		NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), NSLocalizedString(@"url_smsInvite", nil)];
+		
+		MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+		messageController.messageComposeDelegate = self;
+		[messageController setRecipients:recipents];
+		[messageController setBody:message];
+		
+		[self presentViewController:messageController animated:YES completion:nil];
+	} else {
+		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
+						   withParameters:@{@"username" : self.contact.username}
+									block:^(id object, NSError *error){
+										if (!error) {
+											SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
+											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
+											
+											[SLVTools playSound:CONNECTION_VIEW_SOUND];
+											
+											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+										} else {
+											SLVLog(@"%@%@", SLV_ERROR, error.description);
+											[ParseErrorHandlingController handleParseError:error];
+										}
+									}];
+	}
+}
+
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

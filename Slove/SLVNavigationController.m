@@ -90,14 +90,14 @@
 																	   toItem:nil
 																	attribute:NSLayoutAttributeNotAnAttribute
 																   multiplier:1
-																	 constant:51]];
+																	 constant:60]];
 	[self.statisticsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.statisticsButton
 																	attribute:NSLayoutAttributeWidth
 																	relatedBy:NSLayoutRelationEqual
 																	   toItem:nil
 																	attribute:NSLayoutAttributeNotAnAttribute
 																   multiplier:1
-																	 constant:147]];
+																	 constant:168]];
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.statisticsButton
 																	attribute:NSLayoutAttributeLeading
 																	relatedBy:NSLayoutRelationEqual
@@ -195,14 +195,14 @@
 																	  toItem:nil
 																   attribute:NSLayoutAttributeNotAnAttribute
 																  multiplier:1
-																	constant:51]];
+																	constant:60]];
 	[self.parametersButton addConstraint:[NSLayoutConstraint constraintWithItem:self.parametersButton
 																   attribute:NSLayoutAttributeWidth
 																   relatedBy:NSLayoutRelationEqual
 																	  toItem:nil
 																   attribute:NSLayoutAttributeNotAnAttribute
 																  multiplier:1
-																	constant:147]];
+																	constant:168]];
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																   attribute:NSLayoutAttributeTrailing
 																   relatedBy:NSLayoutRelationEqual
@@ -263,11 +263,19 @@
 }
 
 - (void)sloveAction:(id)sender {
-	if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
-		SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
-		[profileViewController sloveAction:sender];
-	} else {
+	if (![self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
 		[self homeAction:self.sloveButton];
+	}
+}
+
+- (void)sloveLongPress:(UILongPressGestureRecognizer *)gesture {
+	if (gesture.state == UIGestureRecognizerStateEnded) {
+		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
+			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
+			[profileViewController sloveAction:self.sloveButton];
+		} else {
+			[self homeAction:self.sloveButton];
+		}
 	}
 }
 
@@ -292,18 +300,18 @@
 	shadow.shadowOffset = CGSizeMake(0, 1);
 	shadow.shadowColor = CLEAR;
 	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName:DARK_GRAY,
-															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE],
+															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE],
 															NSShadowAttributeName:shadow}];
 }
 
 - (void)loadBottomNavigationBar {
 	self.bottomNavigationBarView = [[UIView alloc] init];
-	self.homeButton = [[UIButton alloc] init];
-	self.statisticsButton = [[UIButton alloc] init];
+	self.homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.statisticsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.sloveButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.parametersButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
-	self.sloveButton = [[UIButton alloc] init];
 	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:WHITE withInsetColor:RED withFrameColor:WHITE withFrame:YES withShadow:YES withShining:YES withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
-	self.parametersButton = [[UIButton alloc] init];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
@@ -314,13 +322,15 @@
 	
 	[self.statisticsButton setTitle:@"button_activity" forState:UIControlStateNormal];
 	[self.statisticsButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.statisticsButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.statisticsButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
 	[self.statisticsButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
-	self.statisticsButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
-	[self.statisticsButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 15, 0, 25)];
+//	self.statisticsButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
+	[self.statisticsButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 15, 0, 25)];
 	[self.statisticsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity"] forState:UIControlStateNormal];
 	[self.statisticsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateHighlighted];
 	[self.statisticsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateSelected];
-	[self.statisticsButton setImageEdgeInsets:UIEdgeInsetsMake(0, 10, 0, 0)];
+	[self.statisticsButton setImageEdgeInsets:UIEdgeInsetsMake(20, 10, 0, 0)];
 	[self.statisticsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity"] forState:UIControlStateNormal];
 	[self.statisticsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateHighlighted];
 	[self.statisticsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateSelected];
@@ -332,16 +342,20 @@
 	self.sloveButton.imageView.contentMode = UIViewContentModeScaleToFill;
 	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/bt_slove_slovy_big"] forState:UIControlStateNormal];
 	[self.sloveButton addTarget:self action:@selector(sloveAction:) forControlEvents:UIControlEventTouchUpInside];
+	UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(sloveLongPress:)];
+	[self.sloveButton addGestureRecognizer:longPress];
 	
 	[self.parametersButton setTitle:@"button_profile" forState:UIControlStateNormal];
 	[self.parametersButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.parametersButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.parametersButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
 	[self.parametersButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
-	self.parametersButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
-	[self.parametersButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 70, 0, 0)];
+//	self.parametersButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
+	[self.parametersButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 90, 0, 0)];
 	[self.parametersButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile"] forState:UIControlStateNormal];
 	[self.parametersButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateHighlighted];
 	[self.parametersButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateSelected];
-	[self.parametersButton setImageEdgeInsets:UIEdgeInsetsMake(0, 65, 0, 15)];
+	[self.parametersButton setImageEdgeInsets:UIEdgeInsetsMake(20, 85, 0, 15)];
 	[self.parametersButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile"] forState:UIControlStateNormal];
 	[self.parametersButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
 	[self.parametersButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];

@@ -20,6 +20,20 @@
 	
     [super viewDidLoad];
 	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/inscription_mail_banniere"];
+	
+	self.emailField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	self.usernameField.background = [UIImage imageNamed:@"Assets/Box/input1"];
+	self.passwordField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateNormal];
+	[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateHighlighted];
+	
+	[self loadBackButton];
+	
 	[self observeKeyboard];
 	[self initTapToDismiss];
 }
@@ -33,9 +47,11 @@
 	conditionsAccepted = !conditionsAccepted;
 	
 	if (conditionsAccepted) {
-		[self.conditionsButton setTitle:@"OK" forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateHighlighted];
 	} else {
-		[self.conditionsButton setTitle:@"KO" forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateHighlighted];
 	}
 }
 
