@@ -92,7 +92,7 @@
  
 	CGFloat height = keyboardFrame.size.height;
 	
-	self.keyboardConstraint.constant += height;
+	self.keyboardLayoutConstraint.constant += height;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
 		[self.view layoutIfNeeded];
@@ -103,7 +103,7 @@
 	NSDictionary *info = [notification userInfo];
 	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
  
-	self.keyboardConstraint.constant = 8;
+	self.keyboardLayoutConstraint.constant = 8;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
 		[self.view layoutIfNeeded];

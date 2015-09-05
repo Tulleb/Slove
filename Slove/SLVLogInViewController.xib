@@ -8,7 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVLogInViewController">
             <connections>
                 <outlet property="errorLabel" destination="CP3-Y5-Obt" id="n0p-WB-wSK"/>
-                <outlet property="keyboardConstraint" destination="4bn-k2-pct" id="wkd-ZT-W39"/>
+                <outlet property="keyboardLayoutConstraint" destination="4bn-k2-pct" id="wkd-ZT-W39"/>
                 <outlet property="logInButton" destination="AyT-J5-dSx" id="anK-dB-Dnf"/>
                 <outlet property="passwordField" destination="Sqp-YP-4h7" id="7E0-Oc-hqD"/>
                 <outlet property="registerButton" destination="AyT-J5-dSx" id="GIA-r2-xuA"/>

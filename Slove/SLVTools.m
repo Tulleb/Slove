@@ -289,12 +289,12 @@
 	NSURL *soundUrl = [NSURL fileURLWithPath:path];
 	
 	NSError *error;
-	AVAudioPlayer *audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
+	ApplicationDelegate.audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:&error];
 	if (error) {
 		SLVLog(@"%@%@", SLV_ERROR, error.description);
 	} else {
-		[audioPlayer play];
-		SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
+		[ApplicationDelegate.audioPlayer play];
+		SLVLog(@"Playing sound: %@", path);
 	}
 }
 

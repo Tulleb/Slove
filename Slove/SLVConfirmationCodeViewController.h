@@ -8,12 +8,16 @@
 
 #import "SLVViewController.h"
 
-@interface SLVConfirmationCodeViewController : SLVViewController {
-	NSString *currentPhoneNumber;
-}
+@interface SLVConfirmationCodeViewController : SLVViewController <UITextFieldDelegate>
 
+@property (strong, nonatomic) NSString *currentPhoneNumber;
+@property (strong, nonatomic) IBOutlet UIImageView *bannerImageView;
+@property (strong, nonatomic) IBOutlet UILabel *bannerLabel;
 @property (strong, nonatomic) IBOutlet UITextField *confirmationNumberField;
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+@property (strong, nonatomic) IBOutlet UIButton *confirmButton;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *leftBannerLabelLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
 
 - (id)initWithPhoneNumber:(NSString *)phoneNumber;
 - (IBAction)confirmAction:(id)sender;

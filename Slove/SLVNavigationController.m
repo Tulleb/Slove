@@ -269,13 +269,30 @@
 }
 
 - (void)sloveLongPress:(UILongPressGestureRecognizer *)gesture {
-	if (gesture.state == UIGestureRecognizerStateEnded) {
+	if (gesture.state == UIGestureRecognizerStateBegan) {;
+		self.sloveClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(incrementSloveClickDuration) userInfo:nil repeats:YES];
+		
 		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
 			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
-			[profileViewController sloveAction:self.sloveButton];
+			[profileViewController.circleImageView startAnimating];
+			profileViewController.circleImageView.hidden = NO;
+		}
+	} else if (gesture.state == UIGestureRecognizerStateEnded) {
+		[self.sloveClickTimer invalidate];
+		
+		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
+			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
+			if (self.sloveClickDuration >= 2) {
+				[profileViewController sloveAction:self.sloveButton];
+			}
+			
+			profileViewController.circleImageView.hidden = YES;
+			[profileViewController.circleImageView stopAnimating];
 		} else {
 			[self homeAction:self.sloveButton];
 		}
+		
+		self.sloveClickDuration = 0;
 	}
 }
 
@@ -296,12 +313,24 @@
 }
 
 - (void)loadTopNavigationBar {
-	NSShadow* shadow = [NSShadow new];
-	shadow.shadowOffset = CGSizeMake(0, 1);
-	shadow.shadowColor = CLEAR;
+//	NSShadow* shadow = [NSShadow new];
+//	shadow.shadowOffset = CGSizeMake(0, 1);
+//	shadow.shadowColor = CLEAR;
 	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName:DARK_GRAY,
-															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE],
-															NSShadowAttributeName:shadow}];
+															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE]}];
+	[[UINavigationBar appearance] setBarTintColor:SUB_COLOR];
+	if (!IS_IOS7) {
+		[[UINavigationBar appearance] setTranslucent:NO];
+		[[UINavigationBar appearance] setBackgroundImage:[UIImage new]
+										  forBarPosition:UIBarPositionAny
+											  barMetrics:UIBarMetricsDefault];
+		
+		[[UINavigationBar appearance] setShadowImage:[UIImage new]];
+	}
+}
+
+- (void)incrementSloveClickDuration {
+	self.sloveClickDuration += TIMER_FREQUENCY;
 }
 
 - (void)loadBottomNavigationBar {

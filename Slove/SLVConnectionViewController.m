@@ -26,8 +26,8 @@
 	[super viewDidLoad];
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
-	self.subtitleUpperLabel.font = [UIFont fontWithName:@"Nunito-Regular" size:DEFAULT_FONT_SIZE_LARGE];
-	self.subtitleLowerLabel.font = [UIFont fontWithName:@"Nunito-Bold" size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleUpperLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 	
 	self.backgroundImageView.image = [UIImage imageNamed:@"Assets/Image/image_fond"];

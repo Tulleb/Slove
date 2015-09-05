@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVProfileViewController">
             <connections>
+                <outlet property="circleImageView" destination="rNQ-as-rwV" id="jwb-at-D4h"/>
                 <outlet property="pictureImageView" destination="Nxu-Ru-Vlf" id="nUF-J7-mhv"/>
                 <outlet property="spiraleImageView" destination="VPm-l2-8K6" id="4pS-im-ihE"/>
                 <outlet property="spiraleYConstraint" destination="ixj-Hd-Rbr" id="TNQ-fe-Qp6"/>
@@ -38,20 +39,29 @@
                         <constraint firstAttribute="width" secondItem="Nxu-Ru-Vlf" secondAttribute="height" multiplier="1:1" id="iQk-a0-Ztc"/>
                     </constraints>
                 </imageView>
-                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VPm-l2-8K6">
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="VPm-l2-8K6">
                     <rect key="frame" x="217" y="247" width="167" height="167"/>
                     <constraints>
                         <constraint firstAttribute="width" constant="167" id="TM4-45-Lto"/>
                         <constraint firstAttribute="height" constant="167" id="sei-mK-zx9"/>
                     </constraints>
                 </imageView>
+                <imageView hidden="YES" userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rNQ-as-rwV">
+                    <rect key="frame" x="208" y="238" width="185" height="185"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="185" id="6uU-A9-Zqt"/>
+                        <constraint firstAttribute="height" constant="185" id="tLP-UQ-cfu"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="centerX" secondItem="rNQ-as-rwV" secondAttribute="centerX" id="ALj-Rt-m2F"/>
                 <constraint firstAttribute="trailing" secondItem="Nxu-Ru-Vlf" secondAttribute="trailing" id="M2s-lQ-8ku"/>
                 <constraint firstItem="Nxu-Ru-Vlf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" id="Ojk-Sl-mMu"/>
                 <constraint firstAttribute="centerX" secondItem="VPm-l2-8K6" secondAttribute="centerX" id="SgG-tI-YUm"/>
                 <constraint firstItem="38U-vq-rUj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="g2f-3D-wVL"/>
+                <constraint firstAttribute="centerY" secondItem="rNQ-as-rwV" secondAttribute="centerY" constant="-30" id="gU3-20-btn"/>
                 <constraint firstAttribute="centerY" secondItem="VPm-l2-8K6" secondAttribute="centerY" constant="-30" id="ixj-Hd-Rbr"/>
                 <constraint firstAttribute="bottom" secondItem="38U-vq-rUj" secondAttribute="bottom" constant="70" id="lZ2-6o-qQM"/>
                 <constraint firstAttribute="trailing" secondItem="38U-vq-rUj" secondAttribute="trailing" id="mmQ-RC-bah"/>

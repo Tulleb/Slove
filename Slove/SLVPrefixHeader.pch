@@ -21,6 +21,9 @@
 #import <Parse/Parse.h>
 #import "ParseErrorHandlingController.h"
 
+// Math
+#define degreesToRadians(x)	(x * M_PI / 180)
+
 // Singleton
 #define ApplicationDelegate	((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
@@ -55,6 +58,7 @@
 
 // Color
 #define MAIN_COLOR		[UIColor colorWithRed:85/255.0 green:160/255.0 blue:254/255.0 alpha:1]
+#define SUB_COLOR		[UIColor colorWithRed:214/255.0 green:214/255.0 blue:214/255.0 alpha:1]
 #define CLEAR			[UIColor clearColor]
 #define BLACK			[UIColor blackColor]
 #define WHITE			[UIColor whiteColor]
@@ -91,13 +95,15 @@
 #define ANIMATION_DURATION              0.75
 #define LONG_ANIMATION_DURATION         1
 #define VERY_LONG_ANIMATION_DURATION    2
+#define TIMER_FREQUENCY					0.1
 
 // Navigation View
 #define SLOVE_BUTTON_SIZE			75
 #define SLOVE_VIEW_BOTTOM_CONSTANT	15
 
 // Connection View
-#define CONNECTION_VIEW_SOUND	@"Congratsbuild2.wav"
+#define SLOVER_SOUND	@"Assets/Sound/Congratsbuild2.wav"
+#define SLOVED_SOUND	@"Assets/Sound/Congratsbuild1.wav"
 
 // Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2

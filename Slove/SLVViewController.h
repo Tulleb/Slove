@@ -17,4 +17,7 @@
 - (void)goBack:(id)sender;
 - (void)goToHome;
 
+// Subclassed method
+- (void)animateImages;
+
 @end

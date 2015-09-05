@@ -53,11 +53,11 @@
 					   withParameters:@{@"username" : self.slover.username}
 								block:^(id object, NSError *error){
 									if (!error) {
+										[SLVTools playSound:SLOVER_SOUND];
+										
 										[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
 											SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
-											
-											[SLVTools playSound:CONNECTION_VIEW_SOUND];
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 										}];

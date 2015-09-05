@@ -22,6 +22,8 @@
 @property (strong, nonatomic) NSLayoutConstraint *sloveViewConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *sloveBadgeConstraint;
 @property (nonatomic) BOOL sloveViewIsMoved;
+@property (nonatomic, strong) NSTimer *sloveClickTimer;
+@property (nonatomic) float sloveClickDuration;
 
 - (void)statisticsAction:(id)sender;
 - (void)sloveAction:(id)sender;
