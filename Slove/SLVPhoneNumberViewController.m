@@ -22,9 +22,31 @@
 	
     [super viewDidLoad];
 	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/choix_pays_banniere"];
+	self.bannerLabel.text = NSLocalizedString(@"label_telephone_banner", nil);
+	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
+	
+	self.pickerBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/degrade_choix_pays"];
+	self.pickerTopImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
+	self.pickerBottomImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
+	
+	self.phoneNumberField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	
+	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	[self observeKeyboard];
+	[self initTapToDismiss];
+	
 	[self loadBackButton];
 	
 	[self selectDefaultCountry];
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	self.rightBannerLabelLayoutConstraint.constant = self.bannerImageView.frame.size.width * 0.45;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -79,6 +101,51 @@
 	}
 }
 
+- (void)observeKeyboard {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	NSDictionary *info = [notification userInfo];
+	NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+	CGRect keyboardFrame = [kbFrame CGRectValue];
+ 
+	CGFloat height = keyboardFrame.size.height;
+	
+	self.keyboardLayoutConstraint.constant += height;
+	
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+	NSDictionary *info = [notification userInfo];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+ 
+	self.keyboardLayoutConstraint.constant = 8;
+	
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+- (void)initTapToDismiss {
+	UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc]
+										   initWithTarget:self
+										   action:@selector(hideKeyboard)];
+	
+	[self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)hideKeyboard {
+	for (UITextField *textField in self.view.subviews) {
+		[textField resignFirstResponder];
+	}
+}
+
 
 # pragma mark - UIPickerViewDelegate
 
@@ -94,6 +161,18 @@
 	SLVCountryCodeData	*countryCodeData = [ApplicationDelegate.countryCodeDatas objectAtIndex:row];
 	
 	return [NSString stringWithFormat:@"%@ (+%@)", countryCodeData.country, countryCodeData.countryCode];
+}
+
+- (UIView *)pickerView:(UIPickerView *)pickerView viewForRow:(NSInteger)row forComponent:(NSInteger)component reusingView:(UIView *)view {
+	UILabel *label = (UILabel *)view;
+	if (!label) {
+		label = [[UILabel alloc] init];
+		label.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+		label.textAlignment = NSTextAlignmentCenter;
+	}
+	
+	label.text = [self pickerView:pickerView titleForRow:row forComponent:component];
+	return label;
 }
 
 @end
