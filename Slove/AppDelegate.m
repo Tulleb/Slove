@@ -12,7 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-#import "SLVSlovedViewController.h"
+#import "SLVSlovedPopupViewController.h"
 
 @interface AppDelegate ()
 
@@ -114,7 +114,7 @@
 		if (error) {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		} else {
-			SLVSlovedViewController *presentedViewController = [[SLVSlovedViewController alloc] initWithContact:slover];
+			SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover];
 			[self.currentNavigationController presentViewController:presentedViewController animated:YES completion:nil];
 			
 			[ApplicationDelegate.currentNavigationController refreshSloveCounter];

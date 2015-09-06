@@ -36,12 +36,22 @@
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
 	
-	[self.confirmationNumberField becomeFirstResponder];
-	
 	[self observeKeyboard];
 	[self initTapToDismiss];
 	
 	[self loadBackButton];
+}
+
+//- (void)viewWillAppear:(BOOL)animated {
+//	[super viewWillAppear:animated];
+//	
+//	[self.confirmationNumberField becomeFirstResponder];
+//}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	[self.confirmationNumberField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {

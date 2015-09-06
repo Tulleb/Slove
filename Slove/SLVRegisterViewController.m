@@ -168,12 +168,32 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == self.usernameField) {
-		[self.emailField becomeFirstResponder];
-	} else if (textField == self.emailField) {
+	if (textField == self.emailField) {
+		[self.usernameField becomeFirstResponder];
+	} else if (textField == self.usernameField) {
 		[self.passwordField becomeFirstResponder];
 	} else if (textField == self.passwordField) {
 		[textField resignFirstResponder];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	if (textField == self.emailField || textField == self.passwordField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2_clic"];
+	} else if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input1_clic"];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+	if (textField == self.emailField || textField == self.passwordField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	} else if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input1"];
 	}
 	
 	return YES;

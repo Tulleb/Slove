@@ -1,19 +1,20 @@
 //
-//  SLVSlovedViewController.m
+//  SLVSlovedPopupViewController.m
 //  Slove
 //
 //  Created by Guillaume Bellut on 13/08/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "SLVSlovedViewController.h"
-#import "SLVSloveSentViewController.h"
+#import "SLVSlovedPopupViewController.h"
+#import "SLVSloveSentPopupViewController.h"
+#import "SLVProfileViewController.h"
 
-@interface SLVSlovedViewController ()
+@interface SLVSlovedPopupViewController ()
 
 @end
 
-@implementation SLVSlovedViewController
+@implementation SLVSlovedPopupViewController
 
 - (id)initWithContact:(SLVContact *)contact {
 	self = [super init];
@@ -49,25 +50,17 @@
 }
 
 - (IBAction)leftAction:(id)sender {
-	[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
-					   withParameters:@{@"username" : self.slover.username}
-								block:^(id object, NSError *error){
-									if (!error) {
-										[SLVTools playSound:SLOVER_SOUND];
-										
-										[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
-											SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
-											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
-											
-											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-										}];
-									} else {
-										SLVLog(@"%@%@", SLV_ERROR, error.description);
-										[ParseErrorHandlingController handleParseError:error];
-										
-										[[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
-									}
-								}];
+	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
+		SLVProfileViewController *profileViewController = [[SLVProfileViewController alloc] initWithContact:self.slover];
+		
+		NSArray *viewControllers = self.navigationController.viewControllers;
+		NSMutableArray *newViewControllers = [NSMutableArray array];
+		
+		[newViewControllers addObject:[viewControllers objectAtIndex:0]];
+		[newViewControllers addObject:profileViewController];
+		
+		[self.navigationController setViewControllers:newViewControllers animated:YES];
+	}];
 }
 
 - (IBAction)rightAction:(id)sender {

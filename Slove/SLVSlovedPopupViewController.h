@@ -1,5 +1,5 @@
 //
-//  SLVSlovedViewController.h
+//  SLVSlovedPopupViewController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 13/08/2015.
@@ -9,7 +9,7 @@
 #import "SLVPopupViewController.h"
 #import "SLVContact.h"
 
-@interface SLVSlovedViewController : SLVPopupViewController
+@interface SLVSlovedPopupViewController : SLVPopupViewController
 
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *layerImageView;

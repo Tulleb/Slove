@@ -7,7 +7,7 @@
 //
 
 #import "SLVProfileViewController.h"
-#import "SLVSloveSentViewController.h"
+#import "SLVSloveSentPopupViewController.h"
 #import "SLVInteractionPopupViewController.h"
 #import "SLVAddressBookContact.h"
 
@@ -131,11 +131,14 @@
 										if (!error) {
 											[SLVTools playSound:SLOVER_SOUND];
 											
-											SLVSloveSentViewController *presentedViewController = [[SLVSloveSentViewController alloc] init];
+											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 										} else {
+											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.description, nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
 											[ParseErrorHandlingController handleParseError:error];
 										}

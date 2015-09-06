@@ -1,20 +1,21 @@
 //
-//  SLVParametersViewController.m
+//  SLVSettingsViewController.m
 //  Slove
 //
 //  Created by Guillaume Bellut on 29/08/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "SLVParametersViewController.h"
+#import "SLVSettingsViewController.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "SLVConstructionPopupViewController.h"
 
-@interface SLVParametersViewController ()
+@interface SLVSettingsViewController ()
 
 @end
 
-@implementation SLVParametersViewController
+@implementation SLVSettingsViewController
 
 - (void)viewDidLoad {
 	self.appName = @"parameters";
@@ -22,6 +23,14 @@
     [super viewDidLoad];
 	
 	[self loadBackButton];
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:YES];
+	
+	SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
+	
+	[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
 }
 
 - (void)didReceiveMemoryWarning {

@@ -57,4 +57,23 @@
 	}];
 }
 
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2_clic"];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+	if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	}
+	
+	return YES;
+}
+
 @end

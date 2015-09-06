@@ -1,5 +1,5 @@
 //
-//  SLVParametersViewController.h
+//  SLVSettingsViewController.h
 //  Slove
 //
 //  Created by Guillaume Bellut on 29/08/2015.
@@ -8,7 +8,7 @@
 
 #import "SLVViewController.h"
 
-@interface SLVParametersViewController : SLVViewController
+@interface SLVSettingsViewController : SLVViewController
 
 - (IBAction)updateProfileAction:(id)sender;
 - (IBAction)disconnectAction:(id)sender;

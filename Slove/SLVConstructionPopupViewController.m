@@ -1,23 +1,23 @@
 //
-//  SLVSloveSentViewController.m
+//  SLVConstructionPopupViewController.m
 //  Slove
 //
-//  Created by Guillaume Bellut on 01/09/2015.
+//  Created by Guillaume Bellut on 06/09/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
-#import "SLVSloveSentViewController.h"
+#import "SLVConstructionPopupViewController.h"
 
-@interface SLVSloveSentViewController ()
+@interface SLVConstructionPopupViewController ()
 
 @end
 
-@implementation SLVSloveSentViewController
+@implementation SLVConstructionPopupViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/notif_envoi"];
+	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/notif_construction"];
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
 	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
