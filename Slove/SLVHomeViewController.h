@@ -18,7 +18,10 @@ typedef enum  {
 
 @interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate>
 
-@property (strong, nonatomic) IBOutlet UISegmentedControl *filterSegmentedControl;
+@property (strong, nonatomic) IBOutlet UIImageView *filterBackgroundImageView;
+@property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
+@property (strong, nonatomic) IBOutlet UIButton *contactButton;
+@property (strong, nonatomic) IBOutlet UIButton *facebookButton;
 @property (strong, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (strong, nonatomic) IBOutlet UITableView *contactTableView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
@@ -26,6 +29,7 @@ typedef enum  {
 @property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *facebookFriends;
+@property (strong, nonatomic) NSArray *filterButtons;
 @property (strong, nonatomic) SLVInteractionPopupViewController *errorPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *addressBookPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *facebookPopup;
@@ -34,8 +38,8 @@ typedef enum  {
 @property (nonatomic) ABAddressBookRef addressBookRef;
 @property (nonatomic) FilterSegment currentFilter;
 @property (nonatomic) int percentage;
+@property (nonatomic) int selectedFilterIndex;
 
-- (IBAction)disconnectAction:(id)sender;
 - (IBAction)filterChanged:(id)sender;
 
 @end

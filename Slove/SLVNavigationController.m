@@ -9,6 +9,7 @@
 #import "SLVNavigationController.h"
 #import "SLVPopupViewController.h"
 #import "SLVProfileViewController.h"
+#import "SLVActivityViewController.h"
 
 @interface SLVNavigationController ()
 
@@ -259,6 +260,11 @@
 	if (!self.activityButton.selected) {
 		self.activityButton.selected = YES;
 		self.settingsButton.selected = NO;
+		
+		SLVActivityViewController *activityViewController = [[SLVActivityViewController alloc] init];
+		
+		[self popToRootViewControllerAnimated:NO];
+		[self pushViewController:activityViewController animated:YES];
 	}
 }
 

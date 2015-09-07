@@ -78,6 +78,8 @@
 		C4F2CECF1B92101E000AC390 /* SLVSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CECD1B92101E000AC390 /* SLVSettingsViewController.xib */; };
 		C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */; };
 		C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */; };
+		C4F849911B9E301F00E3C53D /* SLVActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */; };
+		C4F849921B9E301F00E3C53D /* SLVActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -208,6 +210,9 @@
 		C4F2CED11B92173A000AC390 /* SLVUpdateProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVUpdateProfileViewController.h; sourceTree = "<group>"; };
 		C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVUpdateProfileViewController.m; sourceTree = "<group>"; };
 		C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVUpdateProfileViewController.xib; sourceTree = "<group>"; };
+		C4F8498E1B9E301F00E3C53D /* SLVActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVActivityViewController.h; sourceTree = "<group>"; };
+		C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVActivityViewController.m; sourceTree = "<group>"; };
+		C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVActivityViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -329,6 +334,7 @@
 		C442250C1B5BED5B00389210 /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C4F8498D1B9E300E00E3C53D /* Activity */,
 				C442252C1B5BF6CD00389210 /* Connection */,
 				C4A4DC761B6149290020BF3A /* Home */,
 				C4F2CECA1B920FF2000AC390 /* Settings */,
@@ -556,6 +562,16 @@
 			name = Settings;
 			sourceTree = "<group>";
 		};
+		C4F8498D1B9E300E00E3C53D /* Activity */ = {
+			isa = PBXGroup;
+			children = (
+				C4F8498E1B9E301F00E3C53D /* SLVActivityViewController.h */,
+				C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */,
+				C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */,
+			);
+			name = Activity;
+			sourceTree = "<group>";
+		};
 		C6B0BBE6B229A7F5CD217DA8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -683,6 +699,7 @@
 				C4A48DA91B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib in Resources */,
 				C4E9C0FF1B96494E0071C084 /* AveriaSansLibre-Regular.ttf in Resources */,
 				C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */,
+				C4F849921B9E301F00E3C53D /* SLVActivityViewController.xib in Resources */,
 				C4A48D9C1B6149EC00CEBA25 /* SLVHomeViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -735,6 +752,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C4A2488F1B81130A004B9D43 /* SLVInteractionPopupViewController.m in Sources */,
+				C4F849911B9E301F00E3C53D /* SLVActivityViewController.m in Sources */,
 				C4A48DA81B61531A00CEBA25 /* SLVConfirmationCodeViewController.m in Sources */,
 				C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */,
 				C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */,

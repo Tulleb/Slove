@@ -17,7 +17,9 @@
 - (id)init {
 	self = [super init];
 	if (self) {
-		self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+		if (!IS_IOS7) {
+			self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+		}
 	}
 	
 	return self;

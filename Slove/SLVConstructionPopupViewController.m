@@ -17,7 +17,7 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
-	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/notif_construction"];
+	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/illu_commingsoon"];
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
 	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];

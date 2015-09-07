@@ -70,24 +70,13 @@
 				textView.text = NSLocalizedString(textView.text, nil);
 			} else if ([subview isKindOfClass:[UISegmentedControl class]]) {
 				UISegmentedControl *segmentedControl = (UISegmentedControl *)subview;
-				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL];
-				NSDictionary *attributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+				NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:font, NSFontAttributeName, nil];
 				[segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
-				segmentedControl.apportionsSegmentWidthsByContent = YES;
 				
 				for (int i = 0; i < segmentedControl.numberOfSegments; i++) {
 					[segmentedControl setTitle:NSLocalizedString([segmentedControl titleForSegmentAtIndex:i], nil) forSegmentAtIndex:i];
 				}
-				
-//				for (UIView *segmentView in segmentedControl.subviews) {
-//					for (UIView *segmentSubview in segmentView.subviews) {
-//						if ([segmentSubview isKindOfClass:[UILabel class]]) {
-//							UILabel *segmentLabel = (UILabel *)segmentSubview;
-//							segmentLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
-//							segmentLabel.adjustsFontSizeToFitWidth = YES;
-//						}
-//					}
-//				}
 			}
 			
 			[self setStyle:subview];

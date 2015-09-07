@@ -22,16 +22,33 @@
 @implementation SLVHomeViewController
 
 - (void)viewDidLoad {
-	self.appName = @"slove";
+	self.appName = @"home";
 	
 	[super viewDidLoad];
-	// Do any additional setup after loading the view from its nib.
+	
+	[self.favoriteButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.favoriteButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.favoriteButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	
+	[self.contactButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.contactButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.contactButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	
+	[self.facebookButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.facebookButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.facebookButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	
+	self.filterButtons = [[NSArray alloc] initWithObjects:self.favoriteButton, self.contactButton, self.facebookButton, nil];
+	
+	self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_contacts"];
+	
+	self.selectedFilterIndex = 1;
+	self.contactButton.selected = YES;
+	[self filterChanged:self.contactButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	[self filterChanged:self.filterSegmentedControl];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,18 +57,30 @@
 }
 
 - (IBAction)filterChanged:(id)sender {
-	self.contactTableView.hidden = NO;
-	[self.loadingIndicator startAnimating];
-	
-	if (sender == self.filterSegmentedControl) {
-		switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	if ([sender isKindOfClass:[UIButton class]]) {
+		UIButton *filterButton = (UIButton *)sender;
+		
+		self.selectedFilterIndex = (int)filterButton.tag;
+		
+		for (UIButton *button in self.filterButtons) {
+			button.selected = button.tag == self.selectedFilterIndex;
+		}
+		
+		self.contactTableView.hidden = NO;
+		[self.loadingIndicator startAnimating];
+		
+		switch (self.selectedFilterIndex) {
 			case kFavoriteFilter: {
+				self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_favoris"];
+				
 				[self.loadingIndicator stopAnimating];
 				[self.contactTableView reloadData];
 				break;
 			}
 				
 			case kAddressBookFilter: {
+				self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_contacts"];
+				
 				if ([self checkAddressBookAccessAuthorization]) {
 					[self contactsAccessGranted];
 				} else {
@@ -69,6 +98,8 @@
 			}
 				
 			case kFacebookFilter: {
+				self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_facebook"];
+				
 				[self checkFacebookFriendsAuthorization];
 				
 				break;
@@ -507,7 +538,7 @@
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			return 1;
 			
@@ -527,7 +558,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kAddressBookFilter:
 			if ([self.synchronizedAddressBookContacts count] > 0) {
 				if (section == 0) {
@@ -548,8 +579,22 @@
 	return 70;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	switch (self.selectedFilterIndex) {
+		case kAddressBookFilter:
+			if ([self.synchronizedAddressBookContacts count] > 0) {
+				return 1 * 2 + 30;
+			} else {
+				return 0;
+			}
+			
+		default:
+			return 0;
+	}
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			return [self.favoriteContacts count];
 			
@@ -580,7 +625,7 @@
 	SLVContact *contact;
 	BOOL isSynchronized = NO;
 	
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			contact = [self.favoriteContacts objectAtIndex:indexPath.row];
 			break;
@@ -659,7 +704,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	SLVContact *contact;
 	
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			contact = [self.favoriteContacts objectAtIndex:indexPath.row];
 			break;
@@ -683,6 +728,19 @@
 	SLVLog(@"Selected %@", [contact description]);
 	
 	[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:contact] animated:YES];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(8, 0, SCREEN_WIDTH - 16, [self tableView:tableView heightForHeaderInSection:section])];
+	headerView.backgroundColor = SUB_COLOR;
+	
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 1, headerView.frame.size.width - 8 * 2, headerView.frame.size.height - 1 * 2)];
+	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	
+	[headerView addSubview:label];
+	
+	return headerView;
 }
 
 
@@ -710,7 +768,7 @@
 			if (!error) {
 				if ([result.grantedPermissions containsObject:@"user_friends"]) {
 					SLVLog(@"User have granted access to his friend list");
-					[self filterChanged:self.filterSegmentedControl];
+					[self filterChanged:self.facebookButton];
 				} else {
 					SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
 				}

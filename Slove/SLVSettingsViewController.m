@@ -18,7 +18,7 @@
 @implementation SLVSettingsViewController
 
 - (void)viewDidLoad {
-	self.appName = @"parameters";
+	self.appName = @"settings";
 	
     [super viewDidLoad];
 	
