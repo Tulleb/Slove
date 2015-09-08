@@ -34,7 +34,7 @@
                         <constraint firstAttribute="width" constant="78" id="WAb-Pl-Qub"/>
                         <constraint firstAttribute="height" constant="30" id="tCh-b7-cha"/>
                     </constraints>
-                    <state key="normal" title="Disconnect">
+                    <state key="normal" title="button_disconnect">
                         <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                     </state>
                     <connections>

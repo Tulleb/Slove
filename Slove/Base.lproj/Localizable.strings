@@ -12,9 +12,6 @@
 "placeholder_password" = "Password";
 "button_confirm" = "Confirm";
 "button_access_contact" = "Access Contact";
-"button_activity" = "Activity";
-"button_slove" = "Slove";
-"button_profile" = "Profile";
 "error_username_empty" = "Your username is empty";
 "error_username_length" = "Your username must contains between 2 and 16 characters";
 "error_username_characters" = "Your username can only contains lower alphanumerical and _ characters";
@@ -27,7 +24,13 @@
 "error_accept_conditions" = "You must accept our terms of service to continue";
 "error_missing_param" = "There is a missing parameter";
 "error_param_is_not_an_array" = "Invalid parameter";
-"ok" = "Ok";
+"button_ok" = "Ok";
+
+// Navigation
+"button_back" = "Return";
+"button_activity" = "Activity";
+"button_slove" = "Slove";
+"button_settings" = "Settings";
 
 // Connection
 "title_connection" = "Connection";
@@ -50,11 +53,11 @@
 
 // Username
 "title_username" = "Username";
-"label_your_username" = "Your username:";
 
 // Phone Number
 "title_phone_number" = "Phone Number";
-"label_your_phone_number" = "Your phone number:";
+"label_banner_telephone" = "\"Yay, I'm finally a star!\"";
+"placeholder_phone_number" = "Your phone number:";
 "error_phone_number_format" = "Unknown phone number format";
 "error_phone_number_already_used" = "This phone number has already been used";
 "error_failed_to_send" = "The text message couldn't be sent";
@@ -63,25 +66,57 @@
 
 // Confirmation Code
 "title_confirmation_code" = "Confirmation Code";
+"label_banner_confirmation" = "\"Kiss the bride!\"";
 "label_your_confirmation_number" = "Your confirmation number:";
 "error_codes_dont_match" = "This confirmation does not match our record";
 
+// Activity
+"title_activity" = "Activity";
+
 // Home View
-"button_disconnect" = "Log out";
-"button_access_contacts" = "Access Contacts";
-"button_facebook_friends" = "Your Friends";
+"title_home" = "Friends";
 "section_slovers" = "Slovers";
 "section_invite_on_slove" = "Invite on Slove";
 "label_several_phone_numbers" = "Several phone numbers";
 "label_loading" = "Loading…";
-"segment_favorite" = "Favorites";
-"segment_address_book" = "Phone contacts";
-"segment_facebook" = "Facebook friends";
+"button_favorite" = "Favorites";
+"button_address_book" = "Contacts";
+"button_facebook" = "Facebook";
 "error_no_user_found_for_supplied_numbers" = "No user found";
 
+// Settings
+"title_settings" = "Settings";
+"button_disconnect" = "Log out";
+"button_updateProfile" = "Update Profile";
+
 // Profile
-"title_profile" = "Profile";
+"label_tutorial_profile" = "Hold the button for 2 seconds to send your first Slove";
 
 // Sloved
-"label_new_slove_received" = "New Slove received";
-"label_from" = "from";
+"title_sloved" = "Wahoo!";
+"subtitle_sloved" = "You just received a Slove from ";
+"button_sloved_left" = "Return a Slove";
+"button_sloved_right" = "Thanks!";
+"label_tutorial_sloved" = "To start the experience, click on \"Return a Slove\"";
+
+// Slove Sent
+"title_sloveSent" = "Great!";
+"subtitle_sloveSent" = "Your Slove has been sent";
+"label_tutorial_slove_sent" = "Yay! You just sent your first Slove! Welcome and enjoy :)";
+
+// Construction
+"title_construction" = "Sorry…";
+"subtitle_construction" = "This page is under construction";
+
+// Popup
+"popup_title_error" = "Oups!";
+"popup_body_notConnectedWithFacebook" = "You are not connected with Facebook";
+"popup_body_smsInvite" = "Your device doesn't support SMS";
+"popup_title_addressBookAccess" = "Contacts access";
+"popup_body_addressBookAccess" = "We need to access your address book contacts";
+"popup_title_facebookAccess" = "Facebook access";
+"popup_body_facebookAccess" = "We need to access your Facebook friends list";
+
+// SMS
+"label_smsInvite" = "Hey! I'd like to send you a Slove, but you don't have the app yet… I'd like you to download it at: ";
+"url_smsInvite" = "APP_URL_TO_REPLACE";
