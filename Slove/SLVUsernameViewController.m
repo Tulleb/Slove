@@ -20,7 +20,17 @@
 	
     [super viewDidLoad];
 	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/inscription_mail_banniere"];
+	
+	self.usernameField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	
+	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
 	[self loadBackButton];
+	
+	[self observeKeyboard];
+	[self initTapToDismiss];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -57,6 +67,50 @@
 	}];
 }
 
+- (void)observeKeyboard {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	NSDictionary *info = [notification userInfo];
+	NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+	CGRect keyboardFrame = [kbFrame CGRectValue];
+ 
+	CGFloat height = keyboardFrame.size.height;
+	
+	self.keyboardLayoutConstraint.constant += height;
+	
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+	NSDictionary *info = [notification userInfo];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+ 
+	self.keyboardLayoutConstraint.constant = 8;
+	
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+- (void)initTapToDismiss {
+	UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc]
+										   initWithTarget:self
+										   action:@selector(hideKeyboard)];
+	
+	[self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)hideKeyboard {
+	for (UITextField *textField in self.view.subviews) {
+		[textField resignFirstResponder];
+	}
+}
 
 #pragma mark - UITextFieldDelegate
 

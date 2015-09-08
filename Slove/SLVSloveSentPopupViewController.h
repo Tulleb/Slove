@@ -13,5 +13,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *titleLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *logoImageView;
+@property (strong, nonatomic) IBOutlet UIView *bubbleView;
+@property (strong, nonatomic) IBOutlet UIImageView *bubbleImageView;
+@property (strong, nonatomic) IBOutlet UILabel *bubbleLabel;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
 
 @end

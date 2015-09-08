@@ -37,34 +37,24 @@
 	}
 	
 	self.spiraleImageView.image = [UIImage imageNamed:@"Assets/Button/bt_spirale_rotation"];
-	
-	self.spiraleYConstraint.constant = -(self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height) / 2;
+	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_slove"];
+	self.bubblePicto.image = [UIImage imageNamed:@"Assets/Image/picto_tap_2secondes"];
 	
 	[self loadBackButton];
+	
+	// To call viewWillAppear after return from Slove Sent popup
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(didDismissSloveSentPopup)
+												 name:NOTIFICATION_SLOVESENTPOPUP_DISMISSED
+											   object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
 	if (self.contact) {
-		self.fullNameLabel.text = self.contact.fullName;
-		
-		if (self.contact.username && ![self.contact.username isEqualToString:@""]) {
-			self.usernameLabel.hidden = NO;
-			self.sloveCounterLabel.hidden = NO;
-			self.sloveButton.hidden = NO;
-			
-			self.usernameLabel.text = self.contact.username;
-			self.sloveCounterLabel.text = [self.contact.sloveCounter stringValue];
-		} else {
-			self.usernameLabel.hidden = YES;
-			self.sloveCounterLabel.hidden = YES;
-			self.sloveButton.hidden = YES;
-		}
-		
 		if (self.contact.picture) {
 			self.pictureImageView.hidden = NO;
-			
 			self.pictureImageView.image = self.contact.picture;
 			self.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 			self.pictureImageView.clipsToBounds = YES;
@@ -74,10 +64,36 @@
 	}
 }
 
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+		[self disableElementsForTutorial];
+		self.bubbleView.hidden = NO;
+		
+		[UIView animateWithDuration:ANIMATION_DURATION animations:^{
+			self.bubbleView.alpha = 1;
+		}];
+		
+	} else if (!self.bubbleView.hidden) {
+		[self enableElementsForTutorial];
+		self.bubbleView.hidden = YES;
+		
+		[self.navigationController popToRootViewControllerAnimated:YES];
+	}
+}
+
 - (void)viewDidDisappear:(BOOL)animated {
 	self.navigationController.navigationBarHidden = NO;
 	
 	[super viewDidDisappear:animated];
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	self.spiraleYConstraint.constant = -(self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height) / 2;
+	self.bubbleLabelTopLayoutConstraint.constant = SCREEN_HEIGHT * 0.07;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -102,7 +118,12 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	if (!self.contact.username) {
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+		[SLVTools playSound:SLOVER_SOUND];
+		
+		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
+		[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
+	} else if (!self.contact.username) {
 		if(![MFMessageComposeViewController canSendText]) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
 			[self presentViewController:errorPopup animated:YES completion:nil];
@@ -143,6 +164,12 @@
 											[ParseErrorHandlingController handleParseError:error];
 										}
 									}];
+	}
+}
+
+- (void)didDismissSloveSentPopup {
+	if (!IS_IOS7) {
+		[self viewDidAppear:YES];
 	}
 }
 
@@ -215,6 +242,20 @@
 	
 	self.circleImageView.animationDuration = 2;
 	self.circleImageView.animationRepeatCount = 1;
+}
+
+- (void)disableElementsForTutorial {
+	ApplicationDelegate.currentNavigationController.activityButton.userInteractionEnabled = NO;
+	ApplicationDelegate.currentNavigationController.homeButton.userInteractionEnabled = NO;
+	ApplicationDelegate.currentNavigationController.settingsButton.userInteractionEnabled = NO;
+	self.navigationItem.leftBarButtonItem.enabled = NO;
+}
+
+- (void)enableElementsForTutorial {
+	ApplicationDelegate.currentNavigationController.activityButton.userInteractionEnabled = YES;
+	ApplicationDelegate.currentNavigationController.homeButton.userInteractionEnabled = YES;
+	ApplicationDelegate.currentNavigationController.settingsButton.userInteractionEnabled = YES;
+	self.navigationItem.leftBarButtonItem.enabled = YES;
 }
 
 #pragma mark - MFMessageComposeViewControllerDelegate

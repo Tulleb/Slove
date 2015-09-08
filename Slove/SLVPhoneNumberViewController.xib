@@ -33,8 +33,8 @@
                         <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zuj-2a-QqR">
                             <rect key="frame" x="0.0" y="0.0" width="600" height="126"/>
                         </imageView>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqM-ZA-3kF">
-                            <rect key="frame" x="20" y="38" width="360" height="30"/>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" misplaced="YES" text="label_banner_telephone" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bqM-ZA-3kF">
+                            <rect key="frame" x="19" y="38" width="360" height="30"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="30" id="40n-XN-Itm"/>
                             </constraints>
@@ -103,7 +103,7 @@
                         <constraint firstAttribute="width" secondItem="29J-Pe-Yws" secondAttribute="height" multiplier="307:72" id="Vk6-pI-64T"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="phonePad" returnKeyType="next"/>
                     <connections>
                         <outlet property="delegate" destination="-1" id="RtH-vu-sgw"/>
                     </connections>

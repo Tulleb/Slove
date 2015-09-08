@@ -23,7 +23,6 @@
     [super viewDidLoad];
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/choix_pays_banniere"];
-	self.bannerLabel.text = NSLocalizedString(@"label_telephone_banner", nil);
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
 	
 	self.pickerBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/degrade_choix_pays"];

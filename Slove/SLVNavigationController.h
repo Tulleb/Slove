@@ -10,7 +10,7 @@
 #import <CustomBadge/CustomBadge.h>
 #import "SLVSettingsViewController.h"
 
-@interface SLVNavigationController : UINavigationController
+@interface SLVNavigationController : UINavigationController <UIGestureRecognizerDelegate>
 
 @property (strong, nonatomic) UIView *bottomNavigationBarView;
 @property (strong, nonatomic) UIView *sloveView;
@@ -32,5 +32,6 @@
 - (void)showBottomNavigationBar;
 - (void)refreshSloveCounter;
 - (void)goToHome;
+- (void)sloveLongPress:(UILongPressGestureRecognizer *)gesture;
 
 @end

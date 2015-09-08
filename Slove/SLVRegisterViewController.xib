@@ -12,6 +12,7 @@
                 <outlet property="conditionsButton" destination="tdW-o0-bCa" id="QwI-nf-Xbs"/>
                 <outlet property="emailField" destination="JDC-Ql-Jua" id="Gtp-Oo-mwh"/>
                 <outlet property="errorLabel" destination="7eO-Cg-pbD" id="rsc-9j-Mvn"/>
+                <outlet property="keyboardLayoutConstraint" destination="PuX-Av-qWx" id="Y1P-lU-iN2"/>
                 <outlet property="passwordField" destination="UIx-xg-RaU" id="aIg-E3-bKq"/>
                 <outlet property="registerButton" destination="Oz8-Gg-vRY" id="Qbp-um-KpI"/>
                 <outlet property="usernameField" destination="4VE-m2-m90" id="LDc-Cu-U31"/>
@@ -33,7 +34,7 @@
                     <rect key="frame" x="0.0" y="126" width="600" height="474"/>
                     <subviews>
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder_username" adjustsFontSizeToFit="NO" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="4VE-m2-m90" customClass="SLVTextField">
-                            <rect key="frame" x="146" y="88" width="307" height="72.5"/>
+                            <rect key="frame" x="146" y="88" width="307" height="72"/>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
                             <connections>
@@ -43,7 +44,7 @@
                         <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder_email" minimumFontSize="15" translatesAutoresizingMaskIntoConstraints="NO" id="JDC-Ql-Jua" customClass="SLVTextField">
                             <rect key="frame" x="146" y="8" width="307" height="72"/>
                             <constraints>
-                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="700" constant="72" id="Jnf-du-Oik"/>
+                                <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="72" id="Jnf-du-Oik"/>
                             </constraints>
                             <fontDescription key="fontDescription" type="system" pointSize="20"/>
                             <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" keyboardType="emailAddress" returnKeyType="next"/>
@@ -158,9 +159,10 @@
                 <constraint firstItem="JXl-Fa-4mB" firstAttribute="top" secondItem="01L-hN-Ady" secondAttribute="bottom" id="MoF-6w-DIr"/>
                 <constraint firstAttribute="trailing" secondItem="01L-hN-Ady" secondAttribute="trailing" id="drW-vd-2qb"/>
                 <constraint firstItem="01L-hN-Ady" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="fno-Vx-QBC"/>
+                <constraint firstItem="01L-hN-Ady" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="250" id="iIf-p7-7er"/>
                 <constraint firstItem="JXl-Fa-4mB" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="nbY-jq-Pf6"/>
                 <constraint firstAttribute="trailing" secondItem="JXl-Fa-4mB" secondAttribute="trailing" id="p1a-pB-iAO"/>
-                <constraint firstItem="01L-hN-Ady" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yET-9B-lhU"/>
+                <constraint firstItem="01L-hN-Ady" firstAttribute="top" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" id="yET-9B-lhU"/>
             </constraints>
         </view>
     </objects>

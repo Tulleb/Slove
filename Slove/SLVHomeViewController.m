@@ -14,6 +14,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SLVProfileViewController.h"
+#import "SLVSlovedPopupViewController.h"
 
 @interface SLVHomeViewController ()
 
@@ -42,13 +43,38 @@
 	
 	self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_contacts"];
 	
-	self.selectedFilterIndex = 1;
-	self.contactButton.selected = YES;
-	[self filterChanged:self.contactButton];
+	// To call viewWillAppear after return from Sloved popup
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(didDismissSlovedPopup)
+												 name:NOTIFICATION_SLOVEDPOPUP_DISMISSED
+											   object:nil];
+	
+	self.selectedFilterIndex = 0;
+	self.favoriteButton.selected = YES;
+	[self filterChanged:self.favoriteButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+- (void)viewDidAppear:(BOOL)animated {
+	if (ApplicationDelegate.sloverToSlove) {
+		[super viewDidAppear:YES];
+		
+		[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
+		
+		ApplicationDelegate.sloverToSlove = nil;
+	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+		[super viewDidAppear:animated];
+		
+		SLVContact *firstSlover = [[SLVContact alloc] init];
+		
+		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_USERNAME];
+		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE];
+		
+		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover];
+		
+		[self.navigationController presentViewController:slovedPopup animated:YES completion:nil];
+	} else {
+		[super viewDidAppear:animated];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -108,6 +134,12 @@
 			default:
 				break;
 		}
+	}
+}
+
+- (void)didDismissSlovedPopup {
+	if (!IS_IOS7) {
+		[self viewDidAppear:YES];
 	}
 }
 

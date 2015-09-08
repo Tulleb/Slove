@@ -28,6 +28,14 @@
 	
     [super viewDidLoad];
 	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/inscription_mail_banniere"];
+	
+	self.usernameField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	self.passwordField.background = [UIImage imageNamed:@"Assets/Box/input1"];
+	
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
 	[self observeKeyboard];
 	[self initTapToDismiss];
 	

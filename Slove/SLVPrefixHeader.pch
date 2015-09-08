@@ -39,7 +39,6 @@
 #define SLV_DETAIL			[NSString stringWithFormat:@"Detail%@", SLV_SEPARATOR]
 
 // Device and iOS version
-#define IS_IOS6					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 6)
 #define IS_IOS7					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 7)
 #define IS_IOS8					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 8)
 #define IS_SUP_IOS7				(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) >= 7)
@@ -97,11 +96,22 @@
 #define VERY_LONG_ANIMATION_DURATION    2
 #define TIMER_FREQUENCY					0.1
 
-// Navigation View
+// Notification
+#define NOTIFICATION_SLOVEDPOPUP_DISMISSED		@"slovedPopupDismissed"
+#define NOTIFICATION_SLOVESENTPOPUP_DISMISSED	@"sloveSentPopupDismissed"
+
+// User key
+#define	KEY_FIRSTTIME_TUTORIAL		@"first_time_tutorial"
+
+// Parse config
+#define PARSE_FIRSTSLOVE_USERNAME	@"first_slove_username"
+#define PARSE_FIRSTSLOVE_PICTURE	@"first_slove_picture"
+
+// Navigation
 #define SLOVE_BUTTON_SIZE			75
 #define SLOVE_VIEW_BOTTOM_CONSTANT	15
 
-// Connection View
+// Connection
 #define SLOVER_SOUND	@"Assets/Sound/Congratsbuild2.wav"
 #define SLOVED_SOUND	@"Assets/Sound/Congratsbuild1.wav"
 

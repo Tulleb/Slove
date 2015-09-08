@@ -10,8 +10,11 @@
 
 @interface SLVUsernameViewController : SLVViewController <UITextFieldDelegate>
 
+@property (strong, nonatomic) IBOutlet UIImageView *bannerImageView;
 @property (strong, nonatomic) IBOutlet UITextField *usernameField;
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+@property (strong, nonatomic) IBOutlet UIButton *confirmButton;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
 
 - (IBAction)confirmAction:(id)sender;
 

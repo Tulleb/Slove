@@ -38,6 +38,19 @@ PODS:
     - FBSDKCoreKit/arc
   - FBSDKLoginKit (4.4.0):
     - FBSDKCoreKit
+  - Google/Analytics (1.0.7):
+    - Google/Core
+    - GoogleAnalytics (~> 3.12)
+  - Google/Core (1.0.7):
+    - GoogleNetworkingUtilities (~> 1.0)
+    - GoogleSymbolUtilities (~> 1.0)
+    - GoogleUtilities (~> 1.0)
+  - GoogleAnalytics (3.13.0)
+  - GoogleNetworkingUtilities (1.0.0):
+    - GoogleSymbolUtilities (~> 1.0)
+  - GoogleSymbolUtilities (1.0.0)
+  - GoogleUtilities (1.0.1):
+    - GoogleSymbolUtilities (~> 1.0)
   - JSONModel (1.1.0)
   - libPhoneNumber-iOS (0.8.5)
   - Parse (1.7.5.3):
@@ -51,6 +64,7 @@ PODS:
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - CustomBadge (~> 3.0)
+  - Google/Analytics (~> 1.0.0)
   - JSONModel
   - libPhoneNumber-iOS (~> 0.8)
   - Parse (~> 1.7)
@@ -62,6 +76,11 @@ SPEC CHECKSUMS:
   CustomBadge: c60738d213e7ef019b0bf1caa7948333f280ea9b
   FBSDKCoreKit: 75bdd75c980e811db218488d99dd93b7740f4474
   FBSDKLoginKit: 02a9254a4c132412fa03577b0d53e936d068a7fb
+  Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
+  GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
+  GoogleNetworkingUtilities: 292992ab31b7b4ba32809a0e8b40e324cdfb2c0c
+  GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
+  GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   libPhoneNumber-iOS: b8ccd23576379caca37c7cbdd554addf384459ed
   Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881

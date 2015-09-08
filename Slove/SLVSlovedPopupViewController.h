@@ -17,7 +17,13 @@
 @property (strong, nonatomic) IBOutlet UILabel *subtitleLabel;
 @property (strong, nonatomic) IBOutlet UIButton *leftButton;
 @property (strong, nonatomic) IBOutlet UIButton *rightButton;
+@property (strong, nonatomic) IBOutlet UIView *disablingView;
+@property (strong, nonatomic) IBOutlet UIView *bubbleView;
+@property (strong, nonatomic) IBOutlet UIImageView *bubbleImageView;
+@property (strong, nonatomic) IBOutlet UILabel *bubbleLabel;
 @property (strong, nonatomic) SLVContact *slover;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeightLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
 
 - (id)initWithContact:(SLVContact *)contact;
 - (IBAction)leftAction:(id)sender;

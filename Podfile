@@ -8,6 +8,7 @@ target 'Slove' do
 	pod 'libPhoneNumber-iOS', '~> 0.8'
 	pod 'JSONModel'
 	pod 'CustomBadge', '~> 3.0'
+	pod 'Google/Analytics', '~> 1.0.0'
 end
 
 target 'SloveTests' do

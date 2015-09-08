@@ -37,6 +37,7 @@
 
 	[FBSDKLoginButton class];
 	
+	[self loadUserDefaults];
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
 	
@@ -79,6 +80,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	[FBSDKAppEvents activateApp];
+	[self loadParseConfig];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -128,6 +130,14 @@
 
 
 #pragma mark - Custom methods
+
+- (void)loadUserDefaults {
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	
+	if (![userDefaults objectForKey:KEY_FIRSTTIME_TUTORIAL]) {
+		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRSTTIME_TUTORIAL];
+	}
+}
 
 - (void)userConnected {
 	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
@@ -448,6 +458,43 @@
 	} else {
 		SLVLog(@"%@No country value found on this device", SLV_WARNING);
 	}
+}
+
+- (void)loadParseConfig {
+	SLVLog(@"Getting the latest config...");
+	
+	[PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
+		if (!error) {
+			SLVLog(@"Config was fetched from the server");
+		} else {
+			SLVLog(@"%@Failed to fetch, using cached Config", SLV_WARNING);
+			config = [PFConfig currentConfig];
+		}
+		
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+		
+		NSString *firstSloveUsername = config[PARSE_FIRSTSLOVE_USERNAME];
+		if (!firstSloveUsername) {
+			SLVLog(@"%@Falling back to default first slove username", SLV_ERROR);
+			firstSloveUsername = NSLocalizedString(@"label_slove_team", nil);
+		}
+		
+		UIImage *firstSlovePicture;
+		PFFile *firstSlovePictureFile = config[PARSE_FIRSTSLOVE_PICTURE];
+		if (!firstSlovePictureFile) {
+			SLVLog(@"%@Falling back to default first slove picture", SLV_ERROR);
+			firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
+		} else {
+			firstSlovePicture = [UIImage imageWithData:[firstSlovePictureFile getData]];
+		}
+		
+		NSMutableDictionary *parseConfigBuffer = [[NSMutableDictionary alloc] initWithObjectsAndKeys:firstSloveUsername, PARSE_FIRSTSLOVE_USERNAME, firstSlovePicture, PARSE_FIRSTSLOVE_PICTURE, nil];
+		
+		self.parseConfig = [NSDictionary dictionaryWithDictionary:parseConfigBuffer];
+	}];
 }
 
 @end

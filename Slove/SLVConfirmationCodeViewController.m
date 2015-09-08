@@ -30,7 +30,6 @@
     [super viewDidLoad];
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/code_tel_banniere"];
-	self.bannerLabel.text = NSLocalizedString(@"label_confirmation_banner", nil);
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
 	
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
@@ -41,12 +40,6 @@
 	
 	[self loadBackButton];
 }
-
-//- (void)viewWillAppear:(BOOL)animated {
-//	[super viewWillAppear:animated];
-//	
-//	[self.confirmationNumberField becomeFirstResponder];
-//}
 
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
