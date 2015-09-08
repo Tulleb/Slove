@@ -8,15 +8,21 @@
 
 #import "SLVViewController.h"
 #import "SLVContact.h"
+#import <MessageUI/MessageUI.h>
 
-@interface SLVProfileViewController : SLVViewController
+@interface SLVProfileViewController : SLVViewController <MFMessageComposeViewControllerDelegate>
 
 @property (strong, nonatomic) SLVContact *contact;
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;
-@property (strong, nonatomic) IBOutlet UILabel *fullNameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
-@property (strong, nonatomic) IBOutlet UILabel *sloveCounterLabel;
-@property (strong, nonatomic) IBOutlet UIButton *sloveButton;
+@property (strong, nonatomic) IBOutlet UIImageView *spiraleImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *circleImageView;
+@property (strong, nonatomic) IBOutlet UIView *bubbleView;
+@property (strong, nonatomic) IBOutlet UIImageView *bubbleImageView;
+@property (strong, nonatomic) IBOutlet UILabel *bubbleLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *bubblePicto;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *spiraleYConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
+@property (nonatomic) float spiraleAngle;
 
 - (id)initWithContact:(SLVContact *)contact;
 - (IBAction)sloveAction:(id)sender;

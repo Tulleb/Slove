@@ -12,12 +12,13 @@
 	BOOL conditionsAccepted;
 }
 
-@property (strong, nonatomic) IBOutlet UITextField *usernameField;
+@property (strong, nonatomic) IBOutlet UIImageView *bannerImageView;
 @property (strong, nonatomic) IBOutlet UITextField *emailField;
+@property (strong, nonatomic) IBOutlet UITextField *usernameField;
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UIButton *registerButton;
 @property (strong, nonatomic) IBOutlet UIButton *conditionsButton;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 
 - (IBAction)conditionsAction:(id)sender;

@@ -8,12 +8,20 @@
 
 #import "SLVViewController.h"
 
-@interface SLVPhoneNumberViewController : SLVViewController <UIPickerViewDataSource, UIPickerViewDelegate>
+@interface SLVPhoneNumberViewController : SLVViewController <UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate>
 
+@property (strong, nonatomic) IBOutlet UIImageView *bannerImageView;
+@property (strong, nonatomic) IBOutlet UILabel *bannerLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *pickerTopImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *pickerBackgroundImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *pickerBottomImageView;
 @property (strong, nonatomic) IBOutlet UIPickerView *countryPickerView;
 @property (strong, nonatomic) IBOutlet UITextField *phoneNumberField;
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
+@property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) NSString *formatedPhoneNumber;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *rightBannerLabelLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
 
 - (IBAction)confirmAction:(id)sender;
 

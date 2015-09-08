@@ -14,6 +14,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Pods-Slove-CustomBadge.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Pods-Slove-FBSDKCoreKit.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -52,47 +57,52 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>030268C64A74FA7CA6EE385A</key>
+		<key>2042D367D3B1035AB660C140</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>1A8D7F36F557FE80C6FC46A0</key>
+		<key>2BFF8FAFA4CD1402E069D907</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>422A12496F81221BEB3DF57D</key>
+		<key>5C22C1C6111F26D7576FC149</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>495DD8DE2452AF65C9760E27</key>
+		<key>682C09F9AA2D84E25EFFF0D5</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>4AADE0F3D31AA2C03D92814E</key>
+		<key>6C76CB9BDBDA92C38680C57C</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>58ED184D1312579FA0825540</key>
+		<key>77AF5F727DDE1049E1CA438A</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>90490B2C2EE73648FD838B49</key>
+		<key>B5313D716C7082CDD6B22E6B</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D3BA60E4302812FD7B84A70C</key>
+		<key>C038CAE24D7834764BC56ED0</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F42FC323D6397B12DB7BEFBF</key>
+		<key>C2EA6CB50F0C32C42365DDBC</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>FC3B535FA9A368E3EFB2D332</key>
 		<dict>
 			<key>primary</key>
 			<true/>

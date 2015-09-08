@@ -14,7 +14,7 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "D3BA60E4302812FD7B84A70C"
+               BlueprintIdentifier = "77AF5F727DDE1049E1CA438A"
                BuildableName = "libPods-Slove-Parse.a"
                BlueprintName = "Pods-Slove-Parse"
                ReferencedContainer = "container:Pods.xcodeproj">

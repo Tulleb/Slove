@@ -18,7 +18,7 @@
 	self = [super init];
 	
 	if (self) {
-		currentPhoneNumber = phoneNumber;
+		self.currentPhoneNumber = phoneNumber;
 	}
 	
 	return self;
@@ -28,7 +28,23 @@
 	self.appName = @"confirmation_code";
 	
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/code_tel_banniere"];
+	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
+	
+	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	[self observeKeyboard];
+	[self initTapToDismiss];
+	
+	[self loadBackButton];
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	[self.confirmationNumberField becomeFirstResponder];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -36,11 +52,19 @@
     // Dispose of any resources that can be recreated.
 }
 
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	self.leftBannerLabelLayoutConstraint.constant = self.bannerImageView.frame.size.width * 0.45;
+	
+	self.confirmationNumberField.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:self.confirmationNumberField.frame.size.width / 2.33];
+}
+
 - (IBAction)confirmAction:(id)sender {
 	self.errorLabel.hidden = YES;
 	
 	[PFCloud callFunctionInBackground:PHONENUMBER_CONFIRM_FUNCTION
-					   withParameters:@{@"phoneNumber" : currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
+					   withParameters:@{@"phoneNumber" : self.currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
 								block:^(id object, NSError *error){
 									if (!error) {
 										[ApplicationDelegate userConnected];
@@ -51,6 +75,57 @@
 										[ParseErrorHandlingController handleParseError:error];
 									}
 								}];
+}
+
+- (void)observeKeyboard {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	NSDictionary *info = [notification userInfo];
+	NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+	CGRect keyboardFrame = [kbFrame CGRectValue];
+ 
+	CGFloat height = keyboardFrame.size.height;
+	
+	self.keyboardLayoutConstraint.constant += height;
+	
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+	NSDictionary *info = [notification userInfo];
+	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+ 
+	self.keyboardLayoutConstraint.constant = 8;
+	
+	[UIView animateWithDuration:animationDuration animations:^{
+		[self.view layoutIfNeeded];
+	}];
+}
+
+- (void)initTapToDismiss {
+	UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc]
+										   initWithTarget:self
+										   action:@selector(hideKeyboard)];
+	
+	[self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)hideKeyboard {
+	for (UITextField *textField in self.view.subviews) {
+		[textField resignFirstResponder];
+	}
+}
+
+#pragma mark - UITextFieldDelegate
+
+- (BOOL)textField:(UITextField *)textField shouldChangeCharactersInRange:(NSRange)range replacementString:(NSString *)string {
+	return !([textField.text length] >= 4 && [string length] > range.length);
 }
 
 @end

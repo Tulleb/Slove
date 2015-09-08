@@ -20,6 +20,20 @@
 	
     [super viewDidLoad];
 	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/inscription_mail_banniere"];
+	
+	self.emailField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	self.usernameField.background = [UIImage imageNamed:@"Assets/Box/input1"];
+	self.passwordField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateNormal];
+	[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateHighlighted];
+	
+	[self loadBackButton];
+	
 	[self observeKeyboard];
 	[self initTapToDismiss];
 }
@@ -33,9 +47,11 @@
 	conditionsAccepted = !conditionsAccepted;
 	
 	if (conditionsAccepted) {
-		[self.conditionsButton setTitle:@"OK" forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateHighlighted];
 	} else {
-		[self.conditionsButton setTitle:@"KO" forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateNormal];
+		[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateHighlighted];
 	}
 }
 
@@ -99,7 +115,7 @@
  
 	CGFloat height = keyboardFrame.size.height;
 
-	self.keyboardConstraint.constant += height;
+	self.keyboardLayoutConstraint.constant += height;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
 		[self.view layoutIfNeeded];
@@ -110,7 +126,7 @@
 	NSDictionary *info = [notification userInfo];
 	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
  
-	self.keyboardConstraint.constant = 8;
+	self.keyboardLayoutConstraint.constant = 8;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
 		[self.view layoutIfNeeded];
@@ -140,7 +156,6 @@
 	[user signUpInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 		if (!error) {
 			SLVPhoneNumberViewController *viewController = [[SLVPhoneNumberViewController alloc] init];
-			viewController.backButtonType = kBackToRoot;
 			[self.navigationController pushViewController:viewController animated:YES];
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -153,12 +168,32 @@
 #pragma mark - UITextFieldDelegate
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-	if (textField == self.usernameField) {
-		[self.emailField becomeFirstResponder];
-	} else if (textField == self.emailField) {
+	if (textField == self.emailField) {
+		[self.usernameField becomeFirstResponder];
+	} else if (textField == self.usernameField) {
 		[self.passwordField becomeFirstResponder];
 	} else if (textField == self.passwordField) {
 		[textField resignFirstResponder];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	if (textField == self.emailField || textField == self.passwordField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2_clic"];
+	} else if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input1_clic"];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+	if (textField == self.emailField || textField == self.passwordField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	} else if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input1"];
 	}
 	
 	return YES;

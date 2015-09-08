@@ -25,10 +25,18 @@
 	
 	[super viewDidLoad];
 	
-	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:45];
-	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	self.subtitleUpperLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 	
+	self.backgroundImageView.image = [UIImage imageNamed:@"Assets/Image/image_fond"];
+	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/masque_coeur_slovy"];
+	
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	// This block doesn't trigger when there is no Internet connexion
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
 			if ([FBSDKAccessToken currentAccessToken]) {
@@ -50,24 +58,18 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
+	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
+	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
+	[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
+	[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
+	
 	self.navigationController.navigationBarHidden = YES;
-	
-//	[self animateLogoEntrance];
 }
 
-- (void)viewDidDisappear:(BOOL)animated {
-	[super viewDidDisappear:animated];
-	
+- (void)viewWillDisappear:(BOOL)animated {
 	self.navigationController.navigationBarHidden = NO;
-}
-
-- (void)viewWillLayoutSubviews {
-	[super viewWillLayoutSubviews];
 	
-	CGFloat bodyViewHeight = SCREEN_HEIGHT - self.footerViewHeightConstraint.constant;
-	
-	self.logoViewHeightConstraint.constant = bodyViewHeight * 0.7;
-	self.subtitleViewHeightConstraint.constant = bodyViewHeight * 0.3;
+	[super viewWillDisappear:animated];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -293,60 +295,6 @@
 	return ([usernamePrefix isEqualToString:USERNAME_EMPTY_PREFIX]);
 }
 
-- (void)animateLogoEntrance {
-	NSString *path = [NSString stringWithFormat:@"%@/%@", [[NSBundle mainBundle] resourcePath], CONNECTION_VIEW_SOUND];
-	NSURL *soundUrl = [NSURL fileURLWithPath:path];
-	
-	audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:soundUrl error:nil];
-	[audioPlayer play];
-	SLVLog(@"Playing sound: %@", CONNECTION_VIEW_SOUND);
-	
-//	CGRect logoImageViewFrame = self.logoImageView.frame;
-//	CGPoint logoImageViewCenter = self.logoImageView.center;
-//	
-//	self.logoImageView.frame = CGRectMake(logoImageViewCenter.x, logoImageViewCenter.y, 1, 1);
-//	self.logoImageView.backgroundColor = GREEN;
-//	
-//	[UIView transitionWithView:self.logoImageView
-//					  duration:10
-//					   options:UIViewAnimationOptionCurveEaseIn
-//					animations:^{
-//						self.logoImageView.frame = logoImageViewFrame;
-//					}
-//					completion:nil];
-}
-
-- (void)animateImages {
-	self.logoImageView.animationImages = [NSArray arrayWithObjects:
-										  [UIImage imageNamed:@"anim_logo00@3x.png"],
-										  [UIImage imageNamed:@"anim_logo01@3x.png"],
-										  [UIImage imageNamed:@"anim_logo02@3x.png"],
-										  [UIImage imageNamed:@"anim_logo03@3x.png"],
-										  [UIImage imageNamed:@"anim_logo04@3x.png"],
-										  [UIImage imageNamed:@"anim_logo05@3x.png"],
-										  [UIImage imageNamed:@"anim_logo06@3x.png"],
-										  [UIImage imageNamed:@"anim_logo07@3x.png"],
-										  [UIImage imageNamed:@"anim_logo08@3x.png"],
-										  [UIImage imageNamed:@"anim_logo09@3x.png"],
-										  [UIImage imageNamed:@"anim_logo10@3x.png"],
-										  [UIImage imageNamed:@"anim_logo11@3x.png"],
-										  [UIImage imageNamed:@"anim_logo12@3x.png"],
-										  [UIImage imageNamed:@"anim_logo13@3x.png"],
-										  [UIImage imageNamed:@"anim_logo14@3x.png"],
-										  [UIImage imageNamed:@"anim_logo15@3x.png"],
-										  [UIImage imageNamed:@"anim_logo16@3x.png"],
-										  [UIImage imageNamed:@"anim_logo17@3x.png"],
-										  [UIImage imageNamed:@"anim_logo18@3x.png"],
-										  [UIImage imageNamed:@"anim_logo19@3x.png"],
-										  [UIImage imageNamed:@"anim_logo20@3x.png"],
-										  [UIImage imageNamed:@"anim_logo21@3x.png"],
-										  [UIImage imageNamed:@"anim_logo22@3x.png"],
-										  [UIImage imageNamed:@"anim_logo23@3x.png"], nil];
-	
-	self.logoImageView.animationDuration = 1;
-	self.logoImageView.animationRepeatCount = 0;
-	[self.logoImageView startAnimating];
-}
 
 #pragma mark - FBSDKLoginButtonDelegate
 

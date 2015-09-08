@@ -1,14 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14E46" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVLogInViewController">
             <connections>
+                <outlet property="bannerImageView" destination="tbp-io-jkD" id="Cn0-Gb-5bS"/>
                 <outlet property="errorLabel" destination="CP3-Y5-Obt" id="n0p-WB-wSK"/>
-                <outlet property="keyboardConstraint" destination="4bn-k2-pct" id="wkd-ZT-W39"/>
+                <outlet property="keyboardLayoutConstraint" destination="4bn-k2-pct" id="wkd-ZT-W39"/>
                 <outlet property="logInButton" destination="AyT-J5-dSx" id="anK-dB-Dnf"/>
                 <outlet property="passwordField" destination="Sqp-YP-4h7" id="7E0-Oc-hqD"/>
                 <outlet property="registerButton" destination="AyT-J5-dSx" id="GIA-r2-xuA"/>
@@ -21,10 +23,17 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="placeholder_username" minimumFontSize="20" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="SDl-hf-wSM">
-                    <rect key="frame" x="8" y="8" width="584" height="40"/>
+                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="tbp-io-jkD">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="126"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="40" id="88Z-rC-0p4"/>
+                        <constraint firstAttribute="width" secondItem="tbp-io-jkD" secondAttribute="height" multiplier="100:21" id="iA1-Af-s21"/>
+                    </constraints>
+                </imageView>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder_username" minimumFontSize="20" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="SDl-hf-wSM" customClass="SLVTextField">
+                    <rect key="frame" x="147" y="134" width="307" height="72"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" priority="750" constant="72" id="88Z-rC-0p4"/>
+                        <constraint firstAttribute="width" secondItem="SDl-hf-wSM" secondAttribute="height" multiplier="307:72" id="az3-dA-cbK"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="20"/>
                     <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="next"/>
@@ -32,11 +41,22 @@
                         <outlet property="delegate" destination="-1" id="fRY-PN-Duw"/>
                     </connections>
                 </textField>
-                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AyT-J5-dSx">
-                    <rect key="frame" x="8" y="542" width="584" height="50"/>
-                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder_password" clearsOnBeginEditing="YES" minimumFontSize="20" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Sqp-YP-4h7" customClass="SLVTextField">
+                    <rect key="frame" x="147" y="214" width="307" height="72"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="ILC-HU-vPO"/>
+                        <constraint firstAttribute="width" secondItem="Sqp-YP-4h7" secondAttribute="height" multiplier="307:72" id="HRN-UO-n6I"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="Yh3-7r-W3T"/>
+                    </connections>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AyT-J5-dSx">
+                    <rect key="frame" x="155" y="530" width="290" height="62"/>
+                    <constraints>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="62" id="ILC-HU-vPO"/>
+                        <constraint firstAttribute="width" secondItem="AyT-J5-dSx" secondAttribute="height" multiplier="145:31" id="lbs-7l-44D"/>
                     </constraints>
                     <state key="normal" title="button_log_in">
                         <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -47,40 +67,36 @@
                     </connections>
                 </button>
                 <label hidden="YES" opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Error label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CP3-Y5-Obt">
-                    <rect key="frame" x="8" y="484" width="584" height="50"/>
+                    <rect key="frame" x="8" y="492" width="584" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="50" id="g6x-wq-rXY"/>
+                        <constraint firstAttribute="height" constant="30" id="g6x-wq-rXY"/>
                     </constraints>
                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="line" placeholder="placeholder_password" clearsOnBeginEditing="YES" minimumFontSize="20" clearButtonMode="unlessEditing" translatesAutoresizingMaskIntoConstraints="NO" id="Sqp-YP-4h7">
-                    <rect key="frame" x="8" y="56" width="584" height="40"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="40" id="l2P-QB-53e"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="done" secureTextEntry="YES"/>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="Yh3-7r-W3T"/>
-                    </connections>
-                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="SDl-hf-wSM" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="8" id="2FR-MA-5yH"/>
                 <constraint firstAttribute="bottom" secondItem="AyT-J5-dSx" secondAttribute="bottom" constant="8" id="4bn-k2-pct"/>
+                <constraint firstItem="Sqp-YP-4h7" firstAttribute="centerX" secondItem="SDl-hf-wSM" secondAttribute="centerX" id="5kF-FQ-2JQ"/>
                 <constraint firstAttribute="trailing" secondItem="CP3-Y5-Obt" secondAttribute="trailing" constant="8" id="8CM-OS-Pne"/>
-                <constraint firstAttribute="trailing" secondItem="Sqp-YP-4h7" secondAttribute="trailing" constant="8" id="OB4-rK-NGf"/>
-                <constraint firstItem="AyT-J5-dSx" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="TUE-zu-qzA"/>
-                <constraint firstItem="Sqp-YP-4h7" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="a8l-N4-F3h"/>
-                <constraint firstAttribute="trailing" secondItem="AyT-J5-dSx" secondAttribute="trailing" constant="8" id="dY9-wT-b0F"/>
-                <constraint firstAttribute="trailing" secondItem="SDl-hf-wSM" secondAttribute="trailing" constant="8" id="jOr-Ih-EeK"/>
+                <constraint firstAttribute="centerX" secondItem="SDl-hf-wSM" secondAttribute="centerX" id="L8L-Wn-egH"/>
+                <constraint firstItem="AyT-J5-dSx" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="TUE-zu-qzA"/>
+                <constraint firstItem="Sqp-YP-4h7" firstAttribute="height" secondItem="SDl-hf-wSM" secondAttribute="height" id="W6U-co-Ixj"/>
+                <constraint firstItem="CP3-Y5-Obt" firstAttribute="top" relation="greaterThanOrEqual" secondItem="Sqp-YP-4h7" secondAttribute="bottom" constant="8" id="Wa5-dZ-xhf"/>
+                <constraint firstItem="tbp-io-jkD" firstAttribute="top" relation="lessThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" id="XZx-G8-Cq0"/>
+                <constraint firstItem="SDl-hf-wSM" firstAttribute="top" secondItem="tbp-io-jkD" secondAttribute="bottom" constant="8" id="Xl0-Da-kBt"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="AyT-J5-dSx" secondAttribute="trailing" constant="8" id="dY9-wT-b0F"/>
+                <constraint firstItem="tbp-io-jkD" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="dZT-Zp-QG5"/>
+                <constraint firstAttribute="centerX" secondItem="AyT-J5-dSx" secondAttribute="centerX" id="fpf-8N-9P0"/>
                 <constraint firstItem="CP3-Y5-Obt" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="kjk-bn-dNV"/>
                 <constraint firstItem="AyT-J5-dSx" firstAttribute="top" secondItem="CP3-Y5-Obt" secondAttribute="bottom" constant="8" id="qJu-Gk-vnb"/>
-                <constraint firstItem="SDl-hf-wSM" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="qhL-BS-m5L"/>
+                <constraint firstAttribute="trailing" secondItem="tbp-io-jkD" secondAttribute="trailing" id="qqO-8X-Umw"/>
+                <constraint firstItem="SDl-hf-wSM" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="u9s-Lj-Z1A"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="SDl-hf-wSM" secondAttribute="trailing" constant="8" id="vWY-lh-I0J"/>
                 <constraint firstItem="Sqp-YP-4h7" firstAttribute="top" secondItem="SDl-hf-wSM" secondAttribute="bottom" constant="8" id="xxr-Uf-MvV"/>
+                <constraint firstItem="tbp-io-jkD" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="250" id="yAe-nb-OBn"/>
             </constraints>
         </view>
     </objects>

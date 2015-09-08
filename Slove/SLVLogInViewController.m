@@ -28,8 +28,18 @@
 	
     [super viewDidLoad];
 	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/inscription_mail_banniere"];
+	
+	self.usernameField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	self.passwordField.background = [UIImage imageNamed:@"Assets/Box/input1"];
+	
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
 	[self observeKeyboard];
 	[self initTapToDismiss];
+	
+	[self loadBackButton];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -90,7 +100,7 @@
  
 	CGFloat height = keyboardFrame.size.height;
 	
-	self.keyboardConstraint.constant += height;
+	self.keyboardLayoutConstraint.constant += height;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
 		[self.view layoutIfNeeded];
@@ -101,7 +111,7 @@
 	NSDictionary *info = [notification userInfo];
 	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
  
-	self.keyboardConstraint.constant = 8;
+	self.keyboardLayoutConstraint.constant = 8;
 	
 	[UIView animateWithDuration:animationDuration animations:^{
 		[self.view layoutIfNeeded];
@@ -130,6 +140,26 @@
 		[self.passwordField becomeFirstResponder];
 	} else if (textField == self.passwordField) {
 		[self logInAction:self.logInButton];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
+	if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2_clic"];
+	} else if (textField == self.passwordField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input1_clic"];
+	}
+	
+	return YES;
+}
+
+- (BOOL)textFieldShouldEndEditing:(UITextField *)textField {
+	if (textField == self.usernameField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input2"];
+	} else if (textField == self.passwordField) {
+		textField.background = [UIImage imageNamed:@"Assets/Box/input1"];
 	}
 	
 	return YES;

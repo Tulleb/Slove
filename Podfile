@@ -3,13 +3,12 @@
 
 target 'Slove' do
 	pod 'AFNetworking', '~> 2.5'
-#	pod 'FBSDKShareKit'
-#	pod 'FBSDKLoginKit'
-#	pod 'FBSDKCoreKit'
 	pod 'Parse', '~> 1.7'
 	pod 'ParseFacebookUtilsV4', '~> 1.7'
 	pod 'libPhoneNumber-iOS', '~> 0.8'
 	pod 'JSONModel'
+	pod 'CustomBadge', '~> 3.0'
+	pod 'Google/Analytics', '~> 1.0.0'
 end
 
 target 'SloveTests' do

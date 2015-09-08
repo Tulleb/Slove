@@ -10,14 +10,19 @@
 #import "SLVNavigationController.h"
 #import <Parse/PFUser.h>
 #import "SLVCountryCodeData.h"
+#import <AVFoundation/AVFoundation.h>
+#import "SLVContact.h"
 
 @interface AppDelegate : UIResponder <UIApplicationDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SLVNavigationController *currentNavigationController;
-@property (nonatomic) BOOL userIsConnected;
 @property (strong, nonatomic) NSArray *countryCodeDatas;
 @property (nonatomic, strong) SLVCountryCodeData *userCountryCodeData;
+@property (nonatomic, strong) AVAudioPlayer *audioPlayer;
+@property (nonatomic, strong) SLVContact *sloverToSlove;
+@property (nonatomic, strong) NSDictionary *parseConfig;
+@property (nonatomic) BOOL userIsConnected;
 
 - (void)userConnected;
 - (void)userDisconnected;

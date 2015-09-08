@@ -8,16 +8,16 @@
 
 #import <UIKit/UIKit.h>
 
-typedef enum  {
-	kBackToPrevious,
-	kBackToRoot
-} BackButtonType;
-
 @interface SLVViewController : UIViewController
 
 @property (nonatomic, strong) NSString * appName;
-@property (nonatomic) BackButtonType backButtonType;
 
 + (void)setStyle:(UIView *)view;
+- (void)loadBackButton;
+- (void)goBack:(id)sender;
+- (void)goToHome;
+
+// Subclassed method
+- (void)animateImages;
 
 @end

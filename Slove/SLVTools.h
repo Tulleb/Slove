@@ -33,5 +33,6 @@
 + (NSString *)validateConditions:(BOOL)conditions;
 + (NSString *)formatPhoneNumber:(NSString *)phoneNumber withCountryCodeData:(SLVCountryCodeData *)countryCodeData;
 + (BOOL)checkConnection;
++ (void)playSound:(NSString *)soundName;
 
 @end

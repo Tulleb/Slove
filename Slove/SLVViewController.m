@@ -7,6 +7,7 @@
 //
 
 #import "SLVViewController.h"
+#import <Google/Analytics.h>
 
 @interface SLVViewController ()
 
@@ -14,27 +15,23 @@
 
 @implementation SLVViewController
 
-- (id)init {
-	self = [super init];
-	if (self) {
-		self.backButtonType = kBackToPrevious;
-	}
-	return self;
-}
-
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
 	[SLVViewController setStyle:self.view];
-	
-	// To substract the navigation bar height from the view
-	if ([self respondsToSelector:@selector(edgesForExtendedLayout)]) {
-		self.edgesForExtendedLayout = UIRectEdgeNone;
-	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
+	// To substract the navigation bar height from the view
+	if ([self respondsToSelector:@selector(edgesForExtendedLayout)] && !self.navigationController.navigationBarHidden) {
+		self.edgesForExtendedLayout = UIRectEdgeNone;
+	}
+	
 	[super viewWillAppear:animated];
+	
+	id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+	[tracker set:kGAIScreenName value:NSStringFromClass(self.class)];
+	[tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 	
 	[self animateImages];
 }
@@ -76,6 +73,15 @@
 				UITextView *textView = (UITextView *)subview;
 				
 				textView.text = NSLocalizedString(textView.text, nil);
+			} else if ([subview isKindOfClass:[UISegmentedControl class]]) {
+				UISegmentedControl *segmentedControl = (UISegmentedControl *)subview;
+				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+				NSDictionary *attributes = [[NSDictionary alloc] initWithObjectsAndKeys:font, NSFontAttributeName, nil];
+				[segmentedControl setTitleTextAttributes:attributes forState:UIControlStateNormal];
+				
+				for (int i = 0; i < segmentedControl.numberOfSegments; i++) {
+					[segmentedControl setTitle:NSLocalizedString([segmentedControl titleForSegmentAtIndex:i], nil) forSegmentAtIndex:i];
+				}
 			}
 			
 			[self setStyle:subview];
@@ -86,6 +92,30 @@
 // Subclassed method
 - (void)animateImages {
 	
+}
+
+- (void)loadBackButton {
+	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+	[backButton setTitle:NSLocalizedString(@"button_back", nil) forState:UIControlStateNormal];
+	[backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
+	[backButton setTitleColor:MAIN_COLOR forState:UIControlStateNormal];
+	[backButton setTitleColor:DARK_GRAY forState:UIControlStateHighlighted];
+	backButton.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+	backButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+	[backButton setImage:[UIImage imageNamed:@"Assets/Button/fleche_retour"] forState:UIControlStateNormal];
+	[backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
+	[backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+	backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
+	UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
+	self.navigationItem.leftBarButtonItem = backButtonItem;
+}
+
+- (void)goBack:(id)sender {
+	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)goToHome {
+	[ApplicationDelegate.currentNavigationController goToHome];
 }
 
 @end

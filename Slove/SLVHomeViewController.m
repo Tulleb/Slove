@@ -14,6 +14,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SLVProfileViewController.h"
+#import "SLVSlovedPopupViewController.h"
 
 @interface SLVHomeViewController ()
 
@@ -22,16 +23,58 @@
 @implementation SLVHomeViewController
 
 - (void)viewDidLoad {
-	self.appName = @"slove";
+	self.appName = @"home";
 	
 	[super viewDidLoad];
-	// Do any additional setup after loading the view from its nib.
+	
+	[self.favoriteButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.favoriteButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.favoriteButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	
+	[self.contactButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.contactButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.contactButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	
+	[self.facebookButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.facebookButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
+	[self.facebookButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	
+	self.filterButtons = [[NSArray alloc] initWithObjects:self.favoriteButton, self.contactButton, self.facebookButton, nil];
+	
+	self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_contacts"];
+	
+	// To call viewWillAppear after return from Sloved popup
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(didDismissSlovedPopup)
+												 name:NOTIFICATION_SLOVEDPOPUP_DISMISSED
+											   object:nil];
+	
+	self.selectedFilterIndex = 0;
+	self.favoriteButton.selected = YES;
+	[self filterChanged:self.favoriteButton];
 }
 
-- (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
-	
-	[self filterChanged:self.filterSegmentedControl];
+- (void)viewDidAppear:(BOOL)animated {
+	if (ApplicationDelegate.sloverToSlove) {
+		[super viewDidAppear:YES];
+		
+		[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
+		
+		ApplicationDelegate.sloverToSlove = nil;
+	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+		[super viewDidAppear:animated];
+		
+		SLVContact *firstSlover = [[SLVContact alloc] init];
+		
+		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_USERNAME];
+		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE];
+		
+		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover];
+		
+		[self.navigationController presentViewController:slovedPopup animated:YES completion:nil];
+	} else {
+		[super viewDidAppear:animated];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -39,96 +82,64 @@
 	// Dispose of any resources that can be recreated.
 }
 
-- (IBAction)disconnectAction:(id)sender {
-	if ([FBSDKAccessToken currentAccessToken]) {
-		[FBSDKAccessToken setCurrentAccessToken:nil];
-	}
-	
-	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
-		if (!error) {
-			[ApplicationDelegate userDisconnected];
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
-}
-
-- (IBAction)accessContactAction:(id)sender {
-	self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-	
-	if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-		SLVLog(@"Asking address book access to the user");
-		ABAddressBookRequestAccessWithCompletion(self.addressBookRef, ^(bool granted, CFErrorRef error) {
-			if (granted) {
-				SLVLog(@"User have granted access to his contact list");
-				[self contactsAccessGranted];
-			} else {
-				SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
-				[self showSettingManipulation];
-			}
-		});
-	}
-}
-
-- (IBAction)accessFriendsAction:(id)sender {
-	FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-	[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-		if (!error) {
-			if ([result.grantedPermissions containsObject:@"user_friends"]) {
-				SLVLog(@"User have granted access to his friend list");
-				[self filterChanged:self.filterSegmentedControl];
-			} else {
-				SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
-			}
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
-}
-
 - (IBAction)filterChanged:(id)sender {
-	self.contactTableView.hidden = NO;
-	[self.loadingIndicator startAnimating];
-	
-	if (sender == self.filterSegmentedControl) {
-		switch (self.filterSegmentedControl.selectedSegmentIndex) {
-			case kFavoriteFilter:
-				self.accessContactsButton.hidden = YES;
-				self.accessFriendsButton.hidden = YES;
+	if ([sender isKindOfClass:[UIButton class]]) {
+		UIButton *filterButton = (UIButton *)sender;
+		
+		self.selectedFilterIndex = (int)filterButton.tag;
+		
+		for (UIButton *button in self.filterButtons) {
+			button.selected = button.tag == self.selectedFilterIndex;
+		}
+		
+		self.contactTableView.hidden = NO;
+		[self.loadingIndicator startAnimating];
+		
+		switch (self.selectedFilterIndex) {
+			case kFavoriteFilter: {
+				self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_favoris"];
 				
 				[self.loadingIndicator stopAnimating];
 				[self.contactTableView reloadData];
 				break;
+			}
 				
-			case kAddressBookFilter:
-				self.accessFriendsButton.hidden = YES;
+			case kAddressBookFilter: {
+				self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_contacts"];
 				
 				if ([self checkAddressBookAccessAuthorization]) {
 					[self contactsAccessGranted];
 				} else {
 					[self.loadingIndicator stopAnimating];
-					self.accessContactsButton.hidden = NO;
+					
+					self.addressBookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_addressBookAccess", nil) body:NSLocalizedString(@"popup_body_addressBookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
+					
+					self.addressBookPopup.delegate = self;
+					
+					[self presentViewController:self.addressBookPopup animated:YES completion:nil];
+					
 					self.contactTableView.hidden = YES;
 				}
 				break;
+			}
 				
-			case kFacebookFilter:
-				self.accessContactsButton.hidden = YES;
+			case kFacebookFilter: {
+				self.filterBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/menunuage_repertoire_facebook"];
 				
-				if ([self checkFacebookFriendsAuthorization]) {
-					[self friendsAccessGranted];
-				} else {
-					[self.loadingIndicator stopAnimating];
-					self.accessFriendsButton.hidden = NO;
-					self.contactTableView.hidden = YES;
-				}
+				[self checkFacebookFriendsAuthorization];
+				
 				break;
+			}
 				
 			default:
 				break;
 		}
+	}
+}
+
+- (void)didDismissSlovedPopup {
+	if (!IS_IOS7) {
+		[self viewDidAppear:YES];
 	}
 }
 
@@ -142,13 +153,58 @@
 	return NO;
 }
 
-- (BOOL)checkFacebookFriendsAuthorization {
-	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
+- (void)checkFacebookFriendsAuthorization {
+	if (![FBSDKAccessToken currentAccessToken]) {
+		SLVLog(@"%@Not connected through Facebook", SLV_WARNING);
+		[self.loadingIndicator stopAnimating];
+		
+		self.errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_notConnectedWithFacebook", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+		
+		self.errorPopup.delegate = self;
+		
+		[self presentViewController:self.errorPopup animated:YES completion:nil];
+		
+		return;
+	}
+	
+	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+								  initWithGraphPath:@"/me/permissions/user_friends"
+								  parameters:nil
+								  HTTPMethod:@"GET"];
+	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+										  id result,
+										  NSError *error) {
+		if (result) {
+			NSArray *data = [result objectForKey:@"data"];
+			
+			for (NSDictionary *permissionDic in data) {
+				if ([[permissionDic objectForKey:@"permission"] isEqualToString:@"user_friends"] && [[permissionDic objectForKey:@"status"] isEqualToString:@"granted"]) {
+					[self friendsAccessGranted];
+				} else {
+					SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
+					[self.loadingIndicator stopAnimating];
+					
+					self.facebookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
+					
+					self.facebookPopup.delegate = self;
+					
+					[self presentViewController:self.facebookPopup animated:YES completion:nil];
+					
+					self.contactTableView.hidden = YES;
+				}
+			}
+		}
+		
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+		}
+	}];
+	
+	// This function sometimes return NO when it shouldn't
+//	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
 }
 
 - (void)contactsAccessGranted {
-	self.accessContactsButton.hidden = YES;
-	
 	if (!self.unsynchronizedAddressBookContacts) {
 		self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
 		[self loadContacts];
@@ -159,8 +215,6 @@
 }
 
 - (void)friendsAccessGranted {
-	self.accessFriendsButton.hidden = YES;
-	
 	if (!self.facebookFriends) {
 		[self loadFriends];
 	} else {
@@ -203,15 +257,22 @@
 		if (firstName) {
 			fullName = [fullName stringByAppendingString:firstNameString];
 		}
-		if (lastNameString && ![fullName isEqualToString:@""]) {
-			fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" %@", lastNameString]];
+		if (lastNameString) {
+			if (![fullName isEqualToString:@""]) {
+				fullName = [fullName stringByAppendingString:@" "];
+			}
+			
+			fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@"%@", lastNameString]];
+		}
+		if (organizationString) {
+			if (![fullName isEqualToString:@""]) {
+				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
+			} else {
+				fullName = [fullName stringByAppendingString:organizationString];
+			}
 		}
 		
 		if (![fullName isEqualToString:@""]) {
-			if (organizationString && ![organizationString isEqualToString:@""]	) {
-				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
-			}
-			
 			CFDataRef imageData = ABPersonCopyImageData(contact);
 			UIImage *image = [UIImage imageWithData:(NSData *)CFBridgingRelease(imageData)];
 			
@@ -239,7 +300,7 @@
 				if (image) {
 					cachedContact.picture = image;
 				} else {
-					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar_thumb"];
+					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar"];
 				}
 				
 				[addressBookBuffer addObject:cachedContact];
@@ -311,7 +372,7 @@
 								friend.pictureDownloaded = NO;
 							}
 						} else {
-							friend.picture = [UIImage imageNamed:@"default_avatar.png"];
+							friend.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar"];
 							friend.pictureDownloaded = YES;
 						}
 					} else {
@@ -509,7 +570,7 @@
 #pragma mark - UITableViewDelegate
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			return 1;
 			
@@ -529,7 +590,7 @@
 }
 
 - (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section {
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kAddressBookFilter:
 			if ([self.synchronizedAddressBookContacts count] > 0) {
 				if (section == 0) {
@@ -550,8 +611,22 @@
 	return 70;
 }
 
+- (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
+	switch (self.selectedFilterIndex) {
+		case kAddressBookFilter:
+			if ([self.synchronizedAddressBookContacts count] > 0) {
+				return 1 * 2 + 30;
+			} else {
+				return 0;
+			}
+			
+		default:
+			return 0;
+	}
+}
+
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			return [self.favoriteContacts count];
 			
@@ -580,8 +655,9 @@
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	
 	SLVContact *contact;
+	BOOL isSynchronized = NO;
 	
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			contact = [self.favoriteContacts objectAtIndex:indexPath.row];
 			break;
@@ -589,6 +665,7 @@
 		case kAddressBookFilter:
 			if (indexPath.section == 0 && [self.synchronizedAddressBookContacts count] > 0) {
 				contact = [self.synchronizedAddressBookContacts objectAtIndex:indexPath.row];
+				isSynchronized = YES;
 			} else {
 				contact = [self.unsynchronizedAddressBookContacts objectAtIndex:indexPath.row];
 			}
@@ -596,6 +673,7 @@
 			
 		case kFacebookFilter:
 			contact = [self.facebookFriends objectAtIndex:indexPath.row];
+			isSynchronized = YES;
 			break;
 			
 		default:
@@ -607,46 +685,50 @@
 		return cell;
 	}
 	
-	cell.fullNameLabel.text = contact.fullName;
-	cell.pictureImageView.image = contact.picture;
-	
-	if (contact.username && ![contact.username isEqualToString:@""]) {
-		cell.usernameLabel.text = contact.username;
-	} else if ([contact isKindOfClass:[SLVAddressBookContact class]]) {
-		SLVAddressBookContact *addressBookContact = (SLVAddressBookContact *)contact;
+	if (isSynchronized) {
+		cell.titleLabel.text = contact.username;
+		cell.subtitleLabel.text = contact.fullName;
+	} else {
+		cell.titleLabel.text = contact.fullName;
 		
-		if ([addressBookContact.phoneNumbers count] > 1) {
-			cell.usernameLabel.text = NSLocalizedString(@"label_several_phone_numbers", nil);
-		} else {
-			NSDictionary *phoneNumberDic = [addressBookContact.phoneNumbers firstObject];
-			NSString *formatedPhoneNumber = [phoneNumberDic objectForKey:@"formatedPhoneNumber"];
-			NSString *phoneNumber = [phoneNumberDic objectForKey:@"phoneNumber"];
+		if ([contact isKindOfClass:[SLVAddressBookContact class]]) {
+			SLVAddressBookContact *addressBookContact = (SLVAddressBookContact *)contact;
 			
-			if (formatedPhoneNumber && [formatedPhoneNumber length] >= 6) {
-				if ([[formatedPhoneNumber substringToIndex:5] isEqualToString:@"error"]) {
-					cell.usernameLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
-					
-					SLVLog(@"%@Phone number '%@' couldn't be formated with country code '%@'", SLV_ERROR, phoneNumber, ApplicationDelegate.userCountryCodeData);
-				} else {
-					cell.usernameLabel.text = phoneNumber;
-				}
+			if ([addressBookContact.phoneNumbers count] > 1) {
+				cell.subtitleLabel.text = NSLocalizedString(@"label_several_phone_numbers", nil);
 			} else {
-				cell.usernameLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
+				NSDictionary *phoneNumberDic = [addressBookContact.phoneNumbers firstObject];
+				NSString *formatedPhoneNumber = [phoneNumberDic objectForKey:@"formatedPhoneNumber"];
+				NSString *phoneNumber = [phoneNumberDic objectForKey:@"phoneNumber"];
 				
-				SLVLog(@"%@Formated phone number reception for '%@' failed without displaying an error!", SLV_ERROR, phoneNumber);
+				if (formatedPhoneNumber && [formatedPhoneNumber length] >= 6) {
+					if ([[formatedPhoneNumber substringToIndex:5] isEqualToString:@"error"]) {
+						cell.subtitleLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
+						
+						SLVLog(@"%@Phone number '%@' couldn't be formated with country code '%@'", SLV_ERROR, phoneNumber, ApplicationDelegate.userCountryCodeData);
+					} else {
+						cell.subtitleLabel.text = phoneNumber;
+					}
+				} else {
+					cell.subtitleLabel.text = NSLocalizedString(formatedPhoneNumber, nil);
+					
+					SLVLog(@"%@Formated phone number reception for '%@' failed without displaying an error!", SLV_ERROR, phoneNumber);
+				}
 			}
+		} else if ([contact isKindOfClass:[SLVFacebookFriend class]]) {
+			cell.subtitleLabel.text = @"";
 		}
-	} else if ([contact isKindOfClass:[SLVFacebookFriend class]]) {
-		cell.usernameLabel.text = @"";
 	}
 	
+	cell.pictureImageView.image = contact.picture;
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	cell.pictureImageView.layer.cornerRadius = cell.pictureImageView.bounds.size.height / 2;
 	cell.pictureImageView.clipsToBounds = YES;
 	
 	[SLVViewController setStyle:cell];
 	
-	cell.fullNameLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
+	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
 	
 	return cell;
 }
@@ -654,7 +736,7 @@
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath {
 	SLVContact *contact;
 	
-	switch (self.filterSegmentedControl.selectedSegmentIndex) {
+	switch (self.selectedFilterIndex) {
 		case kFavoriteFilter:
 			contact = [self.favoriteContacts objectAtIndex:indexPath.row];
 			break;
@@ -678,6 +760,56 @@
 	SLVLog(@"Selected %@", [contact description]);
 	
 	[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:contact] animated:YES];
+}
+
+- (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
+	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(8, 0, SCREEN_WIDTH - 16, [self tableView:tableView heightForHeaderInSection:section])];
+	headerView.backgroundColor = SUB_COLOR;
+	
+	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 1, headerView.frame.size.width - 8 * 2, headerView.frame.size.height - 1 * 2)];
+	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	
+	[headerView addSubview:label];
+	
+	return headerView;
+}
+
+
+#pragma mark - SLVInteractionPopupDelegate
+
+- (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.addressBookPopup) {
+		self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+		
+		if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+			SLVLog(@"Asking address book access to the user");
+			ABAddressBookRequestAccessWithCompletion(self.addressBookRef, ^(bool granted, CFErrorRef error) {
+				if (granted) {
+					SLVLog(@"User have granted access to his contact list");
+					[self contactsAccessGranted];
+				} else {
+					SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
+					[self showSettingManipulation];
+				}
+			});
+		}
+	} else if (popup == self.facebookPopup) {
+		FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+		[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+			if (!error) {
+				if ([result.grantedPermissions containsObject:@"user_friends"]) {
+					SLVLog(@"User have granted access to his friend list");
+					[self filterChanged:self.facebookButton];
+				} else {
+					SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
+				}
+			} else {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+				[ParseErrorHandlingController handleParseError:error];
+			}
+		}];
+	}
 }
 
 @end

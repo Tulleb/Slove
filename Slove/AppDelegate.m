@@ -12,7 +12,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
-#import "SLVSlovedViewController.h"
+#import "SLVSlovedPopupViewController.h"
+#import <Google/Analytics.h>
 
 @interface AppDelegate ()
 
@@ -37,22 +38,37 @@
 
 	[FBSDKLoginButton class];
 	
+	// Configure tracker from GoogleService-Info.plist.
+	NSError *configureError;
+	[[GGLContext sharedInstance] configureWithError:&configureError];
+	NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+	
+	// Optional: configure GAI options.
+	GAI *gai = [GAI sharedInstance];
+	gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+	gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
+	
+	[self loadUserDefaults];
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
 	
-	UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-													UIUserNotificationTypeBadge |
-													UIUserNotificationTypeSound);
-	UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-																			 categories:nil];
-	[application registerUserNotificationSettings:settings];
-	[application registerForRemoteNotifications];
+	if (IS_IOS7) {
+		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+	} else {
+		UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+														UIUserNotificationTypeBadge |
+														UIUserNotificationTypeSound);
+		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+																				 categories:nil];
+		[application registerUserNotificationSettings:settings];
+		[application registerForRemoteNotifications];
+	}
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 	self.window.rootViewController = self.currentNavigationController;
-	self.currentNavigationController.bottomNavigationBarView.hidden = YES;
+	[self.currentNavigationController hideBottomNavigationBar];
 	[self.window addSubview:self.currentNavigationController.view];
 	[self.window makeKeyAndVisible];
 	
@@ -75,6 +91,7 @@
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
 	[FBSDKAppEvents activateApp];
+	[self loadParseConfig];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -103,12 +120,17 @@
 	if (sloverDic) {
 		NSError *error;
 		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
+		if ([sloverDic objectForKey:@"pictureUrl"]) {
+			slover.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]]];
+		}
 		
 		if (error) {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		} else {
-			SLVSlovedViewController *presentedViewController = [[SLVSlovedViewController alloc] initWithContact:slover];
+			SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover];
 			[self.currentNavigationController presentViewController:presentedViewController animated:YES completion:nil];
+			
+			[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 		}
 	} else {
 		[PFPush handlePush:userInfo];
@@ -120,6 +142,14 @@
 
 #pragma mark - Custom methods
 
+- (void)loadUserDefaults {
+	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+	
+	if (![userDefaults objectForKey:KEY_FIRSTTIME_TUTORIAL]) {
+		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRSTTIME_TUTORIAL];
+	}
+}
+
 - (void)userConnected {
 	SLVLog(@"User '%@' connected on Slove", [PFUser currentUser].username);
 	
@@ -128,8 +158,9 @@
 	[currentInstallation saveInBackground];
 	
 	if (!self.userIsConnected) {
+		self.currentNavigationController = nil;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
-		self.currentNavigationController.bottomNavigationBarView.hidden = NO;
+		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
 	}
 
@@ -140,8 +171,9 @@
 	SLVLog(@"User disconnected from Slove");
 	
 	if (self.userIsConnected) {
+		self.currentNavigationController = nil;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
-		self.currentNavigationController.bottomNavigationBarView.hidden = YES;
+		[self.currentNavigationController hideBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
 	}
 	
@@ -437,6 +469,43 @@
 	} else {
 		SLVLog(@"%@No country value found on this device", SLV_WARNING);
 	}
+}
+
+- (void)loadParseConfig {
+	SLVLog(@"Getting the latest config...");
+	
+	[PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
+		if (!error) {
+			SLVLog(@"Config was fetched from the server");
+		} else {
+			SLVLog(@"%@Failed to fetch, using cached Config", SLV_WARNING);
+			config = [PFConfig currentConfig];
+		}
+		
+		if (error) {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+		
+		NSString *firstSloveUsername = config[PARSE_FIRSTSLOVE_USERNAME];
+		if (!firstSloveUsername) {
+			SLVLog(@"%@Falling back to default first slove username", SLV_ERROR);
+			firstSloveUsername = NSLocalizedString(@"label_slove_team", nil);
+		}
+		
+		UIImage *firstSlovePicture;
+		PFFile *firstSlovePictureFile = config[PARSE_FIRSTSLOVE_PICTURE];
+		if (!firstSlovePictureFile) {
+			SLVLog(@"%@Falling back to default first slove picture", SLV_ERROR);
+			firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
+		} else {
+			firstSlovePicture = [UIImage imageWithData:[firstSlovePictureFile getData]];
+		}
+		
+		NSMutableDictionary *parseConfigBuffer = [[NSMutableDictionary alloc] initWithObjectsAndKeys:firstSloveUsername, PARSE_FIRSTSLOVE_USERNAME, firstSlovePicture, PARSE_FIRSTSLOVE_PICTURE, nil];
+		
+		self.parseConfig = [NSDictionary dictionaryWithDictionary:parseConfigBuffer];
+	}];
 }
 
 @end
