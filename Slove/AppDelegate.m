@@ -13,6 +13,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "SLVSlovedPopupViewController.h"
+#import <Google/Analytics.h>
 
 @interface AppDelegate ()
 
@@ -36,6 +37,16 @@
 	[PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
 
 	[FBSDKLoginButton class];
+	
+	// Configure tracker from GoogleService-Info.plist.
+	NSError *configureError;
+	[[GGLContext sharedInstance] configureWithError:&configureError];
+	NSAssert(!configureError, @"Error configuring Google services: %@", configureError);
+	
+	// Optional: configure GAI options.
+	GAI *gai = [GAI sharedInstance];
+	gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
+	gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
 	
 	[self loadUserDefaults];
 	[self loadCountryCodeDatas];

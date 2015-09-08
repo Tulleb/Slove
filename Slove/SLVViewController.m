@@ -7,6 +7,7 @@
 //
 
 #import "SLVViewController.h"
+#import <Google/Analytics.h>
 
 @interface SLVViewController ()
 
@@ -27,6 +28,10 @@
 	}
 	
 	[super viewWillAppear:animated];
+	
+	id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+	[tracker set:kGAIScreenName value:NSStringFromClass(self.class)];
+	[tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 	
 	[self animateImages];
 }

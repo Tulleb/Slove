@@ -33,6 +33,7 @@
 		C44EB1A61B7D46CF001DC989 /* SLVSlovedPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44EB1A41B7D46CF001DC989 /* SLVSlovedPopupViewController.xib */; };
 		C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C458F6FE1B6A320E0075B8EF /* Localizable.strings */; };
 		C458F70E1B6BD7B20075B8EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */; };
+		C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */; };
 		C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */; };
 		C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */; };
 		C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E8311B64F1FE002B0A4E /* ParseErrorHandlingController.m */; };
@@ -143,6 +144,7 @@
 		C458F7061B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C458F7071B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRegisterViewController.h; sourceTree = "<group>"; };
 		C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRegisterViewController.m; sourceTree = "<group>"; };
 		C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVRegisterViewController.xib; sourceTree = "<group>"; };
@@ -306,6 +308,7 @@
 		C44224E61B5BE7D600389210 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */,
 				C44224E71B5BE7D600389210 /* Info.plist */,
 				C44224E81B5BE7D600389210 /* main.m */,
 				C442251A1B5BF0E000389210 /* SLVPrefixHeader.pch */,
@@ -695,6 +698,7 @@
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
 				C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
+				C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */,
 				C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */,
 				C4A48DA91B61531A00CEBA25 /* SLVConfirmationCodeViewController.xib in Resources */,
 				C4E9C0FF1B96494E0071C084 /* AveriaSansLibre-Regular.ttf in Resources */,
