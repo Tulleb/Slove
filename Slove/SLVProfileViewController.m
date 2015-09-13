@@ -157,7 +157,7 @@
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 										} else {
-											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.description, nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
 											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);

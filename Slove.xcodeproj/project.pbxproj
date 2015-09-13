@@ -44,6 +44,7 @@
 		C49FA8BF1B6D4193009288B9 /* SLVAddressBookContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C49FA8BE1B6D4193009288B9 /* SLVAddressBookContact.m */; };
 		C49FA8C21B6EB1B6009288B9 /* SLVCountryCodeData.m in Sources */ = {isa = PBXBuildFile; fileRef = C49FA8C11B6EB1B6009288B9 /* SLVCountryCodeData.m */; };
 		C49FA8C41B6EB5A4009288B9 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C49FA8C31B6EB5A4009288B9 /* CoreTelephony.framework */; };
+		C4A07C961BA60261009C6288 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A07C951BA60261009C6288 /* Reachability.m */; };
 		C4A2488F1B81130A004B9D43 /* SLVInteractionPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A2488D1B81130A004B9D43 /* SLVInteractionPopupViewController.m */; };
 		C4A248901B81130A004B9D43 /* SLVInteractionPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4A2488E1B81130A004B9D43 /* SLVInteractionPopupViewController.xib */; };
 		C4A248951B8117ED004B9D43 /* SLVPopupViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A248931B8117ED004B9D43 /* SLVPopupViewController.m */; };
@@ -161,6 +162,8 @@
 		C49FA8C01B6EB1B6009288B9 /* SLVCountryCodeData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVCountryCodeData.h; sourceTree = "<group>"; };
 		C49FA8C11B6EB1B6009288B9 /* SLVCountryCodeData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVCountryCodeData.m; sourceTree = "<group>"; };
 		C49FA8C31B6EB5A4009288B9 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		C4A07C941BA60261009C6288 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		C4A07C951BA60261009C6288 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
 		C4A2488C1B81130A004B9D43 /* SLVInteractionPopupViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVInteractionPopupViewController.h; sourceTree = "<group>"; };
 		C4A2488D1B81130A004B9D43 /* SLVInteractionPopupViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVInteractionPopupViewController.m; sourceTree = "<group>"; };
 		C4A2488E1B81130A004B9D43 /* SLVInteractionPopupViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVInteractionPopupViewController.xib; sourceTree = "<group>"; };
@@ -469,6 +472,8 @@
 				C4A48DAC1B61552F00CEBA25 /* SLVNetworking.m */,
 				C4A48DB31B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.h */,
 				C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */,
+				C4A07C941BA60261009C6288 /* Reachability.h */,
+				C4A07C951BA60261009C6288 /* Reachability.m */,
 			);
 			name = Networking;
 			sourceTree = "<group>";
@@ -789,6 +794,7 @@
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,
 				C4E9C0F21B9641730071C084 /* SLVSloveSentPopupViewController.m in Sources */,
 				C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */,
+				C4A07C961BA60261009C6288 /* Reachability.m in Sources */,
 				C49FA8C21B6EB1B6009288B9 /* SLVCountryCodeData.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

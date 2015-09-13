@@ -102,7 +102,7 @@
                                 <action selector="dismissAction:" destination="-1" eventType="touchUpInside" id="wWk-uH-gmz"/>
                             </connections>
                         </button>
-                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Body" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="5" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X44-pC-Ugd">
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Body" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="X44-pC-Ugd">
                             <rect key="frame" x="50" y="76" width="500" height="342"/>
                             <constraints>
                                 <constraint firstAttribute="width" constant="384" id="UdZ-yr-xRb"/>

@@ -14,6 +14,7 @@
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "SLVSlovedPopupViewController.h"
 #import <Google/Analytics.h>
+#import "Reachability.h"
 
 @interface AppDelegate ()
 
@@ -72,6 +73,13 @@
 	[self.window addSubview:self.currentNavigationController.view];
 	[self.window makeKeyAndVisible];
 	
+	NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+	
+	//Accept push notification when app is not open
+	if (remoteNotif) {
+		self.queuedPushNotification = [[NSArray alloc] initWithObjects:application, remoteNotif, nil];
+	}
+	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -90,6 +98,7 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	[self checkReachability];
 	[FBSDKAppEvents activateApp];
 	[self loadParseConfig];
 }
@@ -116,6 +125,14 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+	[self application:application handleRemoteNotification:userInfo];
+}
+
+
+#pragma mark - Custom methods
+
+- (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
+	self.queuedPushNotification = nil;
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
 		NSError *error;
@@ -139,8 +156,16 @@
 	SLVLog(@"Received a push notification");
 }
 
-
-#pragma mark - Custom methods
+- (void)checkReachability {
+	Reachability *reach = [Reachability reachabilityForInternetConnection];
+	
+	NetworkStatus netStatus = [reach currentReachabilityStatus];
+	if (netStatus == NotReachable) {
+		SLVLog(@"%@No internet connection!", SLV_ERROR);
+		SLVInteractionPopupViewController *reachabilityPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_reachability", nil) buttonsTitle:nil andDismissButton:YES];
+		[self.currentNavigationController presentViewController:reachabilityPopup animated:YES completion:nil];
+	}
+}
 
 - (void)loadUserDefaults {
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
@@ -162,6 +187,10 @@
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
+		
+		if (self.queuedPushNotification) {
+			[self application:[self.queuedPushNotification firstObject] handleRemoteNotification:[self.queuedPushNotification lastObject]];
+		}
 	}
 
 	self.userIsConnected = YES;

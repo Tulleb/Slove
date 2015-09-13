@@ -67,7 +67,7 @@
 	
 	self.usernameField.text = [SLVTools trimUsername:self.usernameField.text];
 	
-	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
+	NSString *answer = [SLVTools validateEmail:self.emailField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = NSLocalizedString(answer, nil);
@@ -75,7 +75,7 @@
 		return;
 	}
 	
-	answer = [SLVTools validateEmail:self.emailField.text];
+	answer = [SLVTools validateUsername:self.usernameField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = NSLocalizedString(answer, nil);

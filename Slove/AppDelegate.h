@@ -23,6 +23,7 @@
 @property (nonatomic, strong) SLVContact *sloverToSlove;
 @property (nonatomic, strong) NSDictionary *parseConfig;
 @property (nonatomic) BOOL userIsConnected;
+@property (strong, nonatomic) NSArray *queuedPushNotification;
 
 - (void)userConnected;
 - (void)userDisconnected;

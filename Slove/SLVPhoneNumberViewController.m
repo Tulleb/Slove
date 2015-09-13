@@ -63,15 +63,16 @@
 	if (self.formatedPhoneNumber && [self.formatedPhoneNumber length] >= 6) {
 		if ([[self.formatedPhoneNumber substringToIndex:5] isEqualToString:@"error"]) {
 			self.errorLabel.hidden = NO;
-			self.errorLabel.text = NSLocalizedString(self.formatedPhoneNumber, nil);
+			self.errorLabel.text = NSLocalizedString(@"error_phone_number_format", nil);
 			
 			SLVLog(@"%@Phone number '%@' couldn't be formated with country code '%@'", SLV_ERROR, self.phoneNumberField.text, [selectedCountryCodeData description]);
-			
-			self.formatedPhoneNumber = nil;
 			
 			return;
 		}
 	} else {
+		self.errorLabel.hidden = NO;
+		self.errorLabel.text = NSLocalizedString(@"error_phone_number_format", nil);
+		
 		SLVLog(@"%@Formated phone number reception for '%@' failed without displaying an error!", SLV_ERROR, self.phoneNumberField.text);
 		return;
 	}

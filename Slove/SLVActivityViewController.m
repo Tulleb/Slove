@@ -36,4 +36,8 @@
 	[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
 }
 
+- (void)goBack:(id)sender {
+	[super goToHome];
+}
+
 @end
