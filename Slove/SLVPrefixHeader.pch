@@ -99,6 +99,7 @@
 // Notification
 #define NOTIFICATION_SLOVEDPOPUP_DISMISSED		@"slovedPopupDismissed"
 #define NOTIFICATION_SLOVESENTPOPUP_DISMISSED	@"sloveSentPopupDismissed"
+#define NOTIFICATION_FIRSTSLOVE_PICTURE_DOWNLOADED	@"firstSlovePictureDownloaded"
 
 // User key
 #define	KEY_FIRSTTIME_TUTORIAL		@"first_time_tutorial"

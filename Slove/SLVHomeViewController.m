@@ -64,14 +64,7 @@
 	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
 		[super viewDidAppear:animated];
 		
-		SLVContact *firstSlover = [[SLVContact alloc] init];
-		
-		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_USERNAME];
-		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE];
-		
-		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover];
-		
-		[self.navigationController presentViewController:slovedPopup animated:YES completion:nil];
+		[self startTutorial];
 	} else {
 		[super viewDidAppear:animated];
 	}
@@ -134,6 +127,21 @@
 			default:
 				break;
 		}
+	}
+}
+
+- (void)startTutorial {
+	if ([ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE]) {
+		SLVContact *firstSlover = [[SLVContact alloc] init];
+		
+		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_USERNAME];
+		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE];
+		
+		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover];
+		
+		[self.navigationController presentViewController:slovedPopup animated:YES completion:nil];
+	} else {
+		[self performSelector:@selector(startTutorial) withObject:nil afterDelay:5];
 	}
 }
 
@@ -687,6 +695,7 @@
 	
 	if (isSynchronized) {
 		cell.titleLabel.text = contact.username;
+		cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
 		cell.subtitleLabel.text = contact.fullName;
 	} else {
 		cell.titleLabel.text = contact.fullName;
@@ -722,8 +731,8 @@
 	
 	cell.pictureImageView.image = contact.picture;
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
-	cell.pictureImageView.layer.cornerRadius = cell.pictureImageView.bounds.size.height / 2;
-	cell.pictureImageView.clipsToBounds = YES;
+	
+	cell.layerImageView.image = [UIImage imageNamed:@"masque_profil_repertoire"];
 	
 	[SLVViewController setStyle:cell];
 	

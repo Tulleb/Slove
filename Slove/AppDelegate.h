@@ -21,7 +21,7 @@
 @property (nonatomic, strong) SLVCountryCodeData *userCountryCodeData;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
 @property (nonatomic, strong) SLVContact *sloverToSlove;
-@property (nonatomic, strong) NSDictionary *parseConfig;
+@property (nonatomic, strong) NSMutableDictionary *parseConfig;
 @property (nonatomic) BOOL userIsConnected;
 @property (strong, nonatomic) NSArray *queuedPushNotification;
 

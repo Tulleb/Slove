@@ -501,6 +501,7 @@
 }
 
 - (void)loadParseConfig {
+	self.parseConfig = [[NSMutableDictionary alloc] init];
 	SLVLog(@"Getting the latest config...");
 	
 	[PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
@@ -522,18 +523,29 @@
 			firstSloveUsername = NSLocalizedString(@"label_slove_team", nil);
 		}
 		
-		UIImage *firstSlovePicture;
+		[self.parseConfig setObject:firstSloveUsername forKey:PARSE_FIRSTSLOVE_USERNAME];
+		
+		__block UIImage *firstSlovePicture;
 		PFFile *firstSlovePictureFile = config[PARSE_FIRSTSLOVE_PICTURE];
 		if (!firstSlovePictureFile) {
 			SLVLog(@"%@Falling back to default first slove picture", SLV_ERROR);
 			firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
-		} else {
+			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+		} else if (firstSlovePictureFile.isDataAvailable) {
 			firstSlovePicture = [UIImage imageWithData:[firstSlovePictureFile getData]];
+			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+		} else {
+			[firstSlovePictureFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+				if (!error) {
+					firstSlovePicture = [UIImage imageWithData:data];
+					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+				} else {
+					SLVLog(@"%@Error when downloading %@, falling back to default first slove picture", SLV_ERROR, PARSE_FIRSTSLOVE_PICTURE);
+					firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
+					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+				}
+			}];
 		}
-		
-		NSMutableDictionary *parseConfigBuffer = [[NSMutableDictionary alloc] initWithObjectsAndKeys:firstSloveUsername, PARSE_FIRSTSLOVE_USERNAME, firstSlovePicture, PARSE_FIRSTSLOVE_PICTURE, nil];
-		
-		self.parseConfig = [NSDictionary dictionaryWithDictionary:parseConfigBuffer];
 	}];
 }
 
