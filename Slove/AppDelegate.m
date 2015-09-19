@@ -170,8 +170,8 @@
 - (void)loadUserDefaults {
 	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
 	
-	if (![userDefaults objectForKey:KEY_FIRSTTIME_TUTORIAL]) {
-		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRSTTIME_TUTORIAL];
+	if (![userDefaults objectForKey:KEY_FIRST_TIME_TUTORIAL]) {
+		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRST_TIME_TUTORIAL];
 	}
 }
 
@@ -517,36 +517,80 @@
 			[ParseErrorHandlingController handleParseError:error];
 		}
 		
-		NSString *firstSloveUsername = config[PARSE_FIRSTSLOVE_USERNAME];
+		NSString *firstSloveUsername = config[PARSE_FIRST_SLOVE_USERNAME];
 		if (!firstSloveUsername) {
 			SLVLog(@"%@Falling back to default first slove username", SLV_ERROR);
 			firstSloveUsername = NSLocalizedString(@"label_slove_team", nil);
 		}
 		
-		[self.parseConfig setObject:firstSloveUsername forKey:PARSE_FIRSTSLOVE_USERNAME];
+		[self.parseConfig setObject:firstSloveUsername forKey:PARSE_FIRST_SLOVE_USERNAME];
+		
+		NSString *compatibleVersion = config[PARSE_COMPATIBLE_VERSION];
+		if (!compatibleVersion) {
+			SLVLog(@"%@Couldn't find compatible version", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:compatibleVersion forKey:PARSE_COMPATIBLE_VERSION];
+		}
+		
+		NSString *downloadAppUrl = config[PARSE_DOWNLOAD_APP_URL];
+		if (!downloadAppUrl) {
+			SLVLog(@"%@Couldn't find download app url", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:downloadAppUrl forKey:PARSE_DOWNLOAD_APP_URL];
+		}
 		
 		__block UIImage *firstSlovePicture;
-		PFFile *firstSlovePictureFile = config[PARSE_FIRSTSLOVE_PICTURE];
+		PFFile *firstSlovePictureFile = config[PARSE_FIRST_SLOVE_PICTURE];
 		if (!firstSlovePictureFile) {
 			SLVLog(@"%@Falling back to default first slove picture", SLV_ERROR);
 			firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
-			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
 		} else if (firstSlovePictureFile.isDataAvailable) {
 			firstSlovePicture = [UIImage imageWithData:[firstSlovePictureFile getData]];
-			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
 		} else {
 			[firstSlovePictureFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
 				if (!error) {
 					firstSlovePicture = [UIImage imageWithData:data];
-					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
 				} else {
-					SLVLog(@"%@Error when downloading %@, falling back to default first slove picture", SLV_ERROR, PARSE_FIRSTSLOVE_PICTURE);
+					SLVLog(@"%@Error when downloading %@, falling back to default first slove picture", SLV_ERROR, PARSE_FIRST_SLOVE_PICTURE);
 					firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
-					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRSTSLOVE_PICTURE];
+					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
 				}
 			}];
 		}
+		
+		[self checkCompatibleVersion];
 	}];
+}
+
+- (void)checkCompatibleVersion {
+	NSString *compatibleVersion = [self.parseConfig objectForKey:PARSE_COMPATIBLE_VERSION];
+	if (compatibleVersion) {
+		NSPredicate *compatibleVersionRegex = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", compatibleVersion];
+		NSString *fullVersion = [NSString stringWithFormat:@"%@.%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+		
+		if (![compatibleVersionRegex evaluateWithObject:fullVersion]) {
+			SLVLog(@"%@Incompatible versions : expected version is %@ whereas current version is %@", SLV_WARNING, compatibleVersion, fullVersion);
+			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil)
+															message:NSLocalizedString(@"error_incompatible_version", nil)
+														   delegate:self
+												  cancelButtonTitle:NSLocalizedString(@"button_ok", nil)
+												  otherButtonTitles:nil];
+			[alert show];
+		}
+	}
+}
+
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
+	NSString *downloadUrlString = [self.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL];
+	if (downloadUrlString) {
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:downloadUrlString]];
+	}
 }
 
 @end

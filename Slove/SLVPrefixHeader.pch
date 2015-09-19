@@ -97,16 +97,17 @@
 #define TIMER_FREQUENCY					0.1
 
 // Notification
-#define NOTIFICATION_SLOVEDPOPUP_DISMISSED		@"slovedPopupDismissed"
-#define NOTIFICATION_SLOVESENTPOPUP_DISMISSED	@"sloveSentPopupDismissed"
-#define NOTIFICATION_FIRSTSLOVE_PICTURE_DOWNLOADED	@"firstSlovePictureDownloaded"
+#define NOTIFICATION_SLOVED_POPUP_DISMISSED		@"slovedPopupDismissed"
+#define NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED	@"sloveSentPopupDismissed"
 
 // User key
-#define	KEY_FIRSTTIME_TUTORIAL		@"first_time_tutorial"
+#define	KEY_FIRST_TIME_TUTORIAL		@"first_time_tutorial"
 
 // Parse config
-#define PARSE_FIRSTSLOVE_USERNAME	@"first_slove_username"
-#define PARSE_FIRSTSLOVE_PICTURE	@"first_slove_picture"
+#define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"
+#define PARSE_FIRST_SLOVE_PICTURE	@"first_slove_picture"
+#define PARSE_COMPATIBLE_VERSION	@"compatible_version"
+#define PARSE_DOWNLOAD_APP_URL		@"download_app_url"
 
 // Navigation
 #define SLOVE_BUTTON_SIZE			75

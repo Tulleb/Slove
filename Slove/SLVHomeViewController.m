@@ -46,7 +46,7 @@
 	// To call viewWillAppear after return from Sloved popup
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(didDismissSlovedPopup)
-												 name:NOTIFICATION_SLOVEDPOPUP_DISMISSED
+												 name:NOTIFICATION_SLOVED_POPUP_DISMISSED
 											   object:nil];
 	
 	self.selectedFilterIndex = 0;
@@ -61,7 +61,7 @@
 		[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
 		
 		ApplicationDelegate.sloverToSlove = nil;
-	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[super viewDidAppear:animated];
 		
 		[self startTutorial];
@@ -131,11 +131,11 @@
 }
 
 - (void)startTutorial {
-	if ([ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE]) {
+	if ([ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_PICTURE]) {
 		SLVContact *firstSlover = [[SLVContact alloc] init];
 		
-		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_USERNAME];
-		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRSTSLOVE_PICTURE];
+		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_USERNAME];
+		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_PICTURE];
 		
 		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover];
 		

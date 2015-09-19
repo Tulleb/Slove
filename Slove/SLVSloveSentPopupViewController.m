@@ -28,10 +28,10 @@
 	
 	[self.view addGestureRecognizer:tap];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.bubbleView.hidden = NO;
 		
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRSTTIME_TUTORIAL];
+		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
 	}
 }
 
@@ -47,7 +47,7 @@
 }
 
 - (void)handleTap:(UITapGestureRecognizer *)tap {
-	[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVESENTPOPUP_DISMISSED
+	[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED
 														object:nil
 													  userInfo:nil];
 	

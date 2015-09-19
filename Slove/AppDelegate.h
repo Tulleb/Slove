@@ -13,7 +13,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import "SLVContact.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SLVNavigationController *currentNavigationController;

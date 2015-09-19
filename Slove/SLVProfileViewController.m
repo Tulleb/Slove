@@ -45,7 +45,7 @@
 	// To call viewWillAppear after return from Slove Sent popup
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(didDismissSloveSentPopup)
-												 name:NOTIFICATION_SLOVESENTPOPUP_DISMISSED
+												 name:NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED
 											   object:nil];
 }
 
@@ -67,7 +67,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self disableElementsForTutorial];
 		self.bubbleView.hidden = NO;
 		
@@ -118,7 +118,7 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[SLVTools playSound:SLOVER_SOUND];
 		
 		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];

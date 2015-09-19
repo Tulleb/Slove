@@ -45,7 +45,7 @@
 	
 	self.subtitleLabel.text = [self.subtitleLabel.text stringByAppendingString:self.slover.username];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.disablingView.hidden = NO;
 		self.bubbleView.hidden = NO;
 	}
@@ -67,7 +67,7 @@
 	ApplicationDelegate.sloverToSlove = self.slover;
 	
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
-		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVEDPOPUP_DISMISSED
+		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED
 															object:nil
 														  userInfo:nil];
 		
