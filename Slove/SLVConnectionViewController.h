@@ -15,7 +15,7 @@
 
 @property (strong, nonatomic) IBOutlet UIImageView *backgroundImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *layerImageView;
-@property (strong, nonatomic) IBOutlet UILabel *titleLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *titleImageView;
 @property (strong, nonatomic) IBOutlet UILabel *subtitleUpperLabel;
 @property (strong, nonatomic) IBOutlet UILabel *subtitleLowerLabel;
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;

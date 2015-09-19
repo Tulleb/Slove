@@ -24,6 +24,7 @@
 @property (nonatomic, strong) NSMutableDictionary *parseConfig;
 @property (nonatomic) BOOL userIsConnected;
 @property (strong, nonatomic) NSArray *queuedPushNotification;
+@property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
 
 - (void)userConnected;
 - (void)userDisconnected;

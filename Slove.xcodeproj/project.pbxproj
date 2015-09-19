@@ -23,9 +23,6 @@
 		C44225301B5BF76100389210 /* SLVConnectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C442252E1B5BF76100389210 /* SLVConnectionViewController.m */; };
 		C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */; };
 		C44D55401B9B3EB200763F0E /* SLVCodeField.m in Sources */ = {isa = PBXBuildFile; fileRef = C44D553F1B9B3EB200763F0E /* SLVCodeField.m */; };
-		C44D55511B9C883300763F0E /* illu_spashscreen.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C44D554E1B9C883300763F0E /* illu_spashscreen.jpg */; };
-		C44D55521B9C883300763F0E /* illu_spashscreen@2x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C44D554F1B9C883300763F0E /* illu_spashscreen@2x.jpg */; };
-		C44D55531B9C883300763F0E /* illu_spashscreen@3x.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C44D55501B9C883300763F0E /* illu_spashscreen@3x.jpg */; };
 		C44DCC941B682086009BDAB2 /* SLVContact.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC931B682086009BDAB2 /* SLVContact.m */; };
 		C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */; };
 		C44DCC991B682C11009BDAB2 /* SLVContactTableViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */; };
@@ -33,6 +30,9 @@
 		C44EB1A61B7D46CF001DC989 /* SLVSlovedPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44EB1A41B7D46CF001DC989 /* SLVSlovedPopupViewController.xib */; };
 		C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C458F6FE1B6A320E0075B8EF /* Localizable.strings */; };
 		C458F70E1B6BD7B20075B8EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */; };
+		C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805B1BAD7B6100F90477 /* illu_spashscreen.png */; settings = {ASSET_TAGS = (); }; };
+		C469805F1BAD7B6100F90477 /* illu_spashscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */; settings = {ASSET_TAGS = (); }; };
+		C46980601BAD7B6100F90477 /* illu_spashscreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */; settings = {ASSET_TAGS = (); }; };
 		C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */; };
 		C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */; };
 		C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */; };
@@ -128,9 +128,6 @@
 		C442252F1B5BF76100389210 /* SLVConnectionViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVConnectionViewController.xib; sourceTree = "<group>"; };
 		C44D553E1B9B3EB200763F0E /* SLVCodeField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVCodeField.h; sourceTree = "<group>"; };
 		C44D553F1B9B3EB200763F0E /* SLVCodeField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVCodeField.m; sourceTree = "<group>"; };
-		C44D554E1B9C883300763F0E /* illu_spashscreen.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = illu_spashscreen.jpg; sourceTree = "<group>"; };
-		C44D554F1B9C883300763F0E /* illu_spashscreen@2x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "illu_spashscreen@2x.jpg"; sourceTree = "<group>"; };
-		C44D55501B9C883300763F0E /* illu_spashscreen@3x.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "illu_spashscreen@3x.jpg"; sourceTree = "<group>"; };
 		C44DCC921B682086009BDAB2 /* SLVContact.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVContact.h; sourceTree = "<group>"; };
 		C44DCC931B682086009BDAB2 /* SLVContact.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVContact.m; sourceTree = "<group>"; };
 		C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVContactTableViewCell.h; sourceTree = "<group>"; };
@@ -145,6 +142,9 @@
 		C458F7061B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C458F7071B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C469805B1BAD7B6100F90477 /* illu_spashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = illu_spashscreen.png; path = "Assets/Splash Screen/illu_spashscreen.png"; sourceTree = "<group>"; };
+		C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "illu_spashscreen@2x.png"; path = "Assets/Splash Screen/illu_spashscreen@2x.png"; sourceTree = "<group>"; };
+		C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "illu_spashscreen@3x.png"; path = "Assets/Splash Screen/illu_spashscreen@3x.png"; sourceTree = "<group>"; };
 		C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRegisterViewController.h; sourceTree = "<group>"; };
 		C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRegisterViewController.m; sourceTree = "<group>"; };
@@ -413,9 +413,9 @@
 		C44D554D1B9C881400763F0E /* Splash Screen */ = {
 			isa = PBXGroup;
 			children = (
-				C44D554E1B9C883300763F0E /* illu_spashscreen.jpg */,
-				C44D554F1B9C883300763F0E /* illu_spashscreen@2x.jpg */,
-				C44D55501B9C883300763F0E /* illu_spashscreen@3x.jpg */,
+				C469805B1BAD7B6100F90477 /* illu_spashscreen.png */,
+				C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */,
+				C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */,
 			);
 			name = "Splash Screen";
 			sourceTree = "<group>";
@@ -675,20 +675,19 @@
 			buildActionMask = 2147483647;
 			files = (
 				C42C8E9A1B8888EF0079D734 /* Assets in Resources */,
+				C46980601BAD7B6100F90477 /* illu_spashscreen@3x.png in Resources */,
 				C4F2CECF1B92101E000AC390 /* SLVSettingsViewController.xib in Resources */,
 				C498E83C1B64F2C8002B0A4E /* SLVLogInViewController.xib in Resources */,
 				C4E9C0FB1B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf in Resources */,
-				C44D55521B9C883300763F0E /* illu_spashscreen@2x.jpg in Resources */,
 				C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */,
 				C4E9C0FD1B96494E0071C084 /* AveriaSansLibre-Light.ttf in Resources */,
-				C44D55531B9C883300763F0E /* illu_spashscreen@3x.jpg in Resources */,
 				C44EB1A61B7D46CF001DC989 /* SLVSlovedPopupViewController.xib in Resources */,
 				C4C6446B1B9A4D7F0065B2BC /* Nunito-Light.ttf in Resources */,
-				C44D55511B9C883300763F0E /* illu_spashscreen.jpg in Resources */,
 				C44224F71B5BE7D600389210 /* LaunchScreen.xib in Resources */,
 				C4C6446C1B9A4D7F0065B2BC /* Nunito-Regular.ttf in Resources */,
 				C4A48DA41B61519000CEBA25 /* SLVPhoneNumberViewController.xib in Resources */,
 				C4E9C1021B96496A0071C084 /* SansitaOne.ttf in Resources */,
+				C469805F1BAD7B6100F90477 /* illu_spashscreen@2x.png in Resources */,
 				C4E9C0FE1B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf in Resources */,
 				C4E9C0FA1B96494E0071C084 /* AveriaSansLibre-Bold.ttf in Resources */,
 				C4E9C0FC1B96494E0071C084 /* AveriaSansLibre-Italic.ttf in Resources */,
@@ -702,6 +701,7 @@
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
 				C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */,
+				C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
 				C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */,
 				C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */,

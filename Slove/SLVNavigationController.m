@@ -351,8 +351,6 @@
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
 	[self.homeButton setImage:[UIImage imageNamed:@"Assets/Button/logo_txt"] forState:UIControlStateNormal];
-	[self.homeButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
-	self.homeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 	[self.homeButton addTarget:self action:@selector(homeAction:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.activityButton setTitle:@"button_activity" forState:UIControlStateNormal];
@@ -375,7 +373,7 @@
 	self.sloveView.backgroundColor = CLEAR;
 	
 	self.sloveButton.imageView.contentMode = UIViewContentModeScaleToFill;
-	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/bt_slove_slovy_big"] forState:UIControlStateNormal];
+	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_spirale"] forState:UIControlStateNormal];
 	[self.sloveButton addTarget:self action:@selector(sloveAction:) forControlEvents:UIControlEventTouchUpInside];
 	UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(sloveLongPress:)];
 	[self.sloveButton addGestureRecognizer:longPress];
