@@ -12,6 +12,7 @@
 
 @interface SLVNavigationController : UINavigationController <UIGestureRecognizerDelegate>
 
+@property (strong, nonatomic) UIImageView *loaderImageView;
 @property (strong, nonatomic) UIView *bottomNavigationBarView;
 @property (strong, nonatomic) UIView *sloveView;
 @property (strong, nonatomic) UIButton *sloveButton;

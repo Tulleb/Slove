@@ -36,34 +36,13 @@
 	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
 	
-	// This block doesn't trigger when there is no Internet connexion
-	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
-		if (!error) {
-			if ([FBSDKAccessToken currentAccessToken]) {
-				[self loggedWithFacebook];
-			} else if ([PFUser currentUser]) {
-				[self loggedWithoutFacebook];
-			}
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
-	
-	if (![SLVTools checkConnection]) {
-		// TODO: exit app
-	}
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
-	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
-	[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
-	[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
-	
-	self.navigationController.navigationBarHidden = YES;
+	[self viewWillEnterForeground:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -83,6 +62,49 @@
 
 - (IBAction)registerAction:(id)sender {
 	[self.navigationController pushViewController:[[SLVRegisterViewController alloc] init] animated:YES];
+}
+
+- (void)viewWillEnterForeground:(NSNotification *)notification {
+	if ([self.navigationController topViewController] == self) {
+		[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
+		[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
+		[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
+		[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
+		
+		self.navigationController.navigationBarHidden = YES;
+		
+		if (self.calledFromBackButton) {
+			self.calledFromBackButton = NO;
+		} else {
+			if (ApplicationDelegate.currentNavigationController.loaderImageView.hidden) {
+				[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+			}
+			[self performSelector:@selector(fetchCurrentUser) withObject:nil afterDelay:MINIMUM_ANIMATION_DURATION];
+		}
+	}
+}
+
+- (void)fetchCurrentUser {
+	PFUser *currentUser = [PFUser currentUser];
+	
+	if (currentUser) {
+		[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
+			if (!error) {
+				if ([FBSDKAccessToken currentAccessToken]) {
+					[self loggedWithFacebook];
+				} else if ([PFUser currentUser]) {
+					[self loggedWithoutFacebook];
+				}
+			} else {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+				[ParseErrorHandlingController handleParseError:error];
+				
+				[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+			}
+		}];
+	} else {
+		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	}
 }
 
 - (void)loggedWithFacebook {
@@ -127,6 +149,8 @@
 																[ApplicationDelegate userConnected];
 															}
 														}
+														
+														[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 													}];
 	}
 }
@@ -138,6 +162,8 @@
 	} else {
 		[ApplicationDelegate userConnected];
 	}
+	
+	[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 }
 
 - (void)getInformationsFromFacebook {

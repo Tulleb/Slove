@@ -33,6 +33,7 @@
 		C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805B1BAD7B6100F90477 /* illu_spashscreen.png */; settings = {ASSET_TAGS = (); }; };
 		C469805F1BAD7B6100F90477 /* illu_spashscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */; settings = {ASSET_TAGS = (); }; };
 		C46980601BAD7B6100F90477 /* illu_spashscreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */; settings = {ASSET_TAGS = (); }; };
+		C46980631BADA52200F90477 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = C46980621BADA52200F90477 /* UIView+Animation.m */; settings = {ASSET_TAGS = (); }; };
 		C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */; };
 		C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */; };
 		C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */; };
@@ -145,6 +146,8 @@
 		C469805B1BAD7B6100F90477 /* illu_spashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = illu_spashscreen.png; path = "Assets/Splash Screen/illu_spashscreen.png"; sourceTree = "<group>"; };
 		C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "illu_spashscreen@2x.png"; path = "Assets/Splash Screen/illu_spashscreen@2x.png"; sourceTree = "<group>"; };
 		C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "illu_spashscreen@3x.png"; path = "Assets/Splash Screen/illu_spashscreen@3x.png"; sourceTree = "<group>"; };
+		C46980611BADA52200F90477 /* UIView+Animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+Animation.h"; sourceTree = "<group>"; };
+		C46980621BADA52200F90477 /* UIView+Animation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+Animation.m"; sourceTree = "<group>"; };
 		C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRegisterViewController.h; sourceTree = "<group>"; };
 		C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRegisterViewController.m; sourceTree = "<group>"; };
@@ -383,6 +386,8 @@
 		C442251E1B5BF1AE00389210 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				C46980611BADA52200F90477 /* UIView+Animation.h */,
+				C46980621BADA52200F90477 /* UIView+Animation.m */,
 				C442251F1B5BF20A00389210 /* NSString+Tools.h */,
 				C44225201B5BF20A00389210 /* NSString+Tools.m */,
 			);
@@ -776,6 +781,7 @@
 				C49FA8BF1B6D4193009288B9 /* SLVAddressBookContact.m in Sources */,
 				C4A48D9B1B6149EC00CEBA25 /* SLVHomeViewController.m in Sources */,
 				C44DCC941B682086009BDAB2 /* SLVContact.m in Sources */,
+				C46980631BADA52200F90477 /* UIView+Animation.m in Sources */,
 				C49A82371B639DF60061BA1B /* SLVUsernameViewController.m in Sources */,
 				C44225211B5BF20A00389210 /* NSString+Tools.m in Sources */,
 				C4C644741B9AF72F0065B2BC /* SLVTextField.m in Sources */,

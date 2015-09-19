@@ -189,57 +189,18 @@
 - (void)loadCircle {
 	self.circleImageView.image = [UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi48"];
 	
-	self.circleImageView.animationImages = [NSArray arrayWithObjects:
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi00"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi01"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi02"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi03"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi04"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi05"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi06"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi07"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi08"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi09"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi10"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi11"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi12"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi13"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi14"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi15"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi16"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi17"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi18"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi19"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi20"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi21"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi22"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi23"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi24"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi25"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi26"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi27"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi28"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi29"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi30"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi31"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi32"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi33"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi34"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi35"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi36"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi37"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi38"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi39"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi40"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi41"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi42"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi43"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi44"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi45"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi46"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi47"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi48"], nil];
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/Envoi_Slove/animenvoi";
 	
+	for (int i = 1; i <= 48; i++) {
+		if (i < 10) {
+			[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:i - 1];
+		} else {
+			[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+		}
+	}
+	
+	self.circleImageView.animationImages = animatedImages;
 	self.circleImageView.animationDuration = 2;
 	self.circleImageView.animationRepeatCount = 1;
 }

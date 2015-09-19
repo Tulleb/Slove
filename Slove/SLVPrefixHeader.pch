@@ -20,6 +20,7 @@
 #import "NSString+Tools.h"
 #import <Parse/Parse.h>
 #import "ParseErrorHandlingController.h"
+#import "UIView+Animation.h"
 
 // Math
 #define degreesToRadians(x)	(x * M_PI / 180)
@@ -95,6 +96,7 @@
 #define LONG_ANIMATION_DURATION         1
 #define VERY_LONG_ANIMATION_DURATION    2
 #define TIMER_FREQUENCY					0.1
+#define MINIMUM_ANIMATION_DURATION		2
 
 // Notification
 #define NOTIFICATION_SLOVED_POPUP_DISMISSED		@"slovedPopupDismissed"

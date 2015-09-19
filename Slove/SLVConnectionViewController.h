@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet FBSDKLoginButton *facebookLoginButton;
 @property (strong, nonatomic) IBOutlet UIButton *registerButton;
 @property (strong, nonatomic) IBOutlet UIButton *usernameLoginButton;
+@property (nonatomic) BOOL calledFromBackButton;
 
 - (IBAction)connectAction:(id)sender;
 - (IBAction)registerAction:(id)sender;

@@ -199,10 +199,12 @@
 	SLVLog(@"User disconnected from Slove");
 	
 	if (self.userIsConnected) {
-		self.currentNavigationController = nil;
-		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
-		[self.currentNavigationController hideBottomNavigationBar];
-		self.window.rootViewController = self.currentNavigationController;
+		[self.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:^{
+			self.currentNavigationController = nil;
+			self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+			[self.currentNavigationController hideBottomNavigationBar];
+			self.window.rootViewController = self.currentNavigationController;
+		}];
 	}
 	
 	self.userIsConnected = NO;

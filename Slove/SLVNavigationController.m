@@ -10,6 +10,7 @@
 #import "SLVPopupViewController.h"
 #import "SLVProfileViewController.h"
 #import "SLVActivityViewController.h"
+#import "SLVConnectionViewController.h"
 
 @interface SLVNavigationController ()
 
@@ -20,12 +21,42 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	[self loadLoader];
 	[self loadTopNavigationBar];
 	[self loadBottomNavigationBar];
 }
 
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
+	
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeLeading
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeLeading
+														 multiplier:1
+														   constant:0]];
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeTrailing
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeTrailing
+														 multiplier:1
+														   constant:0]];
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeBottom
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeBottom
+														 multiplier:1
+														   constant:0]];
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeTop
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeTop
+														 multiplier:1
+														   constant:0]];
 	
 	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
 														  attribute:NSLayoutAttributeLeading
@@ -238,12 +269,22 @@
 		[self moveSloveViewBottom];
 	}
 	
+	if ([self.viewControllers count] == 2 && [self.viewControllers.firstObject isKindOfClass:[SLVConnectionViewController class]]) {
+		SLVConnectionViewController *rootViewController = self.viewControllers.firstObject;
+		rootViewController.calledFromBackButton = YES;
+	}
+	
 	return [super popViewControllerAnimated:animated];
 }
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
 	if (self.sloveViewIsMoved) {
 		[self moveSloveViewBottom];
+	}
+	
+	if ([self.viewControllers.firstObject isKindOfClass:[SLVConnectionViewController class]]) {
+		SLVConnectionViewController *rootViewController = self.viewControllers.firstObject;
+		rootViewController.calledFromBackButton = YES;
 	}
 	
 	return [super popToRootViewControllerAnimated:animated];
@@ -316,6 +357,28 @@
 
 - (void)goToHome {
 	[self homeAction:nil];
+}
+
+- (void)loadLoader {
+	self.loaderImageView = [[UIImageView alloc] init];
+	
+	self.loaderImageView.contentMode = UIViewContentModeScaleAspectFill;
+	
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/Loading/anim_loading";
+	
+	for (int i = 1; i <= 14; i++) {
+		[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+	}
+	
+	self.loaderImageView.animationImages = animatedImages;
+	self.loaderImageView.animationDuration = 1;
+	self.loaderImageView.animationRepeatCount = 0;
+	[self.loaderImageView startAnimating];
+	
+	[self.view addSubview:self.loaderImageView];
+	
+	self.loaderImageView.translatesAutoresizingMaskIntoConstraints = NO;
 }
 
 - (void)loadTopNavigationBar {

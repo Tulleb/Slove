@@ -133,10 +133,14 @@
 }
 
 - (void)animateImages {
-	self.popupImageView.animationImages = [NSArray arrayWithObjects:
-								  [UIImage imageNamed:@"Assets/Animation/anim_popup/anim_popup1"],
-								  [UIImage imageNamed:@"Assets/Animation/anim_popup/anim_popup2"], nil];
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/anim_popup/anim_popup";
 	
+	for (int i = 1; i <= 2; i++) {
+		[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+	}
+	
+	self.popupImageView.animationImages = animatedImages;
 	self.popupImageView.animationDuration = 0.2;
 	self.popupImageView.animationRepeatCount = 0;
 	[self.popupImageView startAnimating];
