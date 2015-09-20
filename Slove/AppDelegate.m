@@ -576,12 +576,12 @@
 		
 		if (![compatibleVersionRegex evaluateWithObject:fullVersion]) {
 			SLVLog(@"%@Incompatible versions : expected version is %@ whereas current version is %@", SLV_WARNING, compatibleVersion, fullVersion);
-			UIAlertView *alert = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil)
-															message:NSLocalizedString(@"error_incompatible_version", nil)
-														   delegate:self
-												  cancelButtonTitle:NSLocalizedString(@"button_ok", nil)
-												  otherButtonTitles:nil];
-			[alert show];
+			
+			self.compatibleVersionPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_incompatible_version_error", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+			
+			self.compatibleVersionPopup.delegate = self;
+			
+			[self.currentNavigationController presentViewController:self.compatibleVersionPopup animated:YES completion:nil];
 		}
 	}
 	
@@ -589,12 +589,14 @@
 }
 
 
-#pragma mark - UIAlertViewDelegate
+#pragma mark - SLVInteractionPopupDelegate
 
-- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex {
-	NSString *downloadUrlString = [self.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL];
-	if (downloadUrlString) {
-		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:downloadUrlString]];
+- (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.compatibleVersionPopup) {
+		NSString *downloadUrlString = [self.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL];
+		if (downloadUrlString) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:downloadUrlString]];
+		}
 	}
 }
 

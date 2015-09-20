@@ -17,6 +17,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	self.view.backgroundColor = BLUE_ALPHA;
+	
 	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/notif_envoi"];
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_tuto_premierevisite"];
 	

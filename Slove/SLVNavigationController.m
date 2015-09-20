@@ -205,21 +205,21 @@
 																  toItem:self.sloveCounterBadge
 															   attribute:NSLayoutAttributeTrailing
 															  multiplier:1
-																constant:SLOVE_BUTTON_SIZE * 0.05]];
+																constant:SLOVE_BUTTON_SIZE * 0.1]];
 	[self.sloveView addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveView
 															   attribute:NSLayoutAttributeBottom
 															   relatedBy:NSLayoutRelationEqual
 																  toItem:self.sloveCounterBadge
 															   attribute:NSLayoutAttributeBottom
 															  multiplier:1
-																constant:SLOVE_BUTTON_SIZE * 0.6]];
+																constant:SLOVE_BUTTON_SIZE * 0.65]];
 	[self.sloveView addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveCounterBadge
 															   attribute:NSLayoutAttributeTop
 															   relatedBy:NSLayoutRelationEqual
 																  toItem:self.sloveView
 															   attribute:NSLayoutAttributeTop
 															  multiplier:1
-																constant:SLOVE_BUTTON_SIZE * 0.05]];
+																constant:SLOVE_BUTTON_SIZE * 0.10]];
 
 	[self.settingsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsButton
 																   attribute:NSLayoutAttributeHeight
@@ -388,9 +388,8 @@
 //	NSShadow* shadow = [NSShadow new];
 //	shadow.shadowOffset = CGSizeMake(0, 1);
 //	shadow.shadowColor = CLEAR;
-	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName:DARK_GRAY,
-															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE]}];
-	[[UINavigationBar appearance] setBarTintColor:LIGHT_GRAY];
+	[[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE]}];
+	[[UINavigationBar appearance] setBarTintColor:WHITE];
 	if (!IS_IOS7) {
 		[[UINavigationBar appearance] setTranslucent:NO];
 		[[UINavigationBar appearance] setBackgroundImage:[UIImage new]
@@ -412,7 +411,7 @@
 	self.sloveButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
-	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:WHITE withInsetColor:RED withFrameColor:WHITE withFrame:YES withShadow:YES withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
+	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:RED withInsetColor:WHITE withFrameColor:RED withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
@@ -499,7 +498,7 @@
 															 relatedBy:NSLayoutRelationEqual
 																toItem:self.sloveView
 															 attribute:NSLayoutAttributeLeading
-															multiplier:1															  constant:SLOVE_BUTTON_SIZE * 0.7];
+															multiplier:1															  constant:SLOVE_BUTTON_SIZE];
 }
 
 - (void)loadSloveButtonAnimation:(BOOL)reversed {
@@ -600,7 +599,7 @@
 																		toItem:self.sloveView
 																	 attribute:NSLayoutAttributeLeading
 																	multiplier:1
-																	  constant:SLOVE_BUTTON_SIZE * (0.7 - (0.1 * [sloveCountString length]))];
+																	  constant:SLOVE_BUTTON_SIZE * (0.75 - (0.1 * [sloveCountString length]))];
 			
 			
 			[self.sloveView setNeedsUpdateConstraints];

@@ -62,6 +62,7 @@
 #define WHITE			[UIColor whiteColor]
 #define RED				[UIColor colorWithRed:255/255.0 green:51/255.0 blue:102/255.0 alpha:1]
 #define BLUE			[UIColor colorWithRed:86/255.0 green:160/255.0 blue:255/255.0 alpha:1]
+#define BLUE_ALPHA			[UIColor colorWithRed:86/255.0 green:160/255.0 blue:255/255.0 alpha:0.9]
 #define GREEN			[UIColor colorWithRed:168/255.0 green:227/255.0 blue:81/255.0 alpha:1]
 #define YELLOW			[UIColor colorWithRed:255/255.0 green:204/255.0 blue:2/255.0 alpha:1]
 #define GRAY			[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:1]
@@ -102,7 +103,9 @@
 #define NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED	@"sloveSentPopupDismissed"
 
 // User key
-#define	KEY_FIRST_TIME_TUTORIAL		@"first_time_tutorial"
+#define	KEY_FIRST_TIME_TUTORIAL					@"first_time_tutorial"
+#define	KEY_ACTIVITY_CONSTRUCTION_DISPLAYED		@"activityConstructionDisplayed"
+#define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 
 // Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"

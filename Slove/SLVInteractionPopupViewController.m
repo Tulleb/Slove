@@ -28,6 +28,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	self.popupView.backgroundColor = BLUE_ALPHA;
+	
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup"] forState:UIControlStateNormal];
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup_clic"] forState:UIControlStateHighlighted];
 	

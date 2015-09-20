@@ -23,9 +23,17 @@
 @implementation SLVHomeViewController
 
 - (void)viewDidLoad {
-	self.appName = @"home";
+	self.appName = @"slove";
 	
 	[super viewDidLoad];
+	
+	self.searchView.backgroundColor = BLUE;
+	
+	self.searchTextField.background = [UIImage imageNamed:@"Assets/Box/input_repertoire"];
+	self.searchTextField.textColor = BLUE;
+	[self.searchTextField addTarget:self action:@selector(textFieldDidChange:) forControlEvents:UIControlEventEditingChanged];
+	
+	self.searchImageView.image = [UIImage imageNamed:@"Assets/Image/loupe"];
 	
 	[self.favoriteButton setTitleColor:WHITE forState:UIControlStateNormal];
 	[self.favoriteButton setTitleColor:BLUE forState:UIControlStateHighlighted];
@@ -51,7 +59,7 @@
 	
 	self.selectedFilterIndex = 0;
 	self.favoriteButton.selected = YES;
-	[self filterChanged:self.favoriteButton];
+	[self filterChanged:self.contactButton];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -319,6 +327,7 @@
 	self.unsynchronizedAddressBookContacts = [addressBookBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
 		return [a.fullName caseInsensitiveCompare:b.fullName];
 	}];
+	self.fullUnsynchronizedAddressBookContacts = self.unsynchronizedAddressBookContacts;
 }
 
 - (void)loadFriendsFromFacebook {
@@ -492,6 +501,7 @@
 												self.synchronizedAddressBookContacts = [synchronizedAddressBookContactsBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
 													return [a.fullName caseInsensitiveCompare:b.fullName];
 												}];
+												self.fullSynchronizedAddressBookContacts = self.synchronizedAddressBookContacts;
 											}
 										} else {
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -567,10 +577,12 @@
 		NSMutableArray *unsynchronizedAddressBookContactsBuffer = [self.unsynchronizedAddressBookContacts mutableCopy];
 		[unsynchronizedAddressBookContactsBuffer removeObject:contact];
 		self.unsynchronizedAddressBookContacts = unsynchronizedAddressBookContactsBuffer;
+		self.fullUnsynchronizedAddressBookContacts = self.unsynchronizedAddressBookContacts;
 		
 		NSMutableArray *synchronizedAddressBookContactsBuffer = [self.synchronizedAddressBookContacts mutableCopy];
 		[synchronizedAddressBookContactsBuffer addObject:contact];
 		self.synchronizedAddressBookContacts = synchronizedAddressBookContactsBuffer;
+		self.fullSynchronizedAddressBookContacts = self.synchronizedAddressBookContacts;
 	}
 }
 
@@ -687,7 +699,7 @@
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
-	[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+	[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Image/fleche_go_profil"] forState:UIControlStateNormal];
 	cell.subtitleLabel.textColor = BLUE;
 	
 	SLVContact *contact;
@@ -812,6 +824,7 @@
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 1, headerView.frame.size.width - 8 * 2, headerView.frame.size.height - 1 * 2)];
 	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
 	label.text = [self tableView:tableView titleForHeaderInSection:section];
+	label.textColor = DARK_GRAY;
 	
 	[headerView addSubview:label];
 	
@@ -860,6 +873,51 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - UITextFieldDelegate
+
+- (void)textFieldDidChange:(UITextField *)textField {
+	if (textField == self.searchTextField) {
+		NSString *text = textField.text;
+		
+		if(text.length == 0) {
+			self.unsynchronizedAddressBookContacts = self.fullUnsynchronizedAddressBookContacts;
+			self.synchronizedAddressBookContacts = self.fullSynchronizedAddressBookContacts;
+		} else {
+			NSMutableArray *filteredContacts = [[NSMutableArray alloc] init];
+			
+			for (SLVAddressBookContact *contact in self.fullSynchronizedAddressBookContacts) {
+				NSRange fullNameRange = [contact.fullName rangeOfString:text options:NSCaseInsensitiveSearch];
+				NSRange usernameRange = [contact.username rangeOfString:text options:NSCaseInsensitiveSearch];
+				if(fullNameRange.location != NSNotFound || usernameRange.location != NSNotFound) {
+					[filteredContacts addObject:contact];
+				}
+			}
+			
+			self.synchronizedAddressBookContacts = filteredContacts;
+			
+			filteredContacts = [[NSMutableArray alloc] init];
+			
+			for (SLVAddressBookContact *contact in self.fullUnsynchronizedAddressBookContacts) {
+				NSRange fullNameRange = [contact.fullName rangeOfString:text options:NSCaseInsensitiveSearch];
+				if(fullNameRange.location != NSNotFound) {
+					[filteredContacts addObject:contact];
+				}
+			}
+			
+			self.unsynchronizedAddressBookContacts = filteredContacts;
+		}
+		
+		[self.contactTableView reloadData];
+	}
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	
+	return YES;
 }
 
 @end

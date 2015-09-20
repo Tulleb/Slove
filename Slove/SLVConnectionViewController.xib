@@ -11,8 +11,10 @@
             <connections>
                 <outlet property="backgroundImageView" destination="ciF-cz-sED" id="gbf-FN-HkE"/>
                 <outlet property="facebookLoginButton" destination="52w-aG-mhA" id="OhB-8Y-D5F"/>
+                <outlet property="headerView" destination="azx-fH-maf" id="Flo-N0-1zz"/>
                 <outlet property="layerImageView" destination="RgA-Ze-pHU" id="6NJ-5G-pCk"/>
                 <outlet property="registerButton" destination="5vX-GM-vt0" id="0fy-Br-Myf"/>
+                <outlet property="subtitleImageView" destination="rGU-yU-3VL" id="6Gx-JG-IdX"/>
                 <outlet property="subtitleLowerLabel" destination="qYo-xw-fVx" id="36q-DO-VMv"/>
                 <outlet property="subtitleUpperLabel" destination="QBe-D8-xQz" id="Ae7-bD-E4K"/>
                 <outlet property="titleImageView" destination="qvm-Yj-zSg" id="1Z4-YA-iXp"/>
@@ -54,7 +56,7 @@
                             </constraints>
                         </imageView>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="subtitle_slove_top" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QBe-D8-xQz">
-                            <rect key="frame" x="40" y="88" width="520" height="21"/>
+                            <rect key="frame" x="40" y="88" width="474" height="21"/>
                             <constraints>
                                 <constraint firstAttribute="height" constant="21" id="Fik-js-PbJ"/>
                             </constraints>
@@ -71,31 +73,34 @@
                             <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                             <nil key="highlightedColor"/>
                         </label>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="rGU-yU-3VL">
+                            <rect key="frame" x="522" y="88" width="53" height="39"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="rGU-yU-3VL" secondAttribute="height" multiplier="53:39" id="Zhp-Bc-Qvl"/>
+                                <constraint firstAttribute="height" constant="39" id="g4R-Eu-gwE"/>
+                            </constraints>
+                        </imageView>
                     </subviews>
                     <color key="backgroundColor" red="0.33333333329999998" green="0.62745098040000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
                     <constraints>
                         <constraint firstItem="qvm-Yj-zSg" firstAttribute="leading" secondItem="azx-fH-maf" secondAttribute="leading" constant="40" id="0qG-Fr-Ke7"/>
+                        <constraint firstItem="rGU-yU-3VL" firstAttribute="top" secondItem="QBe-D8-xQz" secondAttribute="top" id="6R6-xy-RNO"/>
                         <constraint firstItem="QBe-D8-xQz" firstAttribute="top" secondItem="qvm-Yj-zSg" secondAttribute="bottom" constant="8" id="742-pq-JFX"/>
                         <constraint firstAttribute="trailing" secondItem="qYo-xw-fVx" secondAttribute="trailing" constant="40" id="F39-JR-Pj5"/>
                         <constraint firstItem="qvm-Yj-zSg" firstAttribute="top" relation="greaterThanOrEqual" secondItem="azx-fH-maf" secondAttribute="top" constant="20" id="GvM-IT-FX8"/>
                         <constraint firstAttribute="trailing" secondItem="RgA-Ze-pHU" secondAttribute="trailing" id="HU2-og-MJb"/>
-                        <constraint firstAttribute="trailing" secondItem="QBe-D8-xQz" secondAttribute="trailing" constant="40" id="Ine-Ad-FGJ"/>
                         <constraint firstItem="qYo-xw-fVx" firstAttribute="top" secondItem="QBe-D8-xQz" secondAttribute="bottom" id="OoY-jG-w80"/>
                         <constraint firstItem="qYo-xw-fVx" firstAttribute="leading" secondItem="azx-fH-maf" secondAttribute="leading" constant="40" id="S7t-uf-PIP"/>
                         <constraint firstAttribute="bottom" secondItem="RgA-Ze-pHU" secondAttribute="bottom" constant="-1" id="WUt-zX-Bm4"/>
                         <constraint firstItem="RgA-Ze-pHU" firstAttribute="top" secondItem="qYo-xw-fVx" secondAttribute="bottom" priority="750" constant="50" id="bKu-wB-ClZ"/>
+                        <constraint firstItem="rGU-yU-3VL" firstAttribute="trailing" secondItem="qYo-xw-fVx" secondAttribute="trailing" constant="15" id="big-HM-DPh"/>
                         <constraint firstItem="ciF-cz-sED" firstAttribute="top" secondItem="azx-fH-maf" secondAttribute="top" id="dHw-M9-f87"/>
-                        <constraint firstAttribute="trailing" secondItem="qvm-Yj-zSg" secondAttribute="trailing" constant="40" id="h1x-rD-dmB"/>
                         <constraint firstItem="QBe-D8-xQz" firstAttribute="leading" secondItem="azx-fH-maf" secondAttribute="leading" constant="40" id="h8U-1q-p6F"/>
+                        <constraint firstItem="rGU-yU-3VL" firstAttribute="leading" secondItem="QBe-D8-xQz" secondAttribute="trailing" constant="8" id="nNd-kc-ixJ"/>
                         <constraint firstItem="ciF-cz-sED" firstAttribute="leading" secondItem="azx-fH-maf" secondAttribute="leading" id="pb7-zg-4BM"/>
                         <constraint firstAttribute="trailing" secondItem="ciF-cz-sED" secondAttribute="trailing" id="tMo-Fm-NSI"/>
                         <constraint firstItem="RgA-Ze-pHU" firstAttribute="leading" secondItem="azx-fH-maf" secondAttribute="leading" id="zv2-w3-WN6"/>
                     </constraints>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="h1x-rD-dmB"/>
-                        </mask>
-                    </variation>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="nR9-ED-ZIj">
                     <rect key="frame" x="0.0" y="350" width="600" height="250"/>

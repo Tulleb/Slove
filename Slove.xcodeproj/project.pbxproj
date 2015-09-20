@@ -30,6 +30,7 @@
 		C44EB1A61B7D46CF001DC989 /* SLVSlovedPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44EB1A41B7D46CF001DC989 /* SLVSlovedPopupViewController.xib */; };
 		C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C458F6FE1B6A320E0075B8EF /* Localizable.strings */; };
 		C458F70E1B6BD7B20075B8EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */; };
+		C467AB201BAF612E002C9631 /* SLVPictureTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C467AB1F1BAF612E002C9631 /* SLVPictureTextField.m */; settings = {ASSET_TAGS = (); }; };
 		C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805B1BAD7B6100F90477 /* illu_spashscreen.png */; settings = {ASSET_TAGS = (); }; };
 		C469805F1BAD7B6100F90477 /* illu_spashscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */; settings = {ASSET_TAGS = (); }; };
 		C46980601BAD7B6100F90477 /* illu_spashscreen@3x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */; settings = {ASSET_TAGS = (); }; };
@@ -143,6 +144,8 @@
 		C458F7061B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
 		C458F7071B6A62630075B8EF /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Localizable.strings"; sourceTree = "<group>"; };
 		C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C467AB1E1BAF612E002C9631 /* SLVPictureTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVPictureTextField.h; sourceTree = "<group>"; };
+		C467AB1F1BAF612E002C9631 /* SLVPictureTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVPictureTextField.m; sourceTree = "<group>"; };
 		C469805B1BAD7B6100F90477 /* illu_spashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = illu_spashscreen.png; path = "Assets/Splash Screen/illu_spashscreen.png"; sourceTree = "<group>"; };
 		C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "illu_spashscreen@2x.png"; path = "Assets/Splash Screen/illu_spashscreen@2x.png"; sourceTree = "<group>"; };
 		C469805D1BAD7B6100F90477 /* illu_spashscreen@3x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "illu_spashscreen@3x.png"; path = "Assets/Splash Screen/illu_spashscreen@3x.png"; sourceTree = "<group>"; };
@@ -530,6 +533,8 @@
 				C4C644731B9AF72F0065B2BC /* SLVTextField.m */,
 				C44D553E1B9B3EB200763F0E /* SLVCodeField.h */,
 				C44D553F1B9B3EB200763F0E /* SLVCodeField.m */,
+				C467AB1E1BAF612E002C9631 /* SLVPictureTextField.h */,
+				C467AB1F1BAF612E002C9631 /* SLVPictureTextField.m */,
 			);
 			name = Override;
 			sourceTree = "<group>";
@@ -799,6 +804,7 @@
 				C44D55401B9B3EB200763F0E /* SLVCodeField.m in Sources */,
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,
 				C4E9C0F21B9641730071C084 /* SLVSloveSentPopupViewController.m in Sources */,
+				C467AB201BAF612E002C9631 /* SLVPictureTextField.m in Sources */,
 				C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */,
 				C4A07C961BA60261009C6288 /* Reachability.m in Sources */,
 				C49FA8C21B6EB1B6009288B9 /* SLVCountryCodeData.m in Sources */,

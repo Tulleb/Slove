@@ -12,8 +12,9 @@
 #import "SLVCountryCodeData.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SLVContact.h"
+#import "SLVInteractionPopupViewController.h"
 
-@interface AppDelegate : UIResponder <UIApplicationDelegate, UIAlertViewDelegate>
+@interface AppDelegate : UIResponder <UIApplicationDelegate, SLVInteractionPopupDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
 @property (strong, nonatomic) SLVNavigationController *currentNavigationController;
@@ -25,6 +26,7 @@
 @property (nonatomic) BOOL userIsConnected;
 @property (strong, nonatomic) NSArray *queuedPushNotification;
 @property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
+@property (nonatomic, strong) SLVInteractionPopupViewController *compatibleVersionPopup;
 
 - (void)userConnected;
 - (void)userDisconnected;

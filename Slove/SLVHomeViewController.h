@@ -17,8 +17,11 @@ typedef enum  {
 	kFacebookFilter
 } FilterSegment;
 
-@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate, MFMessageComposeViewControllerDelegate>
+@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate, MFMessageComposeViewControllerDelegate, UITextFieldDelegate>
 
+@property (strong, nonatomic) IBOutlet UIView *searchView;
+@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+@property (strong, nonatomic) IBOutlet UIImageView *searchImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *filterBackgroundImageView;
 @property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
 @property (strong, nonatomic) IBOutlet UIButton *contactButton;
@@ -29,6 +32,8 @@ typedef enum  {
 @property (strong, nonatomic) NSArray *favoriteContacts;
 @property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
+@property (strong, nonatomic) NSArray *fullUnsynchronizedAddressBookContacts;
+@property (strong, nonatomic) NSArray *fullSynchronizedAddressBookContacts;
 @property (strong, nonatomic) NSArray *facebookFriends;
 @property (strong, nonatomic) NSArray *filterButtons;
 @property (strong, nonatomic) SLVInteractionPopupViewController *errorPopup;
