@@ -28,7 +28,11 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	self.pictureImageView.image = self.slover.picture;
+	if (self.slover.picture) {
+		self.pictureImageView.image = self.slover.picture;
+	} else {
+		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+	}
 	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/notif_masque"];
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_tuto_premierevisite_v2"];
 	

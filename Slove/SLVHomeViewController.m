@@ -308,7 +308,7 @@
 				if (image) {
 					cachedContact.picture = image;
 				} else {
-					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar"];
+					cachedContact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
 				}
 				
 				[addressBookBuffer addObject:cachedContact];
@@ -380,7 +380,7 @@
 								friend.pictureDownloaded = NO;
 							}
 						} else {
-							friend.picture = [UIImage imageNamed:@"Assets/Avatar/default_avatar"];
+							friend.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
 							friend.pictureDownloaded = YES;
 						}
 					} else {
@@ -574,6 +574,31 @@
 	}
 }
 
+- (void)inviteBySMS:(UIButton *)button {
+	SLVAddressBookContact *addressBookContact = [self.unsynchronizedAddressBookContacts objectAtIndex:button.tag];
+	
+	if(![MFMessageComposeViewController canSendText]) {
+		SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+		[self presentViewController:errorPopup animated:YES completion:nil];
+		
+		return;
+	}
+	
+	NSMutableArray *recipents = [[NSMutableArray alloc] init];
+	for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
+		[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
+	}
+	
+	NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), NSLocalizedString(@"url_smsInvite", nil)];
+	
+	MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
+	messageController.messageComposeDelegate = self;
+	[messageController setRecipients:recipents];
+	[messageController setBody:message];
+	
+	[self presentViewController:messageController animated:YES completion:nil];
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -616,7 +641,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 70;
+	return 100;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -661,6 +686,9 @@
 	}
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
+	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
+	[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
+	cell.subtitleLabel.textColor = MAIN_COLOR;
 	
 	SLVContact *contact;
 	BOOL isSynchronized = NO;
@@ -676,6 +704,11 @@
 				isSynchronized = YES;
 			} else {
 				contact = [self.unsynchronizedAddressBookContacts objectAtIndex:indexPath.row];
+				cell.subtitleImageView.image = nil;
+				cell.subtitleLabel.textColor = nil;
+				[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_ajout_contact"] forState:UIControlStateNormal];
+				cell.selectionButton.tag = indexPath.row;
+				[cell.selectionButton addTarget:self action:@selector(inviteBySMS:) forControlEvents:UIControlEventTouchUpInside];
 			}
 			break;
 			
@@ -731,8 +764,9 @@
 	
 	cell.pictureImageView.image = contact.picture;
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+	cell.pictureImageView.clipsToBounds = YES;
 	
-	cell.layerImageView.image = [UIImage imageNamed:@"masque_profil_repertoire"];
+	cell.layerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
 	
 	[SLVViewController setStyle:cell];
 	
@@ -819,6 +853,13 @@
 			}
 		}];
 	}
+}
+
+
+#pragma mark - MFMessageComposeViewControllerDelegate
+
+- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+	[self dismissViewControllerAnimated:YES completion:nil];
 }
 
 @end

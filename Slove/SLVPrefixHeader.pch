@@ -113,7 +113,7 @@
 
 // Navigation
 #define SLOVE_BUTTON_SIZE			75
-#define SLOVE_VIEW_BOTTOM_CONSTANT	15
+#define SLOVE_VIEW_BOTTOM_CONSTANT	0
 
 // Connection
 #define SLOVER_SOUND	@"Assets/Sound/Congratsbuild2.wav"

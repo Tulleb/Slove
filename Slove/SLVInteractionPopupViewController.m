@@ -29,6 +29,7 @@
     [super viewDidLoad];
 	
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup"] forState:UIControlStateNormal];
+	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup_clic"] forState:UIControlStateHighlighted];
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
 	

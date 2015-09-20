@@ -9,6 +9,7 @@
 #import "SLVViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "SLVInteractionPopupViewController.h"
+#import <MessageUI/MessageUI.h>
 
 typedef enum  {
 	kFavoriteFilter,
@@ -16,7 +17,7 @@ typedef enum  {
 	kFacebookFilter
 } FilterSegment;
 
-@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate>
+@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate, MFMessageComposeViewControllerDelegate>
 
 @property (strong, nonatomic) IBOutlet UIImageView *filterBackgroundImageView;
 @property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
