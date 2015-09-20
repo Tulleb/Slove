@@ -18,6 +18,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *leftBannerLabelLayoutConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
+@property (nonatomic) BOOL keyboardIsVisible;
 
 - (id)initWithPhoneNumber:(NSString *)phoneNumber;
 - (IBAction)confirmAction:(id)sender;

@@ -28,16 +28,16 @@
 	[super viewDidLoad];
 	
 	[self.favoriteButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.favoriteButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.favoriteButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.favoriteButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.favoriteButton setTitleColor:BLUE forState:UIControlStateSelected];
 	
 	[self.contactButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.contactButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.contactButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.contactButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.contactButton setTitleColor:BLUE forState:UIControlStateSelected];
 	
 	[self.facebookButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.facebookButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.facebookButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.facebookButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.facebookButton setTitleColor:BLUE forState:UIControlStateSelected];
 	
 	self.filterButtons = [[NSArray alloc] initWithObjects:self.favoriteButton, self.contactButton, self.facebookButton, nil];
 	
@@ -688,7 +688,7 @@
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
 	[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@""] forState:UIControlStateNormal];
-	cell.subtitleLabel.textColor = MAIN_COLOR;
+	cell.subtitleLabel.textColor = BLUE;
 	
 	SLVContact *contact;
 	BOOL isSynchronized = NO;
@@ -807,7 +807,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(8, 0, SCREEN_WIDTH - 16, [self tableView:tableView heightForHeaderInSection:section])];
-	headerView.backgroundColor = SUB_COLOR;
+	headerView.backgroundColor = LIGHT_GRAY;
 	
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 1, headerView.frame.size.width - 8 * 2, headerView.frame.size.height - 1 * 2)];
 	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];

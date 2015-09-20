@@ -22,6 +22,7 @@
 @property (strong, nonatomic) NSString *formatedPhoneNumber;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *rightBannerLabelLayoutConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
+@property (nonatomic) BOOL keyboardIsVisible;
 
 - (IBAction)confirmAction:(id)sender;
 

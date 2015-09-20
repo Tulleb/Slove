@@ -98,7 +98,7 @@
 	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
 	[backButton setTitle:NSLocalizedString(@"button_back", nil) forState:UIControlStateNormal];
 	[backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
-	[backButton setTitleColor:MAIN_COLOR forState:UIControlStateNormal];
+	[backButton setTitleColor:BLUE forState:UIControlStateNormal];
 	[backButton setTitleColor:DARK_GRAY forState:UIControlStateHighlighted];
 	backButton.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 	backButton.titleLabel.adjustsFontSizeToFitWidth = YES;

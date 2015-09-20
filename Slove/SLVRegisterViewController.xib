@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVRegisterViewController">
             <connections>
                 <outlet property="bannerImageView" destination="01L-hN-Ady" id="aYM-Yp-hcS"/>
+                <outlet property="bodyView" destination="JXl-Fa-4mB" id="ilr-jZ-whW"/>
                 <outlet property="conditionsButton" destination="tdW-o0-bCa" id="QwI-nf-Xbs"/>
                 <outlet property="emailField" destination="JDC-Ql-Jua" id="Gtp-Oo-mwh"/>
                 <outlet property="errorLabel" destination="7eO-Cg-pbD" id="rsc-9j-Mvn"/>

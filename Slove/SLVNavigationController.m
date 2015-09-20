@@ -258,6 +258,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	if ([viewController isKindOfClass:[SLVProfileViewController class]]) {
+		[self animateSloveButton:NO];
 		[self moveSloveViewTop];
 	}
 	
@@ -266,6 +267,7 @@
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
 	if (self.sloveViewIsMoved) {
+		[self animateSloveButton:YES];
 		[self moveSloveViewBottom];
 	}
 	
@@ -279,6 +281,7 @@
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
 	if (self.sloveViewIsMoved) {
+		[self animateSloveButton:YES];
 		[self moveSloveViewBottom];
 	}
 	
@@ -387,7 +390,7 @@
 //	shadow.shadowColor = CLEAR;
 	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName:DARK_GRAY,
 															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE]}];
-	[[UINavigationBar appearance] setBarTintColor:SUB_COLOR];
+	[[UINavigationBar appearance] setBarTintColor:LIGHT_GRAY];
 	if (!IS_IOS7) {
 		[[UINavigationBar appearance] setTranslucent:NO];
 		[[UINavigationBar appearance] setBackgroundImage:[UIImage new]
@@ -409,7 +412,7 @@
 	self.sloveButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
-	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:WHITE withInsetColor:RED withFrameColor:WHITE withFrame:YES withShadow:YES withShining:YES withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
+	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:WHITE withInsetColor:RED withFrameColor:WHITE withFrame:YES withShadow:YES withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
@@ -418,8 +421,8 @@
 	
 	[self.activityButton setTitle:@"button_activity" forState:UIControlStateNormal];
 	[self.activityButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.activityButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.activityButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.activityButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.activityButton setTitleColor:BLUE forState:UIControlStateSelected];
 	[self.activityButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
 //	self.activityButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
 	[self.activityButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 0, 0, 25)];
@@ -436,15 +439,19 @@
 	self.sloveView.backgroundColor = CLEAR;
 	
 	self.sloveButton.imageView.contentMode = UIViewContentModeScaleToFill;
-	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_spirale"] forState:UIControlStateNormal];
+	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_menu"] forState:UIControlStateNormal];
 	[self.sloveButton addTarget:self action:@selector(sloveAction:) forControlEvents:UIControlEventTouchUpInside];
 	UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(sloveLongPress:)];
 	[self.sloveButton addGestureRecognizer:longPress];
+	self.sloveButton.imageView.animationDuration = LONG_ANIMATION_DURATION;
+	self.sloveButton.imageView.animationRepeatCount = 1;
+	
+	[self loadSloveButtonAnimation:NO];
 	
 	[self.settingsButton setTitle:@"button_settings" forState:UIControlStateNormal];
 	[self.settingsButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.settingsButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.settingsButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.settingsButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.settingsButton setTitleColor:BLUE forState:UIControlStateSelected];
 	[self.settingsButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
 //	self.settingsButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
 	[self.settingsButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 65, 0, 0)];
@@ -493,6 +500,43 @@
 																toItem:self.sloveView
 															 attribute:NSLayoutAttributeLeading
 															multiplier:1															  constant:SLOVE_BUTTON_SIZE * 0.7];
+}
+
+- (void)loadSloveButtonAnimation:(BOOL)reversed {
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/Morphin_Slovy/morphing_Slove_fixe00";
+	
+	if (reversed) {
+		for (int i = 25; i >= 1; i--) {
+			if (i < 10) {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:25 - i];
+			} else {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:25 - i];
+			}
+		}
+	} else {
+		for (int i = 1; i <= 25; i++) {
+			if (i < 10) {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:i - 1];
+			} else {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+			}
+		}
+	}
+	
+	self.sloveButton.imageView.animationImages = animatedImages;
+}
+
+- (void)animateSloveButton:(BOOL)reversed {
+	[self loadSloveButtonAnimation:reversed];
+	
+	if (reversed) {
+		[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_menu"] forState:UIControlStateNormal];
+	} else {
+		[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_spirale"] forState:UIControlStateNormal];
+	}
+	
+	[self.sloveButton.imageView startAnimating];
 }
 
 - (void)moveSloveViewTop {

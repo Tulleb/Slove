@@ -57,17 +57,16 @@
 #define SCREEN_HEIGHT	[[UIScreen mainScreen] bounds].size.height
 
 // Color
-#define MAIN_COLOR		[UIColor colorWithRed:85/255.0 green:160/255.0 blue:254/255.0 alpha:1]
-#define SUB_COLOR		[UIColor colorWithRed:214/255.0 green:214/255.0 blue:214/255.0 alpha:1]
 #define CLEAR			[UIColor clearColor]
 #define BLACK			[UIColor blackColor]
 #define WHITE			[UIColor whiteColor]
-#define RED				[UIColor redColor]
-#define BLUE			[UIColor blueColor]
-#define GREEN			[UIColor greenColor]
-#define GRAY			[UIColor grayColor]
-#define LIGHT_GRAY		[UIColor lightGrayColor]
-#define DARK_GRAY		[UIColor darkGrayColor]
+#define RED				[UIColor colorWithRed:255/255.0 green:51/255.0 blue:102/255.0 alpha:1]
+#define BLUE			[UIColor colorWithRed:86/255.0 green:160/255.0 blue:255/255.0 alpha:1]
+#define GREEN			[UIColor colorWithRed:168/255.0 green:227/255.0 blue:81/255.0 alpha:1]
+#define YELLOW			[UIColor colorWithRed:255/255.0 green:204/255.0 blue:2/255.0 alpha:1]
+#define GRAY			[UIColor colorWithRed:170/255.0 green:170/255.0 blue:170/255.0 alpha:1]
+#define LIGHT_GRAY		[UIColor colorWithRed:209/255.0 green:209/255.0 blue:209/255.0 alpha:1]
+#define DARK_GRAY		[UIColor colorWithRed:131/255.0 green:131/255.0 blue:131/255.0 alpha:1]
 #define VERY_LIGHT_GRAY [UIColor groupTableViewBackgroundColor]
 
 // Font

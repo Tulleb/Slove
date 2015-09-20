@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UITextField *passwordField;
 @property (strong, nonatomic) IBOutlet UIButton *registerButton;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
+@property (nonatomic) BOOL keyboardIsVisible;
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 @property (strong, nonatomic) IBOutlet UIButton *logInButton;
 
