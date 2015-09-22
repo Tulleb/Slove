@@ -8,11 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVHomeViewController">
             <connections>
-                <outlet property="contactButton" destination="u5L-9O-px7" id="SB3-6c-YGP"/>
                 <outlet property="contactTableView" destination="xJv-gE-cQk" id="VMm-5g-LfT"/>
-                <outlet property="facebookButton" destination="Joa-HN-vTc" id="HGH-85-dC4"/>
-                <outlet property="favoriteButton" destination="qo6-hu-tLE" id="Iu8-Ay-XQK"/>
-                <outlet property="filterBackgroundImageView" destination="MRy-VE-xFB" id="aKn-A8-foH"/>
                 <outlet property="loadingIndicator" destination="Gsm-xj-cQx" id="K36-EC-fGC"/>
                 <outlet property="loadingLabel" destination="Lx0-ET-2jz" id="xi0-9i-DtW"/>
                 <outlet property="searchImageView" destination="qIf-rr-CCP" id="ybf-Nt-XT6"/>
@@ -56,71 +52,7 @@
                         <constraint firstAttribute="height" constant="51" id="zA9-wu-7Qq"/>
                     </constraints>
                 </view>
-                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eun-rP-xQn">
-                    <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="MRy-VE-xFB">
-                            <rect key="frame" x="0.0" y="0.0" width="600" height="88"/>
-                        </imageView>
-                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qo6-hu-tLE">
-                            <rect key="frame" x="0.0" y="8" width="200" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="qo6-hu-tLE" secondAttribute="height" multiplier="5:1" id="zxC-b6-9aC"/>
-                            </constraints>
-                            <state key="normal" title="button_favorite">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="filterChanged:" destination="-1" eventType="touchUpInside" id="MPS-kZ-vxd"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="1" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="u5L-9O-px7">
-                            <rect key="frame" x="200" y="8" width="200" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="u5L-9O-px7" secondAttribute="height" multiplier="5:1" id="cUk-DI-4pk"/>
-                            </constraints>
-                            <state key="normal" title="button_address_book">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="filterChanged:" destination="-1" eventType="touchUpInside" id="82f-lL-lzi"/>
-                            </connections>
-                        </button>
-                        <button opaque="NO" tag="2" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Joa-HN-vTc">
-                            <rect key="frame" x="400" y="8" width="200" height="40"/>
-                            <constraints>
-                                <constraint firstAttribute="width" secondItem="Joa-HN-vTc" secondAttribute="height" multiplier="5:1" id="FEx-W9-MZF"/>
-                            </constraints>
-                            <state key="normal" title="button_facebook">
-                                <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                            </state>
-                            <connections>
-                                <action selector="filterChanged:" destination="-1" eventType="touchUpInside" id="Xtg-AU-Mig"/>
-                            </connections>
-                        </button>
-                    </subviews>
-                    <color key="backgroundColor" red="0.33333333329999998" green="0.62745098040000002" blue="0.99607843139999996" alpha="1" colorSpace="calibratedRGB"/>
-                    <constraints>
-                        <constraint firstItem="Joa-HN-vTc" firstAttribute="top" secondItem="eun-rP-xQn" secondAttribute="top" constant="8" id="1dV-qL-5Ra"/>
-                        <constraint firstItem="MRy-VE-xFB" firstAttribute="top" secondItem="eun-rP-xQn" secondAttribute="top" id="2mD-rC-r70"/>
-                        <constraint firstItem="u5L-9O-px7" firstAttribute="leading" secondItem="qo6-hu-tLE" secondAttribute="trailing" id="6Lq-02-6Rk"/>
-                        <constraint firstItem="Joa-HN-vTc" firstAttribute="width" secondItem="u5L-9O-px7" secondAttribute="width" id="D3n-ei-hGo"/>
-                        <constraint firstItem="u5L-9O-px7" firstAttribute="width" secondItem="qo6-hu-tLE" secondAttribute="width" id="HEb-5b-lkK"/>
-                        <constraint firstItem="u5L-9O-px7" firstAttribute="top" secondItem="eun-rP-xQn" secondAttribute="top" constant="8" id="IU6-Gj-Gsv"/>
-                        <constraint firstItem="MRy-VE-xFB" firstAttribute="leading" secondItem="eun-rP-xQn" secondAttribute="leading" id="LWX-WQ-eHE"/>
-                        <constraint firstAttribute="bottom" secondItem="MRy-VE-xFB" secondAttribute="bottom" id="MjZ-63-eJ0"/>
-                        <constraint firstItem="qo6-hu-tLE" firstAttribute="leading" secondItem="eun-rP-xQn" secondAttribute="leading" id="RpB-9U-mtZ"/>
-                        <constraint firstAttribute="trailing" secondItem="Joa-HN-vTc" secondAttribute="trailing" id="X2E-9s-cDB"/>
-                        <constraint firstAttribute="width" secondItem="eun-rP-xQn" secondAttribute="height" multiplier="75:11" id="klA-Jc-k0Z"/>
-                        <constraint firstItem="qo6-hu-tLE" firstAttribute="top" secondItem="eun-rP-xQn" secondAttribute="top" constant="8" id="m4f-sC-K2C"/>
-                        <constraint firstItem="Joa-HN-vTc" firstAttribute="leading" secondItem="u5L-9O-px7" secondAttribute="trailing" id="orL-La-0BQ"/>
-                        <constraint firstAttribute="trailing" secondItem="MRy-VE-xFB" secondAttribute="trailing" id="ugc-lN-MjX"/>
-                    </constraints>
-                </view>
-                <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xJv-gE-cQk">
+                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xJv-gE-cQk">
                     <rect key="frame" x="0.0" y="51" width="600" height="549"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
@@ -148,14 +80,11 @@
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="eun-rP-xQn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="3mL-dD-Vdl"/>
                 <constraint firstAttribute="centerY" secondItem="Gsm-xj-cQx" secondAttribute="centerY" constant="62" id="Apw-Vs-ZYf"/>
                 <constraint firstAttribute="centerX" secondItem="Lx0-ET-2jz" secondAttribute="centerX" id="Bsf-Hc-e4c"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="WUG-sa-XZV" secondAttribute="bottom" id="D7R-AQ-xd0"/>
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D7u-ey-NFt"/>
                 <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
-                <constraint firstItem="eun-rP-xQn" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="NiG-6M-A3G"/>
-                <constraint firstAttribute="trailing" secondItem="eun-rP-xQn" secondAttribute="trailing" id="QWf-Rp-JVf"/>
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TYX-Da-s9y"/>
                 <constraint firstAttribute="trailing" secondItem="WUG-sa-XZV" secondAttribute="trailing" id="dYn-Ia-dQO"/>
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>

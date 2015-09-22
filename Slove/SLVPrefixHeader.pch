@@ -132,10 +132,11 @@
 #define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
 
 // PFCloud
-#define PHONENUMBER_SEND_FUNCTION		@"sendPhoneCode"
-#define PHONENUMBER_CONFIRM_FUNCTION	@"confirmPhoneCode"
-#define SYNCHRONIZE_CONTACTS_FUNCTION	@"getRegisteredContacts"
-#define SYNCHRONIZE_FRIENDS_FUNCTION	@"getRegisteredFriends"
-#define SEND_SLOVE_FUNCTION				@"sendSlove"
+#define PHONENUMBER_SEND_FUNCTION					@"sendPhoneCode"
+#define PHONENUMBER_CONFIRM_FUNCTION				@"confirmPhoneCode"
+#define SYNCHRONIZE_ADDRESS_BOOK_CONTACTS_FUNCTION	@"getRegisteredContacts"
+#define SYNCHRONIZE_FACEBOOK_CONTACTS_FUNCTION		@"getRegisteredFriends"
+#define SYNCHRONIZE_FOLLOWED_CONTACTS_FUNCTION		@"getFollows"
+#define SEND_SLOVE_FUNCTION							@"sendSlove"
 
 #endif
