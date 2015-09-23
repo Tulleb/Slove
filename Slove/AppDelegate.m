@@ -200,6 +200,22 @@
 - (void)userDisconnected {
 	SLVLog(@"User disconnected from Slove");
 	
+	if ([PFUser currentUser]) {
+		[PFUser logOutInBackgroundWithBlock:^(NSError *error) {
+			if (error) {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+			}
+			
+			[self disconnectingUserTransition];
+		}];
+	} else {
+		[self disconnectingUserTransition];
+	}
+	
+	self.userIsConnected = NO;
+}
+
+- (void)disconnectingUserTransition {
 	if (self.userIsConnected) {
 		[self.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:^{
 			self.currentNavigationController = nil;
@@ -211,8 +227,6 @@
 			self.window.rootViewController = self.currentNavigationController;
 		}];
 	}
-	
-	self.userIsConnected = NO;
 }
 
 - (void)loadCountryCodeDatas {
