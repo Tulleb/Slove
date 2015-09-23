@@ -27,6 +27,7 @@
 @property (strong, nonatomic) NSArray *addressBookContacts;
 @property (strong, nonatomic) NSArray *facebookContacts;
 @property (strong, nonatomic) NSArray *followedContacts;
+@property (nonatomic) BOOL refreshByPulling;
 @property (nonatomic) BOOL isAlreadyLoading;
 @property (nonatomic) BOOL addressBookContactsReady;
 @property (nonatomic) BOOL facebookContactsReady;

@@ -61,6 +61,8 @@
 		C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DB41B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m */; };
 		C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */; };
 		C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */ = {isa = PBXBuildFile; fileRef = C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */; };
+		C4AB93891BB350C200ED8764 /* SLVAddSloverViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4AB93871BB350C200ED8764 /* SLVAddSloverViewController.m */; settings = {ASSET_TAGS = (); }; };
+		C4AB938A1BB350C200ED8764 /* SLVAddSloverViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4AB93881BB350C200ED8764 /* SLVAddSloverViewController.xib */; settings = {ASSET_TAGS = (); }; };
 		C4C6446A1B9A4D7F0065B2BC /* Nunito-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C644671B9A4D7F0065B2BC /* Nunito-Bold.ttf */; };
 		C4C6446B1B9A4D7F0065B2BC /* Nunito-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C644681B9A4D7F0065B2BC /* Nunito-Light.ttf */; };
 		C4C6446C1B9A4D7F0065B2BC /* Nunito-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4C644691B9A4D7F0065B2BC /* Nunito-Regular.ttf */; };
@@ -194,6 +196,9 @@
 		C4A48DBA1B62C73B00CEBA25 /* SLVRoute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRoute.m; sourceTree = "<group>"; };
 		C4A870B31B72C721000A5510 /* SLVFacebookFriend.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVFacebookFriend.h; sourceTree = "<group>"; };
 		C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVFacebookFriend.m; sourceTree = "<group>"; };
+		C4AB93861BB350C200ED8764 /* SLVAddSloverViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVAddSloverViewController.h; sourceTree = "<group>"; };
+		C4AB93871BB350C200ED8764 /* SLVAddSloverViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVAddSloverViewController.m; sourceTree = "<group>"; };
+		C4AB93881BB350C200ED8764 /* SLVAddSloverViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVAddSloverViewController.xib; sourceTree = "<group>"; };
 		C4C644671B9A4D7F0065B2BC /* Nunito-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Bold.ttf"; path = "Assets/Font/Nunito/Nunito-Bold.ttf"; sourceTree = "<group>"; };
 		C4C644681B9A4D7F0065B2BC /* Nunito-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Light.ttf"; path = "Assets/Font/Nunito/Nunito-Light.ttf"; sourceTree = "<group>"; };
 		C4C644691B9A4D7F0065B2BC /* Nunito-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Nunito-Regular.ttf"; path = "Assets/Font/Nunito/Nunito-Regular.ttf"; sourceTree = "<group>"; };
@@ -509,6 +514,9 @@
 				C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */,
 				C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */,
 				C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */,
+				C4AB93861BB350C200ED8764 /* SLVAddSloverViewController.h */,
+				C4AB93871BB350C200ED8764 /* SLVAddSloverViewController.m */,
+				C4AB93881BB350C200ED8764 /* SLVAddSloverViewController.xib */,
 				C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */,
 				C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */,
 				C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */,
@@ -702,6 +710,7 @@
 				C4E9C0FA1B96494E0071C084 /* AveriaSansLibre-Bold.ttf in Resources */,
 				C4E9C0FC1B96494E0071C084 /* AveriaSansLibre-Italic.ttf in Resources */,
 				C4197E381B9CE06000064507 /* SLVConstructionPopupViewController.xib in Resources */,
+				C4AB938A1BB350C200ED8764 /* SLVAddSloverViewController.xib in Resources */,
 				C44224F41B5BE7D600389210 /* Images.xcassets in Resources */,
 				C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */,
 				C4C6446A1B9A4D7F0065B2BC /* Nunito-Bold.ttf in Resources */,
@@ -776,6 +785,7 @@
 				C4C9274D1B66ABC4000ABA7A /* SLVFacebookInviteViewController.m in Sources */,
 				C44DCC981B682C11009BDAB2 /* SLVContactTableViewCell.m in Sources */,
 				C44224EC1B5BE7D600389210 /* AppDelegate.m in Sources */,
+				C4AB93891BB350C200ED8764 /* SLVAddSloverViewController.m in Sources */,
 				C44225251B5BF5C900389210 /* SLVNavigationController.m in Sources */,
 				C4A870B51B72C721000A5510 /* SLVFacebookFriend.m in Sources */,
 				C4A248951B8117ED004B9D43 /* SLVPopupViewController.m in Sources */,

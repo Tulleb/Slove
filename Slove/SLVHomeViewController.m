@@ -15,6 +15,7 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SLVProfileViewController.h"
 #import "SLVSlovedPopupViewController.h"
+#import "SLVAddSloverViewController.h"
 
 @interface SLVHomeViewController ()
 
@@ -39,6 +40,13 @@
 	[self.refreshControl addTarget:self action:@selector(loadContacts) forControlEvents:UIControlEventValueChanged];
 	[self.contactTableView addSubview:self.refreshControl];
 	
+	UIButton *addSloverButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
+	[addSloverButton setImage:[UIImage imageNamed:@"Assets/Button/bt_inviter_amis"] forState:UIControlStateNormal];
+	[addSloverButton setImage:[UIImage imageNamed:@"Assets/Button/bt_inviter_amis_clic"] forState:UIControlStateHighlighted];
+	[addSloverButton addTarget:self action:@selector(showAddSloverView:) forControlEvents:UIControlEventTouchUpInside];
+	UIBarButtonItem *addSloverButtonItem = [[UIBarButtonItem alloc] initWithCustomView:addSloverButton];
+	self.navigationItem.rightBarButtonItem = addSloverButtonItem;
+	
 	// To call viewWillAppear after return from Sloved popup
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(didDismissSlovedPopup)
@@ -49,18 +57,16 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
 	if (ApplicationDelegate.sloverToSlove) {
-		[super viewDidAppear:YES];
-		
 		[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
 		
 		ApplicationDelegate.sloverToSlove = nil;
 	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
-		[super viewDidAppear:animated];
-		
 		[self startTutorial];
 	} else {
-		[super viewDidAppear:animated];
+		[self loadContacts];
 	}
 }
 
@@ -90,12 +96,6 @@
 	}
 }
 
-- (void)refresh:(UIRefreshControl *)refreshControl {
-	[self loadContacts];
-	
-	[refreshControl endRefreshing];
-}
-
 - (void)needToReloadContacts {
 	if (self.isAlreadyLoading) {
 		[self performSelector:@selector(needToReloadContacts) withObject:nil afterDelay:1];
@@ -108,7 +108,9 @@
 	if (!self.isAlreadyLoading) {
 		self.isAlreadyLoading = YES;
 		
-		[self.loadingIndicator startAnimating];
+		if (![self.refreshControl isRefreshing]) {
+			[self.loadingIndicator startAnimating];
+		}
 		
 		self.synchronizedContacts = [[NSArray alloc] init];
 		self.unsynchronizedContacts = [[NSArray alloc] init];
@@ -396,12 +398,46 @@
 								block:^(id object, NSError *error){
 									if (!error) {
 										NSDictionary *datas = object;
-										NSArray *registeredContacts = [datas objectForKey:@"registeredFriends"];
+										NSArray *follows = [datas objectForKey:@"follows"];
 										
-										if (registeredContacts && [registeredContacts count] > 0) {
-											for (NSDictionary *registeredContact in registeredContacts) {
-												// TODO: add to followedContacts
+										if (follows && [follows count] > 0) {
+											NSMutableArray *followedContactsBuffer = [[NSMutableArray alloc] init];
+											
+											for (NSDictionary *user in follows) {
+												SLVContact *contact = [[SLVContact alloc] init];
+												
+												contact.username = [user objectForKey:@"username"];
+												
+												NSString *pictureUrl = [user objectForKey:@"pictureUrl"];
+												if (pictureUrl) {
+													contact.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]]];
+												} else {
+													contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+												}
+												
+												NSString *fullName = @"";
+												NSString *firstName = [user objectForKey:@"firstName"];
+												
+												if (firstName) {
+													fullName = [fullName stringByAppendingString:firstName];
+												}
+												
+												NSString *lastName = [user objectForKey:@"lastName"];
+												
+												if (lastName) {
+													if (![fullName isEqualToString:@""]) {
+														fullName = [fullName stringByAppendingString:@" "];
+													}
+													
+													fullName = [fullName stringByAppendingString:lastName];
+												}
+												
+												contact.fullName = fullName;
+												
+												[followedContactsBuffer addObject:contact];
 											}
+											
+											self.followedContacts = [NSArray arrayWithArray:followedContactsBuffer];
 										}
 									} else {
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -427,7 +463,9 @@
 	
 	self.fullSynchronizedContacts = self.synchronizedContacts;
 	
-	[self.loadingIndicator stopAnimating];
+	if (![self.refreshControl isRefreshing]) {
+		[self.loadingIndicator stopAnimating];
+	}
 	
 	[self.contactTableView reloadData];
 	
@@ -457,7 +495,7 @@
 	}
 	
 	self.synchronizedContacts = [synchronizedContactsBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
-		return [a.fullName caseInsensitiveCompare:b.fullName];
+		return [a.username caseInsensitiveCompare:b.username];
 	}];
 }
 
@@ -640,6 +678,26 @@
 	self.fullUnsynchronizedContacts = self.unsynchronizedContacts;
 }
 
+- (void)showAddSloverView:(UIButton *)button {
+	SLVAddSloverViewController *addSloverViewController = [[SLVAddSloverViewController alloc] init];
+	
+	[self.navigationController pushViewController:addSloverViewController animated:YES];
+}
+
+- (void)inviteAction:(UIButton *)button {
+	SLVLog(@"User is trying to share Slove!");
+	
+	NSString *shareText = NSLocalizedString(@"label_share_with_friends", nil);
+	UIImage *shareImage = [UIImage imageNamed:@"Assets/App Icon/Logo_Slove_App_1024"];
+	NSURL *shareUrl = [NSURL URLWithString:[ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
+	
+	UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[shareText, shareImage, shareUrl] applicationActivities:nil];
+	
+	activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToWeibo, UIActivityTypeOpenInIBooks, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList];
+	
+	[self presentViewController:activityViewController animated:YES completion:nil];
+}
+
 - (void)inviteBySMS:(UIButton *)button {
 	SLVAddressBookContact *addressBookContact = [self.unsynchronizedContacts objectAtIndex:button.tag];
 	
@@ -664,7 +722,7 @@
 		[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
 	}
 	
-	NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), NSLocalizedString(@"url_smsInvite", nil)];
+	NSString *message = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"label_smsInvite", nil), [ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
 	
 	MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
 	messageController.messageComposeDelegate = self;
@@ -717,7 +775,7 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *myIdentifier = @"AddressBookContactCell";
+	static NSString *myIdentifier = @"FollowedSloverContactCell";
 	SLVContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myIdentifier];
 	if (!cell) {
 		[tableView registerNib:[UINib nibWithNibName:@"SLVContactTableViewCell" bundle:nil] forCellReuseIdentifier:myIdentifier];
@@ -750,7 +808,7 @@
 	
 	if (isSynchronized) {
 		cell.titleLabel.text = contact.username;
-		cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+		
 		cell.subtitleLabel.text = contact.fullName;
 	} else {
 		cell.titleLabel.text = contact.fullName;
@@ -793,6 +851,7 @@
 	[SLVViewController setStyle:cell];
 	
 	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
+	
 	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
 	
 	return cell;
@@ -804,7 +863,7 @@
 	if (indexPath.section == 0 && [self.synchronizedContacts count] > 0) {
 		contact = [self.synchronizedContacts objectAtIndex:indexPath.row];
 	} else {
-		contact = [self.unsynchronizedContacts objectAtIndex:indexPath.row];
+		return;
 	}
 	
 	SLVLog(@"Selected %@", [contact description]);

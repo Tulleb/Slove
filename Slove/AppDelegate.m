@@ -201,7 +201,10 @@
 	if (self.userIsConnected) {
 		[self.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:^{
 			self.currentNavigationController = nil;
-			self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
+			
+			SLVConnectionViewController *connectionViewController = [[SLVConnectionViewController alloc] init];
+			
+			self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:connectionViewController];
 			[self.currentNavigationController hideBottomNavigationBar];
 			self.window.rootViewController = self.currentNavigationController;
 		}];

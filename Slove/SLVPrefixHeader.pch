@@ -137,6 +137,7 @@
 #define SYNCHRONIZE_ADDRESS_BOOK_CONTACTS_FUNCTION	@"getRegisteredContacts"
 #define SYNCHRONIZE_FACEBOOK_CONTACTS_FUNCTION		@"getRegisteredFriends"
 #define SYNCHRONIZE_FOLLOWED_CONTACTS_FUNCTION		@"getFollows"
+#define FOLLOW_SLOVER_FUNCTION						@"addFollow"
 #define SEND_SLOVE_FUNCTION							@"sendSlove"
 
 #endif
