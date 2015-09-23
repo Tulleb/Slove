@@ -97,6 +97,8 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	application.applicationIconBadgeNumber = 0;
+	
 	[self checkReachability];
 	[FBSDKAppEvents activateApp];
 	[self loadParseConfig];
