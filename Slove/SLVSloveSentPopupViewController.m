@@ -30,10 +30,8 @@
 	
 	[self.view addGestureRecognizer:tap];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.bubbleView.hidden = NO;
-		
-		[[NSUserDefaults standardUserDefaults] setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
 	}
 }
 

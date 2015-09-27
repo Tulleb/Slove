@@ -80,9 +80,9 @@
                     </constraints>
                 </activityIndicatorView>
                 <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wjj-uM-oF3">
-                    <rect key="frame" x="236" y="59" width="128" height="128"/>
+                    <rect key="frame" x="280" y="59" width="40" height="40"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="128" id="B2c-3c-rDU"/>
+                        <constraint firstAttribute="height" constant="40" id="B2c-3c-rDU"/>
                         <constraint firstAttribute="width" secondItem="Wjj-uM-oF3" secondAttribute="height" multiplier="1:1" id="ZLs-6z-7jO"/>
                     </constraints>
                 </imageView>

@@ -8,6 +8,7 @@
 
 #import "SLVViewController.h"
 #import "SLVInteractionPopupViewController.h"
+#import "SLVHomeViewController.h"
 
 @interface SLVAddSloverViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, SLVInteractionPopupDelegate>
 
@@ -15,8 +16,16 @@
 @property (strong, nonatomic) IBOutlet UITextField *searchTextField;
 @property (strong, nonatomic) IBOutlet UIImageView *searchImageView;
 @property (strong, nonatomic) IBOutlet UITableView *sloverTableView;
+@property (strong, nonatomic) IBOutlet UIButton *facebookFriendsButton;
+@property (strong, nonatomic) IBOutlet UIButton *addressBookButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addressBookBottomLayoutConstraint;
 @property (strong, nonatomic) SLVInteractionPopupViewController *followedPopup;
 @property (strong, nonatomic) NSArray *sloversFound;
+@property (strong, nonatomic) SLVHomeViewController *homeViewController;
+
+- (id)initWithHomeViewController:(SLVHomeViewController *)homeViewController;
+- (IBAction)facebookFriendsAction:(id)sender;
+- (IBAction)contactBookAction:(id)sender;
 
 @end

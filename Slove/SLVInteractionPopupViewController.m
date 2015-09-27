@@ -34,9 +34,9 @@
 	[self.dismissButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_close_popup_clic"] forState:UIControlStateHighlighted];
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
-	
 	self.titleLabel.text = self.popupTitle;
-	self.bodyLabel.text = self.popupBody;
+	
+	self.bodyLabel.text = [NSString stringWithFormat:@"%@", self.popupBody];
 	
 	switch ([self.buttonTitles count]) {
 		case 1: {

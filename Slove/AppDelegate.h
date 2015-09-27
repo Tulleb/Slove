@@ -14,6 +14,12 @@
 #import "SLVContact.h"
 #import "SLVInteractionPopupViewController.h"
 
+
+typedef enum : NSInteger {
+	kPushedMessage,
+	kSlovedPopup
+} PopupType;
+
 @interface AppDelegate : UIResponder <UIApplicationDelegate, SLVInteractionPopupDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
@@ -24,7 +30,7 @@
 @property (nonatomic, strong) SLVContact *sloverToSlove;
 @property (nonatomic, strong) NSMutableDictionary *parseConfig;
 @property (nonatomic) BOOL userIsConnected;
-@property (strong, nonatomic) NSArray *queuedPushNotification;
+@property (strong, nonatomic) NSMutableArray *queuedPopups;
 @property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
 @property (nonatomic, strong) SLVInteractionPopupViewController *compatibleVersionPopup;
 

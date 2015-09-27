@@ -42,4 +42,7 @@
 @property (nonatomic) int percentage;
 @property (nonatomic) BOOL popupIsDisplayed;
 
+- (void)showSettingManipulation;
+- (void)askFacebookFriends;
+
 @end

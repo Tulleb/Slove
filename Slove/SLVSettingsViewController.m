@@ -28,13 +28,12 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:YES];
 	
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	if (![userDefaults objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] || ![[userDefaults objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] boolValue]) {
+	if (![USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] || ![[USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] boolValue]) {
 		SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
 		
 		[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
 		
-		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
 	}
 }
 

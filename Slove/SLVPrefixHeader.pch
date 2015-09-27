@@ -22,27 +22,30 @@
 #import "ParseErrorHandlingController.h"
 #import "UIView+Animation.h"
 
-// Math
+#pragma mark - Math
 #define degreesToRadians(x)	(x * M_PI / 180)
 
-// Singleton
+#pragma mark - Singleton
 #define ApplicationDelegate	((AppDelegate *)[[UIApplication sharedApplication] delegate])
 
-// Server
+#pragma mark - Server
 #define SERVER_ADDRESS	@"http://slove.co"
 #define REQUEST_TIMEOUT	10
 
-// Log
+#pragma mark - Log
 #define SLVLog(s, ...)		[[SLVLogger sharedStore] logFile:__FILE__ lineNumber:__LINE__ format:(s), ##__VA_ARGS__]
 #define SLV_SEPARATOR		@": "
 #define SLV_ERROR			[NSString stringWithFormat:@"Error%@", SLV_SEPARATOR]
 #define SLV_WARNING			[NSString stringWithFormat:@"Warning%@", SLV_SEPARATOR]
 #define SLV_DETAIL			[NSString stringWithFormat:@"Detail%@", SLV_SEPARATOR]
 
-// Device and iOS version
+#pragma mark - Device and iOS version
 #define IS_IOS7					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 7)
 #define IS_IOS8					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 8)
+#define IS_IOS9					(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) == 9)
 #define IS_SUP_IOS7				(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) >= 7)
+#define IS_SUP_IOS8				(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) >= 8)
+#define IS_SUP_IOS9				(((int)[[[UIDevice currentDevice] systemVersion] floatValue]) >= 9)
 #define IS_IPAD					(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPad)
 #define IS_IPHONE				(UI_USER_INTERFACE_IDIOM() == UIUserInterfaceIdiomPhone)
 #define IS_3INCH5				([UIScreen mainScreen].bounds.size.height == 480)
@@ -51,12 +54,12 @@
 #define IS_5INCH5				([UIScreen mainScreen].bounds.size.height == 736.0)
 #define IS_RETINA				([[UIScreen mainScreen] scale] == 2.0)
 
-// Screen size
+#pragma mark - Screen size
 #define SCREEN_SIZE		[[UIScreen mainScreen] bounds].size
 #define SCREEN_WIDTH	[[UIScreen mainScreen] bounds].size.width
 #define SCREEN_HEIGHT	[[UIScreen mainScreen] bounds].size.height
 
-// Color
+#pragma mark - Color
 #define CLEAR			[UIColor clearColor]
 #define BLACK			[UIColor blackColor]
 #define WHITE			[UIColor whiteColor]
@@ -70,7 +73,7 @@
 #define DARK_GRAY		[UIColor colorWithRed:131/255.0 green:131/255.0 blue:131/255.0 alpha:1]
 #define VERY_LIGHT_GRAY [UIColor groupTableViewBackgroundColor]
 
-// Font
+#pragma mark - Font
 //#define DEFAULT_FONT					@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Regular.ttf"
 //#define DEFAULT_FONT_ITALIC			@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Italic.ttf"
 //#define DEFAULT_FONT_BOLD				@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Bold.ttf"
@@ -90,7 +93,7 @@
 #define DEFAULT_FONT_SIZE_LARGE			20
 #define DEFAULT_FONT_SIZE_VERY_LARGE	45
 
-// Animation
+#pragma mark - Animation
 #define SHORT_ANIMATION_DURATION        0.2
 #define ANIMATION_DURATION              0.75
 #define LONG_ANIMATION_DURATION         1
@@ -98,40 +101,45 @@
 #define TIMER_FREQUENCY					0.1
 #define MINIMUM_ANIMATION_DURATION		2
 
-// Notification
+#pragma mark - Notification
 #define NOTIFICATION_SLOVED_POPUP_DISMISSED		@"slovedPopupDismissed"
 #define NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED	@"sloveSentPopupDismissed"
 
-// User key
+#pragma mark - User key
+#define USER_DEFAULTS							[NSUserDefaults standardUserDefaults]
 #define	KEY_FIRST_TIME_TUTORIAL					@"first_time_tutorial"
 #define	KEY_ACTIVITY_CONSTRUCTION_DISPLAYED		@"activityConstructionDisplayed"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
+#define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
+#define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
+#define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
 
-// Parse config
+#pragma mark - Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"
 #define PARSE_FIRST_SLOVE_PICTURE	@"first_slove_picture"
 #define PARSE_COMPATIBLE_VERSION	@"compatible_version"
 #define PARSE_DOWNLOAD_APP_URL		@"download_app_url"
+#define PARSE_PUSHED_MESSAGE		@"pushed_message"
 
-// Navigation
+#pragma mark - Navigation
 #define SLOVE_BUTTON_SIZE			75
 #define SLOVE_VIEW_BOTTOM_CONSTANT	0
 
-// Connection
+#pragma mark - Connection
 #define SLOVER_SOUND	@"Assets/Sound/Congratsbuild2.wav"
 #define SLOVED_SOUND	@"Assets/Sound/Congratsbuild1.wav"
 
-// Field validation
+#pragma mark - Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2
 #define VALIDATION_USERNAME_MAX_LENGTH	16
 #define VALIDATION_PASSWORD_MIN_LENGTH	6
 #define VALIDATION_PASSWORD_MAX_LENGTH	64
 
-// Username
+#pragma mark - Username
 #define USERNAME_EMPTY_PREFIX			@"empty#"
 #define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
 
-// PFCloud
+#pragma mark - PFCloud
 #define PHONENUMBER_SEND_FUNCTION					@"sendPhoneCode"
 #define PHONENUMBER_CONFIRM_FUNCTION				@"confirmPhoneCode"
 #define SYNCHRONIZE_ADDRESS_BOOK_CONTACTS_FUNCTION	@"getRegisteredContacts"

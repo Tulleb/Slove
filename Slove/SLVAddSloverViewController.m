@@ -8,12 +8,22 @@
 
 #import "SLVAddSloverViewController.h"
 #import "SLVContactTableViewCell.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <AddressBookUI/AddressBookUI.h>
 
 @interface SLVAddSloverViewController ()
 
 @end
 
 @implementation SLVAddSloverViewController
+
+- (id)initWithHomeViewController:(SLVHomeViewController *)homeViewController {
+	self = [super init];
+	if (self) {
+		self.homeViewController = homeViewController;
+	}
+	return self;
+}
 
 - (void)viewDidLoad {
 	self.appName = @"add_slover";
@@ -27,6 +37,12 @@
 	
 	self.searchImageView.image = [UIImage imageNamed:@"Assets/Image/loupe"];
 	
+	[self.facebookFriendsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
+	[self.facebookFriendsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
+	
+	[self.addressBookButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.addressBookButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
 	[self initTapToDismiss];
 	
 	[self loadBackButton];
@@ -37,10 +53,25 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
 	
-	[self.searchTextField becomeFirstResponder];
+	[self checkAddressBookAccessAuthorization];
+	[self checkFacebookFriendsAuthorization];
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	self.addressBookBottomLayoutConstraint.constant = SLOVE_BUTTON_SIZE;
+}
+
+- (IBAction)facebookFriendsAction:(id)sender {
+	[self.homeViewController askFacebookFriends];
+}
+
+- (IBAction)contactBookAction:(id)sender {
+	[self.homeViewController showSettingManipulation];
 }
 
 - (void)initTapToDismiss {
@@ -144,6 +175,45 @@
 										[ParseErrorHandlingController handleParseError:error];
 									}
 								}];
+}
+
+- (void)checkAddressBookAccessAuthorization {
+	if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied) {
+		SLVLog(@"%@Address book access not granted", SLV_WARNING);
+		
+		self.addressBookButton.hidden = NO;
+	}
+}
+
+- (void)checkFacebookFriendsAuthorization {
+	if ([FBSDKAccessToken currentAccessToken]) {
+		FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
+									  initWithGraphPath:@"/me/permissions/user_friends"
+									  parameters:nil
+									  HTTPMethod:@"GET"];
+		[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
+											  id result,
+											  NSError *error) {
+			if (result) {
+				NSArray *data = [result objectForKey:@"data"];
+				
+				for (NSDictionary *permissionDic in data) {
+					if (!([[permissionDic objectForKey:@"permission"] isEqualToString:@"user_friends"] && [[permissionDic objectForKey:@"status"] isEqualToString:@"granted"])) {
+						SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
+						
+						self.facebookFriendsButton.hidden = NO;
+					}
+				}
+			}
+			
+			if (error) {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+			}
+		}];
+	}
+	
+	// This function sometimes return NO when it shouldn't
+	//	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
 }
 
 

@@ -36,7 +36,7 @@
 	
 	self.searchImageView.image = [UIImage imageNamed:@"Assets/Image/loupe"];
 	
-	self.pullImageView.image = [UIImage imageNamed:@"Assets/Image/pull_icon"];
+	self.pullImageView.image = [UIImage imageNamed:@"Assets/Image/fleche_refresh"];
 	
 	self.refreshControl = [[UIRefreshControl alloc] init];
 	[self.refreshControl addTarget:self action:@selector(loadContacts) forControlEvents:UIControlEventValueChanged];
@@ -54,8 +54,6 @@
 											 selector:@selector(didDismissSlovedPopup)
 												 name:NOTIFICATION_SLOVED_POPUP_DISMISSED
 											   object:nil];
-	
-	[self loadContacts];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -65,7 +63,7 @@
 		[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
 		
 		ApplicationDelegate.sloverToSlove = nil;
-	} else if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self startTutorial];
 	} else {
 		[self loadContacts];
@@ -164,14 +162,16 @@
 	} else {
 		SLVLog(@"%@Address book access not granted", SLV_WARNING);
 		
-		if (!self.popupIsDisplayed) {
+		if (!([USER_DEFAULTS objectForKey:KEY_ASK_CONTACT_BOOK] && [[USER_DEFAULTS objectForKey:KEY_ASK_CONTACT_BOOK] boolValue]) && !self.popupIsDisplayed) {
 			self.popupIsDisplayed = YES;
 			
 			self.addressBookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_addressBookAccess", nil) body:NSLocalizedString(@"popup_body_addressBookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 			
 			self.addressBookPopup.delegate = self;
 			
-			[self presentViewController:self.addressBookPopup animated:YES completion:nil];
+			[self presentViewController:self.addressBookPopup animated:YES completion:^{
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
+			}];
 		}
 		
 		self.addressBookContactsReady = YES;
@@ -217,14 +217,16 @@
 				} else {
 					SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
 					
-					if (!self.popupIsDisplayed) {
+					if (!([USER_DEFAULTS objectForKey:KEY_ASK_FACEBOOK_FRIENDS] && [[USER_DEFAULTS objectForKey:KEY_ASK_FACEBOOK_FRIENDS] boolValue]) && !self.popupIsDisplayed) {
 						self.popupIsDisplayed = YES;
 						
 						self.facebookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 						
 						self.facebookPopup.delegate = self;
 						
-						[self presentViewController:self.facebookPopup animated:YES completion:nil];
+						[self presentViewController:self.facebookPopup animated:YES completion:^{
+							[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
+						}];
 					}
 					
 					self.facebookContactsReady = YES;
@@ -244,7 +246,27 @@
 }
 
 - (void)showSettingManipulation {
-	SLVLog(@"%@User denied the access to his address book", SLV_ERROR);
+	SLVInteractionPopupViewController *popupViewController = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_go_to_settings", nil) buttonsTitle:nil andDismissButton:YES];
+	
+	[self.navigationController presentViewController:popupViewController animated:YES completion:nil];
+}
+
+- (void)askFacebookFriends {
+	FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
+	[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+		if (!error) {
+			if ([result.grantedPermissions containsObject:@"user_friends"]) {
+				SLVLog(@"User have granted access to his friend list");
+				
+				[self loadContacts];
+			} else {
+				SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
+			}
+		} else {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
 }
 
 - (void)loadAddressBookFromAddressBookRef:(ABAddressBookRef)addressBookRef {
@@ -692,7 +714,7 @@
 }
 
 - (void)showAddSloverView:(UIButton *)button {
-	SLVAddSloverViewController *addSloverViewController = [[SLVAddSloverViewController alloc] init];
+	SLVAddSloverViewController *addSloverViewController = [[SLVAddSloverViewController alloc] initWithHomeViewController:self];
 	
 	[self.navigationController pushViewController:addSloverViewController animated:YES];
 }
@@ -706,7 +728,13 @@
 	
 	UIActivityViewController *activityViewController = [[UIActivityViewController alloc] initWithActivityItems:@[shareText, shareImage, shareUrl] applicationActivities:nil];
 	
-	activityViewController.excludedActivityTypes = @[UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToWeibo, UIActivityTypeOpenInIBooks, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList];
+	NSMutableArray *excludedActivityTypes = [NSMutableArray arrayWithObjects:UIActivityTypeAssignToContact, UIActivityTypeSaveToCameraRoll, UIActivityTypePostToWeibo, UIActivityTypeAirDrop, UIActivityTypeAddToReadingList, nil];
+	
+	if (IS_SUP_IOS9) {
+		[excludedActivityTypes addObject:UIActivityTypeOpenInIBooks];
+	}
+	
+	activityViewController.excludedActivityTypes = excludedActivityTypes;
 	
 	[self presentViewController:activityViewController animated:YES completion:nil];
 }
@@ -812,7 +840,7 @@
 		cell.subtitleLabel.textColor = nil;
 		[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_ajout_contact"] forState:UIControlStateNormal];
 		cell.selectionButton.tag = indexPath.row;
-		[cell.selectionButton addTarget:self action:@selector(inviteBySMS:) forControlEvents:UIControlEventTouchUpInside];
+		[cell.selectionButton addTarget:self action:@selector(inviteAction:) forControlEvents:UIControlEventTouchUpInside];
 	}
 	
 	if (!contact) {
@@ -916,27 +944,11 @@
 					[self needToReloadContacts];
 				} else {
 					SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
-					
-					[self showSettingManipulation];
 				}
 			});
 		}
 	} else if (popup == self.facebookPopup) {
-		FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-		[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
-			if (!error) {
-				if ([result.grantedPermissions containsObject:@"user_friends"]) {
-					SLVLog(@"User have granted access to his friend list");
-					
-					[self loadContacts];
-				} else {
-					SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
-				}
-			} else {
-				SLVLog(@"%@%@", SLV_ERROR, error.description);
-				[ParseErrorHandlingController handleParseError:error];
-			}
-		}];
+		[self askFacebookFriends];
 	}
 }
 

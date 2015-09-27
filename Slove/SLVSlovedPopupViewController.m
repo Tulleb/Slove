@@ -49,7 +49,7 @@
 	
 	self.subtitleLabel.text = [self.subtitleLabel.text stringByAppendingString:self.slover.username];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.disablingView.hidden = NO;
 		self.bubbleView.hidden = NO;
 	}

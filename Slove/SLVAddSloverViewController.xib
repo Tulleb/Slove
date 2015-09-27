@@ -8,6 +8,9 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVAddSloverViewController">
             <connections>
+                <outlet property="addressBookBottomLayoutConstraint" destination="ADg-pq-dQ9" id="mzw-BQ-z9M"/>
+                <outlet property="addressBookButton" destination="3yq-mU-SYc" id="F8Q-Wy-71B"/>
+                <outlet property="facebookFriendsButton" destination="wrh-2U-ayK" id="oLN-CK-Evd"/>
                 <outlet property="loadingIndicator" destination="Gsm-xj-cQx" id="K36-EC-fGC"/>
                 <outlet property="searchImageView" destination="qIf-rr-CCP" id="ybf-Nt-XT6"/>
                 <outlet property="searchTextField" destination="kLw-2D-P1a" id="jqE-iM-5YD"/>
@@ -52,7 +55,7 @@
                     </constraints>
                 </view>
                 <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" translatesAutoresizingMaskIntoConstraints="NO" id="xJv-gE-cQk">
-                    <rect key="frame" x="0.0" y="51" width="600" height="549"/>
+                    <rect key="frame" x="0.0" y="51" width="600" height="359"/>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <connections>
                         <outlet property="dataSource" destination="-1" id="DVL-eQ-ZV3"/>
@@ -66,16 +69,46 @@
                         <constraint firstAttribute="height" constant="20" id="oYJ-v3-S2e"/>
                     </constraints>
                 </activityIndicatorView>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3yq-mU-SYc">
+                    <rect key="frame" x="155" y="488" width="290" height="62"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="62" id="P5K-1s-ZwP"/>
+                        <constraint firstAttribute="width" secondItem="3yq-mU-SYc" secondAttribute="height" multiplier="145:31" id="btF-LQ-JtK"/>
+                    </constraints>
+                    <state key="normal" title="button_address_book">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="contactBookAction:" destination="-1" eventType="touchUpInside" id="ii7-Gg-cFR"/>
+                    </connections>
+                </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wrh-2U-ayK">
+                    <rect key="frame" x="155" y="418" width="290" height="62"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="62" id="AjR-H3-hSL"/>
+                        <constraint firstAttribute="width" secondItem="wrh-2U-ayK" secondAttribute="height" multiplier="145:31" id="hQ3-O7-3Pl"/>
+                    </constraints>
+                    <state key="normal" title="button_facebook_friends">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="facebookFriendsAction:" destination="-1" eventType="touchUpInside" id="FDO-Yp-eLT"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="3yq-mU-SYc" secondAttribute="bottom" constant="50" id="ADg-pq-dQ9"/>
                 <constraint firstAttribute="centerY" secondItem="Gsm-xj-cQx" secondAttribute="centerY" constant="62" id="Apw-Vs-ZYf"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="WUG-sa-XZV" secondAttribute="bottom" id="D7R-AQ-xd0"/>
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D7u-ey-NFt"/>
-                <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
+                <constraint firstItem="3yq-mU-SYc" firstAttribute="top" secondItem="wrh-2U-ayK" secondAttribute="bottom" constant="8" id="EUf-sK-pLo"/>
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TYX-Da-s9y"/>
+                <constraint firstItem="3yq-mU-SYc" firstAttribute="centerX" secondItem="wrh-2U-ayK" secondAttribute="centerX" id="Ypb-QT-29x"/>
+                <constraint firstItem="3yq-mU-SYc" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="aus-jU-LNc"/>
                 <constraint firstAttribute="trailing" secondItem="WUG-sa-XZV" secondAttribute="trailing" id="dYn-Ia-dQO"/>
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>
+                <constraint firstItem="wrh-2U-ayK" firstAttribute="top" secondItem="xJv-gE-cQk" secondAttribute="bottom" constant="8" id="ehI-Jl-8Ur"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pKZ-dy-vWM"/>
                 <constraint firstAttribute="centerX" secondItem="Gsm-xj-cQx" secondAttribute="centerX" id="qMP-YO-sJO"/>
             </constraints>

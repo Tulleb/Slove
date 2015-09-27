@@ -24,6 +24,8 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	self.queuedPopups = [[NSMutableArray alloc] init];
+	
 	// [Optional] Power your app with Local Datastore. For more info, go to
 	// https://parse.com/docs/ios_guide#localdatastore/iOS
 	[Parse enableLocalDatastore];
@@ -77,7 +79,7 @@
 	
 	//Accept push notification when app is not open
 	if (remoteNotif) {
-		self.queuedPushNotification = [[NSArray alloc] initWithObjects:application, remoteNotif, nil];
+		[self.queuedPopups addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:kSlovedPopup], @"type", [NSArray arrayWithObjects:application, remoteNotif, nil], @"data", nil]];
 	}
 	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -133,7 +135,7 @@
 #pragma mark - Custom methods
 
 - (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
-	self.queuedPushNotification = nil;
+	self.queuedPopups = nil;
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
 		NSError *error;
@@ -168,11 +170,25 @@
 	}
 }
 
+- (void)popQueuedPopup {
+	if (!self.currentNavigationController.presentedViewController && [self.queuedPopups count] > 0 && self.userIsConnected && ![[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+		NSDictionary *popup = [self.queuedPopups firstObject];
+		
+		if ([[popup objectForKey:@"type"] integerValue] == kPushedMessage) {
+			[self displayPushedMessage];
+		} else if ([[popup objectForKey:@"type"] integerValue] == kSlovedPopup) {
+			NSArray *data = [popup objectForKey:@"data"];
+			
+			[self application:[data firstObject] handleRemoteNotification:[data lastObject]];
+		}
+		
+		[self.queuedPopups removeObjectAtIndex:0];
+	}
+}
+
 - (void)loadUserDefaults {
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
-	if (![userDefaults objectForKey:KEY_FIRST_TIME_TUTORIAL]) {
-		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRST_TIME_TUTORIAL];
+	if (![USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL]) {
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRST_TIME_TUTORIAL];
 	}
 }
 
@@ -188,13 +204,11 @@
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
-		
-		if (self.queuedPushNotification) {
-			[self application:[self.queuedPushNotification firstObject] handleRemoteNotification:[self.queuedPushNotification lastObject]];
-		}
 	}
 
 	self.userIsConnected = YES;
+	
+	[self popQueuedPopup];
 }
 
 - (void)userDisconnected {
@@ -521,7 +535,10 @@
 }
 
 - (void)loadParseConfig {
-	self.parseConfig = [[NSMutableDictionary alloc] init];
+	if (!self.parseConfig) {
+		self.parseConfig = [[NSMutableDictionary alloc] init];
+	}
+	
 	SLVLog(@"Getting the latest config...");
 	
 	[PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
@@ -559,6 +576,19 @@
 			[self.parseConfig setObject:downloadAppUrl forKey:PARSE_DOWNLOAD_APP_URL];
 		}
 		
+		NSString *currentPushedMessage = config[PARSE_PUSHED_MESSAGE];
+		if (!currentPushedMessage) {
+			SLVLog(@"%@Couldn't find pushed message", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:currentPushedMessage forKey:PARSE_PUSHED_MESSAGE];
+			
+			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];;
+			
+			if (!lastPushedMessage || ![lastPushedMessage isEqualToString:currentPushedMessage]) {
+				[self.queuedPopups insertObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:kPushedMessage], @"type", nil] atIndex:0];
+			}
+		}
+			
 		__block UIImage *firstSlovePicture;
 		PFFile *firstSlovePictureFile = config[PARSE_FIRST_SLOVE_PICTURE];
 		if (!firstSlovePictureFile) {
@@ -584,6 +614,8 @@
 		if (!self.alreadyCheckedCompatibleVersion) {
 			[self checkCompatibleVersion];
 		}
+		
+		[self popQueuedPopup];
 	}];
 }
 
@@ -605,6 +637,16 @@
 	}
 	
 	self.alreadyCheckedCompatibleVersion = YES;
+}
+
+- (void)displayPushedMessage {
+	NSString *currentPushedMessage = [self.parseConfig objectForKey:PARSE_PUSHED_MESSAGE];
+	
+	SLVInteractionPopupViewController *pushedMessagePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:@"Slove Team" body:currentPushedMessage buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+	
+	[self.currentNavigationController presentViewController:pushedMessagePopup animated:YES completion:^{
+		[USER_DEFAULTS setObject:currentPushedMessage forKey:KEY_LAST_PUSHED_MESSAGE];
+	}];
 }
 
 
