@@ -11,6 +11,8 @@
                 <outlet property="contactTableView" destination="xJv-gE-cQk" id="VMm-5g-LfT"/>
                 <outlet property="loadingIndicator" destination="Gsm-xj-cQx" id="K36-EC-fGC"/>
                 <outlet property="loadingLabel" destination="Lx0-ET-2jz" id="xi0-9i-DtW"/>
+                <outlet property="pullImageView" destination="Wjj-uM-oF3" id="nha-cM-iTJ"/>
+                <outlet property="pullTopLayoutConstraint" destination="jZg-Nx-0Vo" id="Zaw-pe-Mxw"/>
                 <outlet property="searchImageView" destination="qIf-rr-CCP" id="ybf-Nt-XT6"/>
                 <outlet property="searchTextField" destination="kLw-2D-P1a" id="jqE-iM-5YD"/>
                 <outlet property="searchView" destination="WUG-sa-XZV" id="6lf-aT-vmN"/>
@@ -77,6 +79,13 @@
                         <constraint firstAttribute="height" constant="20" id="oYJ-v3-S2e"/>
                     </constraints>
                 </activityIndicatorView>
+                <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Wjj-uM-oF3">
+                    <rect key="frame" x="236" y="59" width="128" height="128"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="128" id="B2c-3c-rDU"/>
+                        <constraint firstAttribute="width" secondItem="Wjj-uM-oF3" secondAttribute="height" multiplier="1:1" id="ZLs-6z-7jO"/>
+                    </constraints>
+                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
@@ -88,6 +97,8 @@
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TYX-Da-s9y"/>
                 <constraint firstAttribute="trailing" secondItem="WUG-sa-XZV" secondAttribute="trailing" id="dYn-Ia-dQO"/>
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>
+                <constraint firstItem="Wjj-uM-oF3" firstAttribute="top" secondItem="WUG-sa-XZV" secondAttribute="bottom" constant="8" id="jZg-Nx-0Vo"/>
+                <constraint firstItem="Wjj-uM-oF3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jfp-AH-qJ5"/>
                 <constraint firstAttribute="centerY" secondItem="Lx0-ET-2jz" secondAttribute="centerY" constant="34" id="kHu-go-TGM"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pKZ-dy-vWM"/>
                 <constraint firstAttribute="centerX" secondItem="Gsm-xj-cQx" secondAttribute="centerX" id="qMP-YO-sJO"/>

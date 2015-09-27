@@ -36,6 +36,8 @@
 	
 	self.searchImageView.image = [UIImage imageNamed:@"Assets/Image/loupe"];
 	
+	self.pullImageView.image = [UIImage imageNamed:@"Assets/Image/pull_icon"];
+	
 	self.refreshControl = [[UIRefreshControl alloc] init];
 	[self.refreshControl addTarget:self action:@selector(loadContacts) forControlEvents:UIControlEventValueChanged];
 	[self.contactTableView addSubview:self.refreshControl];
@@ -97,10 +99,21 @@
 }
 
 - (void)needToReloadContacts {
-	if (self.isAlreadyLoading) {
-		[self performSelector:@selector(needToReloadContacts) withObject:nil afterDelay:1];
-	} else {
-		[self loadContacts];
+	if (!self.isAlreadyLoading) {
+		self.pullTopLayoutConstraint.constant = 150;
+		
+		[UIView animateWithDuration:LONG_ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
+			self.pullImageView.alpha = 1;
+			[self.view layoutIfNeeded];
+		} completion:^(BOOL isFinished) {
+			[UIView animateWithDuration:SHORT_ANIMATION_DURATION animations:^{
+				self.pullImageView.alpha = 0;
+			} completion:^(BOOL isFinished) {
+				self.pullTopLayoutConstraint.constant = 8;
+				
+				[self.view layoutIfNeeded];
+			}];
+		}];
 	}
 }
 

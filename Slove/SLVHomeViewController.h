@@ -19,6 +19,8 @@
 @property (strong, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (strong, nonatomic) IBOutlet UITableView *contactTableView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
+@property (strong, nonatomic) IBOutlet UIImageView *pullImageView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *pullTopLayoutConstraint;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSArray *unsynchronizedContacts;
 @property (strong, nonatomic) NSArray *synchronizedContacts;
