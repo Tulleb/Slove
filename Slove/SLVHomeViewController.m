@@ -154,13 +154,11 @@
 	} else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied) {
 		SLVLog(@"%@Address book access not granted", SLV_WARNING);
 		
-		[self showSettingManipulation];
-		
 		self.addressBookContactsReady = YES;
 		
 		return;
 	} else {
-		SLVLog(@"%@Address book access not granted", SLV_WARNING);
+		SLVLog(@"%@Address book access never asked", SLV_WARNING);
 		
 		if (!([USER_DEFAULTS objectForKey:KEY_ASK_CONTACT_BOOK] && [[USER_DEFAULTS objectForKey:KEY_ASK_CONTACT_BOOK] boolValue]) && !self.popupIsDisplayed) {
 			self.popupIsDisplayed = YES;
@@ -168,10 +166,11 @@
 			self.addressBookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_addressBookAccess", nil) body:NSLocalizedString(@"popup_body_addressBookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 			
 			self.addressBookPopup.delegate = self;
+			self.addressBookPopup.priority = kPriorityHigh;
 			
-			[self presentViewController:self.addressBookPopup animated:YES completion:^{
-				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
-			}];
+			[ApplicationDelegate.queuedPopups addObject:self.addressBookPopup];
+			
+			[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
 		}
 		
 		self.addressBookContactsReady = YES;
@@ -183,16 +182,6 @@
 - (void)checkFacebookFriendsAuthorization {
 	if (![FBSDKAccessToken currentAccessToken]) {
 		SLVLog(@"%@Not connected through Facebook", SLV_WARNING);
-		
-		if (!self.popupIsDisplayed) {
-			self.popupIsDisplayed = YES;
-			
-			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_notConnectedWithFacebook", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
-			
-			errorPopup.delegate = self;
-			
-			[self presentViewController:errorPopup animated:YES completion:nil];
-		}
 		
 		self.facebookContactsReady = YES;
 		
@@ -223,10 +212,11 @@
 						self.facebookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 						
 						self.facebookPopup.delegate = self;
+						self.facebookPopup.priority = kPriorityHigh;
 						
-						[self presentViewController:self.facebookPopup animated:YES completion:^{
-							[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
-						}];
+						[ApplicationDelegate.queuedPopups addObject:self.facebookPopup];
+						
+						[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
 					}
 					
 					self.facebookContactsReady = YES;
@@ -251,6 +241,27 @@
 	[self.navigationController presentViewController:popupViewController animated:YES completion:nil];
 }
 
+- (void)askAddressBookAccess {
+	self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+	
+	if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied) {
+		SLVLog(@"%@Address book access not granted", SLV_WARNING);
+		
+		[self showSettingManipulation];
+	} else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
+		SLVLog(@"Asking address book access to the user");
+		ABAddressBookRequestAccessWithCompletion(self.addressBookRef, ^(bool granted, CFErrorRef error) {
+			if (granted) {
+				SLVLog(@"User have granted access to his contact list");
+				
+				[self needToReloadContacts];
+			} else {
+				SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
+			}
+		});
+	}
+}
+
 - (void)askFacebookFriends {
 	FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
 	[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
@@ -258,7 +269,7 @@
 			if ([result.grantedPermissions containsObject:@"user_friends"]) {
 				SLVLog(@"User have granted access to his friend list");
 				
-				[self loadContacts];
+				[self needToReloadContacts];
 			} else {
 				SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
 			}
@@ -747,7 +758,7 @@
 		
 		if (!self.popupIsDisplayed) {
 			self.popupIsDisplayed = YES;
-			
+		
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
 			
 			errorPopup.delegate = self;
@@ -933,20 +944,7 @@
 	self.popupIsDisplayed = NO;
 	
 	if (popup == self.addressBookPopup) {
-		self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
-		
-		if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
-			SLVLog(@"Asking address book access to the user");
-			ABAddressBookRequestAccessWithCompletion(self.addressBookRef, ^(bool granted, CFErrorRef error) {
-				if (granted) {
-					SLVLog(@"User have granted access to his contact list");
-					
-					[self needToReloadContacts];
-				} else {
-					SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
-				}
-			});
-		}
+		[self askAddressBookAccess];
 	} else if (popup == self.facebookPopup) {
 		[self askFacebookFriends];
 	}

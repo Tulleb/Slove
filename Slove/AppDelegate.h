@@ -15,11 +15,6 @@
 #import "SLVInteractionPopupViewController.h"
 
 
-typedef enum : NSInteger {
-	kPushedMessage,
-	kSlovedPopup
-} PopupType;
-
 @interface AppDelegate : UIResponder <UIApplicationDelegate, SLVInteractionPopupDelegate>
 
 @property (strong, nonatomic) UIWindow *window;

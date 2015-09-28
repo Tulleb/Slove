@@ -43,6 +43,7 @@
 @property (nonatomic) BOOL popupIsDisplayed;
 
 - (void)showSettingManipulation;
+- (void)askAddressBookAccess;
 - (void)askFacebookFriends;
 
 @end

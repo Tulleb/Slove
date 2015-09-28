@@ -9,7 +9,6 @@
 #import "SLVAddSloverViewController.h"
 #import "SLVContactTableViewCell.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <AddressBookUI/AddressBookUI.h>
 
 @interface SLVAddSloverViewController ()
 
@@ -56,8 +55,8 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[self checkAddressBookAccessAuthorization];
 	[self checkFacebookFriendsAuthorization];
+	[self checkAddressBookAccessAuthorization];
 }
 
 - (void)viewWillLayoutSubviews {
@@ -67,11 +66,15 @@
 }
 
 - (IBAction)facebookFriendsAction:(id)sender {
+	[self.navigationController popViewControllerAnimated:YES];
+	
 	[self.homeViewController askFacebookFriends];
 }
 
 - (IBAction)contactBookAction:(id)sender {
-	[self.homeViewController showSettingManipulation];
+	[self.navigationController popViewControllerAnimated:YES];
+	
+	[self.homeViewController askAddressBookAccess];
 }
 
 - (void)initTapToDismiss {
@@ -177,14 +180,6 @@
 								}];
 }
 
-- (void)checkAddressBookAccessAuthorization {
-	if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied) {
-		SLVLog(@"%@Address book access not granted", SLV_WARNING);
-		
-		self.addressBookButton.hidden = NO;
-	}
-}
-
 - (void)checkFacebookFriendsAuthorization {
 	if ([FBSDKAccessToken currentAccessToken]) {
 		FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
@@ -214,6 +209,12 @@
 	
 	// This function sometimes return NO when it shouldn't
 	//	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
+}
+
+- (void)checkAddressBookAccessAuthorization {
+	self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
+	
+	self.addressBookButton.hidden = ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized;
 }
 
 

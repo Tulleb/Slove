@@ -9,6 +9,7 @@
 #import "SLVViewController.h"
 #import "SLVInteractionPopupViewController.h"
 #import "SLVHomeViewController.h"
+#import <AddressBookUI/AddressBookUI.h>
 
 @interface SLVAddSloverViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, UITextFieldDelegate, SLVInteractionPopupDelegate>
 
@@ -23,6 +24,7 @@
 @property (strong, nonatomic) SLVInteractionPopupViewController *followedPopup;
 @property (strong, nonatomic) NSArray *sloversFound;
 @property (strong, nonatomic) SLVHomeViewController *homeViewController;
+@property (nonatomic) ABAddressBookRef addressBookRef;
 
 - (id)initWithHomeViewController:(SLVHomeViewController *)homeViewController;
 - (IBAction)facebookFriendsAction:(id)sender;

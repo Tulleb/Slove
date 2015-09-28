@@ -51,6 +51,7 @@
 	gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
 	gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
 	
+	[self popQueuedPopup];
 	[self loadUserDefaults];
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
@@ -79,7 +80,7 @@
 	
 	//Accept push notification when app is not open
 	if (remoteNotif) {
-		[self.queuedPopups addObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:kSlovedPopup], @"type", [NSArray arrayWithObjects:application, remoteNotif, nil], @"data", nil]];
+		[self application:application handleRemoteNotification:remoteNotif];
 	}
 	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
@@ -148,9 +149,8 @@
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		} else {
 			SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover];
-			[self.currentNavigationController presentViewController:presentedViewController animated:YES completion:nil];
 			
-			[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+			[self.queuedPopups addObject:presentedViewController];
 		}
 	} else {
 		[PFPush handlePush:userInfo];
@@ -171,19 +171,28 @@
 }
 
 - (void)popQueuedPopup {
-	if (!self.currentNavigationController.presentedViewController && [self.queuedPopups count] > 0 && self.userIsConnected && ![[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
-		NSDictionary *popup = [self.queuedPopups firstObject];
-		
-		if ([[popup objectForKey:@"type"] integerValue] == kPushedMessage) {
-			[self displayPushedMessage];
-		} else if ([[popup objectForKey:@"type"] integerValue] == kSlovedPopup) {
-			NSArray *data = [popup objectForKey:@"data"];
+	if ([self.queuedPopups count] > 0) {
+		if (!self.currentNavigationController.presentedViewController && self.userIsConnected && ![[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+			SLVLog(@"Popping queued popup...");
 			
-			[self application:[data firstObject] handleRemoteNotification:[data lastObject]];
+			SLVPopupViewController *pushedPopup = [self.queuedPopups firstObject];
+			for (SLVPopupViewController *popup in self.queuedPopups) {
+				if (pushedPopup.priority < popup.priority) {
+					pushedPopup = popup;
+				}
+			}
+			
+			[self.currentNavigationController presentViewController:pushedPopup animated:YES completion:^{
+				[self.queuedPopups removeObject:pushedPopup];
+			}];
+		} else {
+			SLVLog(@"Couldn't pop because view is busy");
 		}
-		
-		[self.queuedPopups removeObjectAtIndex:0];
+	} else {
+		SLVLog(@"No popup to pop");
 	}
+	
+	[self performSelector:@selector(popQueuedPopup) withObject:nil afterDelay:5];
 }
 
 - (void)loadUserDefaults {
@@ -207,8 +216,6 @@
 	}
 
 	self.userIsConnected = YES;
-	
-	[self popQueuedPopup];
 }
 
 - (void)userDisconnected {
@@ -585,7 +592,11 @@
 			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];;
 			
 			if (!lastPushedMessage || ![lastPushedMessage isEqualToString:currentPushedMessage]) {
-				[self.queuedPopups insertObject:[NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInteger:kPushedMessage], @"type", nil] atIndex:0];
+				SLVInteractionPopupViewController *pushedMessagePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:@"Slove Team" body:currentPushedMessage buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+				
+				[self.queuedPopups addObject:pushedMessagePopup];
+				
+				[USER_DEFAULTS setObject:currentPushedMessage forKey:KEY_LAST_PUSHED_MESSAGE];
 			}
 		}
 			
@@ -614,8 +625,6 @@
 		if (!self.alreadyCheckedCompatibleVersion) {
 			[self checkCompatibleVersion];
 		}
-		
-		[self popQueuedPopup];
 	}];
 }
 
@@ -631,22 +640,13 @@
 			self.compatibleVersionPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_incompatible_version_error", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
 			
 			self.compatibleVersionPopup.delegate = self;
+			self.compatibleVersionPopup.priority = kPriorityHigh;
 			
-			[self.currentNavigationController presentViewController:self.compatibleVersionPopup animated:YES completion:nil];
+			[self.queuedPopups addObject:self.compatibleVersionPopup];
 		}
 	}
 	
 	self.alreadyCheckedCompatibleVersion = YES;
-}
-
-- (void)displayPushedMessage {
-	NSString *currentPushedMessage = [self.parseConfig objectForKey:PARSE_PUSHED_MESSAGE];
-	
-	SLVInteractionPopupViewController *pushedMessagePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:@"Slove Team" body:currentPushedMessage buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
-	
-	[self.currentNavigationController presentViewController:pushedMessagePopup animated:YES completion:^{
-		[USER_DEFAULTS setObject:currentPushedMessage forKey:KEY_LAST_PUSHED_MESSAGE];
-	}];
 }
 
 
