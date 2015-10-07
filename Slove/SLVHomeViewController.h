@@ -45,5 +45,6 @@
 - (void)showSettingManipulation;
 - (void)askAddressBookAccess;
 - (void)askFacebookFriends;
+- (SLVContact *)contactForUsername:(NSString *)username;
 
 @end

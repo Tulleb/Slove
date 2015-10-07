@@ -35,8 +35,10 @@
 	
 	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
 	self.titleLabel.text = self.popupTitle;
+	self.titleLabel.textColor = WHITE;
 	
 	self.bodyLabel.text = [NSString stringWithFormat:@"%@", self.popupBody];
+	self.bodyLabel.textColor = WHITE;
 	
 	switch ([self.buttonTitles count]) {
 		case 1: {

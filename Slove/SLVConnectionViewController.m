@@ -28,7 +28,11 @@
 	self.headerView.backgroundColor = BLUE;
 	
 	self.subtitleUpperLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleUpperLabel.textColor = WHITE;
+	
 	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleLowerLabel.textColor = WHITE;
+	
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 	
 	self.titleImageView.image = [UIImage imageNamed:@"Assets/Image/logo_txt_accueil"];

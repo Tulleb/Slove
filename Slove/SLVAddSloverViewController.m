@@ -249,12 +249,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *myIdentifier = @"NewSloverContactCell";
-	SLVContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myIdentifier];
+	static NSString *identifier = @"SloverCell";
+	SLVContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	if (!cell) {
-		[tableView registerNib:[UINib nibWithNibName:@"SLVContactTableViewCell" bundle:nil] forCellReuseIdentifier:myIdentifier];
-		cell = [tableView dequeueReusableCellWithIdentifier:myIdentifier];
+		[tableView registerNib:[UINib nibWithNibName:@"SLVContactTableViewCell" bundle:nil] forCellReuseIdentifier:identifier];
+		cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	}
+	
+	[SLVViewController setStyle:cell];
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
@@ -265,21 +267,18 @@
 	
 	SLVContact *contact = [self.sloversFound objectAtIndex:indexPath.row];
 	
-	cell.titleLabel.text = contact.username;
+	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
+	cell.titleLabel.text = contact.fullName;
 	
-	cell.subtitleLabel.text = contact.fullName;
+	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
+	cell.subtitleLabel.text = contact.username;
+	cell.subtitleLabel.textColor = BLUE;
 	
 	cell.pictureImageView.image = contact.picture;
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	cell.pictureImageView.clipsToBounds = YES;
 	
 	cell.layerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
-	
-	[SLVViewController setStyle:cell];
-	
-	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
-	
-	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
 	
 	return cell;
 }

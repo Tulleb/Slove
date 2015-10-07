@@ -118,9 +118,7 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
-		[SLVTools playSound:SLOVER_SOUND];
-		
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {		
 		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
 			[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
@@ -139,7 +137,7 @@
 			[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
 		}
 		
-		NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), NSLocalizedString(@"url_smsInvite", nil)];
+		NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), [ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
 		
 		MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
 		messageController.messageComposeDelegate = self;
@@ -176,7 +174,7 @@
 }
 
 - (void)rotateSpirale {
-	self.spiraleAngle += 18 * TIMER_FREQUENCY * (1 + ApplicationDelegate.currentNavigationController.sloveClickDuration * 15);
+	self.spiraleAngle += 18 * TIMER_FREQUENCY * (1 + MAX(ApplicationDelegate.currentNavigationController.sloveClickDuration, ApplicationDelegate.currentNavigationController.sloveClickDecelerationDuration) * 15);
 	[UIView animateWithDuration:TIMER_FREQUENCY
 						  delay:0
 						options:UIViewAnimationOptionCurveLinear

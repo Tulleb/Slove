@@ -205,7 +205,7 @@
 																  toItem:self.sloveCounterBadge
 															   attribute:NSLayoutAttributeTrailing
 															  multiplier:1
-																constant:SLOVE_BUTTON_SIZE * 0.1]];
+																constant:SLOVE_BUTTON_SIZE * 0.05]];
 	[self.sloveView addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveView
 															   attribute:NSLayoutAttributeBottom
 															   relatedBy:NSLayoutRelationEqual
@@ -219,7 +219,7 @@
 																  toItem:self.sloveView
 															   attribute:NSLayoutAttributeTop
 															  multiplier:1
-																constant:SLOVE_BUTTON_SIZE * 0.10]];
+																constant:SLOVE_BUTTON_SIZE * 0.05]];
 
 	[self.settingsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsButton
 																   attribute:NSLayoutAttributeHeight
@@ -308,7 +308,7 @@
 		SLVActivityViewController *activityViewController = [[SLVActivityViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
-		[self pushViewController:activityViewController animated:YES];
+		[self pushViewController:activityViewController animated:NO];
 	}
 }
 
@@ -320,6 +320,7 @@
 
 - (void)sloveLongPress:(UILongPressGestureRecognizer *)gesture {
 	if (gesture.state == UIGestureRecognizerStateBegan) {;
+		[self.sloveLastClickTimer invalidate];
 		self.sloveClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(incrementSloveClickDuration) userInfo:nil repeats:YES];
 		
 		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
@@ -329,6 +330,7 @@
 		}
 	} else if (gesture.state == UIGestureRecognizerStateEnded) {
 		[self.sloveClickTimer invalidate];
+		self.sloveLastClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(decrementDecelerationDuration) userInfo:nil repeats:YES];
 		
 		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
 			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
@@ -354,7 +356,7 @@
 		SLVSettingsViewController *parametersViewController = [[SLVSettingsViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
-		[self pushViewController:parametersViewController animated:YES];
+		[self pushViewController:parametersViewController animated:NO];
 	}
 }
 
@@ -388,7 +390,7 @@
 //	NSShadow* shadow = [NSShadow new];
 //	shadow.shadowOffset = CGSizeMake(0, 1);
 //	shadow.shadowColor = CLEAR;
-	[[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE]}];
+	[[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE], NSForegroundColorAttributeName:DEFAULT_TEXT_COLOR}];
 	[[UINavigationBar appearance] setBarTintColor:WHITE];
 	if (!IS_IOS7) {
 		[[UINavigationBar appearance] setTranslucent:NO];
@@ -402,6 +404,15 @@
 
 - (void)incrementSloveClickDuration {
 	self.sloveClickDuration += TIMER_FREQUENCY;
+	self.sloveClickDecelerationDuration = self.sloveClickDuration;
+}
+
+- (void)decrementDecelerationDuration {
+	self.sloveClickDecelerationDuration -= TIMER_FREQUENCY;
+	
+	if (self.sloveClickDecelerationDuration <= 0) {
+		[self.sloveLastClickTimer invalidate];
+	}
 }
 
 - (void)loadBottomNavigationBar {
@@ -447,7 +458,7 @@
 	
 	[self loadSloveButtonAnimation:NO];
 	
-	[self.settingsButton setTitle:@"button_settings" forState:UIControlStateNormal];
+	[self.settingsButton setTitle:@"button_profile" forState:UIControlStateNormal];
 	[self.settingsButton setTitleColor:WHITE forState:UIControlStateNormal];
 	[self.settingsButton setTitleColor:BLUE forState:UIControlStateHighlighted];
 	[self.settingsButton setTitleColor:BLUE forState:UIControlStateSelected];
@@ -498,7 +509,8 @@
 															 relatedBy:NSLayoutRelationEqual
 																toItem:self.sloveView
 															 attribute:NSLayoutAttributeLeading
-															multiplier:1															  constant:SLOVE_BUTTON_SIZE];
+															multiplier:1
+															  constant:SLOVE_BUTTON_SIZE];
 }
 
 - (void)loadSloveButtonAnimation:(BOOL)reversed {

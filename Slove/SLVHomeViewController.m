@@ -70,6 +70,12 @@
 	}
 }
 
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	[self.searchTextField resignFirstResponder];
+}
+
 - (void)didReceiveMemoryWarning {
 	[super didReceiveMemoryWarning];
 	// Dispose of any resources that can be recreated.
@@ -784,6 +790,16 @@
 	[self presentViewController:messageController animated:YES completion:nil];
 }
 
+- (SLVContact *)contactForUsername:(NSString *)username {
+	for (SLVContact *contact in self.fullSynchronizedContacts) {
+		if ([contact.username isEqualToString:username]) {
+			return contact;
+		}
+	}
+	
+	return nil;
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -827,12 +843,14 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *myIdentifier = @"FollowedSloverContactCell";
-	SLVContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:myIdentifier];
+	static NSString *identifier = @"ContactCell";
+	SLVContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	if (!cell) {
-		[tableView registerNib:[UINib nibWithNibName:@"SLVContactTableViewCell" bundle:nil] forCellReuseIdentifier:myIdentifier];
-		cell = [tableView dequeueReusableCellWithIdentifier:myIdentifier];
+		[tableView registerNib:[UINib nibWithNibName:@"SLVContactTableViewCell" bundle:nil] forCellReuseIdentifier:identifier];
+		cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	}
+	
+	[SLVViewController setStyle:cell];
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
@@ -845,13 +863,15 @@
 	if (indexPath.section == 0 && [self.synchronizedContacts count] > 0) {
 		contact = [self.synchronizedContacts objectAtIndex:indexPath.row];
 		isSynchronized = YES;
-	} else {
+	} else if ([self.unsynchronizedContacts count] > 0) {
 		contact = [self.unsynchronizedContacts objectAtIndex:indexPath.row];
 		cell.subtitleImageView.image = nil;
 		cell.subtitleLabel.textColor = nil;
 		[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_ajout_contact"] forState:UIControlStateNormal];
 		cell.selectionButton.tag = indexPath.row;
 		[cell.selectionButton addTarget:self action:@selector(inviteAction:) forControlEvents:UIControlEventTouchUpInside];
+	} else {
+		return cell;
 	}
 	
 	if (!contact) {
@@ -859,9 +879,10 @@
 	}
 	
 	if (isSynchronized) {
-		cell.titleLabel.text = contact.username;
+		cell.titleLabel.text = contact.fullName;
 		
-		cell.subtitleLabel.text = contact.fullName;
+		cell.subtitleLabel.text = contact.username;
+		cell.subtitleLabel.textColor = BLUE;
 	} else {
 		cell.titleLabel.text = contact.fullName;
 		
@@ -900,8 +921,6 @@
 	
 	cell.layerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
 	
-	[SLVViewController setStyle:cell];
-	
 	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
 	
 	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
@@ -925,7 +944,7 @@
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
 	UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(8, 0, SCREEN_WIDTH - 16, [self tableView:tableView heightForHeaderInSection:section])];
-	headerView.backgroundColor = LIGHT_GRAY;
+	headerView.backgroundColor = VERY_LIGHT_GRAY;
 	
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 1, headerView.frame.size.width - 8 * 2, headerView.frame.size.height - 1 * 2)];
 	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];

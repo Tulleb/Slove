@@ -74,12 +74,6 @@
 #define VERY_LIGHT_GRAY [UIColor groupTableViewBackgroundColor]
 
 #pragma mark - Font
-//#define DEFAULT_FONT					@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Regular.ttf"
-//#define DEFAULT_FONT_ITALIC			@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Italic.ttf"
-//#define DEFAULT_FONT_BOLD				@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Bold.ttf"
-//#define DEFAULT_FONT_BOLD_ITALIC		@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-BoldItalic.ttf"
-//#define DEFAULT_FONT_LIGHT			@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-Light.ttf"
-//#define DEFAULT_FONT_LIGHT_ITALIC		@"Assets/Font/Averia_Sans_Libre/AveriaSansLibre-LightItalic.ttf"
 #define DEFAULT_FONT_REGULAR			@"AveriaSansLibre-Regular"
 #define DEFAULT_FONT_ITALIC				@"AveriaSansLibre-Italic"
 #define DEFAULT_FONT_BOLD				@"AveriaSansLibre-Bold"
@@ -91,7 +85,9 @@
 #define DEFAULT_FONT_SIZE				17
 #define DEFAULT_FONT_SIZE_SMALL			15
 #define DEFAULT_FONT_SIZE_LARGE			20
-#define DEFAULT_FONT_SIZE_VERY_LARGE	45
+#define DEFAULT_FONT_SIZE_VERY_LARGE	25
+#define DEFAULT_FONT_SIZE_HUGE			45
+#define DEFAULT_TEXT_COLOR				DARK_GRAY
 
 #pragma mark - Animation
 #define SHORT_ANIMATION_DURATION        0.2
@@ -113,6 +109,7 @@
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
 #define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
 #define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
+#define	KEY_LAST_ACTIVITY_REFRESH				@"lastActivityRefresh"
 
 #pragma mark - Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"
@@ -126,8 +123,8 @@
 #define SLOVE_VIEW_BOTTOM_CONSTANT	0
 
 #pragma mark - Connection
-#define SLOVER_SOUND	@"Assets/Sound/Congratsbuild2.wav"
-#define SLOVED_SOUND	@"Assets/Sound/Congratsbuild1.wav"
+#define SLOVER_SOUND	@"Assets/Sound/Congratsbuild1.wav"
+#define SLOVED_SOUND	@"Assets/Sound/Congratsbuild2.wav"
 
 #pragma mark - Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2
@@ -147,5 +144,6 @@
 #define SYNCHRONIZE_FOLLOWED_CONTACTS_FUNCTION		@"getFollows"
 #define FOLLOW_SLOVER_FUNCTION						@"addFollow"
 #define SEND_SLOVE_FUNCTION							@"sendSlove"
+#define GET_ACTIVITIES								@"getActivities"
 
 #endif

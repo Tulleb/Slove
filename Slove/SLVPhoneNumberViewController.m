@@ -24,6 +24,7 @@
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/choix_pays_banniere"];
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
+	self.bannerLabel.textColor = WHITE;
 	
 	self.pickerBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/degrade_choix_pays"];
 	self.pickerTopImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];

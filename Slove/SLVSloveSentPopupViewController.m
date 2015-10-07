@@ -22,8 +22,11 @@
 	self.logoImageView.image = [UIImage imageNamed:@"Assets/Image/notif_envoi"];
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_tuto_premierevisite"];
 	
-	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_HUGE];
+	self.titleLabel.textColor = WHITE;
+	
 	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleLabel.textColor = WHITE;
 	
 	UITapGestureRecognizer *tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleTap:)];
 	tap.delegate = self;
@@ -33,6 +36,12 @@
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.bubbleView.hidden = NO;
 	}
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[SLVTools playSound:SLOVER_SOUND];
 }
 
 - (void)didReceiveMemoryWarning {

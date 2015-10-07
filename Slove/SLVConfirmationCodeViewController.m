@@ -31,6 +31,7 @@
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/code_tel_banniere"];
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
+	self.bannerLabel.textColor = WHITE;
 	
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];

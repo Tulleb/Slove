@@ -44,8 +44,11 @@
 	[self.leftButton setTitleColor:WHITE forState:UIControlStateNormal];
 	[self.rightButton setTitleColor:WHITE forState:UIControlStateNormal];
 	
-	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_HUGE];
+	self.titleLabel.textColor = WHITE;
+	
 	self.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleLabel.textColor = WHITE;
 	
 	self.subtitleLabel.text = [self.subtitleLabel.text stringByAppendingString:self.slover.username];
 	
@@ -53,6 +56,12 @@
 		self.disablingView.hidden = NO;
 		self.bubbleView.hidden = NO;
 	}
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[SLVTools playSound:SLOVED_SOUND];
 }
 
 - (void)didReceiveMemoryWarning {
