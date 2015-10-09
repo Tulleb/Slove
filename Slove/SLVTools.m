@@ -106,6 +106,11 @@
 	return [comp1 day] == [comp2 day] && [comp1 month] == [comp2 month] && [comp1 year] == [comp2 year];
 }
 
++ (BOOL)deviceIs24Hour {
+	NSString *format = [NSDateFormatter dateFormatFromTemplate:@"j" options:0 locale:[NSLocale currentLocale]];
+	return ([format rangeOfString:@"a"].location == NSNotFound);
+}
+
 
 #pragma mark - Field validation
 

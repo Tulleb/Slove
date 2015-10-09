@@ -35,5 +35,6 @@
 + (BOOL)checkConnection;
 + (void)playSound:(NSString *)soundName;
 + (BOOL)isSameDay:(NSDate*)date1 thatDay:(NSDate*)date2;
++ (BOOL)deviceIs24Hour;
 
 @end

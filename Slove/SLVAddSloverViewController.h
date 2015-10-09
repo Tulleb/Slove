@@ -20,11 +20,13 @@
 @property (strong, nonatomic) IBOutlet UIButton *facebookFriendsButton;
 @property (strong, nonatomic) IBOutlet UIButton *addressBookButton;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addressBookBottomLayoutConstraint;
 @property (strong, nonatomic) SLVInteractionPopupViewController *followedPopup;
 @property (strong, nonatomic) NSArray *sloversFound;
 @property (strong, nonatomic) SLVHomeViewController *homeViewController;
 @property (nonatomic) ABAddressBookRef addressBookRef;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *sloverTableViewBottomConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *addressBookBottomLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *facebookBottomLayoutConstraint;
 
 - (id)initWithHomeViewController:(SLVHomeViewController *)homeViewController;
 - (IBAction)facebookFriendsAction:(id)sender;

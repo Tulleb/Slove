@@ -23,7 +23,7 @@
 - (void)viewDidLoad {
 	self.appName = @"activity";
 	
-    [super viewDidLoad];
+	[super viewDidLoad];
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/activite_banniere"];
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
@@ -32,12 +32,16 @@
 	self.sectionOrder = [[NSArray alloc] init];
 	self.activities = [[NSDictionary alloc] init];
 	
+	self.refreshControl = [[UIRefreshControl alloc] init];
+	[self.refreshControl addTarget:self action:@selector(loadActivities) forControlEvents:UIControlEventValueChanged];
+	[self.activityTableView addSubview:self.refreshControl];
+	
 	[self loadBackButton];
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -59,84 +63,97 @@
 }
 
 - (void)loadActivities {
-	NSDictionary *params;
-	NSDate *lastRefresh = [USER_DEFAULTS objectForKey:KEY_LAST_ACTIVITY_REFRESH];
-	
-	NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
-	
-	NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
-	[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
-	[dateFormatter setTimeZone:timeZone];
- 
-	if (!lastRefresh) {
-		params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNull null], @"dateLastUpdate", nil];
-	} else {
-		params = [NSDictionary dictionaryWithObjectsAndKeys:[dateFormatter stringFromDate:lastRefresh], @"dateLastUpdate", nil];
-	}
-
-	[PFCloud callFunctionInBackground:GET_ACTIVITIES
-					   withParameters:params
-								block:^(id object, NSError *error){
-									if (!error) {
-										NSDictionary *datas = object;
-										NSArray *activities = [datas objectForKey:@"activities"];
-										
-										if (activities && [activities count] > 0) {
-											for (NSDictionary *activity in activities) {
-												SLVActivity *parsedActivity = [[SLVActivity alloc] init];
-												
-												NSString *activityType = [activity objectForKey:@"activityType"];
-												
-												if ([activityType isEqualToString:@"slove"]) {
-													parsedActivity.type = kSloved;
-												} else if ([activityType isEqualToString:@"credit"]) {
-													parsedActivity.type = kCredit;
-												} else if ([activityType isEqualToString:@"level"]) {
-													parsedActivity.type = kLevel;
-												}
-												
-												parsedActivity.isNew = [[activity objectForKey:@"isNew"] boolValue];
-												parsedActivity.createdAt = [dateFormatter dateFromString:[activity objectForKey:@"createdAt"]];
-												parsedActivity.value = [activity objectForKey:@"activityValue"];
-												parsedActivity.relatedUser = [activity objectForKey:@"relatedUser"];
-												
-												if ([activities indexOfObject:activity] == 0) {
-													parsedActivity.isNew = YES;
-												}
-												
-												BOOL sectionAlreadyExists = NO;
-												for (id section in self.sectionOrder) {
-													if ([section isKindOfClass:[NSDate class]] && [SLVTools isSameDay:section thatDay:parsedActivity.createdAt]) {
-														sectionAlreadyExists = YES;
-														
-														[self addActivity:parsedActivity ForSection:section toAdd:NO];
-														
-														break;
+	if (!self.isAlreadyLoading) {
+		self.isAlreadyLoading = YES;
+		
+		self.sectionOrder = nil;
+		self.activities = nil;
+		
+		NSDictionary *params;
+		NSDate *lastRefresh = [USER_DEFAULTS objectForKey:KEY_LAST_ACTIVITY_REFRESH];
+		
+		NSTimeZone *timeZone = [NSTimeZone timeZoneWithName:@"UTC"];
+		
+		NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+		[dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"];
+		[dateFormatter setTimeZone:timeZone];
+		
+		if (!lastRefresh) {
+			params = [NSDictionary dictionaryWithObjectsAndKeys:[NSNull null], @"dateLastUpdate", nil];
+		} else {
+			params = [NSDictionary dictionaryWithObjectsAndKeys:[dateFormatter stringFromDate:lastRefresh], @"dateLastUpdate", nil];
+		}
+		
+		[PFCloud callFunctionInBackground:GET_ACTIVITIES
+						   withParameters:params
+									block:^(id object, NSError *error){
+										if (!error) {
+											NSDictionary *datas = object;
+											NSArray *activities = [datas objectForKey:@"activities"];
+											
+											if (activities && [activities count] > 0) {
+												for (NSDictionary *activity in activities) {
+													SLVActivity *parsedActivity = [[SLVActivity alloc] init];
+													
+													NSString *activityType = [activity objectForKey:@"activityType"];
+													
+													if ([activityType isEqualToString:@"slove"]) {
+														parsedActivity.type = kSloved;
+													} else if ([activityType isEqualToString:@"credit"]) {
+														parsedActivity.type = kCredit;
+													} else if ([activityType isEqualToString:@"level"]) {
+														parsedActivity.type = kLevel;
 													}
-												}
-												
-												if (!sectionAlreadyExists) {
-													if (parsedActivity.isNew) {
-														[self addActivity:parsedActivity ForSection:@"new" toAdd:NO];
-													} else {
-														[self addActivity:parsedActivity ForSection:parsedActivity.createdAt toAdd:YES];
+													
+													parsedActivity.isNew = [[activity objectForKey:@"isNew"] boolValue];
+													parsedActivity.createdAt = [dateFormatter dateFromString:[activity objectForKey:@"createdAt"]];
+													parsedActivity.value = [activity objectForKey:@"activityValue"];
+													parsedActivity.relatedUser = [activity objectForKey:@"relatedUser"];
+													
+													if ([activities indexOfObject:activity] == 0) {
+														parsedActivity.isNew = YES;
+													}
+													
+													BOOL sectionAlreadyExists = NO;
+													for (id section in self.sectionOrder) {
+														if ([section isKindOfClass:[NSDate class]] && [SLVTools isSameDay:section thatDay:parsedActivity.createdAt]) {
+															sectionAlreadyExists = YES;
+															
+															[self addActivity:parsedActivity ForSection:section toAdd:NO];
+															
+															break;
+														}
+													}
+													
+													if (!sectionAlreadyExists) {
+														if (parsedActivity.isNew) {
+															[self addActivity:parsedActivity ForSection:@"new" toAdd:NO];
+														} else {
+															[self addActivity:parsedActivity ForSection:parsedActivity.createdAt toAdd:YES];
+														}
 													}
 												}
 											}
+											
+											[USER_DEFAULTS setObject:[NSDate date] forKey:KEY_LAST_ACTIVITY_REFRESH];
+											
+											[self.activityTableView reloadData];
+										} else {
+											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
+											
+											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+											
+											SLVLog(@"%@%@", SLV_ERROR, error.description);
+											[ParseErrorHandlingController handleParseError:error];
 										}
 										
-										[USER_DEFAULTS setObject:[NSDate date] forKey:KEY_LAST_ACTIVITY_REFRESH];
+										if ([self.refreshControl isRefreshing]) {
+											[self.refreshControl endRefreshing];
+										}
 										
-										[self.activityTableView reloadData];
-									} else {
-										SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
-										
-										[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-										
-										SLVLog(@"%@%@", SLV_ERROR, error.description);
-										[ParseErrorHandlingController handleParseError:error];
-									}
-								}];
+										self.isAlreadyLoading = NO;
+									}];
+	}
 }
 
 - (void)addActivity:(SLVActivity *)activity ForSection:(id)section toAdd:(BOOL)shouldAddSectionToSectionOrder {
@@ -231,24 +248,34 @@
 		}
 	}
 	
-	if (!activity.isNew) {
-		NSDateFormatter *hourFormatter = [[NSDateFormatter alloc] init];
-		[hourFormatter setDateFormat:@"HH:mm"];
-		[hourFormatter setTimeZone:[NSTimeZone localTimeZone]];
-		
-		description = [[hourFormatter stringFromDate:activity.createdAt] stringByAppendingString:[NSString stringWithFormat:@" - %@", description]];
-	}
-	
 	NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:description];
 	
 	if (activity.isNew) {
-		[attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:DEFAULT_FONT_ITALIC size:DEFAULT_FONT_SIZE_LARGE] range:NSMakeRange(0, [attributedString length])];
+		NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithString:description];
+		
+		[attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE] range:NSMakeRange(0, [attributedString length])];
 	} else {
+		NSDateFormatter *hourFormatter = [[NSDateFormatter alloc] init];
+		if ([SLVTools deviceIs24Hour]) {
+			[hourFormatter setDateFormat:@"HH:mm"];
+		} else {
+			[hourFormatter setDateFormat:@"h:mm a"];
+		}
+		[hourFormatter setTimeZone:[NSTimeZone localTimeZone]];
+		
+		NSString *hourString = [[hourFormatter stringFromDate:activity.createdAt] stringByAppendingString:@" - "];
+		description = [hourString stringByAppendingString:description];
+		
+		attributedString = [[NSMutableAttributedString alloc] initWithString:description];
+		
+		[attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:DEFAULT_FONT_ITALIC size:DEFAULT_FONT_SIZE_LARGE] range:NSMakeRange(0, [attributedString length])];
+		
 		[attributedString addAttribute:NSFontAttributeName value:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE] range:NSMakeRange(0, [attributedString length])];
 		
+		NSRange timeRange = [description rangeOfString:hourString];
 		[attributedString addAttribute:NSForegroundColorAttributeName
 								 value:LIGHT_GRAY
-								 range:NSMakeRange(0, 7)];
+								 range:timeRange];
 	}
 	
 	NSRange relatedUserRange = [description rangeOfString:activity.relatedUser];

@@ -238,7 +238,7 @@
 	}];
 	
 	// This function sometimes return NO when it shouldn't
-//	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
+	//	return ([[FBSDKAccessToken currentAccessToken] hasGranted:@"user_friends"]);
 }
 
 - (void)showSettingManipulation {
@@ -370,7 +370,7 @@
 	[params setObject:@"5000" forKey:@"limit"];
 	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-								  initWithGraphPath:@"/me/friends?fields=name,picture.width(320)"
+								  initWithGraphPath:@"/me/friends?fields=name,picture.width(720)"
 								  parameters:params
 								  HTTPMethod:@"GET"];
 	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
@@ -554,14 +554,10 @@
 - (void)downloadPictures {
 	BOOL downloadNeeded = NO;
 	
-	for (SLVContact *contact in self.synchronizedContacts) {
-		if ([contact isKindOfClass:[SLVFacebookFriend class]]) {
-			SLVFacebookFriend *friend = (SLVFacebookFriend *)contact;
-			
-			if (!friend.pictureDownloaded) {
-				downloadNeeded = YES;
-				break;
-			}
+	for (SLVFacebookFriend *friend in self.facebookContacts) {
+		if (!friend.pictureDownloaded) {
+			downloadNeeded = YES;
+			break;
 		}
 	}
 	
@@ -572,26 +568,22 @@
 	self.loadingLabel.hidden = NO;
 	int previousPercentage = -1;
 	
-	for (SLVContact *contact in self.synchronizedContacts) {
-		if ([contact isKindOfClass:[SLVFacebookFriend class]]) {
-			SLVFacebookFriend *friend = (SLVFacebookFriend *)contact;
-			
-			if (!friend.pictureDownloaded) {
-				int percentage = (int)((([self.synchronizedContacts indexOfObject:friend] + 1) / (float)([self.synchronizedContacts count])) * 100);
-				if ((percentage % 10 == 0) && (percentage != previousPercentage)) {
-					previousPercentage = percentage;
-					SLVLog(@"Loading contact... %d%%", percentage);
-				}
-				
-				self.loadingLabel.text = [NSString stringWithFormat:@"%@ %d%%", NSLocalizedString(@"label_loading", nil), percentage];
-				[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
-				
-				UIImage *picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:friend.pictureURLString]]];
-				[SLVTools saveImage:picture withName:friend.fullName];
-				friend.picture = picture;
-				
-				friend.pictureDownloaded = YES;
+	for (SLVFacebookFriend *friend in self.facebookContacts) {
+		if (!friend.pictureDownloaded) {
+			int percentage = (int)((([self.facebookContacts indexOfObject:friend] + 1) / (float)([self.facebookContacts count])) * 100);
+			if ((percentage % 10 == 0) && (percentage != previousPercentage)) {
+				previousPercentage = percentage;
+				SLVLog(@"Loading contact... %d%%", percentage);
 			}
+			
+			self.loadingLabel.text = [NSString stringWithFormat:@"%@ %d%%", NSLocalizedString(@"label_loading", nil), percentage];
+			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
+			
+			UIImage *picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:friend.pictureURLString]]];
+			[SLVTools saveImage:picture withName:friend.fullName];
+			friend.picture = picture;
+			
+			friend.pictureDownloaded = YES;
 		}
 	}
 	
@@ -764,7 +756,7 @@
 		
 		if (!self.popupIsDisplayed) {
 			self.popupIsDisplayed = YES;
-		
+			
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
 			
 			errorPopup.delegate = self;

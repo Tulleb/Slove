@@ -403,8 +403,11 @@
 }
 
 - (void)incrementSloveClickDuration {
-	self.sloveClickDuration += TIMER_FREQUENCY;
-	self.sloveClickDecelerationDuration = self.sloveClickDuration;
+	// There is a maximum duration to avoid the animated wheel to turn reversed
+	if (self.sloveClickDuration <= 6.2) {
+		self.sloveClickDuration += TIMER_FREQUENCY;
+		self.sloveClickDecelerationDuration = self.sloveClickDuration;
+	}
 }
 
 - (void)decrementDecelerationDuration {

@@ -63,6 +63,7 @@
 	[super viewWillLayoutSubviews];
 	
 	self.addressBookBottomLayoutConstraint.constant = SLOVE_BUTTON_SIZE;
+	self.facebookBottomLayoutConstraint.constant = MAX(SLOVE_BUTTON_SIZE, self.facebookBottomLayoutConstraint.constant);
 }
 
 - (IBAction)facebookFriendsAction:(id)sender {
@@ -197,6 +198,10 @@
 						SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
 						
 						self.facebookFriendsButton.hidden = NO;
+						
+						self.sloverTableViewBottomConstraint.constant = MAX(self.sloverTableViewBottomConstraint.constant, SLOVE_BUTTON_SIZE) + self.facebookFriendsButton.frame.size.height + 8;
+						
+						[self.view layoutIfNeeded];
 					}
 				}
 			}
@@ -214,7 +219,11 @@
 - (void)checkAddressBookAccessAuthorization {
 	self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
 	
-	self.addressBookButton.hidden = ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized;
+	if (!(ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusAuthorized)) {
+		self.addressBookButton.hidden = NO;
+		self.sloverTableViewBottomConstraint.constant = MAX(self.sloverTableViewBottomConstraint.constant, SLOVE_BUTTON_SIZE) + self.addressBookButton.frame.size.height + 8;
+		self.facebookBottomLayoutConstraint.constant = SLOVE_BUTTON_SIZE + self.addressBookButton.frame.size.height + 8;
+	}
 }
 
 
