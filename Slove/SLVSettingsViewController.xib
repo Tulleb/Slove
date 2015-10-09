@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="7706" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7703"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVSettingsViewController">
@@ -15,23 +15,9 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Juw-zz-W2x">
-                    <rect key="frame" x="250" y="266" width="97" height="30"/>
-                    <constraints>
-                        <constraint firstAttribute="width" constant="97" id="VdB-zF-XBM"/>
-                        <constraint firstAttribute="height" constant="30" id="dZb-Du-aRL"/>
-                    </constraints>
-                    <state key="normal" title="Update profile">
-                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                    </state>
-                    <connections>
-                        <action selector="updateProfileAction:" destination="-1" eventType="touchUpInside" id="DK6-ZX-3ta"/>
-                    </connections>
-                </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="JPG-li-wEq">
-                    <rect key="frame" x="261" y="304" width="78" height="30"/>
+                    <rect key="frame" x="8" y="285" width="584" height="30"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="78" id="WAb-Pl-Qub"/>
                         <constraint firstAttribute="height" constant="30" id="tCh-b7-cha"/>
                     </constraints>
                     <state key="normal" title="button_disconnect">
@@ -41,13 +27,29 @@
                         <action selector="disconnectAction:" destination="-1" eventType="touchUpInside" id="iFy-hc-HuW"/>
                     </connections>
                 </button>
+                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Juw-zz-W2x">
+                    <rect key="frame" x="8" y="247" width="584" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="dZb-Du-aRL"/>
+                    </constraints>
+                    <state key="normal" title="button_upload_profile_picture">
+                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                    </state>
+                    <connections>
+                        <action selector="uploadProfilePictureAction:" destination="-1" eventType="touchUpInside" id="APu-Qz-euL"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstAttribute="centerY" secondItem="Juw-zz-W2x" secondAttribute="centerY" constant="19" id="1zl-Qh-bKT"/>
-                <constraint firstAttribute="centerY" secondItem="JPG-li-wEq" secondAttribute="centerY" constant="-19" id="9s9-2x-Zr4"/>
-                <constraint firstAttribute="centerX" secondItem="Juw-zz-W2x" secondAttribute="centerX" constant="1.5" id="R5W-Oy-FCe"/>
+                <constraint firstAttribute="centerY" secondItem="Juw-zz-W2x" secondAttribute="centerY" constant="38" id="1zl-Qh-bKT"/>
+                <constraint firstAttribute="centerY" secondItem="JPG-li-wEq" secondAttribute="centerY" id="9s9-2x-Zr4"/>
+                <constraint firstItem="JPG-li-wEq" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Aia-S1-jvU"/>
+                <constraint firstAttribute="trailing" secondItem="Juw-zz-W2x" secondAttribute="trailing" constant="8" id="Mxj-rb-TLm"/>
+                <constraint firstAttribute="centerX" secondItem="Juw-zz-W2x" secondAttribute="centerX" id="R5W-Oy-FCe"/>
                 <constraint firstAttribute="centerX" secondItem="JPG-li-wEq" secondAttribute="centerX" id="c7u-LP-keG"/>
+                <constraint firstAttribute="trailing" secondItem="JPG-li-wEq" secondAttribute="trailing" constant="8" id="dUp-NX-UfP"/>
+                <constraint firstItem="Juw-zz-W2x" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="qUZ-0C-hqB"/>
             </constraints>
         </view>
     </objects>

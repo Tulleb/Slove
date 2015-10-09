@@ -12,6 +12,7 @@
 
 @interface SLVNavigationController : UINavigationController <UIGestureRecognizerDelegate>
 
+@property (strong, nonatomic) UIImageView *loaderImageView;
 @property (strong, nonatomic) UIView *bottomNavigationBarView;
 @property (strong, nonatomic) UIView *sloveView;
 @property (strong, nonatomic) UIButton *sloveButton;
@@ -23,7 +24,10 @@
 @property (strong, nonatomic) NSLayoutConstraint *sloveBadgeConstraint;
 @property (nonatomic) BOOL sloveViewIsMoved;
 @property (nonatomic, strong) NSTimer *sloveClickTimer;
+@property (nonatomic, strong) NSTimer *sloveLastClickTimer;
 @property (nonatomic) float sloveClickDuration;
+@property (nonatomic) float sloveClickDecelerationDuration;
+@property (nonatomic) BOOL firstLoad;
 
 - (void)activityAction:(id)sender;
 - (void)sloveAction:(id)sender;

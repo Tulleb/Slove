@@ -25,45 +25,31 @@
 	
 	[super viewDidLoad];
 	
-	self.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	self.headerView.backgroundColor = BLUE;
+	
 	self.subtitleUpperLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleUpperLabel.textColor = WHITE;
+	
 	self.subtitleLowerLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
+	self.subtitleLowerLabel.textColor = WHITE;
+	
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
 	
+	self.titleImageView.image = [UIImage imageNamed:@"Assets/Image/logo_txt_accueil"];
+	self.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeurs_trio_accueil"];
 	self.backgroundImageView.image = [UIImage imageNamed:@"Assets/Image/image_fond"];
 	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/masque_coeur_slovy"];
 	
 	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.registerButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
 	
-	// This block doesn't trigger when there is no Internet connexion
-	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
-		if (!error) {
-			if ([FBSDKAccessToken currentAccessToken]) {
-				[self loggedWithFacebook];
-			} else if ([PFUser currentUser]) {
-				[self loggedWithoutFacebook];
-			}
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
-	
-	if (![SLVTools checkConnection]) {
-		// TODO: exit app
-	}
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(viewWillEnterForeground:) name:UIApplicationWillEnterForegroundNotification object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
-	[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
-	[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
-	[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
-	
-	self.navigationController.navigationBarHidden = YES;
+	[self viewWillEnterForeground:nil];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -83,6 +69,50 @@
 
 - (IBAction)registerAction:(id)sender {
 	[self.navigationController pushViewController:[[SLVRegisterViewController alloc] init] animated:YES];
+}
+
+- (void)viewWillEnterForeground:(NSNotification *)notification {
+	if ([self.navigationController topViewController] == self) {
+		[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook"] forState:UIControlStateNormal];
+		[self.facebookLoginButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_facebook_clic"] forState:UIControlStateHighlighted];
+		[self.facebookLoginButton setImage:nil forState:UIControlStateNormal];
+		[self.facebookLoginButton setImage:nil forState:UIControlStateHighlighted];
+		
+		self.navigationController.navigationBarHidden = YES;
+		
+		if (self.calledFromBackButton) {
+			self.calledFromBackButton = NO;
+		} else {
+			[self performSelector:@selector(fetchCurrentUser) withObject:nil afterDelay:MINIMUM_ANIMATION_DURATION];
+		}
+	}
+}
+
+- (void)fetchCurrentUser {
+	PFUser *currentUser = [PFUser currentUser];
+	
+	if (currentUser) {
+		[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
+			if (!error) {
+				if ([FBSDKAccessToken currentAccessToken]) {
+					[self loggedWithFacebook];
+				} else if ([PFUser currentUser]) {
+					[self loggedWithoutFacebook];
+				}
+			} else {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+				[ParseErrorHandlingController handleParseError:error];
+				
+				ApplicationDelegate.applicationJustStarted = NO;
+				
+				[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+			}
+		}];
+	} else {
+		ApplicationDelegate.applicationJustStarted = NO;
+		
+		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	}
 }
 
 - (void)loggedWithFacebook {
@@ -121,12 +151,18 @@
 															if (!validUsername) {
 																SLVLog(@"%@Username is not valid, going to Username view controller", SLV_WARNING);
 																[self.navigationController pushViewController:[[SLVUsernameViewController alloc] init] animated:YES];
+																
+																[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 															} else if ([user objectForKey:@"phoneNumber"] == nil || [[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
 																[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+																
+																[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 															} else {
 																[ApplicationDelegate userConnected];
 															}
 														}
+														
+														ApplicationDelegate.applicationJustStarted = NO;
 													}];
 	}
 }
@@ -135,9 +171,13 @@
 	PFUser *user = [PFUser currentUser];
 	if ([user objectForKey:@"phoneNumber"] == nil) {
 		[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+		
+		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 	} else {
 		[ApplicationDelegate userConnected];
 	}
+	
+	ApplicationDelegate.applicationJustStarted = NO;
 }
 
 - (void)getInformationsFromFacebook {

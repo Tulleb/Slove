@@ -10,6 +10,7 @@
 #import "SLVPopupViewController.h"
 #import "SLVProfileViewController.h"
 #import "SLVActivityViewController.h"
+#import "SLVConnectionViewController.h"
 
 @interface SLVNavigationController ()
 
@@ -20,12 +21,58 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
 	
+	[self loadLoader];
 	[self loadTopNavigationBar];
 	[self loadBottomNavigationBar];
+	
+	self.firstLoad = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if (self.firstLoad) {
+		if (ApplicationDelegate.applicationJustStarted) {
+			self.loaderImageView.hidden = NO;
+		} else {
+			[self.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+		}
+		
+		self.firstLoad = NO;
+	}
 }
 
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
+	
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeLeading
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeLeading
+														 multiplier:1
+														   constant:0]];
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeTrailing
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeTrailing
+														 multiplier:1
+														   constant:0]];
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeBottom
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeBottom
+														 multiplier:1
+														   constant:0]];
+	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
+														  attribute:NSLayoutAttributeTop
+														  relatedBy:NSLayoutRelationEqual
+															 toItem:self.loaderImageView
+														  attribute:NSLayoutAttributeTop
+														 multiplier:1
+														   constant:0]];
 	
 	[self.view addConstraint:[NSLayoutConstraint constraintWithItem:self.view
 														  attribute:NSLayoutAttributeLeading
@@ -91,14 +138,14 @@
 																	   toItem:nil
 																	attribute:NSLayoutAttributeNotAnAttribute
 																   multiplier:1
-																	 constant:60]];
+																	 constant:67]];
 	[self.activityButton addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
 																	attribute:NSLayoutAttributeWidth
 																	relatedBy:NSLayoutRelationEqual
 																	   toItem:nil
 																	attribute:NSLayoutAttributeNotAnAttribute
 																   multiplier:1
-																	 constant:168]];
+																	 constant:153]];
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityButton
 																	attribute:NSLayoutAttributeLeading
 																	relatedBy:NSLayoutRelationEqual
@@ -181,7 +228,7 @@
 																  toItem:self.sloveCounterBadge
 															   attribute:NSLayoutAttributeBottom
 															  multiplier:1
-																constant:SLOVE_BUTTON_SIZE * 0.6]];
+																constant:SLOVE_BUTTON_SIZE * 0.65]];
 	[self.sloveView addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveCounterBadge
 															   attribute:NSLayoutAttributeTop
 															   relatedBy:NSLayoutRelationEqual
@@ -196,14 +243,14 @@
 																	  toItem:nil
 																   attribute:NSLayoutAttributeNotAnAttribute
 																  multiplier:1
-																	constant:60]];
+																	constant:67]];
 	[self.settingsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsButton
 																   attribute:NSLayoutAttributeWidth
 																   relatedBy:NSLayoutRelationEqual
 																	  toItem:nil
 																   attribute:NSLayoutAttributeNotAnAttribute
 																  multiplier:1
-																	constant:168]];
+																	constant:153]];
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																   attribute:NSLayoutAttributeTrailing
 																   relatedBy:NSLayoutRelationEqual
@@ -227,6 +274,7 @@
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
 	if ([viewController isKindOfClass:[SLVProfileViewController class]]) {
+		[self animateSloveButton:NO];
 		[self moveSloveViewTop];
 	}
 	
@@ -235,7 +283,13 @@
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
 	if (self.sloveViewIsMoved) {
+		[self animateSloveButton:YES];
 		[self moveSloveViewBottom];
+	}
+	
+	if ([self.viewControllers count] == 2 && [self.viewControllers.firstObject isKindOfClass:[SLVConnectionViewController class]]) {
+		SLVConnectionViewController *rootViewController = self.viewControllers.firstObject;
+		rootViewController.calledFromBackButton = YES;
 	}
 	
 	return [super popViewControllerAnimated:animated];
@@ -243,7 +297,13 @@
 
 - (NSArray *)popToRootViewControllerAnimated:(BOOL)animated {
 	if (self.sloveViewIsMoved) {
+		[self animateSloveButton:YES];
 		[self moveSloveViewBottom];
+	}
+	
+	if ([self.viewControllers.firstObject isKindOfClass:[SLVConnectionViewController class]]) {
+		SLVConnectionViewController *rootViewController = self.viewControllers.firstObject;
+		rootViewController.calledFromBackButton = YES;
 	}
 	
 	return [super popToRootViewControllerAnimated:animated];
@@ -264,7 +324,7 @@
 		SLVActivityViewController *activityViewController = [[SLVActivityViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
-		[self pushViewController:activityViewController animated:YES];
+		[self pushViewController:activityViewController animated:NO];
 	}
 }
 
@@ -276,6 +336,7 @@
 
 - (void)sloveLongPress:(UILongPressGestureRecognizer *)gesture {
 	if (gesture.state == UIGestureRecognizerStateBegan) {;
+		[self.sloveLastClickTimer invalidate];
 		self.sloveClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(incrementSloveClickDuration) userInfo:nil repeats:YES];
 		
 		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
@@ -285,6 +346,7 @@
 		}
 	} else if (gesture.state == UIGestureRecognizerStateEnded) {
 		[self.sloveClickTimer invalidate];
+		self.sloveLastClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(decrementDecelerationDuration) userInfo:nil repeats:YES];
 		
 		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
 			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
@@ -310,7 +372,7 @@
 		SLVSettingsViewController *parametersViewController = [[SLVSettingsViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
-		[self pushViewController:parametersViewController animated:YES];
+		[self pushViewController:parametersViewController animated:NO];
 	}
 }
 
@@ -318,13 +380,35 @@
 	[self homeAction:nil];
 }
 
+- (void)loadLoader {
+	self.loaderImageView = [[UIImageView alloc] init];
+	
+	self.loaderImageView.contentMode = UIViewContentModeScaleAspectFill;
+	
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/Loading/anim_loading";
+	
+	for (int i = 1; i <= 14; i++) {
+		[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+	}
+	
+	self.loaderImageView.animationImages = animatedImages;
+	self.loaderImageView.animationDuration = 1;
+	self.loaderImageView.animationRepeatCount = 0;
+	self.loaderImageView.hidden = YES;
+	[self.loaderImageView startAnimating];
+	
+	[self.view addSubview:self.loaderImageView];
+	
+	self.loaderImageView.translatesAutoresizingMaskIntoConstraints = NO;
+}
+
 - (void)loadTopNavigationBar {
 //	NSShadow* shadow = [NSShadow new];
 //	shadow.shadowOffset = CGSizeMake(0, 1);
 //	shadow.shadowColor = CLEAR;
-	[[UINavigationBar appearance] setTitleTextAttributes: @{NSForegroundColorAttributeName:DARK_GRAY,
-															NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE]}];
-	[[UINavigationBar appearance] setBarTintColor:SUB_COLOR];
+	[[UINavigationBar appearance] setTitleTextAttributes: @{NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE], NSForegroundColorAttributeName:DEFAULT_TEXT_COLOR}];
+	[[UINavigationBar appearance] setBarTintColor:WHITE];
 	if (!IS_IOS7) {
 		[[UINavigationBar appearance] setTranslucent:NO];
 		[[UINavigationBar appearance] setBackgroundImage:[UIImage new]
@@ -336,7 +420,19 @@
 }
 
 - (void)incrementSloveClickDuration {
-	self.sloveClickDuration += TIMER_FREQUENCY;
+	// There is a maximum duration to avoid the animated wheel to turn reversed
+	if (self.sloveClickDuration <= 6.2) {
+		self.sloveClickDuration += TIMER_FREQUENCY;
+		self.sloveClickDecelerationDuration = self.sloveClickDuration;
+	}
+}
+
+- (void)decrementDecelerationDuration {
+	self.sloveClickDecelerationDuration -= TIMER_FREQUENCY;
+	
+	if (self.sloveClickDecelerationDuration <= 0) {
+		[self.sloveLastClickTimer invalidate];
+	}
 }
 
 - (void)loadBottomNavigationBar {
@@ -346,26 +442,24 @@
 	self.sloveButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
-	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:WHITE withInsetColor:RED withFrameColor:WHITE withFrame:YES withShadow:YES withShining:YES withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
+	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:RED withInsetColor:WHITE withFrameColor:RED withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
 	[self.homeButton setImage:[UIImage imageNamed:@"Assets/Button/logo_txt"] forState:UIControlStateNormal];
-	[self.homeButton setTitleColor:DARK_GRAY forState:UIControlStateNormal];
-	self.homeButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentCenter;
 	[self.homeButton addTarget:self action:@selector(homeAction:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.activityButton setTitle:@"button_activity" forState:UIControlStateNormal];
 	[self.activityButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.activityButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.activityButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.activityButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.activityButton setTitleColor:BLUE forState:UIControlStateSelected];
 	[self.activityButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
 //	self.activityButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
-	[self.activityButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 15, 0, 25)];
+	[self.activityButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 0, 0, 25)];
 	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity"] forState:UIControlStateNormal];
 	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateHighlighted];
 	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateSelected];
-	[self.activityButton setImageEdgeInsets:UIEdgeInsetsMake(20, 10, 0, 0)];
+	[self.activityButton setImageEdgeInsets:UIEdgeInsetsMake(5, 25, 0, 0)];
 	[self.activityButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity"] forState:UIControlStateNormal];
 	[self.activityButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateHighlighted];
 	[self.activityButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_activity_clic"] forState:UIControlStateSelected];
@@ -375,22 +469,26 @@
 	self.sloveView.backgroundColor = CLEAR;
 	
 	self.sloveButton.imageView.contentMode = UIViewContentModeScaleToFill;
-	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/bt_slove_slovy_big"] forState:UIControlStateNormal];
+	[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_menu"] forState:UIControlStateNormal];
 	[self.sloveButton addTarget:self action:@selector(sloveAction:) forControlEvents:UIControlEventTouchUpInside];
 	UILongPressGestureRecognizer *longPress = [[UILongPressGestureRecognizer alloc] initWithTarget:self action:@selector(sloveLongPress:)];
 	[self.sloveButton addGestureRecognizer:longPress];
+	self.sloveButton.imageView.animationDuration = LONG_ANIMATION_DURATION;
+	self.sloveButton.imageView.animationRepeatCount = 1;
 	
-	[self.settingsButton setTitle:@"button_settings" forState:UIControlStateNormal];
+	[self loadSloveButtonAnimation:NO];
+	
+	[self.settingsButton setTitle:@"button_profile" forState:UIControlStateNormal];
 	[self.settingsButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.settingsButton setTitleColor:MAIN_COLOR forState:UIControlStateHighlighted];
-	[self.settingsButton setTitleColor:MAIN_COLOR forState:UIControlStateSelected];
+	[self.settingsButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.settingsButton setTitleColor:BLUE forState:UIControlStateSelected];
 	[self.settingsButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
 //	self.settingsButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
-	[self.settingsButton setTitleEdgeInsets:UIEdgeInsetsMake(20, 90, 0, 0)];
+	[self.settingsButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 65, 0, 0)];
 	[self.settingsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile"] forState:UIControlStateNormal];
 	[self.settingsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateHighlighted];
 	[self.settingsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateSelected];
-	[self.settingsButton setImageEdgeInsets:UIEdgeInsetsMake(20, 85, 0, 15)];
+	[self.settingsButton setImageEdgeInsets:UIEdgeInsetsMake(8, 112, 0, 0)];
 	[self.settingsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile"] forState:UIControlStateNormal];
 	[self.settingsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
 	[self.settingsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];
@@ -407,6 +505,9 @@
 	[self.sloveView addSubview:self.sloveCounterBadge];
 	
 	[SLVViewController setStyle:self.view];
+	
+	[self.activityButton.titleLabel setFont:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL]];
+	[self.settingsButton.titleLabel setFont:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL]];
 	
 	self.bottomNavigationBarView.translatesAutoresizingMaskIntoConstraints = NO;
 	self.homeButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -428,7 +529,45 @@
 															 relatedBy:NSLayoutRelationEqual
 																toItem:self.sloveView
 															 attribute:NSLayoutAttributeLeading
-															multiplier:1															  constant:SLOVE_BUTTON_SIZE * 0.7];
+															multiplier:1
+															  constant:SLOVE_BUTTON_SIZE];
+}
+
+- (void)loadSloveButtonAnimation:(BOOL)reversed {
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/Morphin_Slovy/morphing_Slove_fixe00";
+	
+	if (reversed) {
+		for (int i = 25; i >= 1; i--) {
+			if (i < 10) {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:25 - i];
+			} else {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:25 - i];
+			}
+		}
+	} else {
+		for (int i = 1; i <= 25; i++) {
+			if (i < 10) {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:i - 1];
+			} else {
+				[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+			}
+		}
+	}
+	
+	self.sloveButton.imageView.animationImages = animatedImages;
+}
+
+- (void)animateSloveButton:(BOOL)reversed {
+	[self loadSloveButtonAnimation:reversed];
+	
+	if (reversed) {
+		[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_menu"] forState:UIControlStateNormal];
+	} else {
+		[self.sloveButton setImage:[UIImage imageNamed:@"Assets/Button/logo_slove_spirale"] forState:UIControlStateNormal];
+	}
+	
+	[self.sloveButton.imageView startAnimating];
 }
 
 - (void)moveSloveViewTop {
@@ -456,7 +595,7 @@
 																 toItem:self.sloveView
 															  attribute:NSLayoutAttributeBottom
 															 multiplier:1
-															   constant:15];
+															   constant:SLOVE_VIEW_BOTTOM_CONSTANT];
 	
 	[UIView animateWithDuration:ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
 		[self.view layoutIfNeeded];
@@ -492,7 +631,7 @@
 																		toItem:self.sloveView
 																	 attribute:NSLayoutAttributeLeading
 																	multiplier:1
-																	  constant:SLOVE_BUTTON_SIZE * (0.7 - (0.1 * [sloveCountString length]))];
+																	  constant:SLOVE_BUTTON_SIZE * (0.75 - (0.1 * [sloveCountString length]))];
 			
 			
 			[self.sloveView setNeedsUpdateConstraints];

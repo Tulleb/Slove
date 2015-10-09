@@ -32,6 +32,8 @@
 	[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox"] forState:UIControlStateNormal];
 	[self.conditionsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/checkbox_clic"] forState:UIControlStateHighlighted];
 	
+	self.errorLabel.textColor = RED;
+	
 	[self loadBackButton];
 	
 	[self observeKeyboard];
@@ -67,7 +69,7 @@
 	
 	self.usernameField.text = [SLVTools trimUsername:self.usernameField.text];
 	
-	NSString *answer = [SLVTools validateUsername:self.usernameField.text];
+	NSString *answer = [SLVTools validateEmail:self.emailField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = NSLocalizedString(answer, nil);
@@ -75,7 +77,7 @@
 		return;
 	}
 	
-	answer = [SLVTools validateEmail:self.emailField.text];
+	answer = [SLVTools validateUsername:self.usernameField.text];
 	if (answer) {
 		self.errorLabel.hidden = NO;
 		self.errorLabel.text = NSLocalizedString(answer, nil);
@@ -108,29 +110,37 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-	NSDictionary *info = [notification userInfo];
-	NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-	CGRect keyboardFrame = [kbFrame CGRectValue];
- 
-	CGFloat height = keyboardFrame.size.height;
-
-	self.keyboardLayoutConstraint.constant += height;
-	
-	[UIView animateWithDuration:animationDuration animations:^{
-		[self.view layoutIfNeeded];
-	}];
+	if (!self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		CGRect keyboardFrame = [kbFrame CGRectValue];
+		
+		CGFloat height = keyboardFrame.size.height;
+		
+		self.keyboardLayoutConstraint.constant += height;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = YES;
+	}
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-	NSDictionary *info = [notification userInfo];
-	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
- 
-	self.keyboardLayoutConstraint.constant = 8;
-	
-	[UIView animateWithDuration:animationDuration animations:^{
-		[self.view layoutIfNeeded];
-	}];
+	if (self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		
+		self.keyboardLayoutConstraint.constant = 8;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = NO;
+	}
 }
 
 - (void)initTapToDismiss {
@@ -142,7 +152,7 @@
 }
 
 - (void)hideKeyboard {
-	for (UITextField *textField in self.view.subviews) {
+	for (UITextField *textField in self.bodyView.subviews) {
 		[textField resignFirstResponder];
 	}
 }

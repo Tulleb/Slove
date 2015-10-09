@@ -31,9 +31,12 @@
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/code_tel_banniere"];
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
+	self.bannerLabel.textColor = WHITE;
 	
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	self.errorLabel.textColor = RED;
 	
 	[self observeKeyboard];
 	[self initTapToDismiss];
@@ -83,29 +86,37 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-	NSDictionary *info = [notification userInfo];
-	NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-	CGRect keyboardFrame = [kbFrame CGRectValue];
- 
-	CGFloat height = keyboardFrame.size.height;
-	
-	self.keyboardLayoutConstraint.constant += height;
-	
-	[UIView animateWithDuration:animationDuration animations:^{
-		[self.view layoutIfNeeded];
-	}];
+	if (!self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		CGRect keyboardFrame = [kbFrame CGRectValue];
+		
+		CGFloat height = keyboardFrame.size.height;
+		
+		self.keyboardLayoutConstraint.constant += height;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = YES;
+	}
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-	NSDictionary *info = [notification userInfo];
-	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
- 
-	self.keyboardLayoutConstraint.constant = 8;
-	
-	[UIView animateWithDuration:animationDuration animations:^{
-		[self.view layoutIfNeeded];
-	}];
+	if (self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		
+		self.keyboardLayoutConstraint.constant = 8;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = NO;
+	}
 }
 
 - (void)initTapToDismiss {

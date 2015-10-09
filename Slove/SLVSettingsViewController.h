@@ -8,9 +8,9 @@
 
 #import "SLVViewController.h"
 
-@interface SLVSettingsViewController : SLVViewController
+@interface SLVSettingsViewController : SLVViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-- (IBAction)updateProfileAction:(id)sender;
+- (IBAction)uploadProfilePictureAction:(id)sender;
 - (IBAction)disconnectAction:(id)sender;
 
 @end

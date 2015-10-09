@@ -15,6 +15,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 @property (strong, nonatomic) IBOutlet UIButton *confirmButton;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
+@property (nonatomic) BOOL keyboardIsVisible;
 
 - (IBAction)confirmAction:(id)sender;
 

@@ -14,6 +14,7 @@
 #import <ParseFacebookUtilsV4/PFFacebookUtils.h>
 #import "SLVSlovedPopupViewController.h"
 #import <Google/Analytics.h>
+#import "Reachability.h"
 
 @interface AppDelegate ()
 
@@ -23,6 +24,9 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+	self.queuedPopups = [[NSMutableArray alloc] init];
+	self.applicationJustStarted = YES;
+	
 	// [Optional] Power your app with Local Datastore. For more info, go to
 	// https://parse.com/docs/ios_guide#localdatastore/iOS
 	[Parse enableLocalDatastore];
@@ -48,6 +52,7 @@
 	gai.trackUncaughtExceptions = YES;  // report uncaught exceptions
 	gai.logger.logLevel = kGAILogLevelVerbose;  // remove before app release
 	
+	[self popQueuedPopup];
 	[self loadUserDefaults];
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
@@ -72,6 +77,13 @@
 	[self.window addSubview:self.currentNavigationController.view];
 	[self.window makeKeyAndVisible];
 	
+	NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+	
+	//Accept push notification when app is not open
+	if (remoteNotif) {
+		[self application:application handleRemoteNotification:remoteNotif];
+	}
+	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
 
@@ -81,15 +93,20 @@
 }
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
-	// Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
-	// If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+	self.alreadyCheckedCompatibleVersion = NO;
+	self.applicationJustStarted = YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	self.currentNavigationController.loaderImageView.hidden = NO;
+	
+	[self performSelector:@selector(hideLoadingScreen) withObject:nil afterDelay:LONG_ANIMATION_DURATION];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	application.applicationIconBadgeNumber = 0;
+	
+	[self checkReachability];
 	[FBSDKAppEvents activateApp];
 	[self loadParseConfig];
 }
@@ -116,6 +133,14 @@
 }
 
 - (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo {
+	[self application:application handleRemoteNotification:userInfo];
+}
+
+
+#pragma mark - Custom methods
+
+- (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
+	self.queuedPopups = nil;
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
 		NSError *error;
@@ -128,9 +153,8 @@
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		} else {
 			SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover];
-			[self.currentNavigationController presentViewController:presentedViewController animated:YES completion:nil];
 			
-			[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+			[self.queuedPopups addObject:presentedViewController];
 		}
 	} else {
 		[PFPush handlePush:userInfo];
@@ -139,14 +163,45 @@
 	SLVLog(@"Received a push notification");
 }
 
+- (void)checkReachability {
+	Reachability *reach = [Reachability reachabilityForInternetConnection];
+	
+	NetworkStatus netStatus = [reach currentReachabilityStatus];
+	if (netStatus == NotReachable) {
+		SLVLog(@"%@No internet connection!", SLV_ERROR);
+		SLVInteractionPopupViewController *reachabilityPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_reachability", nil) buttonsTitle:nil andDismissButton:YES];
+		[self.currentNavigationController presentViewController:reachabilityPopup animated:YES completion:nil];
+	}
+}
 
-#pragma mark - Custom methods
+- (void)popQueuedPopup {
+	if ([self.queuedPopups count] > 0) {
+		if (!self.currentNavigationController.presentedViewController && self.userIsConnected && ![[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+			SLVLog(@"Popping queued popup...");
+			
+			SLVPopupViewController *pushedPopup = [self.queuedPopups firstObject];
+			for (SLVPopupViewController *popup in self.queuedPopups) {
+				if (pushedPopup.priority < popup.priority) {
+					pushedPopup = popup;
+				}
+			}
+			
+			[self.currentNavigationController presentViewController:pushedPopup animated:YES completion:^{
+				[self.queuedPopups removeObject:pushedPopup];
+			}];
+		} else {
+			SLVLog(@"Couldn't pop because view is busy");
+		}
+	} else {
+		SLVLog(@"No popup to pop");
+	}
+	
+	[self performSelector:@selector(popQueuedPopup) withObject:nil afterDelay:5];
+}
 
 - (void)loadUserDefaults {
-	NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
-	
-	if (![userDefaults objectForKey:KEY_FIRSTTIME_TUTORIAL]) {
-		[userDefaults setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRSTTIME_TUTORIAL];
+	if (![USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL]) {
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_FIRST_TIME_TUTORIAL];
 	}
 }
 
@@ -162,6 +217,8 @@
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
+		
+		[self performSelector:@selector(hideLoadingScreen) withObject:nil afterDelay:LONG_ANIMATION_DURATION];
 	}
 
 	self.userIsConnected = YES;
@@ -170,14 +227,35 @@
 - (void)userDisconnected {
 	SLVLog(@"User disconnected from Slove");
 	
-	if (self.userIsConnected) {
-		self.currentNavigationController = nil;
-		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
-		[self.currentNavigationController hideBottomNavigationBar];
-		self.window.rootViewController = self.currentNavigationController;
+	if ([PFUser currentUser]) {
+		[PFUser logOutInBackgroundWithBlock:^(NSError *error) {
+			if (error) {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+			}
+			
+			[self disconnectingUserTransition];
+		}];
+	} else {
+		[self disconnectingUserTransition];
 	}
 	
 	self.userIsConnected = NO;
+}
+
+- (void)hideLoadingScreen {
+	self.applicationJustStarted = NO;
+	
+	[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+}
+
+- (void)disconnectingUserTransition {
+	if (self.userIsConnected) {
+		SLVConnectionViewController *connectionViewController = [[SLVConnectionViewController alloc] init];
+		
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:connectionViewController];
+		[self.currentNavigationController hideBottomNavigationBar];
+		self.window.rootViewController = self.currentNavigationController;
+	}
 }
 
 - (void)loadCountryCodeDatas {
@@ -472,6 +550,10 @@
 }
 
 - (void)loadParseConfig {
+	if (!self.parseConfig) {
+		self.parseConfig = [[NSMutableDictionary alloc] init];
+	}
+	
 	SLVLog(@"Getting the latest config...");
 	
 	[PFConfig getConfigInBackgroundWithBlock:^(PFConfig *config, NSError *error) {
@@ -487,25 +569,104 @@
 			[ParseErrorHandlingController handleParseError:error];
 		}
 		
-		NSString *firstSloveUsername = config[PARSE_FIRSTSLOVE_USERNAME];
+		NSString *firstSloveUsername = config[PARSE_FIRST_SLOVE_USERNAME];
 		if (!firstSloveUsername) {
 			SLVLog(@"%@Falling back to default first slove username", SLV_ERROR);
 			firstSloveUsername = NSLocalizedString(@"label_slove_team", nil);
 		}
 		
-		UIImage *firstSlovePicture;
-		PFFile *firstSlovePictureFile = config[PARSE_FIRSTSLOVE_PICTURE];
+		[self.parseConfig setObject:firstSloveUsername forKey:PARSE_FIRST_SLOVE_USERNAME];
+		
+		NSString *compatibleVersion = config[PARSE_COMPATIBLE_VERSION];
+		if (!compatibleVersion) {
+			SLVLog(@"%@Couldn't find compatible version", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:compatibleVersion forKey:PARSE_COMPATIBLE_VERSION];
+		}
+		
+		NSString *downloadAppUrl = config[PARSE_DOWNLOAD_APP_URL];
+		if (!downloadAppUrl) {
+			SLVLog(@"%@Couldn't find download app url", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:downloadAppUrl forKey:PARSE_DOWNLOAD_APP_URL];
+		}
+		
+		NSString *currentPushedMessage = config[PARSE_PUSHED_MESSAGE];
+		if (!currentPushedMessage) {
+			SLVLog(@"%@Couldn't find pushed message", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:currentPushedMessage forKey:PARSE_PUSHED_MESSAGE];
+			
+			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];;
+			
+			if (!lastPushedMessage || ![lastPushedMessage isEqualToString:currentPushedMessage]) {
+				SLVInteractionPopupViewController *pushedMessagePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:@"Slove Team" body:currentPushedMessage buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+				
+				[self.queuedPopups addObject:pushedMessagePopup];
+				
+				[USER_DEFAULTS setObject:currentPushedMessage forKey:KEY_LAST_PUSHED_MESSAGE];
+			}
+		}
+			
+		__block UIImage *firstSlovePicture;
+		PFFile *firstSlovePictureFile = config[PARSE_FIRST_SLOVE_PICTURE];
 		if (!firstSlovePictureFile) {
 			SLVLog(@"%@Falling back to default first slove picture", SLV_ERROR);
 			firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
-		} else {
+			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
+		} else if (firstSlovePictureFile.isDataAvailable) {
 			firstSlovePicture = [UIImage imageWithData:[firstSlovePictureFile getData]];
+			[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
+		} else {
+			[firstSlovePictureFile getDataInBackgroundWithBlock:^(NSData *data, NSError *error) {
+				if (!error) {
+					firstSlovePicture = [UIImage imageWithData:data];
+					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
+				} else {
+					SLVLog(@"%@Error when downloading %@, falling back to default first slove picture", SLV_ERROR, PARSE_FIRST_SLOVE_PICTURE);
+					firstSlovePicture = [UIImage imageNamed:@"Assets/Image/photo_team_slove"];
+					[self.parseConfig setObject:firstSlovePicture forKey:PARSE_FIRST_SLOVE_PICTURE];
+				}
+			}];
 		}
 		
-		NSMutableDictionary *parseConfigBuffer = [[NSMutableDictionary alloc] initWithObjectsAndKeys:firstSloveUsername, PARSE_FIRSTSLOVE_USERNAME, firstSlovePicture, PARSE_FIRSTSLOVE_PICTURE, nil];
-		
-		self.parseConfig = [NSDictionary dictionaryWithDictionary:parseConfigBuffer];
+		if (!self.alreadyCheckedCompatibleVersion) {
+			[self checkCompatibleVersion];
+		}
 	}];
+}
+
+- (void)checkCompatibleVersion {
+	NSString *compatibleVersion = [self.parseConfig objectForKey:PARSE_COMPATIBLE_VERSION];
+	if (compatibleVersion) {
+		NSPredicate *compatibleVersionRegex = [NSPredicate predicateWithFormat:@"SELF MATCHES %@", compatibleVersion];
+		NSString *fullVersion = [NSString stringWithFormat:@"%@.%@", [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"], [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"]];
+		
+		if (![compatibleVersionRegex evaluateWithObject:fullVersion]) {
+			SLVLog(@"%@Incompatible versions : expected version is %@ whereas current version is %@", SLV_WARNING, compatibleVersion, fullVersion);
+			
+			self.compatibleVersionPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_incompatible_version_error", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+			
+			self.compatibleVersionPopup.delegate = self;
+			self.compatibleVersionPopup.priority = kPriorityHigh;
+			
+			[self.queuedPopups addObject:self.compatibleVersionPopup];
+		}
+	}
+	
+	self.alreadyCheckedCompatibleVersion = YES;
+}
+
+
+#pragma mark - SLVInteractionPopupDelegate
+
+- (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.compatibleVersionPopup) {
+		NSString *downloadUrlString = [self.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL];
+		if (downloadUrlString) {
+			[[UIApplication sharedApplication] openURL:[NSURL URLWithString:downloadUrlString]];
+		}
+	}
 }
 
 @end

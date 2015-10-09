@@ -45,7 +45,7 @@
 	// To call viewWillAppear after return from Slove Sent popup
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(didDismissSloveSentPopup)
-												 name:NOTIFICATION_SLOVESENTPOPUP_DISMISSED
+												 name:NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED
 											   object:nil];
 }
 
@@ -67,7 +67,7 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self disableElementsForTutorial];
 		self.bubbleView.hidden = NO;
 		
@@ -118,11 +118,11 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	if ([[[NSUserDefaults standardUserDefaults] objectForKey:KEY_FIRSTTIME_TUTORIAL] boolValue]) {
-		[SLVTools playSound:SLOVER_SOUND];
-		
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {		
 		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-		[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
+		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
+			[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
+		}];
 	} else if (!self.contact.username) {
 		if(![MFMessageComposeViewController canSendText]) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
@@ -137,7 +137,7 @@
 			[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
 		}
 		
-		NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), NSLocalizedString(@"url_smsInvite", nil)];
+		NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), [ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
 		
 		MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
 		messageController.messageComposeDelegate = self;
@@ -157,7 +157,7 @@
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 										} else {
-											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.description, nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
 											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -174,7 +174,7 @@
 }
 
 - (void)rotateSpirale {
-	self.spiraleAngle += 18 * TIMER_FREQUENCY * (1 + ApplicationDelegate.currentNavigationController.sloveClickDuration * 15);
+	self.spiraleAngle += 18 * TIMER_FREQUENCY * (1 + MAX(ApplicationDelegate.currentNavigationController.sloveClickDuration, ApplicationDelegate.currentNavigationController.sloveClickDecelerationDuration) * 15);
 	[UIView animateWithDuration:TIMER_FREQUENCY
 						  delay:0
 						options:UIViewAnimationOptionCurveLinear
@@ -189,57 +189,18 @@
 - (void)loadCircle {
 	self.circleImageView.image = [UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi48"];
 	
-	self.circleImageView.animationImages = [NSArray arrayWithObjects:
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi00"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi01"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi02"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi03"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi04"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi05"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi06"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi07"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi08"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi09"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi10"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi11"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi12"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi13"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi14"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi15"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi16"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi17"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi18"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi19"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi20"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi21"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi22"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi23"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi24"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi25"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi26"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi27"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi28"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi29"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi30"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi31"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi32"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi33"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi34"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi35"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi36"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi37"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi38"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi39"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi40"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi41"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi42"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi43"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi44"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi45"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi46"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi47"],
-											[UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi48"], nil];
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/Envoi_Slove/animenvoi";
 	
+	for (int i = 1; i <= 48; i++) {
+		if (i < 10) {
+			[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:i - 1];
+		} else {
+			[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+		}
+	}
+	
+	self.circleImageView.animationImages = animatedImages;
 	self.circleImageView.animationDuration = 2;
 	self.circleImageView.animationRepeatCount = 1;
 }

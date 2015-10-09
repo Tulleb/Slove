@@ -9,37 +9,42 @@
 #import "SLVViewController.h"
 #import <AddressBookUI/AddressBookUI.h>
 #import "SLVInteractionPopupViewController.h"
+#import <MessageUI/MessageUI.h>
 
-typedef enum  {
-	kFavoriteFilter,
-	kAddressBookFilter,
-	kFacebookFilter
-} FilterSegment;
+@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate, MFMessageComposeViewControllerDelegate, UITextFieldDelegate>
 
-@interface SLVHomeViewController : SLVViewController <UITableViewDataSource, UITableViewDelegate, SLVInteractionPopupDelegate>
-
-@property (strong, nonatomic) IBOutlet UIImageView *filterBackgroundImageView;
-@property (strong, nonatomic) IBOutlet UIButton *favoriteButton;
-@property (strong, nonatomic) IBOutlet UIButton *contactButton;
-@property (strong, nonatomic) IBOutlet UIButton *facebookButton;
+@property (strong, nonatomic) IBOutlet UIView *searchView;
+@property (strong, nonatomic) IBOutlet UITextField *searchTextField;
+@property (strong, nonatomic) IBOutlet UIImageView *searchImageView;
 @property (strong, nonatomic) IBOutlet UILabel *loadingLabel;
 @property (strong, nonatomic) IBOutlet UITableView *contactTableView;
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
-@property (strong, nonatomic) NSArray *favoriteContacts;
-@property (strong, nonatomic) NSArray *unsynchronizedAddressBookContacts;
-@property (strong, nonatomic) NSArray *synchronizedAddressBookContacts;
-@property (strong, nonatomic) NSArray *facebookFriends;
-@property (strong, nonatomic) NSArray *filterButtons;
-@property (strong, nonatomic) SLVInteractionPopupViewController *errorPopup;
+@property (strong, nonatomic) IBOutlet UIImageView *pullImageView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *pullTopLayoutConstraint;
+@property (strong, nonatomic) UIRefreshControl *refreshControl;
+@property (strong, nonatomic) NSArray *unsynchronizedContacts;
+@property (strong, nonatomic) NSArray *synchronizedContacts;
+@property (strong, nonatomic) NSArray *fullUnsynchronizedContacts;
+@property (strong, nonatomic) NSArray *fullSynchronizedContacts;
+@property (strong, nonatomic) NSArray *addressBookContacts;
+@property (strong, nonatomic) NSArray *facebookContacts;
+@property (strong, nonatomic) NSArray *followedContacts;
+@property (nonatomic) BOOL refreshByPulling;
+@property (nonatomic) BOOL isAlreadyLoading;
+@property (nonatomic) BOOL addressBookContactsReady;
+@property (nonatomic) BOOL facebookContactsReady;
+@property (nonatomic) BOOL followedContactsReady;
 @property (strong, nonatomic) SLVInteractionPopupViewController *addressBookPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *facebookPopup;
 @property (nonatomic) BOOL readyToDownload;
 @property (nonatomic) BOOL pictureDownloaded;
 @property (nonatomic) ABAddressBookRef addressBookRef;
-@property (nonatomic) FilterSegment currentFilter;
 @property (nonatomic) int percentage;
-@property (nonatomic) int selectedFilterIndex;
+@property (nonatomic) BOOL popupIsDisplayed;
 
-- (IBAction)filterChanged:(id)sender;
+- (void)showSettingManipulation;
+- (void)askAddressBookAccess;
+- (void)askFacebookFriends;
+- (SLVContact *)contactForUsername:(NSString *)username;
 
 @end

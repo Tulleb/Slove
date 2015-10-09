@@ -19,6 +19,8 @@
 	if (self) {
 		if (!IS_IOS7) {
 			self.modalPresentationStyle = UIModalPresentationOverCurrentContext;
+			self.isRemanent = YES;
+			self.priority = kPriorityMedium;
 		}
 	}
 	

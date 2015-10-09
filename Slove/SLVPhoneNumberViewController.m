@@ -24,6 +24,7 @@
 	
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/choix_pays_banniere"];
 	self.bannerLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT_ITALIC size:DEFAULT_FONT_SIZE];
+	self.bannerLabel.textColor = WHITE;
 	
 	self.pickerBackgroundImageView.image = [UIImage imageNamed:@"Assets/Image/degrade_choix_pays"];
 	self.pickerTopImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
@@ -33,6 +34,8 @@
 	
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
 	[self.confirmButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	self.errorLabel.textColor = RED;
 	
 	[self observeKeyboard];
 	[self initTapToDismiss];
@@ -63,15 +66,16 @@
 	if (self.formatedPhoneNumber && [self.formatedPhoneNumber length] >= 6) {
 		if ([[self.formatedPhoneNumber substringToIndex:5] isEqualToString:@"error"]) {
 			self.errorLabel.hidden = NO;
-			self.errorLabel.text = NSLocalizedString(self.formatedPhoneNumber, nil);
+			self.errorLabel.text = NSLocalizedString(@"error_phone_number_format", nil);
 			
 			SLVLog(@"%@Phone number '%@' couldn't be formated with country code '%@'", SLV_ERROR, self.phoneNumberField.text, [selectedCountryCodeData description]);
-			
-			self.formatedPhoneNumber = nil;
 			
 			return;
 		}
 	} else {
+		self.errorLabel.hidden = NO;
+		self.errorLabel.text = NSLocalizedString(@"error_phone_number_format", nil);
+		
 		SLVLog(@"%@Formated phone number reception for '%@' failed without displaying an error!", SLV_ERROR, self.phoneNumberField.text);
 		return;
 	}
@@ -106,29 +110,37 @@
 }
 
 - (void)keyboardWillShow:(NSNotification *)notification {
-	NSDictionary *info = [notification userInfo];
-	NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
-	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-	CGRect keyboardFrame = [kbFrame CGRectValue];
- 
-	CGFloat height = keyboardFrame.size.height;
-	
-	self.keyboardLayoutConstraint.constant += height;
-	
-	[UIView animateWithDuration:animationDuration animations:^{
-		[self.view layoutIfNeeded];
-	}];
+	if (!self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		CGRect keyboardFrame = [kbFrame CGRectValue];
+		
+		CGFloat height = keyboardFrame.size.height;
+		
+		self.keyboardLayoutConstraint.constant += height;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = YES;
+	}
 }
 
 - (void)keyboardWillHide:(NSNotification *)notification {
-	NSDictionary *info = [notification userInfo];
-	NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
- 
-	self.keyboardLayoutConstraint.constant = 8;
-	
-	[UIView animateWithDuration:animationDuration animations:^{
-		[self.view layoutIfNeeded];
-	}];
+	if (self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		
+		self.keyboardLayoutConstraint.constant = 8;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = NO;
+	}
 }
 
 - (void)initTapToDismiss {

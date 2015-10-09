@@ -1,122 +1,95 @@
-/*
- Localizable.strings
- Slove
- 
- Created by Guillaume Bellut on 30/07/2015.
- Copyright (c) 2015 Tulleb's Corp. All rights reserved.
- */
-
-// Misc
-"title_slove" = "Slove";
-"placeholder_username" = "Nom d'utilisateur";
-"placeholder_password" = "Mot de passe";
-"button_confirm" = "Valider";
-"button_access_contact" = "Accèder aux contacts";
-"error_username_empty" = "Bah alors ? Vous avez oublié de donner votre pseudo";
-"error_username_length" = "Votre pseudo est trop long ou trop court (entre 2 et 16 caractères)";
-"error_username_characters" = "Seulement des lettres et des nombres pour le pseudo svp :)";
-"error_username_taken" = "Ce pseudo est déjà pris ! Sniff…";
-"error_email_empty" = "Vous avez oublié l'email !";
-"error_email_invalid" = "Vous êtes sûr(e) que c'est une adresse email ?";
-"error_email_taken" = "Cet email est déjà utilisé ! ";
-"error_password_empty" = "Vous n'avez pas rentré de mot de passe";
-"error_password_length" = "Votre mot de passe doit contenir au moins 6 caractères";
-"error_accept_conditions" = "Vous devez accepter les CGU pour continuer";
-"error_missing_param" = "Paramètre manquant dans la requête";
-"error_param_is_not_an_array" = "Paramètre invalide";
-"button_ok" = "D'accord";
-
-// Navigation
-"button_back" = "Retour";
-"button_activity" = "Activité";
-"button_slove" = "Slove";
-"button_settings" = "Paramètres";
-
-// Connection
-"title_connection" = "Connexion";
-"subtitle_slove_top" = "Slove est l'app de messagerie";
-"subtitle_slove_bottom" = "pour partager de l'amour avec des gens que vous aimez";
-"button_sign_up_email" = "S'enregistrer avec un email";
-"button_already_have_account" = "J'ai déjà un compte";
-
-// Register
-"title_register" = "S'enregistrer";
-"placeholder_email" = "Email";
-"label_terms_of_service" = "J'accepte les CGU";
-"button_register" = "S'enregistrer";
-
-// Log In
-"title_log_in" = "Se connecter";
-"button_log_in" = "Se connecter";
-"button_password_forgot" = "J'ai oublié mon mot de passe";
-"error_login_doesnt_match" = "Login ou mot de passe invalide";
-
-// Username
-"title_username" = "Nom d'utilisateur";
-
-// Phone Number
-"title_phone_number" = "Numéro de téléphone";
-"label_banner_telephone" = "\"Yeah, j'suis une étoile !\"";
-"placeholder_phone_number" = "Votre numéro de téléphone";
-"error_phone_number_format" = "Ce format de numéro est invalide";
-"error_phone_number_already_used" = "Ce numéro de téléphone a déjà été utilisé";
-"error_failed_to_send" = "Oups ! Le SMS n'a pu être envoyé";
-"???" = "Le code ne corespond pas à celui envoyé";
-"[error certificate for this server]" = "Oups! Il semble que vous avez été déconnecté. Identifiez-vous de nouveau pour confirmer votre numéro de téléphone";
-
-// Confirmation Code
-"title_confirmation_code" = "Code de confirmation";
-"label_banner_confirmation" = "\"Embrassez la mariée !\"";
-"label_your_confirmation_number" = "Votre numéro de confirmation";
-"error_codes_dont_match" = "Le code de vérification ne correspond pas à celui envoyé. Réessayez";
-
-// Activity
-"title_activity" = "Activité";
-
-// Home View
-"title_home" = "Amis";
-"section_slovers" = "Slovers";
-"section_invite_on_slove" = "Inviter sur Slove";
-"label_several_phone_numbers" = "Plusieurs numéros";
-"label_loading" = "Chargement";
-"button_favorite" = "Favoris";
-"button_address_book" = "Répertoire";
-"button_facebook" = "Facebook";
-"error_no_user_found_for_supplied_numbers" = "Aucun utilisateur trouvé ";
-
-// Settings
-"title_settings" = "Paramètres";
-"button_disconnect" = "Se déconnecter";
-"button_updateProfile" = "MAJ Profile";
-
-// Profile
-"label_tutorial_profile" = "Maintenez le bouton appuyé 2 secondes pour envoyer votre premier Slove";
-
-// Sloved
-"title_sloved" = "Wahou !";
+"label_your_username" = "Votre nom d'utilisateur";
+"button_disconnect" = "Se deconnecter";
+"title_add_slover" = "Ajouter un Slover";
 "subtitle_sloved" = "Vous venez de recevoir un Slove de ";
-"button_sloved_left" = "Renvoyer un Slove";
-"button_sloved_right" = "Merci !";
+"label_tutorial_profile" = "Maintenez le bouton appuyé 2 secondes pour envoyer votre premier Slove";
+"error_username_length" = "Votre pseudo est trop long ou trop court (entre 2 et 16 caractères)";
+"error_phone_number_already_used" = "Ce numéro de téléphone a déjà été utilisé";
+"label_username_search" = "Rechercher par nom d'utilisateur";
 "label_tutorial_sloved" = "Pour commencer l'expérience, cliquez sur \"Renvoyer un Slove\"";
-
-// Slove Sent
-"title_sloveSent" = "Super !";
-"subtitle_sloveSent" = "Votre Slove a bien été envoyé";
-"label_tutorial_slove_sent" = "Youpi ! Vous venez d'envoyer votre premier Slove ! Amusez-vous bien :)";
-
-// Construction
-"title_construction" = "Désolé…";
-"subtitle_construction" = "Cette page est en construction";
-
-// Popup
-"popup_title_error" = "Oups !";
-"popup_body_notConnectedWithFacebook" = "Vous n'êtes pas connecté via Facebook";
+"label_tutorial_slove_sent" = "Félicitations ! Vous venez d'envoyer votre premier Slove ! :)";
+"label_banner_confirmation" = "\"Embrassez la mariée !\"";
+"button_already_have_account" = "J'ai déjà un compte";
 "popup_body_smsInvite" = "Votre appareil ne peut pas envoyer de SMS";
-"popup_title_addressBookAccess" = "Accès répertoire";
-"popup_body_addressBookAccess" = "Nous avons besoin d'accéder à vos contacts de répertoire pour continuer";
+"label_received_gift" = "+[number] [slove] pour vous :)";
+"error_password_length" = "Votre mot de passe doit contenir au moins 6 caractères";
+"button_profile" = "Profil";
 "popup_title_facebookAccess" = "Accès Facebook";
-"popup_body_facebookAccess" = "Nous avons besoin d'accéder à vos amis Facebook pour continuer";
-
-// SMS
-"label_smsInvite" = "Coucou ! J'aimerais t'envoyer un Slove, mais apparemment tu n'as pas encore l'application. Tu peux la télécharger ici : ";
-"url_smsInvite" = "APP_URL_TO_REPLACE";
+"button_register" = "S'enregistrer";
+"popup_title_addressBookAccess" = "Accès aux contacts";
+"error_accept_conditions" = "Un peu de calme… Vous devez accepter les CGU pour continuer";
+"title_slove" = "Slove";
+"subtitle_slove_top" = "Slove is the messaging app";
+"button_activity" = "Activité";
+"label_friend_joined" = "[username] vient de s'inscrire sur Slove";
+"title_confirmation_code" = "Code de confirmation";
+"button_sign_up_email" = "S'enregistrer avec un email";
+"label_several_phone_numbers" = "Plusieurs numéros";
+"button_sloved_left" = "Renvoyer un Slove";
+"error_login_doesnt_match" = "Oh-oh ! Login ou mot de passe invalide";
+"error_username_empty" = "Bah alors ? Vous avez oublié de donner votre pseudo";
+"pop_up_SloveBankOver" = "Vous avez utilisés vos SLOVE_NUMBER Sloves aujourd'hui. Vous allez avoir de nouveaux Sloves dans TIME_LEFT";
+"error_missing_param" = "Paramètre manquant dans la requête";
+"button_updateProfile" = "Modifier Profile";
+"error_username_characters" = "Seulement des lettres et des nombres pour le pseudo :)";
+"title_username" = "Nom d'utilisateur";
+"title_connection" = "Connexion";
+"title_sloveSent" = "Génial !";
+"placeholder_email" = "Email";
+"subtitle_slove_bottom" = "to share love with people you care about";
+"button_address_book" = "Accéder à votre répertoire";
+"button_facebook_friends" = "Ajouter des amis depuis Facebook";
+"button_log_in" = "Se connecter";
+"popup_body_addressBookAccess" = "Slovy a besoin d'accèder à votre répertoire :)";
+"button_back" = "Retour";
+"label_new_header" = "Nouveau";
+"error_param_is_not_an_array" = "Paramètre invalide";
+"popup_title_error" = "Oups !";
+"title_construction" = "Coming soon…";
+"error_username_taken" = "Ce pseudo est déjà pris ! Sniff…";
+"error_email_invalid" = "Vous êtes sûr(e) que c'est une adresse email ?";
+"popup_body_slover_followed" = "Vous suivez désormais [username] !";
+"label_your_confirmation_number" = "Votre numéro de confirmation";
+"placeholder_password" = "Mot de passe";
+"Pop-up_SloveTimeLeft" = "Vous allez pouvoir envoyer un nouveau Slove à cette personne dans TIME_LEFT";
+"error_failed_to_send" = "Oups ! Le SMS ne peut pas être envoyé";
+"placeholder_phone_number" = "Votre numéro de téléphone";
+"popup_title_success" = "Youpi !";
+"error_codes_dont_match" = "Le code de vérification ne correspond pas à celui envoyé. Réessayez";
+"section_invite_on_slove" = "Inviter sur Slove";
+"popup_go_to_settings" = "Merci de vous rendre dans les réglages de votre appareil pour activer cette fonctionnalité";
+"title_register" = "S'enregistrer";
+"error_email_taken" = "Cet email est déjà utilisé ! ";
+"placeholder_username" = "Nom d'utilisateur";
+"error_disconnected" = "Oups ! Il semble que vous avez été déconnecté. Identifiez-vous à nouveau…";
+"error_password_empty" = "Vous n'avez pas entré de mot de passe";
+"title_home" = "Amis";
+"error_no_user_found_for_supplied_numbers" = "Aucun utilisateur trouvé, qui donc cherches-tu ?";
+"label_banner_activity" = "CoOol : invitez des amis pour envoyer plus de Sloves !";
+"popup_body_notConnectedWithFacebook" = "Vous n'êtes pas connecté via Facebook";
+"popup_incompatible_version_error" = "Mwahaha! Votre version n'est plus à jour !";
+"label_level_up" = "Vous avez atteint le niveau [number] avec [username]";
+"subtitle_sloveSent" = "Votre Slove a bien été envoyé";
+"label_slove_from" = "Slove de [username]";
+"error_phone_number_format" = "Humm…Ce format de numéro est invalide ";
+"section_slovers" = "Slovers";
+"label_banner_telephone" = "\"Youhouuu, je suis une étooooile !\"";
+"button_ok" = "D'accord";
+"error_email_empty" = "Vous avez oublié l'email !";
+"title_sloved" = "Wahou !";
+"button_upload_profile_picture" = "Mettre à jour votre photo de profil";
+"title_phone_number" = "Numéro de téléphone";
+"button_access_contact" = "Accèder aux contacts";
+"popup_only_jpg_png_error" = "Seules les images sont supportées, et oui c'est une photo !";
+"button_password_forgot" = "J'ai oublié mon mot de passe";
+"label_share_with_friends" = "Ça y est, je suis un Sloveeer ! Toi aussi rejoins-moi :)";
+"button_slove" = "Slove";
+"label_loading" = "Chargement…";
+"title_log_in" = "Se connecter";
+"title_settings" = "Paramètres";
+"title_activity" = "Activité";
+"button_sloved_right" = "Merci !";
+"button_confirm" = "Valider";
+"popup_body_facebookAccess" = "Nous avons besoin d'accèder à votre lsite d'amis Facebook";
+"label_terms_of_service" = "J'accepte les CGU";
+"label_search" = "Rechercher";

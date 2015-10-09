@@ -58,21 +58,25 @@
 				label.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 				label.text = NSLocalizedString(label.text, nil);
 				label.adjustsFontSizeToFitWidth = YES;
+				label.textColor = DEFAULT_TEXT_COLOR;
 			} else if ([subview isKindOfClass:[UIButton class]]) {
 				UIButton *button = (UIButton *)subview;
 				
 				button.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 				[button setTitle:NSLocalizedString(button.titleLabel.text, nil) forState:UIControlStateNormal];
 				button.titleLabel.adjustsFontSizeToFitWidth = YES;
+				button.titleLabel.textColor = DEFAULT_TEXT_COLOR;
 			} else if ([subview isKindOfClass:[UITextField class]]) {
 				UITextField *textField = (UITextField *)subview;
 				
 				textField.text = NSLocalizedString(textField.text, nil);
 				textField.placeholder = NSLocalizedString(textField.placeholder, nil);
+				textField.textColor = DEFAULT_TEXT_COLOR;
 			} else if ([subview isKindOfClass:[UITextView class]]) {
 				UITextView *textView = (UITextView *)subview;
 				
 				textView.text = NSLocalizedString(textView.text, nil);
+				textView.textColor = DEFAULT_TEXT_COLOR;
 			} else if ([subview isKindOfClass:[UISegmentedControl class]]) {
 				UISegmentedControl *segmentedControl = (UISegmentedControl *)subview;
 				UIFont *font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
@@ -98,7 +102,7 @@
 	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
 	[backButton setTitle:NSLocalizedString(@"button_back", nil) forState:UIControlStateNormal];
 	[backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
-	[backButton setTitleColor:MAIN_COLOR forState:UIControlStateNormal];
+	[backButton setTitleColor:BLUE forState:UIControlStateNormal];
 	[backButton setTitleColor:DARK_GRAY forState:UIControlStateHighlighted];
 	backButton.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
 	backButton.titleLabel.adjustsFontSizeToFitWidth = YES;
