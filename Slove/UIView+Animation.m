@@ -16,6 +16,10 @@
 
 - (void)hideByFadingWithDuration:(NSTimeInterval)duration AndCompletion:(void (^)())completionBlock
 {
+	if (self.hidden) {
+		return;
+	}
+	
 	int alphaBuffer = self.alpha;
 	[UIView transitionWithView:self
 					  duration:duration
@@ -34,6 +38,10 @@
 
 - (void)showByFadingWithDuration:(NSTimeInterval)duration AndCompletion:(void (^)())completionBlock
 {
+	if (!self.hidden) {
+		return;
+	}
+	
 	int alphaBuffer = self.alpha;
 	self.alpha = 0;
 	self.hidden = NO;
@@ -55,6 +63,10 @@
 
 - (void)hideByZoomingInWithDuration:(NSTimeInterval)duration AndCompletion:(void (^)())completionBlock
 {
+	if (self.hidden) {
+		return;
+	}
+	
 	int alphaBuffer = self.alpha;
 	CGAffineTransform __block transformBuffer = self.transform;
 	
@@ -77,6 +89,10 @@
 
 - (void)showByZoomingInWithDuration:(NSTimeInterval)duration AndCompletion:(void (^)())completionBlock
 {
+	if (!self.hidden) {
+		return;
+	}
+	
 	int alphaBuffer = self.alpha;
 	self.alpha = 0;
 	self.hidden = NO;
@@ -102,6 +118,10 @@
 
 - (void)hideByZoomingOutWithDuration:(NSTimeInterval)duration AndCompletion:(void (^)())completionBlock
 {
+	if (self.hidden) {
+		return;
+	}
+	
 	int alphaBuffer = self.alpha;
 	CGAffineTransform __block transformBuffer = self.transform;
 	
@@ -124,6 +144,10 @@
 
 - (void)showByZoomingOutWithDuration:(NSTimeInterval)duration AndCompletion:(void (^)())completionBlock
 {
+	if (!self.hidden) {
+		return;
+	}
+	
 	int alphaBuffer = self.alpha;
 	self.alpha = 0;
 	self.hidden = NO;

@@ -27,6 +27,7 @@
 @property (nonatomic, strong) NSTimer *sloveLastClickTimer;
 @property (nonatomic) float sloveClickDuration;
 @property (nonatomic) float sloveClickDecelerationDuration;
+@property (nonatomic) BOOL firstLoad;
 
 - (void)activityAction:(id)sender;
 - (void)sloveAction:(id)sender;

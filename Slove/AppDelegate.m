@@ -25,6 +25,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	self.queuedPopups = [[NSMutableArray alloc] init];
+	self.applicationJustStarted = YES;
 	
 	// [Optional] Power your app with Local Datastore. For more info, go to
 	// https://parse.com/docs/ios_guide#localdatastore/iOS
@@ -93,10 +94,13 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	self.alreadyCheckedCompatibleVersion = NO;
+	self.applicationJustStarted = YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-	// Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+	self.currentNavigationController.loaderImageView.hidden = NO;
+	
+	[self performSelector:@selector(hideLoadingScreen) withObject:nil afterDelay:LONG_ANIMATION_DURATION];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
@@ -213,6 +217,8 @@
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
 		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
+		
+		[self performSelector:@selector(hideLoadingScreen) withObject:nil afterDelay:LONG_ANIMATION_DURATION];
 	}
 
 	self.userIsConnected = YES;
@@ -236,17 +242,19 @@
 	self.userIsConnected = NO;
 }
 
+- (void)hideLoadingScreen {
+	self.applicationJustStarted = NO;
+	
+	[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+}
+
 - (void)disconnectingUserTransition {
 	if (self.userIsConnected) {
-		[self.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:^{
-			self.currentNavigationController = nil;
-			
-			SLVConnectionViewController *connectionViewController = [[SLVConnectionViewController alloc] init];
-			
-			self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:connectionViewController];
-			[self.currentNavigationController hideBottomNavigationBar];
-			self.window.rootViewController = self.currentNavigationController;
-		}];
+		SLVConnectionViewController *connectionViewController = [[SLVConnectionViewController alloc] init];
+		
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:connectionViewController];
+		[self.currentNavigationController hideBottomNavigationBar];
+		self.window.rootViewController = self.currentNavigationController;
 	}
 }
 

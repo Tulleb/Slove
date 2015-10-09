@@ -24,6 +24,22 @@
 	[self loadLoader];
 	[self loadTopNavigationBar];
 	[self loadBottomNavigationBar];
+	
+	self.firstLoad = YES;
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if (self.firstLoad) {
+		if (ApplicationDelegate.applicationJustStarted) {
+			self.loaderImageView.hidden = NO;
+		} else {
+			[self.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+		}
+		
+		self.firstLoad = NO;
+	}
 }
 
 - (void)viewWillLayoutSubviews {
@@ -379,6 +395,7 @@
 	self.loaderImageView.animationImages = animatedImages;
 	self.loaderImageView.animationDuration = 1;
 	self.loaderImageView.animationRepeatCount = 0;
+	self.loaderImageView.hidden = YES;
 	[self.loaderImageView startAnimating];
 	
 	[self.view addSubview:self.loaderImageView];

@@ -83,9 +83,6 @@
 		if (self.calledFromBackButton) {
 			self.calledFromBackButton = NO;
 		} else {
-			if (ApplicationDelegate.currentNavigationController.loaderImageView.hidden) {
-				[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
-			}
 			[self performSelector:@selector(fetchCurrentUser) withObject:nil afterDelay:MINIMUM_ANIMATION_DURATION];
 		}
 	}
@@ -106,10 +103,14 @@
 				SLVLog(@"%@%@", SLV_ERROR, error.description);
 				[ParseErrorHandlingController handleParseError:error];
 				
+				ApplicationDelegate.applicationJustStarted = NO;
+				
 				[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 			}
 		}];
 	} else {
+		ApplicationDelegate.applicationJustStarted = NO;
+		
 		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 	}
 }
@@ -150,14 +151,18 @@
 															if (!validUsername) {
 																SLVLog(@"%@Username is not valid, going to Username view controller", SLV_WARNING);
 																[self.navigationController pushViewController:[[SLVUsernameViewController alloc] init] animated:YES];
+																
+																[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 															} else if ([user objectForKey:@"phoneNumber"] == nil || [[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
 																[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+																
+																[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 															} else {
 																[ApplicationDelegate userConnected];
 															}
 														}
 														
-														[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+														ApplicationDelegate.applicationJustStarted = NO;
 													}];
 	}
 }
@@ -166,11 +171,13 @@
 	PFUser *user = [PFUser currentUser];
 	if ([user objectForKey:@"phoneNumber"] == nil) {
 		[self.navigationController pushViewController:[[SLVPhoneNumberViewController alloc] init] animated:YES];
+		
+		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 	} else {
 		[ApplicationDelegate userConnected];
 	}
 	
-	[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	ApplicationDelegate.applicationJustStarted = NO;
 }
 
 - (void)getInformationsFromFacebook {

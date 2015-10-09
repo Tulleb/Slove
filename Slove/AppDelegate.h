@@ -28,6 +28,7 @@
 @property (strong, nonatomic) NSMutableArray *queuedPopups;
 @property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
 @property (nonatomic, strong) SLVInteractionPopupViewController *compatibleVersionPopup;
+@property (nonatomic) BOOL applicationJustStarted;
 
 - (void)userConnected;
 - (void)userDisconnected;
