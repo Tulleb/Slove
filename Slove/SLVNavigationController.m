@@ -620,7 +620,7 @@
 - (void)refreshSloveCounter {
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
-			NSNumber *sloveCount = object[@"sloveCounter"];
+			NSNumber *sloveCount = object[@"sloveNumber"];
 			NSString *sloveCountString = [NSString stringWithFormat:@"%d", [sloveCount intValue]];
 			self.sloveCounterBadge.badgeText = sloveCountString;
 			[self.sloveCounterBadge setNeedsDisplay];
