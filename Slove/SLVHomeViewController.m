@@ -54,6 +54,8 @@
 											 selector:@selector(didDismissSlovedPopup)
 												 name:NOTIFICATION_SLOVED_POPUP_DISMISSED
 											   object:nil];
+	
+	[self loadContacts];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -65,8 +67,6 @@
 		ApplicationDelegate.sloverToSlove = nil;
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self startTutorial];
-	} else {
-		[self loadContacts];
 	}
 }
 
@@ -520,6 +520,7 @@
 	}
 	
 	[self.contactTableView reloadData];
+	[self.contactTableView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 	
 	if ([self.refreshControl isRefreshing]) {
 		[self.refreshControl endRefreshing];
@@ -835,7 +836,19 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-	static NSString *identifier = @"ContactCell";
+	BOOL isSynchronized = NO;
+	
+	if (indexPath.section == 0 && [self.synchronizedContacts count] > 0) {
+		isSynchronized = YES;
+	}
+	
+	NSString *identifier;
+	if (isSynchronized) {
+		identifier = @"SynchronizedContactCell";
+	} else {
+		identifier = @"UnsynchronizedContactCell";
+	}
+	
 	SLVContactTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:identifier];
 	if (!cell) {
 		[tableView registerNib:[UINib nibWithNibName:@"SLVContactTableViewCell" bundle:nil] forCellReuseIdentifier:identifier];
@@ -850,11 +863,9 @@
 	cell.subtitleLabel.textColor = BLUE;
 	
 	SLVContact *contact;
-	BOOL isSynchronized = NO;
 	
-	if (indexPath.section == 0 && [self.synchronizedContacts count] > 0) {
+	if (isSynchronized) {
 		contact = [self.synchronizedContacts objectAtIndex:indexPath.row];
-		isSynchronized = YES;
 	} else if ([self.unsynchronizedContacts count] > 0) {
 		contact = [self.unsynchronizedContacts objectAtIndex:indexPath.row];
 		cell.subtitleImageView.image = nil;
