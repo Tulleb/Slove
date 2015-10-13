@@ -94,13 +94,10 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	self.alreadyCheckedCompatibleVersion = NO;
-	self.applicationJustStarted = YES;
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
-	self.currentNavigationController.loaderImageView.hidden = NO;
 	
-	[self performSelector:@selector(hideLoadingScreen) withObject:nil afterDelay:LONG_ANIMATION_DURATION];
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {

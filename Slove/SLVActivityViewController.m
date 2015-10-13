@@ -7,7 +7,6 @@
 //
 
 #import "SLVActivityViewController.h"
-#import "SLVConstructionPopupViewController.h"
 #import "SLVActivity.h"
 #import "SLVNewActivityTableViewCell.h"
 #import "SLVOldActivityTableViewCell.h"
@@ -46,14 +45,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	if (![USER_DEFAULTS objectForKey:KEY_ACTIVITY_CONSTRUCTION_DISPLAYED] || ![[USER_DEFAULTS objectForKey:KEY_ACTIVITY_CONSTRUCTION_DISPLAYED] boolValue]) {
-		SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
-		
-		[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
-		
-		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ACTIVITY_CONSTRUCTION_DISPLAYED];
-	}
 	
 	[self loadActivities];
 }
