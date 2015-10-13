@@ -36,6 +36,7 @@
 	[self.activityTableView addSubview:self.refreshControl];
 	
 	[self loadBackButton];
+	[self loadActivities];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,8 +46,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	[self loadActivities];
 }
 
 - (void)goBack:(id)sender {
@@ -129,6 +128,7 @@
 											[USER_DEFAULTS setObject:[NSDate date] forKey:KEY_LAST_ACTIVITY_REFRESH];
 											
 											[self.activityTableView reloadData];
+											[self.activityTableView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 										} else {
 											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
 											
@@ -137,6 +137,8 @@
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
 											[ParseErrorHandlingController handleParseError:error];
 										}
+										
+										[self.activityIndicatorView stopAnimating];
 										
 										if ([self.refreshControl isRefreshing]) {
 											[self.refreshControl endRefreshing];

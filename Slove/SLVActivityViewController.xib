@@ -8,6 +8,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SLVActivityViewController">
             <connections>
+                <outlet property="activityIndicatorView" destination="f6w-Vv-TNQ" id="FmM-vd-jFP"/>
                 <outlet property="activityTableView" destination="onz-YT-K4n" id="7e0-zv-tya"/>
                 <outlet property="bannerImageView" destination="QNR-ud-NML" id="hIF-o5-B5A"/>
                 <outlet property="bannerLabel" destination="lnS-H5-1VO" id="Czl-7s-ATF"/>
@@ -48,25 +49,47 @@
                         <constraint firstAttribute="trailing" secondItem="QNR-ud-NML" secondAttribute="trailing" id="yHH-fK-wSx"/>
                     </constraints>
                 </view>
-                <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="onz-YT-K4n">
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uAu-v8-VjS">
                     <rect key="frame" x="0.0" y="126" width="600" height="474"/>
+                    <subviews>
+                        <tableView hidden="YES" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="none" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="onz-YT-K4n">
+                            <rect key="frame" x="0.0" y="0.0" width="600" height="474"/>
+                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                            <connections>
+                                <outlet property="dataSource" destination="-1" id="4Y8-qe-cvq"/>
+                                <outlet property="delegate" destination="-1" id="vx5-x5-wDK"/>
+                            </connections>
+                        </tableView>
+                        <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" hidesWhenStopped="YES" animating="YES" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="f6w-Vv-TNQ">
+                            <rect key="frame" x="290" y="227" width="20" height="20"/>
+                            <constraints>
+                                <constraint firstAttribute="width" constant="20" id="Ie1-QP-ph0"/>
+                                <constraint firstAttribute="width" secondItem="f6w-Vv-TNQ" secondAttribute="height" multiplier="1:1" id="xqS-mI-cqi"/>
+                            </constraints>
+                        </activityIndicatorView>
+                    </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    <connections>
-                        <outlet property="dataSource" destination="-1" id="4Y8-qe-cvq"/>
-                        <outlet property="delegate" destination="-1" id="vx5-x5-wDK"/>
-                    </connections>
-                </tableView>
+                    <constraints>
+                        <constraint firstItem="f6w-Vv-TNQ" firstAttribute="centerY" secondItem="uAu-v8-VjS" secondAttribute="centerY" id="4Ot-Cq-JN5"/>
+                        <constraint firstItem="onz-YT-K4n" firstAttribute="top" secondItem="uAu-v8-VjS" secondAttribute="top" id="Du2-pX-IF8"/>
+                        <constraint firstItem="onz-YT-K4n" firstAttribute="leading" secondItem="uAu-v8-VjS" secondAttribute="leading" id="EHG-r5-CGL"/>
+                        <constraint firstItem="f6w-Vv-TNQ" firstAttribute="centerX" secondItem="uAu-v8-VjS" secondAttribute="centerX" id="Lh7-h7-k0g"/>
+                        <constraint firstAttribute="bottom" secondItem="onz-YT-K4n" secondAttribute="bottom" id="h4d-Yp-1fg"/>
+                        <constraint firstAttribute="trailing" secondItem="onz-YT-K4n" secondAttribute="trailing" id="i1Y-ha-VC9"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
-                <constraint firstItem="onz-YT-K4n" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="7hd-iq-ONW"/>
+                <constraint firstItem="uAu-v8-VjS" firstAttribute="top" secondItem="u3c-eO-0Sj" secondAttribute="bottom" id="JXM-H2-5Y0"/>
+                <constraint firstAttribute="bottom" secondItem="uAu-v8-VjS" secondAttribute="bottom" id="Ou6-EN-Jrm"/>
+                <constraint firstAttribute="trailing" secondItem="uAu-v8-VjS" secondAttribute="trailing" id="STh-ow-bgg"/>
                 <constraint firstItem="u3c-eO-0Sj" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="XPn-YK-fAH"/>
                 <constraint firstAttribute="trailing" secondItem="u3c-eO-0Sj" secondAttribute="trailing" id="Xl2-GC-cys"/>
+                <constraint firstItem="uAu-v8-VjS" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="YWT-vv-tsX"/>
                 <constraint firstItem="u3c-eO-0Sj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="ZcP-4J-o45"/>
-                <constraint firstAttribute="trailing" secondItem="onz-YT-K4n" secondAttribute="trailing" id="vGi-dq-tXk"/>
-                <constraint firstItem="onz-YT-K4n" firstAttribute="top" secondItem="u3c-eO-0Sj" secondAttribute="bottom" id="xGI-sz-Yv2"/>
-                <constraint firstAttribute="bottom" secondItem="onz-YT-K4n" secondAttribute="bottom" id="xLV-z1-Tls"/>
             </constraints>
+            <point key="canvasLocation" x="198" y="121"/>
         </view>
     </objects>
 </document>
