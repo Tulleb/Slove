@@ -10,6 +10,7 @@
 #import "SLVSloveSentPopupViewController.h"
 #import "SLVInteractionPopupViewController.h"
 #import "SLVAddressBookContact.h"
+#import "SLVLevel.h"
 
 @interface SLVProfileViewController ()
 
@@ -40,6 +41,9 @@
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_slove"];
 	self.bubblePicto.image = [UIImage imageNamed:@"Assets/Image/picto_tap_2secondes"];
 	
+	self.levelCarousel.type = iCarouselTypeCoverFlow2;
+	self.levelCarousel.userInteractionEnabled = NO;
+	
 	[self loadBackButton];
 	
 	// To call viewWillAppear after return from Slove Sent popup
@@ -47,6 +51,8 @@
 											 selector:@selector(didDismissSloveSentPopup)
 												 name:NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED
 											   object:nil];
+	
+	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number - 1 animated:NO];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -81,6 +87,22 @@
 		
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
+	
+	NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
+	NSNumber *level = [USER_DEFAULTS objectForKey:levelKey];
+	if (level && [level intValue] != self.contact.currentLevel.number) {
+		self.contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[level intValue] - 1];
+		
+		[USER_DEFAULTS removeObjectForKey:levelKey];
+		
+		[self startLevelAnimation];
+	}
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	[self.levelCarousel hideByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 }
 
 - (void)viewDidDisappear:(BOOL)animated {
@@ -94,6 +116,7 @@
 	
 	self.spiraleYConstraint.constant = -(self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height) / 2;
 	self.bubbleLabelTopLayoutConstraint.constant = SCREEN_HEIGHT * 0.07;
+	self.levelCarouselBottomLayoutConstraint.constant = SLOVE_BUTTON_SIZE;
 }
 
 - (void)viewDidLayoutSubviews {
@@ -167,6 +190,10 @@
 	}
 }
 
+- (void)startLevelAnimation {
+	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number - 1 duration:VERY_LONG_ANIMATION_DURATION];
+}
+
 - (void)didDismissSloveSentPopup {
 	if (!IS_IOS7) {
 		[self viewDidAppear:YES];
@@ -223,6 +250,56 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
 	[self dismissViewControllerAnimated:YES completion:nil];
+}
+
+
+#pragma mark - iCarouselDelegate
+
+- (NSInteger)numberOfItemsInCarousel:(iCarousel *)carousel {
+	//return the total number of items in the carousel
+	return [ApplicationDelegate.levels count];
+}
+
+- (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
+	UILabel *label = nil;
+	
+	//create new view if no view is available for recycling
+	if (view == nil) {
+		//don't do anything specific to the index within
+		//this `if (view == nil) {...}` statement because the view will be
+		//recycled and used with other index values later
+		view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
+		view.contentMode = UIViewContentModeCenter;
+		view.backgroundColor = RED;
+		
+		label = [[UILabel alloc] initWithFrame:view.bounds];
+		[view addSubview:label];
+	} else {
+		//get a reference to the label in the recycled view
+		label = (UILabel *)[view viewWithTag:1];
+	}
+	
+	[SLVViewController setStyle:view];
+	
+	SLVLevel *level = [ApplicationDelegate.levels objectAtIndex:index];
+	
+	//set item label
+	//remember to always set any properties of your carousel item
+	//views outside of the `if (view == nil) {...}` check otherwise
+	//you'll get weird issues with carousel item content appearing
+	//in the wrong place in the carousel
+	((UIImageView *)view).image = level.picture;
+	label.text = level.name;
+	
+	return view;
+}
+
+- (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
+	if (option == iCarouselOptionSpacing) {
+		return value * 1.1;
+	}
+	
+	return value;
 }
 
 @end

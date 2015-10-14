@@ -9,8 +9,9 @@
 #import "SLVViewController.h"
 #import "SLVContact.h"
 #import <MessageUI/MessageUI.h>
+#import <iCarousel/iCarousel.h>
 
-@interface SLVProfileViewController : SLVViewController <MFMessageComposeViewControllerDelegate>
+@interface SLVProfileViewController : SLVViewController <MFMessageComposeViewControllerDelegate, iCarouselDataSource, iCarouselDelegate>
 
 @property (strong, nonatomic) SLVContact *contact;
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;
@@ -22,6 +23,8 @@
 @property (strong, nonatomic) IBOutlet UIImageView *bubblePicto;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *spiraleYConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
+@property (strong, nonatomic) IBOutlet iCarousel *levelCarousel;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *levelCarouselBottomLayoutConstraint;
 @property (nonatomic) float spiraleAngle;
 
 - (id)initWithContact:(SLVContact *)contact;

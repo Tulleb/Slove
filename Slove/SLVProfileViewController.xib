@@ -14,6 +14,8 @@
                 <outlet property="bubblePicto" destination="HNU-YL-33a" id="QEe-rQ-w1O"/>
                 <outlet property="bubbleView" destination="38U-vq-rUj" id="IRQ-6Z-oeC"/>
                 <outlet property="circleImageView" destination="rNQ-as-rwV" id="jwb-at-D4h"/>
+                <outlet property="levelCarousel" destination="U3B-5W-RIf" id="I3G-t8-Ppq"/>
+                <outlet property="levelCarouselBottomLayoutConstraint" destination="fLO-Ou-MaX" id="EPu-jw-y9r"/>
                 <outlet property="pictureImageView" destination="Nxu-Ru-Vlf" id="nUF-J7-mhv"/>
                 <outlet property="spiraleImageView" destination="VPm-l2-8K6" id="4pS-im-ihE"/>
                 <outlet property="spiraleYConstraint" destination="ixj-Hd-Rbr" id="TNQ-fe-Qp6"/>
@@ -85,14 +87,26 @@
                         <constraint firstAttribute="trailing" secondItem="4Mc-u7-Nrq" secondAttribute="trailing" constant="8" id="qsp-Ea-e5G"/>
                     </constraints>
                 </view>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="U3B-5W-RIf" customClass="iCarousel">
+                    <rect key="frame" x="0.0" y="422" width="600" height="148"/>
+                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="JH8-FR-ia7"/>
+                        <outlet property="delegate" destination="-1" id="Fav-Lh-eP6"/>
+                    </connections>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstAttribute="centerX" secondItem="rNQ-as-rwV" secondAttribute="centerX" id="ALj-Rt-m2F"/>
+                <constraint firstItem="U3B-5W-RIf" firstAttribute="top" secondItem="VPm-l2-8K6" secondAttribute="bottom" constant="8" id="DJf-pm-u3n"/>
+                <constraint firstItem="U3B-5W-RIf" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="JAS-aa-VEf"/>
                 <constraint firstAttribute="trailing" secondItem="Nxu-Ru-Vlf" secondAttribute="trailing" id="M2s-lQ-8ku"/>
                 <constraint firstItem="Nxu-Ru-Vlf" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="750" id="Ojk-Sl-mMu"/>
                 <constraint firstAttribute="centerX" secondItem="VPm-l2-8K6" secondAttribute="centerX" id="SgG-tI-YUm"/>
+                <constraint firstAttribute="trailing" secondItem="U3B-5W-RIf" secondAttribute="trailing" id="TxI-zB-YTt"/>
                 <constraint firstItem="38U-vq-rUj" firstAttribute="top" secondItem="rNQ-as-rwV" secondAttribute="bottom" constant="-60" id="bbh-6Z-mWj"/>
+                <constraint firstAttribute="bottom" secondItem="U3B-5W-RIf" secondAttribute="bottom" constant="30" id="fLO-Ou-MaX"/>
                 <constraint firstItem="38U-vq-rUj" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="g2f-3D-wVL"/>
                 <constraint firstAttribute="centerY" secondItem="rNQ-as-rwV" secondAttribute="centerY" constant="-30" id="gU3-20-btn"/>
                 <constraint firstAttribute="centerY" secondItem="VPm-l2-8K6" secondAttribute="centerY" constant="-30" id="ixj-Hd-Rbr"/>

@@ -15,6 +15,7 @@
 #import "SLVSlovedPopupViewController.h"
 #import <Google/Analytics.h>
 #import "Reachability.h"
+#import "SLVLevel.h"
 
 @interface AppDelegate ()
 
@@ -56,6 +57,7 @@
 	[self loadUserDefaults];
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
+	[self loadLevels];
 	
 	if (IS_IOS7) {
 		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -544,6 +546,26 @@
 	} else {
 		SLVLog(@"%@No country value found on this device", SLV_WARNING);
 	}
+}
+
+- (void)loadLevels {
+	NSMutableArray *levelsBuffer = [[NSMutableArray alloc] init];
+	
+	for (int i = 1; i <= 10; i++) {
+		SLVLevel *level = [[SLVLevel alloc] init];
+		
+		level.number = i;
+		
+		NSString *levelImageName = @"Assets/Image/level";
+		levelImageName = [levelImageName stringByAppendingString:[NSString stringWithFormat:@"%d.png", i]];
+		level.picture = [UIImage imageNamed:levelImageName];
+		
+		level.name = levelImageName;
+		
+		[levelsBuffer addObject:level];
+	}
+	
+	self.levels = [[NSArray alloc] initWithArray:levelsBuffer];
 }
 
 - (void)loadParseConfig {

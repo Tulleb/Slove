@@ -29,6 +29,7 @@
 @property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
 @property (nonatomic, strong) SLVInteractionPopupViewController *compatibleVersionPopup;
 @property (nonatomic) BOOL applicationJustStarted;
+@property (nonatomic) NSArray *levels;
 
 - (void)userConnected;
 - (void)userDisconnected;

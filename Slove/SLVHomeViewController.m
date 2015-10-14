@@ -548,7 +548,7 @@
 	}
 	
 	self.synchronizedContacts = [synchronizedContactsBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
-		return [a.username caseInsensitiveCompare:b.username];
+		return [a.fullName caseInsensitiveCompare:b.fullName];
 	}];
 }
 

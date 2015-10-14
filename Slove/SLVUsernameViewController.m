@@ -122,7 +122,16 @@
 	}
 }
 
+
 #pragma mark - UITextFieldDelegate
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField {
+	[textField resignFirstResponder];
+	
+	[self confirmAction:self.confirmButton];
+	
+	return YES;
+}
 
 - (BOOL)textFieldShouldBeginEditing:(UITextField *)textField {
 	if (textField == self.usernameField) {

@@ -82,38 +82,29 @@
 	NSData* data = UIImageJPEGRepresentation(image, 1);
 	PFFile *imageFile = [PFFile fileWithName:imageFullName data:data];
 	
-//	[imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//		if (!error) {
-//			PFUser *user = [PFUser currentUser];
-//			
-//			if (![user objectForKey:@"pictureUrl"]) {
-//				user[@"pictureUrl"] = url;
-//				SLVLog(@"User's profile picture retrieved from Facebook");
-//				
-//				[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//					if (error) {
-//						SLVLog(@"%@%@", SLV_ERROR, error.description);
-//						[ParseErrorHandlingController handleParseError:error];
-//					}
-//				}];
-//			// The image has now been uploaded to Parse. Associate it with a new object
-//			PFObject* newPhotoObject = [PFObject objectWithClassName:@"PhotoObject"];
-//			[newPhotoObject setObject:imageFile forKey:@"image"];
-//			
-//			[newPhotoObject saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-//				if (!error) {
-//					NSLog(@"Saved");
-//				}
-//				else{
-//					// Error
-//					NSLog(@"Error: %@ %@", error, [error userInfo]);
-//				}
-//			}];
-//		} else {
-//			SLVLog(@"%@%@", SLV_ERROR, error.description);
-//			[ParseErrorHandlingController handleParseError:error];
-//		}
-//	}];
+	[imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		if (!error) {
+			PFUser *user = [PFUser currentUser];
+			
+			user[@"pictureUrl"] = imageFile.url;
+			
+			[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				if (error) {
+					SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_upload_image_error", nil) buttonsTitle:nil andDismissButton:YES];
+					[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+					
+					SLVLog(@"%@%@", SLV_ERROR, error.description);
+					[ParseErrorHandlingController handleParseError:error];
+				}
+			}];
+		} else {
+			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_upload_image_error", nil) buttonsTitle:nil andDismissButton:YES];
+			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+			
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
 	
 	[self dismissViewControllerAnimated:YES completion:nil];
 }

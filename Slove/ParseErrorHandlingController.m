@@ -8,6 +8,7 @@
 
 #import "ParseErrorHandlingController.h"
 #import "SLVLogInViewController.h"
+#import "SLVInteractionPopupViewController.h"
 
 @implementation ParseErrorHandlingController
 
@@ -42,7 +43,11 @@
 	//--------------------------------------
 	// You may want this if the logout button is inaccessible in the UI.
 	//
-	[ApplicationDelegate userDisconnected];
+	
+	SLVInteractionPopupViewController *disconnectPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_please_reconnect", nil) buttonsTitle:nil andDismissButton:YES];
+	[ApplicationDelegate.currentNavigationController presentViewController:disconnectPopup animated:YES completion:nil];
+	
+	//	[ApplicationDelegate userDisconnected];
 }
 
 @end

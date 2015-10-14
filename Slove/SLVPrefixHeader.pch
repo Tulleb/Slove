@@ -109,6 +109,7 @@
 #define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
 #define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
 #define	KEY_LAST_ACTIVITY_REFRESH				@"lastActivityRefresh"
+#define	KEY_CONTACT_LEVELUP						@"contactLevelUp"
 
 #pragma mark - Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"

@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "JSONModel.h"
+#import "SLVLevel.h"
 
 @interface SLVContact : JSONModel
 
@@ -16,5 +17,6 @@
 @property (nonatomic, strong) NSString *username;
 @property (nonatomic, strong) UIImage<Optional> *picture;
 @property (nonatomic, strong) NSNumber<Optional> *sloveCounter;
+@property (nonatomic, strong) SLVLevel *currentLevel;
 
 @end

@@ -30,6 +30,7 @@
 		C44EB1A61B7D46CF001DC989 /* SLVSlovedPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C44EB1A41B7D46CF001DC989 /* SLVSlovedPopupViewController.xib */; };
 		C458F6FC1B6A320E0075B8EF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = C458F6FE1B6A320E0075B8EF /* Localizable.strings */; };
 		C458F70E1B6BD7B20075B8EF /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */; };
+		C4631E4F1BCF050200CF645E /* SLVLevel.m in Sources */ = {isa = PBXBuildFile; fileRef = C4631E4E1BCF050200CF645E /* SLVLevel.m */; settings = {ASSET_TAGS = (); }; };
 		C467AB201BAF612E002C9631 /* SLVPictureTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = C467AB1F1BAF612E002C9631 /* SLVPictureTextField.m */; settings = {ASSET_TAGS = (); }; };
 		C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805B1BAD7B6100F90477 /* illu_spashscreen.png */; settings = {ASSET_TAGS = (); }; };
 		C469805F1BAD7B6100F90477 /* illu_spashscreen@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = C469805C1BAD7B6100F90477 /* illu_spashscreen@2x.png */; settings = {ASSET_TAGS = (); }; };
@@ -149,6 +150,8 @@
 		C458F7041B6A62410075B8EF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		C458F7051B6A62410075B8EF /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		C458F70D1B6BD7B20075B8EF /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		C4631E4D1BCF050200CF645E /* SLVLevel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVLevel.h; sourceTree = "<group>"; };
+		C4631E4E1BCF050200CF645E /* SLVLevel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVLevel.m; sourceTree = "<group>"; };
 		C467AB1E1BAF612E002C9631 /* SLVPictureTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVPictureTextField.h; sourceTree = "<group>"; };
 		C467AB1F1BAF612E002C9631 /* SLVPictureTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVPictureTextField.m; sourceTree = "<group>"; };
 		C469805B1BAD7B6100F90477 /* illu_spashscreen.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = illu_spashscreen.png; path = "Assets/Splash Screen/illu_spashscreen.png"; sourceTree = "<group>"; };
@@ -463,6 +466,8 @@
 				C49FA8BE1B6D4193009288B9 /* SLVAddressBookContact.m */,
 				C4A870B31B72C721000A5510 /* SLVFacebookFriend.h */,
 				C4A870B41B72C721000A5510 /* SLVFacebookFriend.m */,
+				C4631E4D1BCF050200CF645E /* SLVLevel.h */,
+				C4631E4E1BCF050200CF645E /* SLVLevel.m */,
 			);
 			name = Contact;
 			sourceTree = "<group>";
@@ -646,6 +651,7 @@
 				C44224E01B5BE7D600389210 /* Frameworks */,
 				C44224E11B5BE7D600389210 /* Resources */,
 				48552365D878136005582CD4 /* Copy Pods Resources */,
+				CE55AB1156FE43EDA097AFB3 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -785,6 +791,21 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Slove/Pods-Slove-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CE55AB1156FE43EDA097AFB3 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Slove/Pods-Slove-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		F4534CEA64DB521C259C6F41 /* Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -833,6 +854,7 @@
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,
 				C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */,
 				C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */,
+				C4631E4F1BCF050200CF645E /* SLVLevel.m in Sources */,
 				C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */,
 				C4F2CECE1B92101E000AC390 /* SLVSettingsViewController.m in Sources */,
 				C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */,
