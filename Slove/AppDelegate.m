@@ -103,7 +103,11 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	application.applicationIconBadgeNumber = 0;
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//	if (currentInstallation.badge != 0) {	// this check is currently not working with Parse
+		currentInstallation.badge = 0;
+		[currentInstallation saveEventually];
+//	}
 	
 	[self checkReachability];
 	[FBSDKAppEvents activateApp];
@@ -126,7 +130,7 @@
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	[currentInstallation setDeviceTokenFromData:deviceToken];
 	currentInstallation.channels = @[@"global"];
-	[currentInstallation saveInBackground];
+	[currentInstallation saveEventually];
 	
 	SLVLog(@"Device registered for push notifications");
 }
@@ -139,13 +143,14 @@
 #pragma mark - Custom methods
 
 - (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
-	self.queuedPopups = nil;
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
 		NSError *error;
 		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
 		if ([sloverDic objectForKey:@"pictureUrl"]) {
 			slover.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]]];
+		} else {
+			slover.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
 		}
 		
 		if (error) {
@@ -209,7 +214,7 @@
 	
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	currentInstallation.channels = @[@"global", [PFUser currentUser].username];
-	[currentInstallation saveInBackground];
+	[currentInstallation saveEventually];
 	
 	if (!self.userIsConnected) {
 		self.currentNavigationController = nil;

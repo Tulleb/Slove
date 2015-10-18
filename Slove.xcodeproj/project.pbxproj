@@ -84,12 +84,10 @@
 		C4E9C0FE1B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F81B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf */; };
 		C4E9C0FF1B96494E0071C084 /* AveriaSansLibre-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C0F91B96494E0071C084 /* AveriaSansLibre-Regular.ttf */; };
 		C4E9C1021B96496A0071C084 /* SansitaOne.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C4E9C1011B96496A0071C084 /* SansitaOne.ttf */; };
-		C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */; };
-		C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */; };
-		C4F2CECE1B92101E000AC390 /* SLVSettingsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F2CECC1B92101E000AC390 /* SLVSettingsViewController.m */; };
-		C4F2CECF1B92101E000AC390 /* SLVSettingsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CECD1B92101E000AC390 /* SLVSettingsViewController.xib */; };
-		C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */; };
-		C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */; };
+		C4ED804A1B7802A6005E84E4 /* SLVContactViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4ED80481B7802A6005E84E4 /* SLVContactViewController.m */; };
+		C4ED804B1B7802A6005E84E4 /* SLVContactViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4ED80491B7802A6005E84E4 /* SLVContactViewController.xib */; };
+		C4F2CECE1B92101E000AC390 /* SLVProfileViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F2CECC1B92101E000AC390 /* SLVProfileViewController.m */; };
+		C4F2CECF1B92101E000AC390 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CECD1B92101E000AC390 /* SLVProfileViewController.xib */; };
 		C4F849911B9E301F00E3C53D /* SLVActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */; };
 		C4F849921B9E301F00E3C53D /* SLVActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
@@ -231,15 +229,12 @@
 		C4E9C0F81B96494E0071C084 /* AveriaSansLibre-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-LightItalic.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-LightItalic.ttf"; sourceTree = "<group>"; };
 		C4E9C0F91B96494E0071C084 /* AveriaSansLibre-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "AveriaSansLibre-Regular.ttf"; path = "Assets/Font/Averia Sans Libre/AveriaSansLibre-Regular.ttf"; sourceTree = "<group>"; };
 		C4E9C1011B96496A0071C084 /* SansitaOne.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = SansitaOne.ttf; path = "Assets/Font/Sansita One/SansitaOne.ttf"; sourceTree = "<group>"; };
-		C4ED80471B7802A6005E84E4 /* SLVProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVProfileViewController.h; sourceTree = "<group>"; };
-		C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVProfileViewController.m; sourceTree = "<group>"; };
-		C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVProfileViewController.xib; sourceTree = "<group>"; };
-		C4F2CECB1B92101E000AC390 /* SLVSettingsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVSettingsViewController.h; sourceTree = "<group>"; };
-		C4F2CECC1B92101E000AC390 /* SLVSettingsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVSettingsViewController.m; sourceTree = "<group>"; };
-		C4F2CECD1B92101E000AC390 /* SLVSettingsViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVSettingsViewController.xib; sourceTree = "<group>"; };
-		C4F2CED11B92173A000AC390 /* SLVUpdateProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVUpdateProfileViewController.h; sourceTree = "<group>"; };
-		C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVUpdateProfileViewController.m; sourceTree = "<group>"; };
-		C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVUpdateProfileViewController.xib; sourceTree = "<group>"; };
+		C4ED80471B7802A6005E84E4 /* SLVContactViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVContactViewController.h; sourceTree = "<group>"; };
+		C4ED80481B7802A6005E84E4 /* SLVContactViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVContactViewController.m; sourceTree = "<group>"; };
+		C4ED80491B7802A6005E84E4 /* SLVContactViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVContactViewController.xib; sourceTree = "<group>"; };
+		C4F2CECB1B92101E000AC390 /* SLVProfileViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVProfileViewController.h; sourceTree = "<group>"; };
+		C4F2CECC1B92101E000AC390 /* SLVProfileViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVProfileViewController.m; sourceTree = "<group>"; };
+		C4F2CECD1B92101E000AC390 /* SLVProfileViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVProfileViewController.xib; sourceTree = "<group>"; };
 		C4F8498E1B9E301F00E3C53D /* SLVActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVActivityViewController.h; sourceTree = "<group>"; };
 		C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVActivityViewController.m; sourceTree = "<group>"; };
 		C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVActivityViewController.xib; sourceTree = "<group>"; };
@@ -368,7 +363,7 @@
 				C4F8498D1B9E300E00E3C53D /* Activity */,
 				C442252C1B5BF6CD00389210 /* Connection */,
 				C4A4DC761B6149290020BF3A /* Home */,
-				C4F2CECA1B920FF2000AC390 /* Settings */,
+				C4F2CECA1B920FF2000AC390 /* Profile */,
 				C4A248911B81178D004B9D43 /* Popup */,
 				C44224F31B5BE7D600389210 /* Images.xcassets */,
 				C44224F51B5BE7D600389210 /* LaunchScreen.xib */,
@@ -536,7 +531,6 @@
 		C4A4DC761B6149290020BF3A /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				C4ED80461B780274005E84E4 /* Profile */,
 				C4A48D981B6149EC00CEBA25 /* SLVHomeViewController.h */,
 				C4A48D991B6149EC00CEBA25 /* SLVHomeViewController.m */,
 				C4A48D9A1B6149EC00CEBA25 /* SLVHomeViewController.xib */,
@@ -546,6 +540,9 @@
 				C44DCC951B682C11009BDAB2 /* SLVContactTableViewCell.h */,
 				C44DCC961B682C11009BDAB2 /* SLVContactTableViewCell.m */,
 				C44DCC971B682C11009BDAB2 /* SLVContactTableViewCell.xib */,
+				C4ED80471B7802A6005E84E4 /* SLVContactViewController.h */,
+				C4ED80481B7802A6005E84E4 /* SLVContactViewController.m */,
+				C4ED80491B7802A6005E84E4 /* SLVContactViewController.xib */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -591,27 +588,14 @@
 			name = "Sansita One";
 			sourceTree = "<group>";
 		};
-		C4ED80461B780274005E84E4 /* Profile */ = {
+		C4F2CECA1B920FF2000AC390 /* Profile */ = {
 			isa = PBXGroup;
 			children = (
-				C4ED80471B7802A6005E84E4 /* SLVProfileViewController.h */,
-				C4ED80481B7802A6005E84E4 /* SLVProfileViewController.m */,
-				C4ED80491B7802A6005E84E4 /* SLVProfileViewController.xib */,
+				C4F2CECB1B92101E000AC390 /* SLVProfileViewController.h */,
+				C4F2CECC1B92101E000AC390 /* SLVProfileViewController.m */,
+				C4F2CECD1B92101E000AC390 /* SLVProfileViewController.xib */,
 			);
 			name = Profile;
-			sourceTree = "<group>";
-		};
-		C4F2CECA1B920FF2000AC390 /* Settings */ = {
-			isa = PBXGroup;
-			children = (
-				C4F2CECB1B92101E000AC390 /* SLVSettingsViewController.h */,
-				C4F2CECC1B92101E000AC390 /* SLVSettingsViewController.m */,
-				C4F2CECD1B92101E000AC390 /* SLVSettingsViewController.xib */,
-				C4F2CED11B92173A000AC390 /* SLVUpdateProfileViewController.h */,
-				C4F2CED21B92173A000AC390 /* SLVUpdateProfileViewController.m */,
-				C4F2CED31B92173A000AC390 /* SLVUpdateProfileViewController.xib */,
-			);
-			name = Settings;
 			sourceTree = "<group>";
 		};
 		C4F8498D1B9E300E00E3C53D /* Activity */ = {
@@ -726,10 +710,10 @@
 			files = (
 				C42C8E9A1B8888EF0079D734 /* Assets in Resources */,
 				C46980601BAD7B6100F90477 /* illu_spashscreen@3x.png in Resources */,
-				C4F2CECF1B92101E000AC390 /* SLVSettingsViewController.xib in Resources */,
+				C4F2CECF1B92101E000AC390 /* SLVProfileViewController.xib in Resources */,
 				C498E83C1B64F2C8002B0A4E /* SLVLogInViewController.xib in Resources */,
 				C4E9C0FB1B96494E0071C084 /* AveriaSansLibre-BoldItalic.ttf in Resources */,
-				C4ED804B1B7802A6005E84E4 /* SLVProfileViewController.xib in Resources */,
+				C4ED804B1B7802A6005E84E4 /* SLVContactViewController.xib in Resources */,
 				C4E9C0FD1B96494E0071C084 /* AveriaSansLibre-Light.ttf in Resources */,
 				C44EB1A61B7D46CF001DC989 /* SLVSlovedPopupViewController.xib in Resources */,
 				C4C6446B1B9A4D7F0065B2BC /* Nunito-Light.ttf in Resources */,
@@ -752,7 +736,6 @@
 				C4E9C0F31B9641730071C084 /* SLVSloveSentPopupViewController.xib in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
-				C4F2CED51B92173A000AC390 /* SLVUpdateProfileViewController.xib in Resources */,
 				C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
 				C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */,
@@ -853,16 +836,15 @@
 				C4C644741B9AF72F0065B2BC /* SLVTextField.m in Sources */,
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,
 				C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */,
-				C4F2CED41B92173A000AC390 /* SLVUpdateProfileViewController.m in Sources */,
 				C4631E4F1BCF050200CF645E /* SLVLevel.m in Sources */,
 				C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */,
-				C4F2CECE1B92101E000AC390 /* SLVSettingsViewController.m in Sources */,
+				C4F2CECE1B92101E000AC390 /* SLVProfileViewController.m in Sources */,
 				C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */,
 				C44224E91B5BE7D600389210 /* main.m in Sources */,
 				C49EF43F1BC15DB500BD1BD5 /* SLVNewActivityTableViewCell.m in Sources */,
 				C4A48D9F1B61505300CEBA25 /* SLVLogger.m in Sources */,
 				C44EB1A51B7D46CF001DC989 /* SLVSlovedPopupViewController.m in Sources */,
-				C4ED804A1B7802A6005E84E4 /* SLVProfileViewController.m in Sources */,
+				C4ED804A1B7802A6005E84E4 /* SLVContactViewController.m in Sources */,
 				C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */,
 				C44D55401B9B3EB200763F0E /* SLVCodeField.m in Sources */,
 				C4A48DBB1B62C73B00CEBA25 /* SLVRoute.m in Sources */,

@@ -8,7 +8,7 @@
 
 #import "SLVSlovedPopupViewController.h"
 #import "SLVSloveSentPopupViewController.h"
-#import "SLVProfileViewController.h"
+#import "SLVContactViewController.h"
 
 @interface SLVSlovedPopupViewController ()
 

@@ -13,7 +13,7 @@
 #import "SLVContactTableViewCell.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
-#import "SLVProfileViewController.h"
+#import "SLVContactViewController.h"
 #import "SLVSlovedPopupViewController.h"
 #import "SLVAddSloverViewController.h"
 
@@ -62,7 +62,7 @@
 	[super viewDidAppear:animated];
 	
 	if (ApplicationDelegate.sloverToSlove) {
-		[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
+		[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
 		
 		ApplicationDelegate.sloverToSlove = nil;
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
@@ -817,7 +817,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 100;
+	return 80;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -942,7 +942,7 @@
 	
 	SLVLog(@"Selected %@", [contact description]);
 	
-	[self.navigationController pushViewController:[[SLVProfileViewController alloc] initWithContact:contact] animated:YES];
+	[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:contact] animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
@@ -950,7 +950,7 @@
 	headerView.backgroundColor = VERY_LIGHT_GRAY;
 	
 	UILabel *label = [[UILabel alloc] initWithFrame:CGRectMake(8, 1, headerView.frame.size.width - 8 * 2, headerView.frame.size.height - 1 * 2)];
-	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
+	label.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
 	label.text = [self tableView:tableView titleForHeaderInSection:section];
 	label.textColor = DARK_GRAY;
 	

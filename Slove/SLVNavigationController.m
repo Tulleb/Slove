@@ -8,7 +8,7 @@
 
 #import "SLVNavigationController.h"
 #import "SLVPopupViewController.h"
-#import "SLVProfileViewController.h"
+#import "SLVContactViewController.h"
 #import "SLVActivityViewController.h"
 #import "SLVConnectionViewController.h"
 
@@ -237,14 +237,14 @@
 															  multiplier:1
 																constant:SLOVE_BUTTON_SIZE * 0.05]];
 
-	[self.settingsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsButton
+	[self.profileButton addConstraint:[NSLayoutConstraint constraintWithItem:self.profileButton
 																   attribute:NSLayoutAttributeHeight
 																   relatedBy:NSLayoutRelationEqual
 																	  toItem:nil
 																   attribute:NSLayoutAttributeNotAnAttribute
 																  multiplier:1
 																	constant:67]];
-	[self.settingsButton addConstraint:[NSLayoutConstraint constraintWithItem:self.settingsButton
+	[self.profileButton addConstraint:[NSLayoutConstraint constraintWithItem:self.profileButton
 																   attribute:NSLayoutAttributeWidth
 																   relatedBy:NSLayoutRelationEqual
 																	  toItem:nil
@@ -254,14 +254,14 @@
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																   attribute:NSLayoutAttributeTrailing
 																   relatedBy:NSLayoutRelationEqual
-																	  toItem:self.settingsButton
+																	  toItem:self.profileButton
 																   attribute:NSLayoutAttributeTrailing
 																  multiplier:1
 																	constant:0]];
 	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
 																	attribute:NSLayoutAttributeBottom
 																	relatedBy:NSLayoutRelationEqual
-																	   toItem:self.settingsButton
+																	   toItem:self.profileButton
 																	attribute:NSLayoutAttributeBottom
 																   multiplier:1
 																	 constant:0]];
@@ -273,7 +273,7 @@
 }
 
 - (void)pushViewController:(UIViewController *)viewController animated:(BOOL)animated {
-	if ([viewController isKindOfClass:[SLVProfileViewController class]]) {
+	if ([viewController isKindOfClass:[SLVContactViewController class]]) {
 		[self animateSloveButton:NO];
 		[self moveSloveViewTop];
 	}
@@ -311,7 +311,7 @@
 
 - (void)homeAction:(id)sender {
 	self.activityButton.selected = NO;
-	self.settingsButton.selected = NO;
+	self.profileButton.selected = NO;
 	
 	[self popToRootViewControllerAnimated:YES];
 }
@@ -319,7 +319,7 @@
 - (void)activityAction:(id)sender {
 	if (!self.activityButton.selected) {
 		self.activityButton.selected = YES;
-		self.settingsButton.selected = NO;
+		self.profileButton.selected = NO;
 		
 		SLVActivityViewController *activityViewController = [[SLVActivityViewController alloc] init];
 		
@@ -329,7 +329,7 @@
 }
 
 - (void)sloveAction:(id)sender {
-	if (![self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
+	if (![self.topViewController isKindOfClass:[SLVContactViewController class]]) {
 		[self homeAction:self.sloveButton];
 	}
 }
@@ -339,8 +339,8 @@
 		[self.sloveLastClickTimer invalidate];
 		self.sloveClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(incrementSloveClickDuration) userInfo:nil repeats:YES];
 		
-		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
-			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
+		if ([self.topViewController isKindOfClass:[SLVContactViewController class]]) {
+			SLVContactViewController *profileViewController = (SLVContactViewController *)self.topViewController;
 			[profileViewController.circleImageView startAnimating];
 			profileViewController.circleImageView.hidden = NO;
 		}
@@ -348,8 +348,8 @@
 		[self.sloveClickTimer invalidate];
 		self.sloveLastClickTimer = [NSTimer scheduledTimerWithTimeInterval:TIMER_FREQUENCY target:self selector:@selector(decrementDecelerationDuration) userInfo:nil repeats:YES];
 		
-		if ([self.topViewController isKindOfClass:[SLVProfileViewController class]]) {
-			SLVProfileViewController *profileViewController = (SLVProfileViewController *)self.topViewController;
+		if ([self.topViewController isKindOfClass:[SLVContactViewController class]]) {
+			SLVContactViewController *profileViewController = (SLVContactViewController *)self.topViewController;
 			if (self.sloveClickDuration >= 2) {
 				[profileViewController sloveAction:self.sloveButton];
 			}
@@ -365,11 +365,11 @@
 }
 
 - (void)settingsAction:(id)sender {
-	if (!self.settingsButton.selected) {
+	if (!self.profileButton.selected) {
 		self.activityButton.selected = NO;
-		self.settingsButton.selected = YES;
+		self.profileButton.selected = YES;
 		
-		SLVSettingsViewController *parametersViewController = [[SLVSettingsViewController alloc] init];
+		SLVProfileViewController *parametersViewController = [[SLVProfileViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
 		[self pushViewController:parametersViewController animated:NO];
@@ -440,7 +440,7 @@
 	self.homeButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.activityButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveButton = [UIButton buttonWithType:UIButtonTypeCustom];
-	self.settingsButton = [UIButton buttonWithType:UIButtonTypeCustom];
+	self.profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
 	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:RED withInsetColor:WHITE withFrameColor:RED withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
 	
@@ -455,7 +455,7 @@
 	[self.activityButton setTitleColor:BLUE forState:UIControlStateSelected];
 	[self.activityButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
 //	self.activityButton.titleLabel.shadowOffset = CGSizeMake(1, 1);
-	[self.activityButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 0, 0, 25)];
+	[self.activityButton setTitleEdgeInsets:UIEdgeInsetsMake(40, -10, 0, 25)];
 	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity"] forState:UIControlStateNormal];
 	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateHighlighted];
 	[self.activityButton setImage:[UIImage imageNamed:@"Assets/Button/picto_activity_clic"] forState:UIControlStateSelected];
@@ -478,25 +478,25 @@
 	
 	[self loadSloveButtonAnimation:NO];
 	
-	[self.settingsButton setTitle:@"button_profile" forState:UIControlStateNormal];
-	[self.settingsButton setTitleColor:WHITE forState:UIControlStateNormal];
-	[self.settingsButton setTitleColor:BLUE forState:UIControlStateHighlighted];
-	[self.settingsButton setTitleColor:BLUE forState:UIControlStateSelected];
-	[self.settingsButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
-//	self.settingsButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
-	[self.settingsButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 65, 0, 0)];
-	[self.settingsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile"] forState:UIControlStateNormal];
-	[self.settingsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateHighlighted];
-	[self.settingsButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateSelected];
-	[self.settingsButton setImageEdgeInsets:UIEdgeInsetsMake(8, 112, 0, 0)];
-	[self.settingsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile"] forState:UIControlStateNormal];
-	[self.settingsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
-	[self.settingsButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];
-	self.settingsButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
-	[self.settingsButton addTarget:self action:@selector(settingsAction:) forControlEvents:UIControlEventTouchUpInside];
+	[self.profileButton setTitle:@"button_profile" forState:UIControlStateNormal];
+	[self.profileButton setTitleColor:WHITE forState:UIControlStateNormal];
+	[self.profileButton setTitleColor:BLUE forState:UIControlStateHighlighted];
+	[self.profileButton setTitleColor:BLUE forState:UIControlStateSelected];
+	[self.profileButton setTitleShadowColor:DARK_GRAY forState:UIControlStateNormal];
+//	self.profileButton.titleLabel.shadowOffset = CGSizeMake(-1, 1);
+	[self.profileButton setTitleEdgeInsets:UIEdgeInsetsMake(40, 40, 0, 5)];
+	[self.profileButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile"] forState:UIControlStateNormal];
+	[self.profileButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateHighlighted];
+	[self.profileButton setImage:[UIImage imageNamed:@"Assets/Button/picto_profile_clic"] forState:UIControlStateSelected];
+	[self.profileButton setImageEdgeInsets:UIEdgeInsetsMake(8, 112, 0, 0)];
+	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile"] forState:UIControlStateNormal];
+	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
+	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];
+	self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
+	[self.profileButton addTarget:self action:@selector(settingsAction:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.bottomNavigationBarView addSubview:self.activityButton];
-	[self.bottomNavigationBarView addSubview:self.settingsButton];
+	[self.bottomNavigationBarView addSubview:self.profileButton];
 	
 	[self.view addSubview:self.bottomNavigationBarView];
 	[self.view addSubview:self.homeButton];
@@ -507,7 +507,7 @@
 	[SLVViewController setStyle:self.view];
 	
 	[self.activityButton.titleLabel setFont:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL]];
-	[self.settingsButton.titleLabel setFont:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL]];
+	[self.profileButton.titleLabel setFont:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL]];
 	
 	self.bottomNavigationBarView.translatesAutoresizingMaskIntoConstraints = NO;
 	self.homeButton.translatesAutoresizingMaskIntoConstraints = NO;
@@ -515,7 +515,7 @@
 	self.sloveView.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveButton.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveCounterBadge.translatesAutoresizingMaskIntoConstraints = NO;
-	self.settingsButton.translatesAutoresizingMaskIntoConstraints = NO;
+	self.profileButton.translatesAutoresizingMaskIntoConstraints = NO;
 	
 	self.sloveViewConstraint = [NSLayoutConstraint constraintWithItem:self.view
 															attribute:NSLayoutAttributeBottom
