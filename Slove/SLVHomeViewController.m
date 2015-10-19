@@ -460,11 +460,17 @@
 												
 												contact.username = [user objectForKey:@"username"];
 												
-												NSString *pictureUrl = [user objectForKey:@"pictureUrl"];
-												if (pictureUrl) {
-													contact.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]]];
-												} else {
-													contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+												contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+												NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
+												if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+													dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+														NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
+														UIImage *image = [UIImage imageWithData:data];
+														
+														dispatch_sync(dispatch_get_main_queue(), ^(void) {
+															contact.picture = image;
+														});
+													});
 												}
 												
 												NSString *fullName = @"";
@@ -625,9 +631,16 @@
 															if ([[phoneNumberDic objectForKey:@"formatedPhoneNumber"] isEqualToString:[registeredContact objectForKey:@"phoneNumber"]]) {
 																addressBookContact.username = username;
 																
-																NSString *pictureUrl = [registeredContact objectForKey:@"pictureUrl"];
-																if (pictureUrl && ![pictureUrl isEqualToString:@""]) {
-																	addressBookContact.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]]];
+																NSString *profilePictureUrl = [registeredContact objectForKey:@"pictureUrl"];
+																if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+																	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+																		NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
+																		UIImage *image = [UIImage imageWithData:data];
+																		
+																		dispatch_sync(dispatch_get_main_queue(), ^(void) {
+																			addressBookContact.picture = image;
+																		});
+																	});
 																}
 																
 																SLVLog(@"Contact '%@' synchronized with username '%@'", addressBookContact.fullName, addressBookContact.username);
@@ -817,7 +830,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 80;
+	return 70;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -924,9 +937,9 @@
 	
 	cell.layerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
 	
-	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_LARGE];
+	cell.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE];
 	
-	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE];
+	cell.subtitleLabel.font = [UIFont fontWithName:DEFAULT_FONT_LIGHT size:DEFAULT_FONT_SIZE_SMALL];
 	
 	return cell;
 }

@@ -77,7 +77,7 @@
 "button_ok" = "D'accord";
 "error_email_empty" = "Vous avez oublié l'email !";
 "title_sloved" = "Wahou !";
-"button_upload_profile_picture" = "Mettre à jour votre photo de profil";
+"button_upload_profile_picture" = "Changer votre photo";
 "title_phone_number" = "Numéro de téléphone";
 "button_access_contact" = "Accèder aux contacts";
 "popup_only_jpg_png_error" = "Seules les images sont supportées, et oui c'est une photo !";

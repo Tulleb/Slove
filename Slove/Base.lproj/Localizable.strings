@@ -77,7 +77,7 @@
 "button_ok" = "Ok";
 "error_email_empty" = "Your email is empty !";
 "title_sloved" = "Wahoo !";
-"button_upload_profile_picture" = "Upload your profile picture";
+"button_upload_profile_picture" = "Change your picture";
 "title_phone_number" = "Phone Number";
 "button_access_contact" = "Contact access";
 "popup_only_jpg_png_error" = "Only picture files are supported… Yes it is your profile picture!";

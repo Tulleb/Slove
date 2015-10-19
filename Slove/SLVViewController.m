@@ -78,7 +78,7 @@
 															initWithString:NSLocalizedString(textField.placeholder, nil)
 															attributes:@{
 																		 NSForegroundColorAttributeName:LIGHT_GRAY,
-																		 NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE],
+																		 NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT_ITALIC size:DEFAULT_FONT_SIZE],
 																		 NSBaselineOffsetAttributeName:[NSNumber numberWithFloat:0]
 																		 }];
 				}

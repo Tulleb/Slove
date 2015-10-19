@@ -110,11 +110,17 @@
 				
 				contact.username = [user objectForKey:@"username"];
 				
-				NSString *pictureUrl = [user objectForKey:@"pictureUrl"];
-				if (pictureUrl) {
-					contact.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]]];
-				} else {
-					contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+				contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+				NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
+				if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+						NSData *data0 = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
+						UIImage *image = [UIImage imageWithData:data0];
+						
+						dispatch_sync(dispatch_get_main_queue(), ^(void) {
+							contact.picture = image;
+						});
+					});
 				}
 				
 				NSString *fullName = @"";
@@ -250,7 +256,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 80;
+	return 70;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {

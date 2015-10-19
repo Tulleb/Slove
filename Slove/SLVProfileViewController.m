@@ -22,6 +22,76 @@
 	
     [super viewDidLoad];
 	
+	PFUser *currentUser = [PFUser currentUser];
+	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/profil_banniere"];
+	self.levelImageView.image = [UIImage imageNamed:@"Assets/Image/niveau_profil_debutant"];
+	self.counterImageView.image = [UIImage imageNamed:@"Assets/Box/compteur_slove"];
+	self.topBarImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
+	self.bottomBarImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
+	self.profilePictureLayerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
+	self.pictoImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
+	self.profilePictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+	
+	self.profilePictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+	self.profilePictureImageView.clipsToBounds = YES;
+	
+	NSString *profilePictureUrl = [currentUser objectForKey:@"pictureUrl"];
+	if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+			NSData *data0 = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
+			UIImage *image = [UIImage imageWithData:data0];
+			
+			dispatch_sync(dispatch_get_main_queue(), ^(void) {
+				self.profilePictureImageView.image = image;
+			});
+		});
+	}
+	
+	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	NSNumber *sloveCounter = [currentUser objectForKey:@"sloveCounter"];
+	if ([sloveCounter intValue] < 100) {
+		self.counterLabel.text = [NSString stringWithFormat:@"***%03d", [sloveCounter intValue]];
+	} else if ([sloveCounter intValue] < 1000) {
+		self.counterLabel.text = [NSString stringWithFormat:@"**%04d", [sloveCounter intValue]];
+	} else if ([sloveCounter intValue] < 10000) {
+		self.counterLabel.text = [NSString stringWithFormat:@"*%05d", [sloveCounter intValue]];
+	} else {
+		self.counterLabel.text = [NSString stringWithFormat:@"%d", [sloveCounter intValue]];
+	}
+	
+	self.counterLabel.textColor = WHITE;
+	self.counterLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	
+	NSString *fullName = @"";
+	NSString *firstName = [currentUser objectForKey:@"firstName"];
+	
+	if (firstName) {
+		fullName = [fullName stringByAppendingString:firstName];
+	}
+	
+	NSString *lastName = [currentUser objectForKey:@"lastName"];
+	
+	if (lastName) {
+		if (![fullName isEqualToString:@""]) {
+			fullName = [fullName stringByAppendingString:@" "];
+		}
+		
+		fullName = [fullName stringByAppendingString:lastName];
+	}
+	
+	self.fullNameLabel.text = fullName;
+	self.fullNameLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+	
+	self.usernameLabel.text = [currentUser objectForKey:@"username"];
+	self.usernameLabel.textColor = BLUE;
+	self.usernameLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL];
+	
+	[self.uploadProfilePictureButton setTitleColor:BLUE forState:UIControlStateNormal];
+	[self.disconnectButton setTitleColor:WHITE forState:UIControlStateNormal];
+	
 	[self loadBackButton];
 }
 
@@ -35,6 +105,12 @@
 		
 		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
 	}
+}
+
+- (void)viewWillLayoutSubviews {
+	[super viewWillLayoutSubviews];
+	
+	self.bottomDictonnectButtonLayoutConstraint.constant = SLOVE_BUTTON_SIZE;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -95,6 +171,18 @@
 					
 					SLVLog(@"%@%@", SLV_ERROR, error.description);
 					[ParseErrorHandlingController handleParseError:error];
+				} else {
+					NSString *profilePictureUrl = [[PFUser currentUser] objectForKey:@"pictureUrl"];
+					if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+						dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+							NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
+							UIImage *image = [UIImage imageWithData:data];
+							
+							dispatch_sync(dispatch_get_main_queue(), ^(void) {
+								self.profilePictureImageView.image = image;
+							});
+						});
+					}
 				}
 			}];
 		} else {
