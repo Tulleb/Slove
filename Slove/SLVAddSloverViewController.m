@@ -106,43 +106,45 @@
 			NSMutableArray *foundContacts = [[NSMutableArray alloc] init];
 			
 			for (PFUser *user in foundUsers) {
-				SLVContact *contact = [[SLVContact alloc] init];
-				
-				contact.username = [user objectForKey:@"username"];
-				
-				contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
-				NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
-				if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-						NSData *data0 = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
-						UIImage *image = [UIImage imageWithData:data0];
-						
-						dispatch_sync(dispatch_get_main_queue(), ^(void) {
-							contact.picture = image;
+				if ([user objectForKey:@"phoneNumber"] && ![[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
+					SLVContact *contact = [[SLVContact alloc] init];
+					
+					contact.username = [user objectForKey:@"username"];
+					
+					contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+					NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
+					if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+						dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+							NSData *data0 = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
+							UIImage *image = [UIImage imageWithData:data0];
+							
+							dispatch_sync(dispatch_get_main_queue(), ^(void) {
+								contact.picture = image;
+							});
 						});
-					});
-				}
-				
-				NSString *fullName = @"";
-				NSString *firstName = [user objectForKey:@"firstName"];
-				
-				if (firstName) {
-					fullName = [fullName stringByAppendingString:firstName];
-				}
-				
-				NSString *lastName = [user objectForKey:@"lastName"];
-				
-				if (lastName) {
-					if (![fullName isEqualToString:@""]) {
-						fullName = [fullName stringByAppendingString:@" "];
 					}
 					
-					fullName = [fullName stringByAppendingString:lastName];
+					NSString *fullName = @"";
+					NSString *firstName = [user objectForKey:@"firstName"];
+					
+					if (firstName) {
+						fullName = [fullName stringByAppendingString:firstName];
+					}
+					
+					NSString *lastName = [user objectForKey:@"lastName"];
+					
+					if (lastName) {
+						if (![fullName isEqualToString:@""]) {
+							fullName = [fullName stringByAppendingString:@" "];
+						}
+						
+						fullName = [fullName stringByAppendingString:lastName];
+					}
+					
+					contact.fullName = fullName;
+					
+					[foundContacts addObject:contact];
 				}
-				
-				contact.fullName = fullName;
-				
-				[foundContacts addObject:contact];
 			}
 			
 			self.sloversFound = [NSArray arrayWithArray:foundContacts];

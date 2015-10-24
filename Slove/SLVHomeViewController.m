@@ -654,7 +654,7 @@
 												}
 											}
 											
-											self.addressBookContacts = addressBookContactsBuffer;
+											self.addressBookContacts = [self cleanAfterSynchronize:addressBookContactsBuffer];;
 										}
 									} else {
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -719,6 +719,8 @@
 													}
 												}
 											}
+											
+											self.facebookContacts = [self cleanAfterSynchronize:self.facebookContacts];
 										}
 									} else {
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -727,6 +729,18 @@
 									
 									self.facebookContactsReady = YES;
 								}];
+}
+
+- (NSArray *)cleanAfterSynchronize:(NSArray *)arrayToClean {
+	NSMutableArray *arrayBuffer = [[NSMutableArray alloc] initWithArray:arrayToClean];
+	
+	for (SLVContact *contact in arrayBuffer) {
+		if (!contact.username || [contact.username isEqualToString:@""]) {
+			[arrayBuffer removeObject:contact];
+		}
+	}
+	
+	return [[NSArray alloc] initWithArray:arrayBuffer];
 }
 
 - (void)removeContactFromUnsynchronizedContacts:(SLVContact *)contact {
