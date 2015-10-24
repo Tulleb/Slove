@@ -16,6 +16,7 @@
 #import "SLVContactViewController.h"
 #import "SLVSlovedPopupViewController.h"
 #import "SLVAddSloverViewController.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface SLVHomeViewController ()
 
@@ -62,7 +63,11 @@
 	[super viewDidAppear:animated];
 	
 	if (ApplicationDelegate.sloverToSlove) {
-		[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
+		if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove andPicture:[ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_PICTURE]] animated:YES];
+		} else {
+			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
+		}
 		
 		ApplicationDelegate.sloverToSlove = nil;
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
@@ -86,9 +91,8 @@
 		SLVContact *firstSlover = [[SLVContact alloc] init];
 		
 		firstSlover.username = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_USERNAME];
-		firstSlover.picture = [ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_PICTURE];
 		
-		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover];
+		SLVSlovedPopupViewController *slovedPopup = [[SLVSlovedPopupViewController alloc] initWithContact:firstSlover andPicture:[ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_PICTURE]];
 		
 		[self.navigationController presentViewController:slovedPopup animated:YES completion:nil];
 	} else {
@@ -408,22 +412,7 @@
 					}
 					
 					if (pictureURLString) {
-						friend.pictureURLString = pictureURLString;
-					}
-					
-					UIImage *previousPicture = [SLVTools loadImageWithName:friend.fullName];
-					if (!previousPicture) {
-						if (pictureURLString) {
-							if (![pictureURLString isEqualToString:friend.pictureURLString]) {
-								friend.pictureDownloaded = NO;
-							}
-						} else {
-							friend.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
-							friend.pictureDownloaded = YES;
-						}
-					} else {
-						friend.picture = previousPicture;
-						friend.pictureDownloaded = YES;
+						friend.pictureUrl = [NSURL URLWithString:pictureURLString];
 					}
 					
 					[friends addObject:friend];
@@ -433,7 +422,6 @@
 			self.facebookContacts = [NSArray arrayWithArray:friends];
 			
 			[self synchronizeFriends];
-			[self downloadPictures];
 		}
 		
 		if (error) {
@@ -460,17 +448,9 @@
 												
 												contact.username = [user objectForKey:@"username"];
 												
-												contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
 												NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
 												if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-													dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-														NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
-														UIImage *image = [UIImage imageWithData:data];
-														
-														dispatch_sync(dispatch_get_main_queue(), ^(void) {
-															contact.picture = image;
-														});
-													});
+													contact.pictureUrl = [NSURL URLWithString:profilePictureUrl];
 												}
 												
 												NSString *fullName = @"";
@@ -558,45 +538,6 @@
 	}];
 }
 
-- (void)downloadPictures {
-	BOOL downloadNeeded = NO;
-	
-	for (SLVFacebookFriend *friend in self.facebookContacts) {
-		if (!friend.pictureDownloaded) {
-			downloadNeeded = YES;
-			break;
-		}
-	}
-	
-	if (!downloadNeeded) {
-		return;
-	}
-	
-	self.loadingLabel.hidden = NO;
-	int previousPercentage = -1;
-	
-	for (SLVFacebookFriend *friend in self.facebookContacts) {
-		if (!friend.pictureDownloaded) {
-			int percentage = (int)((([self.facebookContacts indexOfObject:friend] + 1) / (float)([self.facebookContacts count])) * 100);
-			if ((percentage % 10 == 0) && (percentage != previousPercentage)) {
-				previousPercentage = percentage;
-				SLVLog(@"Loading contact... %d%%", percentage);
-			}
-			
-			self.loadingLabel.text = [NSString stringWithFormat:@"%@ %d%%", NSLocalizedString(@"label_loading", nil), percentage];
-			[[NSRunLoop currentRunLoop] runMode:NSDefaultRunLoopMode beforeDate:[NSDate distantPast]];
-			
-			UIImage *picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:friend.pictureURLString]]];
-			[SLVTools saveImage:picture withName:friend.fullName];
-			friend.picture = picture;
-			
-			friend.pictureDownloaded = YES;
-		}
-	}
-	
-	self.loadingLabel.hidden = YES;
-}
-
 - (void)synchronizeContacts {
 	if ([self.unsynchronizedContacts count] == 0) {
 		self.addressBookContactsReady = YES;
@@ -633,14 +574,7 @@
 																
 																NSString *profilePictureUrl = [registeredContact objectForKey:@"pictureUrl"];
 																if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-																	dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-																		NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
-																		UIImage *image = [UIImage imageWithData:data];
-																		
-																		dispatch_sync(dispatch_get_main_queue(), ^(void) {
-																			addressBookContact.picture = image;
-																		});
-																	});
+																	addressBookContact.pictureUrl = [NSURL URLWithString:profilePictureUrl];
 																}
 																
 																SLVLog(@"Contact '%@' synchronized with username '%@'", addressBookContact.fullName, addressBookContact.username);
@@ -700,18 +634,7 @@
 															NSString *pictureURLString = [registeredContact objectForKey:@"pictureUrl"];
 															
 															if (pictureURLString && ![pictureURLString isEqualToString:@""]) {
-																if (![pictureURLString isEqualToString:friend.pictureURLString]) {
-																	friend.pictureURLString = pictureURLString;
-																	friend.pictureDownloaded = NO;
-																} else {
-																	UIImage *previousPicture = [SLVTools loadImageWithName:friend.fullName];
-																	if (!previousPicture) {
-																		friend.pictureDownloaded = NO;
-																	} else {
-																		friend.picture = previousPicture;
-																		friend.pictureDownloaded = YES;
-																	}
-																}
+																friend.pictureUrl = [NSURL URLWithString:pictureURLString];
 															}
 															
 															SLVLog(@"Contact '%@' synchronized with username '%@'", friend.fullName, friend.username);
@@ -945,7 +868,13 @@
 		}
 	}
 	
-	cell.pictureImageView.image = contact.picture;
+	if (contact.pictureUrl) {
+		[cell.pictureImageView setImageWithURL:contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	} else if ([contact isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)contact).picture) {
+		cell.pictureImageView.image = ((SLVAddressBookContact *)contact).picture;
+	} else {
+		cell.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+	}
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	cell.pictureImageView.clipsToBounds = YES;
 	

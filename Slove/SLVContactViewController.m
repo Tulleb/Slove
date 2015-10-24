@@ -11,6 +11,7 @@
 #import "SLVInteractionPopupViewController.h"
 #import "SLVAddressBookContact.h"
 #import "SLVLevel.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 #define LOCKER_IMAGE_VIEW_TAG	593
 
@@ -25,6 +26,15 @@
 	
 	if (self) {
 		self.contact = contact;
+	}
+	
+	return self;
+}
+
+- (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture {
+	self = [self initWithContact:contact];
+	if (self) {
+		self.pictureImage = picture;
 	}
 	
 	return self;
@@ -46,7 +56,15 @@
 	self.levelCarousel.type = iCarouselTypeCustom;
 	self.levelCarousel.userInteractionEnabled = NO;
 	
-	self.pictureImageView.image = self.contact.picture;
+	if (self.contact.pictureUrl) {
+		[self.pictureImageView setImageWithURL:self.contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	} else if ([self.contact isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)self.contact).picture) {
+		self.pictureImageView.image = ((SLVAddressBookContact *)self.contact).picture;
+	} else if (self.pictureImage) {
+		self.pictureImageView.image = self.pictureImage;
+	} else {
+		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+	}
 	self.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	self.pictureImageView.clipsToBounds = YES;
 	

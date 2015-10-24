@@ -11,5 +11,6 @@
 @interface SLVAddressBookContact : SLVContact
 
 @property (nonatomic, strong) NSArray<Optional> *phoneNumbers;
+@property (nonatomic, strong) UIImage *picture;
 
 @end

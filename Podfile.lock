@@ -61,6 +61,11 @@ PODS:
     - FBSDKCoreKit (~> 4.0)
     - FBSDKLoginKit (~> 4.0)
     - Parse (~> 1.7.5.3)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
@@ -71,6 +76,7 @@ DEPENDENCIES:
   - libPhoneNumber-iOS (~> 0.8)
   - Parse (~> 1.7)
   - ParseFacebookUtilsV4 (~> 1.7)
+  - UIActivityIndicator-for-SDWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
@@ -88,5 +94,7 @@ SPEC CHECKSUMS:
   libPhoneNumber-iOS: b8ccd23576379caca37c7cbdd554addf384459ed
   Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881
   ParseFacebookUtilsV4: ea5db22e87b91cbf99b9d156642e2b97a4db7d51
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
 COCOAPODS: 0.39.0

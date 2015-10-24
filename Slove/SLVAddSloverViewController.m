@@ -9,6 +9,7 @@
 #import "SLVAddSloverViewController.h"
 #import "SLVContactTableViewCell.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface SLVAddSloverViewController ()
 
@@ -111,17 +112,9 @@
 					
 					contact.username = [user objectForKey:@"username"];
 					
-					contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
 					NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
 					if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-						dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-							NSData *data0 = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
-							UIImage *image = [UIImage imageWithData:data0];
-							
-							dispatch_sync(dispatch_get_main_queue(), ^(void) {
-								contact.picture = image;
-							});
-						});
+						contact.pictureUrl = [NSURL URLWithString:[user objectForKey:@"pictureUrl"]];
 					}
 					
 					NSString *fullName = @"";
@@ -291,7 +284,11 @@
 	cell.subtitleLabel.text = contact.username;
 	cell.subtitleLabel.textColor = BLUE;
 	
-	cell.pictureImageView.image = contact.picture;
+	if (contact.pictureUrl) {
+		[cell.pictureImageView setImageWithURL:contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	} else {
+		cell.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+	}
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	cell.pictureImageView.clipsToBounds = YES;
 	

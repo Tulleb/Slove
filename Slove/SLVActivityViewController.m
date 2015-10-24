@@ -12,6 +12,7 @@
 #import "SLVOldActivityTableViewCell.h"
 #import "SLVHomeViewController.h"
 #import "SLVSlovedPopupViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SLVActivityViewController ()
 
@@ -418,9 +419,22 @@
 			SLVContact *contact = [homeViewController contactForUsername:activity.relatedUser];
 			
 			if (contact) {
-				SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact];
-				
-				[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+				if (contact.pictureUrl) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+						NSData *data = [NSData dataWithContentsOfURL:contact.pictureUrl];
+						UIImage *image = [UIImage imageWithData:data];
+						
+						dispatch_sync(dispatch_get_main_queue(), ^(void) {
+							SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact andPicture:image];
+							
+							[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+						});
+					});
+				} else {
+					SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact andPicture:[UIImage imageNamed:@"Assets/Avatar/avatar_user_big"]];
+					
+					[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+				}
 			}
 		}
 	}

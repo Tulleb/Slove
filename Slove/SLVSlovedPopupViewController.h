@@ -24,8 +24,9 @@
 @property (strong, nonatomic) SLVContact *slover;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pictureHeightLayoutConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
+@property (strong, nonatomic) UIImage *pictureImage;
 
-- (id)initWithContact:(SLVContact *)contact;
+- (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture;
 - (IBAction)leftAction:(id)sender;
 - (IBAction)rightAction:(id)sender;
 

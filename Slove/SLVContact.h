@@ -15,7 +15,7 @@
 @property (nonatomic, strong) NSString<Optional> *phoneNumber;
 @property (nonatomic, strong) NSString<Optional> *fullName;
 @property (nonatomic, strong) NSString *username;
-@property (nonatomic, strong) UIImage<Optional> *picture;
+@property (nonatomic, strong) NSURL<Optional> *pictureUrl;
 @property (nonatomic, strong) NSNumber<Optional> *sloveCounter;
 @property (nonatomic, strong) SLVLevel<Optional> *currentLevel;
 

@@ -49,6 +49,16 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>UIActivityIndicator-for-SDWebImage.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>iCarousel.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,7 +82,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>372CBDC583447D8E7997A5CB18C4EBFF</key>
+		<key>5DD3867EE779F83D2BF777B783742DBF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -92,12 +102,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
+		<key>941B45EFD43947BD125FF2854124AB81</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>9494390523250106847516AB47E5F9FF</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
 		<key>9F3A3DAF2523F0F6FEC26AC469CD4639</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>C46FA09AEE466127AEE9BE4787738780</key>
 		<dict>
 			<key>primary</key>
 			<true/>

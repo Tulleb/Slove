@@ -10,16 +10,18 @@
 #import "SLVSloveSentPopupViewController.h"
 #import "SLVContactViewController.h"
 
+
 @interface SLVSlovedPopupViewController ()
 
 @end
 
 @implementation SLVSlovedPopupViewController
 
-- (id)initWithContact:(SLVContact *)contact {
+- (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture {
 	self = [super init];
 	if (self) {
 		self.slover = contact;
+		self.pictureImage = picture;
 	}
 	
 	return self;
@@ -28,11 +30,6 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	if (self.slover.picture) {
-		self.pictureImageView.image = self.slover.picture;
-	} else {
-		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
-	}
 	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/notif_masque"];
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_tuto_premierevisite_v2"];
 	
@@ -60,6 +57,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	
+	if (!self.pictureImageView.image) {
+		if (self.pictureImage) {
+			self.pictureImageView.image = self.pictureImage;
+		} else {
+			self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+		}
+	}
 	
 	[SLVTools playSound:SLOVED_SOUND];
 }

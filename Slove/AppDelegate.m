@@ -147,18 +147,26 @@
 	if (sloverDic) {
 		NSError *error;
 		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
-		if ([sloverDic objectForKey:@"pictureUrl"]) {
-			slover.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]]];
-		} else {
-			slover.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
-		}
 		
 		if (error) {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		} else {
-			SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover];
-			
-			[self.queuedPopups addObject:presentedViewController];
+			if ([sloverDic objectForKey:@"pictureUrl"]) {
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+					NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]];
+					UIImage *image = [UIImage imageWithData:data];
+					
+					dispatch_sync(dispatch_get_main_queue(), ^(void) {
+						SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover andPicture:image];
+						
+						[self.queuedPopups addObject:presentedViewController];
+					});
+				});
+			} else {
+				SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover andPicture:nil];
+				
+				[self.queuedPopups addObject:presentedViewController];
+			}
 		}
 	} else {
 		[PFPush handlePush:userInfo];

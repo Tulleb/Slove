@@ -10,6 +10,7 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SLVConstructionPopupViewController.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface SLVProfileViewController ()
 
@@ -38,14 +39,7 @@
 	
 	NSString *profilePictureUrl = [currentUser objectForKey:@"pictureUrl"];
 	if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-			NSData *data0 = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
-			UIImage *image = [UIImage imageWithData:data0];
-			
-			dispatch_sync(dispatch_get_main_queue(), ^(void) {
-				self.profilePictureImageView.image = image;
-			});
-		});
+		[self.profilePictureImageView setImageWithURL:[NSURL URLWithString:profilePictureUrl] placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	}
 	
 	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
@@ -174,14 +168,7 @@
 				} else {
 					NSString *profilePictureUrl = [[PFUser currentUser] objectForKey:@"pictureUrl"];
 					if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-						dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-							NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:profilePictureUrl]];
-							UIImage *image = [UIImage imageWithData:data];
-							
-							dispatch_sync(dispatch_get_main_queue(), ^(void) {
-								self.profilePictureImageView.image = image;
-							});
-						});
+						[self.profilePictureImageView setImageWithURL:[NSURL URLWithString:profilePictureUrl] placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 					}
 				}
 			}];
