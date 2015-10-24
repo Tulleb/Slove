@@ -556,16 +556,14 @@
 - (void)loadLevels {
 	NSMutableArray *levelsBuffer = [[NSMutableArray alloc] init];
 	
-	for (int i = 1; i <= 10; i++) {
+	for (int i = 0; i <= 8; i++) {
 		SLVLevel *level = [[SLVLevel alloc] init];
 		
 		level.number = i;
 		
-		NSString *levelImageName = @"Assets/Image/level";
-		levelImageName = [levelImageName stringByAppendingString:[NSString stringWithFormat:@"%d.png", i]];
+		NSString *levelImageName = @"Assets/Image/niveau";
+		levelImageName = [levelImageName stringByAppendingString:[NSString stringWithFormat:@"%d_active", i]];
 		level.picture = [UIImage imageNamed:levelImageName];
-		
-		level.name = levelImageName;
 		
 		[levelsBuffer addObject:level];
 	}

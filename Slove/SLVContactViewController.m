@@ -12,6 +12,8 @@
 #import "SLVAddressBookContact.h"
 #import "SLVLevel.h"
 
+#define LOCKER_IMAGE_VIEW_TAG	593
+
 @interface SLVContactViewController ()
 
 @end
@@ -41,7 +43,7 @@
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_slove"];
 	self.bubblePicto.image = [UIImage imageNamed:@"Assets/Image/picto_tap_2secondes"];
 	
-	self.levelCarousel.type = iCarouselTypeCoverFlow2;
+	self.levelCarousel.type = iCarouselTypeCustom;
 	self.levelCarousel.userInteractionEnabled = NO;
 	
 	self.pictureImageView.image = self.contact.picture;
@@ -56,7 +58,7 @@
 												 name:NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED
 											   object:nil];
 	
-	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number - 1 animated:NO];
+	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number animated:NO];
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -79,8 +81,9 @@
 	
 	NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
 	NSNumber *level = [USER_DEFAULTS objectForKey:levelKey];
+	
 	if (level && [level intValue] != self.contact.currentLevel.number) {
-		self.contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[level intValue] - 1];
+		self.contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[level intValue]];
 		
 		[USER_DEFAULTS removeObjectForKey:levelKey];
 		
@@ -180,7 +183,8 @@
 }
 
 - (void)startLevelAnimation {
-	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number - 1 duration:VERY_LONG_ANIMATION_DURATION];
+	[[[self.levelCarousel itemViewAtIndex:self.contact.currentLevel.number] viewWithTag:LOCKER_IMAGE_VIEW_TAG] hideByFadingWithDuration:LONG_ANIMATION_DURATION AndCompletion:nil];
+	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number duration:VERY_LONG_ANIMATION_DURATION];
 }
 
 - (void)didDismissSloveSentPopup {
@@ -250,45 +254,89 @@
 }
 
 - (UIView *)carousel:(iCarousel *)carousel viewForItemAtIndex:(NSInteger)index reusingView:(UIView *)view {
-	UILabel *label = nil;
+	UIImageView *boxImageView = nil;
+	UIImageView *lockerImageView = nil;
+	UIImageView *levelImageView = nil;
+	
+	UILabel *levelLabel = nil;
+	UIImageView *numberImageView = nil;
+	UILabel *numberLabel = nil;
 	
 	//create new view if no view is available for recycling
 	if (view == nil) {
 		//don't do anything specific to the index within
 		//this `if (view == nil) {...}` statement because the view will be
 		//recycled and used with other index values later
-		view = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 300, 100)];
-		view.contentMode = UIViewContentModeCenter;
-		view.backgroundColor = RED;
+		view = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 117, 80)];
+		//		view.contentMode = UIViewContentModeCenter;
 		
-		label = [[UILabel alloc] initWithFrame:view.bounds];
-		[view addSubview:label];
-	} else {
-		//get a reference to the label in the recycled view
-		label = (UILabel *)[view viewWithTag:1];
+		boxImageView = [[UIImageView alloc] initWithFrame:CGRectMake((view.frame.size.width - 117) / 2, 0, 117, 80)];
+		lockerImageView = [[UIImageView alloc] initWithFrame:boxImageView.frame];
+		levelImageView = [[UIImageView alloc] initWithFrame:CGRectMake(boxImageView.frame.origin.x + (boxImageView.frame.size.width - 80) / 2, (boxImageView.frame.size.height - 40) / 2 - 10, 80, 40)];
+		
+		levelLabel = [[UILabel alloc] initWithFrame:CGRectMake(boxImageView.frame.origin.x + 27, 55, 40, 20)];
+		levelLabel.textAlignment = NSTextAlignmentRight;
+		numberImageView = [[UIImageView alloc] initWithFrame:CGRectMake(levelLabel.frame.origin.x + levelLabel.frame.size.width + 5,  levelLabel.frame.origin.y + (levelLabel.frame.size.height - 15) / 2, 16, 15)];
+		numberLabel = [[UILabel alloc] initWithFrame:CGRectMake(numberImageView.frame.origin.x + 4, numberImageView.frame.origin.y, numberImageView.frame.size.width, numberImageView.frame.size.height)];
+		
+		[view addSubview:boxImageView];
+		[view addSubview:lockerImageView];
+		[view addSubview:levelImageView];
+		[view addSubview:numberImageView];
+		[view addSubview:levelLabel];
+		[view addSubview:numberLabel];
+		
+		[view bringSubviewToFront:lockerImageView];
 	}
+//	else {
+//		//get a reference to the label in the recycled view
+//		label = (UILabel *)[view viewWithTag:1];
+//	}
 	
 	[SLVViewController setStyle:view];
 	
 	SLVLevel *level = [ApplicationDelegate.levels objectAtIndex:index];
 	
-	//set item label
-	//remember to always set any properties of your carousel item
-	//views outside of the `if (view == nil) {...}` check otherwise
-	//you'll get weird issues with carousel item content appearing
-	//in the wrong place in the carousel
-	((UIImageView *)view).image = level.picture;
-	label.text = level.name;
+	boxImageView.image = [UIImage imageNamed:@"Assets/Box/bloc_niveau"];
+	
+	lockerImageView.image = [UIImage imageNamed:@"Assets/Box/bloc_niveau_cadenas"];
+	lockerImageView.tag = LOCKER_IMAGE_VIEW_TAG;
+	
+	levelImageView.image = level.picture;
+	
+	numberImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_numero_niveau"];
+	
+	levelLabel.text = NSLocalizedString(@"level", nil);
+	
+	numberLabel.text = [NSString stringWithFormat:@"%d", level.number];
+	numberLabel.textColor = WHITE;
+	numberLabel.font = [UIFont fontWithName:DEFAULT_FONT_BOLD size:DEFAULT_FONT_SIZE_VERY_SMALL];
+	
+	BOOL levelIsReached = (level.number <= self.contact.currentLevel.number);
+	
+	if (levelIsReached) {
+		lockerImageView.hidden = YES;
+	}
 	
 	return view;
 }
 
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
 	if (option == iCarouselOptionSpacing) {
-		return value * 1.1;
+		return value * 2;
 	}
 	
 	return value;
+}
+
+- (CGFloat)carouselItemWidth:(iCarousel *)carousel {
+	return 100;
+}
+
+- (CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform {
+	CGFloat distance = SCREEN_HEIGHT / 4; //number of pixels to move the items away from camera
+	CGFloat z = - fminf(1.0f, fabs(offset)) * distance;
+	return CATransform3DTranslate(transform, offset * carousel.itemWidth, ABS(offset) * -20, z);
 }
 
 @end

@@ -11,7 +11,6 @@
 @interface SLVLevel : JSONModel
 
 @property (nonatomic) int number;
-@property (nonatomic, strong) NSString *name;
 @property (nonatomic, strong) UIImage *picture;
 
 @end

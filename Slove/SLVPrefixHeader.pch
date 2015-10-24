@@ -83,6 +83,7 @@
 #define DEFAULT_FONT					DEFAULT_FONT_REGULAR
 #define DEFAULT_FONT_TITLE				@"SansitaOne"
 #define DEFAULT_FONT_SIZE				17
+#define DEFAULT_FONT_SIZE_VERY_SMALL	13
 #define DEFAULT_FONT_SIZE_SMALL			15
 #define DEFAULT_FONT_SIZE_LARGE			19
 #define DEFAULT_FONT_SIZE_VERY_LARGE	25
@@ -120,7 +121,7 @@
 
 #pragma mark - Navigation
 #define SLOVE_BUTTON_SIZE			75
-#define SLOVE_VIEW_BOTTOM_CONSTANT	0
+#define SLOVE_VIEW_BOTTOM_CONSTANT	(IS_3INCH5 ? -20 : (IS_4INCH ? -10 : 0))
 
 #pragma mark - Connection
 #define SLOVER_SOUND	@"Assets/Sound/Congratsbuild1.wav"
