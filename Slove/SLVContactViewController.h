@@ -28,7 +28,6 @@
 @property (strong, nonatomic) UIImage *pictureImage;
 @property (nonatomic) float spiraleAngle;
 
-- (id)initWithContact:(SLVContact *)contact;
 - (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture;
 - (IBAction)sloveAction:(id)sender;
 

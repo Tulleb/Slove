@@ -9,6 +9,7 @@
 #import "SLVSlovedPopupViewController.h"
 #import "SLVSloveSentPopupViewController.h"
 #import "SLVContactViewController.h"
+#import "SLVAddressBookContact.h"
 
 
 @interface SLVSlovedPopupViewController ()
@@ -58,15 +59,39 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	if (!self.pictureImageView.image) {
-		if (self.pictureImage) {
-			self.pictureImageView.image = self.pictureImage;
-		} else {
-			self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
-		}
+	if ([self.slover.username isEqualToString:PUPPY_USERNAME]) {
+		self.unknownPuppyImageView = [[UIImageView alloc] initWithFrame:self.pictureImageView.frame];
+		
+		self.unknownPuppyImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+		
+		[self.view insertSubview:self.unknownPuppyImageView aboveSubview:self.pictureImageView];
 	}
 	
-	[SLVTools playSound:SLOVED_SOUND];
+	if (self.pictureImage) {
+		self.pictureImageView.image = self.pictureImage;
+	} else if ([self.slover isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)self.slover).picture) {
+		self.pictureImageView.image = ((SLVAddressBookContact *)self.slover).picture;
+	} else {
+		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+	}
+	
+	[SLVTools playSound:SLOVED_SOUND_PATH];
+}
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	
+	if (self.unknownPuppyImageView) {
+		self.unknownPuppyImageView.frame = self.pictureImageView.frame;
+	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	if (self.unknownPuppyImageView) {
+		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:nil];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -82,7 +107,7 @@
 }
 
 - (IBAction)leftAction:(id)sender {
-	ApplicationDelegate.sloverToSlove = self.slover;
+	ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:self.slover, self.pictureImage, nil];
 	
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED

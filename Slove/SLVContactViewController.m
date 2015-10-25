@@ -21,19 +21,10 @@
 
 @implementation SLVContactViewController
 
-- (id)initWithContact:(SLVContact *)contact {
+- (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture {
 	self = [super init];
-	
 	if (self) {
 		self.contact = contact;
-	}
-	
-	return self;
-}
-
-- (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture {
-	self = [self initWithContact:contact];
-	if (self) {
 		self.pictureImage = picture;
 	}
 	
@@ -63,7 +54,7 @@
 	} else if (self.pictureImage) {
 		self.pictureImageView.image = self.pictureImage;
 	} else {
-		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
 	}
 	self.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	self.pictureImageView.clipsToBounds = YES;
@@ -151,7 +142,7 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {		
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue] || (self.contact.username && [self.contact.username isEqualToString:PUPPY_USERNAME])) {
 		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
 			[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
@@ -178,12 +169,43 @@
 		[messageController setBody:message];
 		
 		[self presentViewController:messageController animated:YES completion:nil];
+	} if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
+		if (ApplicationDelegate.puppyPush) {
+			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_already_sloved_recently", nil) buttonsTitle:nil andDismissButton:YES];
+			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+		} else {
+			PFUser *currentUser = [PFUser currentUser];
+			
+			NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
+			if ([sloveCounter intValue] > 0) {
+				[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
+				
+				NSDictionary *data = @{
+									   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
+									   @"badge" : @"Increment",
+									   @"sound" : SLOVED_SOUND_PATH,
+									   @"slover" : @{@"username" : PUPPY_USERNAME}
+									   };
+				PFPush *push = [[PFPush alloc] init];
+				[push setChannels:@[currentUser.username]];
+				[push setData:data];
+				ApplicationDelegate.puppyPush = push;
+				
+				SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
+				[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
+					[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
+				}];
+			} else {
+				SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
+				[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+			}
+		}
 	} else {
 		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
 						   withParameters:@{@"username" : self.contact.username}
 									block:^(id object, NSError *error){
 										if (!error) {
-											[SLVTools playSound:SLOVER_SOUND];
+											[SLVTools playSound:SLOVER_SOUND_PATH];
 											
 											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];

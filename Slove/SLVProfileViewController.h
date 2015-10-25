@@ -21,6 +21,7 @@
 @property (strong, nonatomic) IBOutlet UIImageView *bottomBarImageView;
 @property (strong, nonatomic) IBOutlet UIButton *disconnectButton;
 @property (strong, nonatomic) IBOutlet UIButton *uploadProfilePictureButton;
+@property (strong, nonatomic) IBOutlet UIProgressView *uploadProgressBar;
 @property (strong, nonatomic) IBOutlet UIView *contactView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePictureImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *profilePictureLayerImageView;

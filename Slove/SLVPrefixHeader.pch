@@ -104,7 +104,8 @@
 
 #pragma mark - User key
 #define USER_DEFAULTS							[NSUserDefaults standardUserDefaults]
-#define	KEY_FIRST_TIME_TUTORIAL					@"first_time_tutorial"
+#define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
+#define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
 #define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
@@ -124,8 +125,8 @@
 #define SLOVE_VIEW_BOTTOM_CONSTANT	(IS_3INCH5 ? -20 : (IS_4INCH ? -10 : 0))
 
 #pragma mark - Connection
-#define SLOVER_SOUND	@"Assets/Sound/Congratsbuild1.wav"
-#define SLOVED_SOUND	@"Assets/Sound/Congratsbuild2.wav"
+#define SLOVER_SOUND_PATH	@"Assets/Sound/Congratsbuild1.wav"
+#define SLOVED_SOUND_PATH	@"Assets/Sound/Congratsbuild2.wav"
 
 #pragma mark - Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2
@@ -146,5 +147,10 @@
 #define FOLLOW_SLOVER_FUNCTION						@"addFollow"
 #define SEND_SLOVE_FUNCTION							@"sendSlove"
 #define GET_ACTIVITIES								@"getActivities"
+
+#pragma mark - Puppy
+#define PUPPY_USERNAME			@"puppey"
+#define PUPPY_MIN_RETURN_DELAY	60 * 15
+#define PUPPY_MAX_RETURN_DELAY	60 * 180
 
 #endif

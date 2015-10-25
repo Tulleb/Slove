@@ -152,8 +152,14 @@
 	NSData* data = UIImageJPEGRepresentation(image, 1);
 	PFFile *imageFile = [PFFile fileWithName:imageFullName data:data];
 	
+	[self.uploadProgressBar showByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	
 	[imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
-		if (!error) {
+		[self.uploadProgressBar hideByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:^{
+			self.uploadProgressBar.progress = 0;
+		}];
+		
+		if (succeeded) {
 			PFUser *user = [PFUser currentUser];
 			
 			user[@"pictureUrl"] = imageFile.url;
@@ -179,6 +185,8 @@
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}
+	} progressBlock:^(int percentDone) {
+		self.uploadProgressBar.progress = percentDone / 100.0;
 	}];
 	
 	[self dismissViewControllerAnimated:YES completion:nil];

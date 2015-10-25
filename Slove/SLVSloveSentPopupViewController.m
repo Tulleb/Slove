@@ -41,7 +41,7 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[SLVTools playSound:SLOVER_SOUND];
+	[SLVTools playSound:SLOVER_SOUND_PATH];
 }
 
 - (void)didReceiveMemoryWarning {

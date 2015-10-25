@@ -25,6 +25,7 @@
                 <outlet property="profilePictureLayerImageView" destination="v4I-I7-TtP" id="qF3-Bb-Rpy"/>
                 <outlet property="topBarImageView" destination="dhQ-zc-hPT" id="bCJ-Sb-4g8"/>
                 <outlet property="uploadProfilePictureButton" destination="Juw-zz-W2x" id="uQa-68-SS9"/>
+                <outlet property="uploadProgressBar" destination="YP5-eM-7nQ" id="0YM-Qz-9Tn"/>
                 <outlet property="usernameLabel" destination="9he-rg-dZ6" id="rUz-W8-UgD"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -186,6 +187,13 @@
                                 <action selector="disconnectAction:" destination="-1" eventType="touchUpInside" id="iFy-hc-HuW"/>
                             </connections>
                         </button>
+                        <progressView hidden="YES" opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="YP5-eM-7nQ">
+                            <rect key="frame" x="225" y="144" width="150" height="2"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="YP5-eM-7nQ" secondAttribute="height" multiplier="75:1" id="Bs8-I9-Uia"/>
+                                <constraint firstAttribute="height" constant="2" id="mHf-yW-CzZ"/>
+                            </constraints>
+                        </progressView>
                     </subviews>
                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     <constraints>
@@ -200,7 +208,9 @@
                         <constraint firstAttribute="trailing" secondItem="106-V6-JMb" secondAttribute="trailing" constant="8" id="cP3-Vt-3Ae"/>
                         <constraint firstItem="Juw-zz-W2x" firstAttribute="top" secondItem="Nw5-gL-ngb" secondAttribute="bottom" constant="8" id="gC2-ty-Ah7"/>
                         <constraint firstItem="JPG-li-wEq" firstAttribute="centerX" secondItem="FQ1-CJ-vRb" secondAttribute="centerX" id="kUE-Tu-abF"/>
+                        <constraint firstItem="YP5-eM-7nQ" firstAttribute="top" secondItem="Juw-zz-W2x" secondAttribute="bottom" constant="8" id="onT-Yo-7ZB"/>
                         <constraint firstItem="106-V6-JMb" firstAttribute="leading" secondItem="FQ1-CJ-vRb" secondAttribute="leading" constant="8" id="sSX-Ay-ukr"/>
+                        <constraint firstItem="YP5-eM-7nQ" firstAttribute="centerX" secondItem="Juw-zz-W2x" secondAttribute="centerX" id="si7-CG-fd5"/>
                         <constraint firstAttribute="trailing" secondItem="dhQ-zc-hPT" secondAttribute="trailing" constant="50" id="u3x-Jq-trz"/>
                         <constraint firstItem="106-V6-JMb" firstAttribute="top" secondItem="dhQ-zc-hPT" secondAttribute="bottom" constant="8" id="uML-Gm-jnj"/>
                         <constraint firstAttribute="bottom" secondItem="JPG-li-wEq" secondAttribute="bottom" constant="8" id="woN-NJ-BG8"/>

@@ -59,14 +59,24 @@
 	[self loadContacts];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	if (ApplicationDelegate.needToRefreshContacts) {
+		[self loadContacts];
+		
+		ApplicationDelegate.needToRefreshContacts = NO;
+	}
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
 	if (ApplicationDelegate.sloverToSlove) {
 		if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
-			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove andPicture:[ApplicationDelegate.parseConfig objectForKey:PARSE_FIRST_SLOVE_PICTURE]] animated:YES];
+			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:[ApplicationDelegate.sloverToSlove firstObject] andPicture:[ApplicationDelegate.sloverToSlove lastObject]] animated:YES];
 		} else {
-			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:ApplicationDelegate.sloverToSlove] animated:YES];
+			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:[ApplicationDelegate.sloverToSlove firstObject] andPicture:nil] animated:YES];
 		}
 		
 		ApplicationDelegate.sloverToSlove = nil;
@@ -499,6 +509,17 @@
 	[self addContactsToSynchronizedContacts:self.facebookContacts];
 	[self addContactsToSynchronizedContacts:self.followedContacts];
 	
+	SLVAddressBookContact *puppy = [[SLVAddressBookContact alloc] init];
+	puppy.fullName = NSLocalizedString(@"stranger_username", nil);
+	puppy.username = PUPPY_USERNAME;
+	puppy.picture = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH]];
+	
+	NSMutableArray *synchronizedContactsBuffer = [[NSMutableArray alloc] initWithArray:self.synchronizedContacts];
+	
+	[synchronizedContactsBuffer insertObject:puppy atIndex:0];
+	
+	self.synchronizedContacts = [[NSArray alloc] initWithArray:synchronizedContactsBuffer];
+	
 	self.fullSynchronizedContacts = self.synchronizedContacts;
 	
 	if (![self.refreshControl isRefreshing]) {
@@ -898,7 +919,7 @@
 	
 	SLVLog(@"Selected %@", [contact description]);
 	
-	[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:contact] animated:YES];
+	[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:contact andPicture:nil] animated:YES];
 }
 
 - (UIView *)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section {
