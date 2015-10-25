@@ -142,7 +142,7 @@
 }
 
 - (IBAction)sloveAction:(id)sender {
-	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue] || (self.contact.username && [self.contact.username isEqualToString:PUPPY_USERNAME])) {
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
 			[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
@@ -169,7 +169,7 @@
 		[messageController setBody:message];
 		
 		[self presentViewController:messageController animated:YES completion:nil];
-	} if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
+	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
 		if (ApplicationDelegate.puppyPush) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_already_sloved_recently", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
@@ -179,6 +179,9 @@
 			NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
 			if ([sloveCounter intValue] > 0) {
 				[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
+				[currentUser saveInBackground];
+				
+				[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 				
 				NSDictionary *data = @{
 									   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],

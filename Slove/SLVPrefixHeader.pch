@@ -150,7 +150,7 @@
 
 #pragma mark - Puppy
 #define PUPPY_USERNAME			@"puppey"
-#define PUPPY_MIN_RETURN_DELAY	60 * 15
-#define PUPPY_MAX_RETURN_DELAY	60 * 180
+#define PUPPY_MIN_RETURN_DELAY	60 * 10
+#define PUPPY_MAX_RETURN_DELAY	60 * 15
 
 #endif
