@@ -62,7 +62,7 @@
 	if ([self.slover.username isEqualToString:PUPPY_USERNAME]) {
 		self.unknownPuppyImageView = [[UIImageView alloc] initWithFrame:self.pictureImageView.frame];
 		
-		self.unknownPuppyImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+		self.unknownPuppyImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]];
 		
 		[self.view insertSubview:self.unknownPuppyImageView aboveSubview:self.pictureImageView];
 	}
@@ -72,7 +72,7 @@
 	} else if ([self.slover isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)self.slover).picture) {
 		self.pictureImageView.image = ((SLVAddressBookContact *)self.slover).picture;
 	} else {
-		self.pictureImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]];
+		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
 	}
 	
 	[SLVTools playSound:SLOVED_SOUND_PATH];
