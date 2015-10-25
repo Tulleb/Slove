@@ -106,6 +106,7 @@
 #define USER_DEFAULTS							[NSUserDefaults standardUserDefaults]
 #define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
 #define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
+#define	KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH	@"puppyProfilePicturePath"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
 #define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
@@ -150,7 +151,7 @@
 
 #pragma mark - Puppy
 #define PUPPY_USERNAME			@"puppey"
-#define PUPPY_MIN_RETURN_DELAY	60 * 10
-#define PUPPY_MAX_RETURN_DELAY	60 * 15
+#define PUPPY_MIN_RETURN_DELAY	(60 * 5)
+#define PUPPY_MAX_RETURN_DELAY	(60 * 15)
 
 #endif

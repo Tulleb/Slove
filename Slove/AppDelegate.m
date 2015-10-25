@@ -61,6 +61,10 @@
 	[self loadLevels];
 	[self loadPuppeyPictures];
 	
+	if (![USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]) {
+		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
+	}
+	
 	if (IS_IOS7) {
 		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
 	} else {
@@ -172,6 +176,7 @@
 			if (slover.username && [slover.username isEqualToString:PUPPY_USERNAME]) {
 				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:(rand() % 12 + 1)];
 				
+				[USER_DEFAULTS setObject:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH] forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
 				[USER_DEFAULTS setObject:newPuppyPicturePath forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
 				
 				self.needToRefreshContacts = YES;

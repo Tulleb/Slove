@@ -72,7 +72,7 @@
 	} else if ([self.slover isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)self.slover).picture) {
 		self.pictureImageView.image = ((SLVAddressBookContact *)self.slover).picture;
 	} else {
-		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+		self.pictureImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]];
 	}
 	
 	[SLVTools playSound:SLOVED_SOUND_PATH];
