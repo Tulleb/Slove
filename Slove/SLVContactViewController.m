@@ -170,10 +170,10 @@
 		} else {
 			PFUser *currentUser = [PFUser currentUser];
 			
-			NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
-			if ([sloveCounter intValue] > 0) {
-				[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
-				[currentUser saveInBackground];
+//			NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
+//			if ([sloveCounter intValue] > 0) {
+//				[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
+//				[currentUser saveInBackground];
 				
 				[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 				
@@ -192,10 +192,10 @@
 				[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
 					[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
 				}];
-			} else {
-				SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
-				[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-			}
+//			} else {
+//				SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
+//				[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+//			}
 		}
 	} else {
 		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
