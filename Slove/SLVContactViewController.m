@@ -168,34 +168,40 @@
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_already_sloved_recently", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 		} else {
-			PFUser *currentUser = [PFUser currentUser];
-			
-//			NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
-//			if ([sloveCounter intValue] > 0) {
-//				[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
-//				[currentUser saveInBackground];
-				
-				[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-				
-				NSDictionary *data = @{
-									   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
-									   @"badge" : @"Increment",
-									   @"sound" : SLOVED_SOUND_PATH,
-									   @"slover" : @{@"username" : PUPPY_USERNAME}
-									   };
-				PFPush *push = [[PFPush alloc] init];
-				[push setChannels:@[currentUser.username]];
-				[push setData:data];
-				ApplicationDelegate.puppyPush = push;
-				
-				SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-				[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
-					[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
-				}];
-//			} else {
-//				SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
-//				[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-//			}
+			[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *currentUser,  NSError *error) {
+				if (!error) {
+					NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
+					
+					if ([sloveCounter intValue] > 0) {
+						[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
+						[currentUser saveInBackground];
+						
+						[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+						
+						NSDictionary *data = @{
+											   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
+											   @"badge" : @"Increment",
+											   @"sound" : SLOVED_SOUND_PATH,
+											   @"slover" : @{@"username" : PUPPY_USERNAME}
+											   };
+						PFPush *push = [[PFPush alloc] init];
+						[push setChannels:@[[currentUser objectForKey:@"username"]]];
+						[push setData:data];
+						ApplicationDelegate.puppyPush = push;
+						
+						SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
+						[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
+							[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
+						}];
+					} else {
+						SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
+						[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+					}
+				} else {
+					SLVLog(@"%@%@", SLV_ERROR, error.description);
+					[ParseErrorHandlingController handleParseError:error];
+				}
+			}];
 		}
 	} else {
 		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
