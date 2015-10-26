@@ -161,6 +161,8 @@
 					   withParameters:@{@"username" : username}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSString *popupBodySloverFollowed = NSLocalizedString(@"popup_body_slover_followed", nil);
 										
 										popupBodySloverFollowed = [popupBodySloverFollowed stringByReplacingOccurrencesOfString:@"[username]"

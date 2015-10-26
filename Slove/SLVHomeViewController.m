@@ -447,6 +447,8 @@
 					   withParameters:nil
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSArray *follows = [datas objectForKey:@"follows"];
 										
@@ -456,7 +458,16 @@
 											for (NSDictionary *user in follows) {
 												SLVContact *contact = [[SLVContact alloc] init];
 												
-												contact.username = [user objectForKey:@"username"];
+												NSString *username = [user objectForKey:@"username"];
+												
+												contact.username = username;
+												
+												NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
+												NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
+												
+												if (currentLevel) {
+													contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
+												}
 												
 												NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
 												if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
@@ -522,7 +533,7 @@
 	
 	self.fullSynchronizedContacts = self.synchronizedContacts;
 	
-	if (![self.refreshControl isRefreshing]) {
+	if ([self.loadingIndicator isAnimating]) {
 		[self.loadingIndicator stopAnimating];
 	}
 	
@@ -578,6 +589,8 @@
 					   withParameters:@{@"phoneNumbers" : phoneNumbers}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSArray *registeredContacts = [datas objectForKey:@"registeredContacts"];
 										
@@ -592,6 +605,13 @@
 														for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
 															if ([[phoneNumberDic objectForKey:@"formatedPhoneNumber"] isEqualToString:[registeredContact objectForKey:@"phoneNumber"]]) {
 																addressBookContact.username = username;
+																
+																NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
+																NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
+																
+																if (currentLevel) {
+																	addressBookContact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
+																}
 																
 																NSString *profilePictureUrl = [registeredContact objectForKey:@"pictureUrl"];
 																if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
@@ -639,6 +659,8 @@
 					   withParameters:@{@"facebookIds" : facebookIds}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSArray *registeredContacts = [datas objectForKey:@"registeredFriends"];
 										
@@ -651,6 +673,13 @@
 													for (SLVFacebookFriend *friend in self.facebookContacts) {
 														if ([friend.facebookId isEqualToString:[registeredContact objectForKey:@"facebookId"]]) {
 															friend.username = username;
+															
+															NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
+															NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
+															
+															if (currentLevel) {
+																friend.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
+															}
 															
 															NSString *pictureURLString = [registeredContact objectForKey:@"pictureUrl"];
 															

@@ -46,6 +46,7 @@
 	
 	self.levelCarousel.type = iCarouselTypeCustom;
 	self.levelCarousel.userInteractionEnabled = NO;
+	self.levelCarousel.hidden = [self.contact.username isEqualToString:PUPPY_USERNAME];
 	
 	if (self.contact.pictureUrl) {
 		[self.pictureImageView setImageWithURL:self.contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
@@ -75,20 +76,22 @@
 	
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self disableElementsForTutorial];
-		self.bubbleView.hidden = NO;
-		
-		[UIView animateWithDuration:ANIMATION_DURATION animations:^{
-			self.bubbleView.alpha = 1;
-		}];
-		
+		[self.bubbleView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 	} else if (!self.bubbleView.hidden) {
 		[self enableElementsForTutorial];
 		self.bubbleView.hidden = YES;
 		
 		[self.navigationController popToRootViewControllerAnimated:YES];
+	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
+		if (![[USER_DEFAULTS objectForKey:KEY_PUPPY_NO_LEVEL_DISPLAYED] boolValue]) {
+			SLVInteractionPopupViewController *warningPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_no_level_available", nil) buttonsTitle:nil andDismissButton:YES];
+			[self.navigationController presentViewController:warningPopup animated:YES completion:^{
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_PUPPY_NO_LEVEL_DISPLAYED];
+			}];
+		}
+	} else {
+		[self checkLevel];
 	}
-	
-	[self checkLevel];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -166,40 +169,48 @@
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_already_sloved_recently", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 		} else {
-			PFUser *currentUser = [PFUser currentUser];
-			
-			NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
-			if ([sloveCounter intValue] > 0) {
-				[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
-				[currentUser saveInBackground];
-				
-				[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-				
-				NSDictionary *data = @{
-									   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
-									   @"badge" : @"Increment",
-									   @"sound" : SLOVED_SOUND_PATH,
-									   @"slover" : @{@"username" : PUPPY_USERNAME}
-									   };
-				PFPush *push = [[PFPush alloc] init];
-				[push setChannels:@[currentUser.username]];
-				[push setData:data];
-				ApplicationDelegate.puppyPush = push;
-				
-				SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-				[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
-					[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
-				}];
-			} else {
-				SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
-				[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-			}
+			[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *currentUser,  NSError *error) {
+				if (!error) {
+					NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
+					
+					if ([sloveCounter intValue] > 0) {
+						[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
+						[currentUser saveInBackground];
+						
+						[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+						
+						NSDictionary *data = @{
+											   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
+											   @"badge" : @"Increment",
+											   @"sound" : SLOVED_SOUND_PATH,
+											   @"slover" : @{@"username" : PUPPY_USERNAME}
+											   };
+						PFPush *push = [[PFPush alloc] init];
+						[push setChannels:@[[currentUser objectForKey:@"username"]]];
+						[push setData:data];
+						ApplicationDelegate.puppyPush = push;
+						
+						SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
+						[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
+							[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
+						}];
+					} else {
+						SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
+						[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+					}
+				} else {
+					SLVLog(@"%@%@", SLV_ERROR, error.description);
+					[ParseErrorHandlingController handleParseError:error];
+				}
+			}];
 		}
 	} else {
 		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
 						   withParameters:@{@"username" : self.contact.username}
 									block:^(id object, NSError *error){
 										if (!error) {
+											SLVLog(@"Received data from server: %@", object);
+											
 											[SLVTools playSound:SLOVER_SOUND_PATH];
 											
 											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
@@ -222,6 +233,8 @@
 					   withParameters:@{@"username" : self.contact.username}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSNumber *level = [datas objectForKey:@"level"];
 										
@@ -233,12 +246,14 @@
 											NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
 											NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
 											
-											if (!currentLevel || ([currentLevel intValue] != self.contact.currentLevel.number)) {
+											if ((!currentLevel && ([level intValue] > 0)) || ([currentLevel intValue] != self.contact.currentLevel.number)) {
 												SLVLog(@"Level up %d with %@!", self.contact.currentLevel.number, self.contact.username);
 												
-												[USER_DEFAULTS setObject:level forKey:levelKey];
-												
 												[self startLevelAnimation];
+											}
+											
+											if (!currentLevel) {
+												[USER_DEFAULTS setObject:level forKey:levelKey];
 											}
 										}
 									} else {

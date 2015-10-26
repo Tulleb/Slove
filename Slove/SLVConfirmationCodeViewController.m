@@ -70,6 +70,8 @@
 					   withParameters:@{@"phoneNumber" : self.currentPhoneNumber, @"phoneVerificationCode" : self.confirmationNumberField.text}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										[ApplicationDelegate userConnected];
 									} else {
 										self.errorLabel.hidden = NO;

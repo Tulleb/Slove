@@ -107,6 +107,7 @@
 #define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
 #define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
 #define	KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
+#define	KEY_PUPPY_NO_LEVEL_DISPLAYED			@"puppyNoLevel"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
 #define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
