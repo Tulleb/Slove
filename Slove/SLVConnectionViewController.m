@@ -59,8 +59,8 @@
 }
 
 - (void)didReceiveMemoryWarning {
-    [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+	[super didReceiveMemoryWarning];
+	// Dispose of any resources that can be recreated.
 }
 
 - (IBAction)connectAction:(id)sender {
@@ -124,6 +124,8 @@
 		[PFFacebookUtils logInInBackgroundWithAccessToken:accessToken
 													block:^(PFUser *user, NSError *error) {
 														if (error) {
+															[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+															
 															SLVLog(@"%@%@", SLV_ERROR, error.description);
 															[ParseErrorHandlingController handleParseError:error];
 														} else {
@@ -149,8 +151,10 @@
 															}
 															
 															if (!validUsername) {
-																SLVLog(@"%@Username is not valid, going to Username view controller", SLV_WARNING);
-																[self.navigationController pushViewController:[[SLVUsernameViewController alloc] init] animated:YES];
+																if (![[self.navigationController topViewController] isKindOfClass:[SLVUsernameViewController class]]) {
+																	SLVLog(@"%@Username is not valid, going to Username view controller", SLV_WARNING);
+																	[self.navigationController pushViewController:[[SLVUsernameViewController alloc] init] animated:YES];
+																}
 																
 																[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 															} else if ([user objectForKey:@"phoneNumber"] == nil || [[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
@@ -196,9 +200,9 @@
 
 - (void)getPublicInformationsFromFacebook {
 	NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
-
+	
 	[params setObject:@"first_name, last_name, email" forKey:@"fields"];
-
+	
 	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
 								  initWithGraphPath:@"/me"
@@ -339,6 +343,9 @@
 #pragma mark - FBSDKLoginButtonDelegate
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
+	ApplicationDelegate.currentNavigationController.loaderImageView.hidden = NO;
+	ApplicationDelegate.applicationJustStarted = YES;
+	
 	[self loggedWithFacebook];
 }
 

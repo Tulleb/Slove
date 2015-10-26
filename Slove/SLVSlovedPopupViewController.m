@@ -8,7 +8,9 @@
 
 #import "SLVSlovedPopupViewController.h"
 #import "SLVSloveSentPopupViewController.h"
-#import "SLVProfileViewController.h"
+#import "SLVContactViewController.h"
+#import "SLVAddressBookContact.h"
+
 
 @interface SLVSlovedPopupViewController ()
 
@@ -16,10 +18,11 @@
 
 @implementation SLVSlovedPopupViewController
 
-- (id)initWithContact:(SLVContact *)contact {
+- (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture {
 	self = [super init];
 	if (self) {
 		self.slover = contact;
+		self.pictureImage = picture;
 	}
 	
 	return self;
@@ -28,11 +31,6 @@
 - (void)viewDidLoad {
 	[super viewDidLoad];
 	
-	if (self.slover.picture) {
-		self.pictureImageView.image = self.slover.picture;
-	} else {
-		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
-	}
 	self.layerImageView.image = [UIImage imageNamed:@"Assets/Image/notif_masque"];
 	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_tuto_premierevisite_v2"];
 	
@@ -61,7 +59,39 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
-	[SLVTools playSound:SLOVED_SOUND];
+	if ([self.slover.username isEqualToString:PUPPY_USERNAME]) {
+		self.unknownPuppyImageView = [[UIImageView alloc] initWithFrame:self.pictureImageView.frame];
+		
+		self.unknownPuppyImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]];
+		
+		[self.view insertSubview:self.unknownPuppyImageView aboveSubview:self.pictureImageView];
+	}
+	
+	if (self.pictureImage) {
+		self.pictureImageView.image = self.pictureImage;
+	} else if ([self.slover isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)self.slover).picture) {
+		self.pictureImageView.image = ((SLVAddressBookContact *)self.slover).picture;
+	} else {
+		self.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user_big"];
+	}
+	
+	[SLVTools playSound:SLOVED_SOUND_PATH];
+}
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	
+	if (self.unknownPuppyImageView) {
+		self.unknownPuppyImageView.frame = self.pictureImageView.frame;
+	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
+	if (self.unknownPuppyImageView) {
+		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:nil];
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -77,7 +107,7 @@
 }
 
 - (IBAction)leftAction:(id)sender {
-	ApplicationDelegate.sloverToSlove = self.slover;
+	ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:self.slover, self.pictureImage, nil];
 	
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED

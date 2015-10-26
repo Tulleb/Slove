@@ -12,6 +12,7 @@
 #import "SLVOldActivityTableViewCell.h"
 #import "SLVHomeViewController.h"
 #import "SLVSlovedPopupViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SLVActivityViewController ()
 
@@ -36,6 +37,7 @@
 	[self.activityTableView addSubview:self.refreshControl];
 	
 	[self loadBackButton];
+	[self loadActivities];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -45,8 +47,6 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
-	
-	[self loadActivities];
 }
 
 - (void)goBack:(id)sender {
@@ -129,6 +129,7 @@
 											[USER_DEFAULTS setObject:[NSDate date] forKey:KEY_LAST_ACTIVITY_REFRESH];
 											
 											[self.activityTableView reloadData];
+											[self.activityTableView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 										} else {
 											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
 											
@@ -137,6 +138,8 @@
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
 											[ParseErrorHandlingController handleParseError:error];
 										}
+										
+										[self.activityIndicatorView stopAnimating];
 										
 										if ([self.refreshControl isRefreshing]) {
 											[self.refreshControl endRefreshing];
@@ -416,9 +419,22 @@
 			SLVContact *contact = [homeViewController contactForUsername:activity.relatedUser];
 			
 			if (contact) {
-				SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact];
-				
-				[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+				if (contact.pictureUrl) {
+					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+						NSData *data = [NSData dataWithContentsOfURL:contact.pictureUrl];
+						UIImage *image = [UIImage imageWithData:data];
+						
+						dispatch_sync(dispatch_get_main_queue(), ^(void) {
+							SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact andPicture:image];
+							
+							[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+						});
+					});
+				} else {
+					SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact andPicture:[UIImage imageNamed:@"Assets/Avatar/avatar_user_big"]];
+					
+					[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+				}
 			}
 		}
 	}

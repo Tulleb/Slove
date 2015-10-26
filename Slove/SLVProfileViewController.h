@@ -2,29 +2,35 @@
 //  SLVProfileViewController.h
 //  Slove
 //
-//  Created by Guillaume Bellut on 09/08/2015.
+//  Created by Guillaume Bellut on 29/08/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
 #import "SLVViewController.h"
-#import "SLVContact.h"
-#import <MessageUI/MessageUI.h>
 
-@interface SLVProfileViewController : SLVViewController <MFMessageComposeViewControllerDelegate>
+@interface SLVProfileViewController : SLVViewController <UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 
-@property (strong, nonatomic) SLVContact *contact;
-@property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;
-@property (strong, nonatomic) IBOutlet UIImageView *spiraleImageView;
-@property (strong, nonatomic) IBOutlet UIImageView *circleImageView;
-@property (strong, nonatomic) IBOutlet UIView *bubbleView;
-@property (strong, nonatomic) IBOutlet UIImageView *bubbleImageView;
-@property (strong, nonatomic) IBOutlet UILabel *bubbleLabel;
-@property (strong, nonatomic) IBOutlet UIImageView *bubblePicto;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *spiraleYConstraint;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
-@property (nonatomic) float spiraleAngle;
+@property (strong, nonatomic) IBOutlet UIView *bannerView;
+@property (strong, nonatomic) IBOutlet UIImageView *bannerImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *levelImageView;
+@property (strong, nonatomic) IBOutlet UIView *counterView;
+@property (strong, nonatomic) IBOutlet UIImageView *counterImageView;
+@property (strong, nonatomic) IBOutlet UILabel *counterLabel;
+@property (strong, nonatomic) IBOutlet UIView *bodyView;
+@property (strong, nonatomic) IBOutlet UIImageView *topBarImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *bottomBarImageView;
+@property (strong, nonatomic) IBOutlet UIButton *disconnectButton;
+@property (strong, nonatomic) IBOutlet UIButton *uploadProfilePictureButton;
+@property (strong, nonatomic) IBOutlet UIProgressView *uploadProgressBar;
+@property (strong, nonatomic) IBOutlet UIView *contactView;
+@property (strong, nonatomic) IBOutlet UIImageView *profilePictureImageView;
+@property (strong, nonatomic) IBOutlet UIImageView *profilePictureLayerImageView;
+@property (strong, nonatomic) IBOutlet UILabel *fullNameLabel;
+@property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *pictoImageView;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomDictonnectButtonLayoutConstraint;
 
-- (id)initWithContact:(SLVContact *)contact;
-- (IBAction)sloveAction:(id)sender;
+- (IBAction)uploadProfilePictureAction:(id)sender;
+- (IBAction)disconnectAction:(id)sender;
 
 @end

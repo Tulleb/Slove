@@ -83,8 +83,9 @@
 #define DEFAULT_FONT					DEFAULT_FONT_REGULAR
 #define DEFAULT_FONT_TITLE				@"SansitaOne"
 #define DEFAULT_FONT_SIZE				17
+#define DEFAULT_FONT_SIZE_VERY_SMALL	13
 #define DEFAULT_FONT_SIZE_SMALL			15
-#define DEFAULT_FONT_SIZE_LARGE			20
+#define DEFAULT_FONT_SIZE_LARGE			19
 #define DEFAULT_FONT_SIZE_VERY_LARGE	25
 #define DEFAULT_FONT_SIZE_HUGE			45
 #define DEFAULT_TEXT_COLOR				DARK_GRAY
@@ -103,12 +104,15 @@
 
 #pragma mark - User key
 #define USER_DEFAULTS							[NSUserDefaults standardUserDefaults]
-#define	KEY_FIRST_TIME_TUTORIAL					@"first_time_tutorial"
+#define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
+#define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
+#define	KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
 #define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
 #define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
 #define	KEY_LAST_ACTIVITY_REFRESH				@"lastActivityRefresh"
+#define	KEY_CONTACT_LEVELUP						@"contactLevelUp"
 
 #pragma mark - Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"
@@ -119,11 +123,11 @@
 
 #pragma mark - Navigation
 #define SLOVE_BUTTON_SIZE			75
-#define SLOVE_VIEW_BOTTOM_CONSTANT	0
+#define SLOVE_VIEW_BOTTOM_CONSTANT	(IS_3INCH5 ? -20 : (IS_4INCH ? -10 : 0))
 
 #pragma mark - Connection
-#define SLOVER_SOUND	@"Assets/Sound/Congratsbuild1.wav"
-#define SLOVED_SOUND	@"Assets/Sound/Congratsbuild2.wav"
+#define SLOVER_SOUND_PATH	@"Assets/Sound/Congratsbuild1.wav"
+#define SLOVED_SOUND_PATH	@"Assets/Sound/Congratsbuild2.wav"
 
 #pragma mark - Field validation
 #define VALIDATION_USERNAME_MIN_LENGTH	2
@@ -144,5 +148,11 @@
 #define FOLLOW_SLOVER_FUNCTION						@"addFollow"
 #define SEND_SLOVE_FUNCTION							@"sendSlove"
 #define GET_ACTIVITIES								@"getActivities"
+#define GET_LEVEL									@"getLevel"
+
+#pragma mark - Puppy
+#define PUPPY_USERNAME			@"puppey"
+#define PUPPY_MIN_RETURN_DELAY	(60 * 5)
+#define PUPPY_MAX_RETURN_DELAY	(60 * 15)
 
 #endif

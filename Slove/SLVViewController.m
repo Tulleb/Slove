@@ -70,8 +70,18 @@
 				UITextField *textField = (UITextField *)subview;
 				
 				textField.text = NSLocalizedString(textField.text, nil);
-				textField.placeholder = NSLocalizedString(textField.placeholder, nil);
 				textField.textColor = DEFAULT_TEXT_COLOR;
+				textField.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+				
+				if ([textField respondsToSelector:@selector(setAttributedPlaceholder:)]) {
+					textField.attributedPlaceholder = [[NSAttributedString alloc]
+															initWithString:NSLocalizedString(textField.placeholder, nil)
+															attributes:@{
+																		 NSForegroundColorAttributeName:LIGHT_GRAY,
+																		 NSFontAttributeName:[UIFont fontWithName:DEFAULT_FONT_ITALIC size:DEFAULT_FONT_SIZE],
+																		 NSBaselineOffsetAttributeName:[NSNumber numberWithFloat:0]
+																		 }];
+				}
 			} else if ([subview isKindOfClass:[UITextView class]]) {
 				UITextView *textView = (UITextView *)subview;
 				

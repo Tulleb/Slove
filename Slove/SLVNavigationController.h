@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import <CustomBadge/CustomBadge.h>
-#import "SLVSettingsViewController.h"
+#import "SLVProfileViewController.h"
 
 @interface SLVNavigationController : UINavigationController <UIGestureRecognizerDelegate>
 
@@ -18,7 +18,7 @@
 @property (strong, nonatomic) UIButton *sloveButton;
 @property (strong, nonatomic) CustomBadge *sloveCounterBadge;
 @property (strong, nonatomic) UIButton *activityButton;
-@property (strong, nonatomic) UIButton *settingsButton;
+@property (strong, nonatomic) UIButton *profileButton;
 @property (strong, nonatomic) UIButton *homeButton;
 @property (strong, nonatomic) NSLayoutConstraint *sloveViewConstraint;
 @property (strong, nonatomic) NSLayoutConstraint *sloveBadgeConstraint;

@@ -15,6 +15,8 @@
 #import "SLVSlovedPopupViewController.h"
 #import <Google/Analytics.h>
 #import "Reachability.h"
+#import "SLVLevel.h"
+#import "SLVAddressBookContact.h"
 
 @interface AppDelegate ()
 
@@ -56,6 +58,12 @@
 	[self loadUserDefaults];
 	[self loadCountryCodeDatas];
 	[self loadDefaultCountryCodeData];
+	[self loadLevels];
+	[self loadPuppeyPictures];
+	
+	if (![USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]) {
+		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
+	}
 	
 	if (IS_IOS7) {
 		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
@@ -94,6 +102,22 @@
 
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	self.alreadyCheckedCompatibleVersion = NO;
+	
+	if (self.puppyPush && !self.puppyTimer) {
+		//create new uiBackgroundTask
+		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+			[application endBackgroundTask:bgTask];
+			bgTask = UIBackgroundTaskInvalid;
+		}];
+		
+		//and create new timer with async call:
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			//run function methodRunAfterBackground
+			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(rand() % (PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
+			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
+			[[NSRunLoop currentRunLoop] run];
+		});
+	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -101,7 +125,11 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
-	application.applicationIconBadgeNumber = 0;
+	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
+//	if (currentInstallation.badge != 0) {	// this check is currently not working with Parse
+		currentInstallation.badge = 0;
+		[currentInstallation saveEventually];
+//	}
 	
 	[self checkReachability];
 	[FBSDKAppEvents activateApp];
@@ -124,7 +152,7 @@
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	[currentInstallation setDeviceTokenFromData:deviceToken];
 	currentInstallation.channels = @[@"global"];
-	[currentInstallation saveInBackground];
+	[currentInstallation saveEventually];
 	
 	SLVLog(@"Device registered for push notifications");
 }
@@ -137,21 +165,48 @@
 #pragma mark - Custom methods
 
 - (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
-	self.queuedPopups = nil;
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
 		NSError *error;
 		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
-		if ([sloverDic objectForKey:@"pictureUrl"]) {
-			slover.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]]];
-		}
 		
 		if (error) {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 		} else {
-			SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover];
-			
-			[self.queuedPopups addObject:presentedViewController];
+			if (slover.username && [slover.username isEqualToString:PUPPY_USERNAME]) {
+				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:(rand() % 12 + 1)];
+				
+				[USER_DEFAULTS setObject:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH] forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
+				[USER_DEFAULTS setObject:newPuppyPicturePath forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
+				
+				self.needToRefreshContacts = YES;
+				
+				UIImage *newPuppyPicture = [UIImage imageNamed:newPuppyPicturePath];
+				
+				SLVAddressBookContact *puppy = [[SLVAddressBookContact alloc] init];
+				
+				puppy.username = slover.username;
+				puppy.picture = newPuppyPicture;
+				
+				SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:puppy andPicture:nil];
+				
+				[self.queuedPopups addObject:presentedViewController];
+			} else if ([sloverDic objectForKey:@"pictureUrl"]) {
+				dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
+					NSData *data = [NSData dataWithContentsOfURL:[NSURL URLWithString:[sloverDic objectForKey:@"pictureUrl"]]];
+					UIImage *image = [UIImage imageWithData:data];
+					
+					dispatch_sync(dispatch_get_main_queue(), ^(void) {
+						SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover andPicture:image];
+						
+						[self.queuedPopups addObject:presentedViewController];
+					});
+				});
+			} else {
+				SLVSlovedPopupViewController *presentedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:slover andPicture:nil];
+				
+				[self.queuedPopups addObject:presentedViewController];
+			}
 		}
 	} else {
 		[PFPush handlePush:userInfo];
@@ -207,7 +262,7 @@
 	
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 	currentInstallation.channels = @[@"global", [PFUser currentUser].username];
-	[currentInstallation saveInBackground];
+	[currentInstallation saveEventually];
 	
 	if (!self.userIsConnected) {
 		self.currentNavigationController = nil;
@@ -546,6 +601,32 @@
 	}
 }
 
+- (void)loadLevels {
+	NSMutableArray *levelsBuffer = [[NSMutableArray alloc] init];
+	
+	for (int i = 0; i <= 8; i++) {
+		SLVLevel *level = [[SLVLevel alloc] init];
+		
+		level.number = i;
+		
+		level.picture = [UIImage imageNamed:[NSString stringWithFormat:@"Assets/Image/niveau%d_active", i]];
+		
+		[levelsBuffer addObject:level];
+	}
+	
+	self.levels = [[NSArray alloc] initWithArray:levelsBuffer];
+}
+
+- (void)loadPuppeyPictures {
+	NSMutableArray *puppyPicturesBuffer = [[NSMutableArray alloc] init];
+	
+	for (int i = 1; i <= 12; i++) {
+		[puppyPicturesBuffer addObject:[NSString stringWithFormat:@"Assets/Avatar/puppy_%02d.jpg", i]];
+	}
+	
+	self.puppyPictures = [[NSArray alloc] initWithArray:puppyPicturesBuffer];
+}
+
 - (void)loadParseConfig {
 	if (!self.parseConfig) {
 		self.parseConfig = [[NSMutableDictionary alloc] init];
@@ -652,6 +733,15 @@
 	}
 	
 	self.alreadyCheckedCompatibleVersion = YES;
+}
+
+- (void)sendPuppyPush {
+	[self.puppyPush sendPushInBackground];
+	
+	self.puppyPush = nil;
+	
+	[self.puppyTimer invalidate];
+	self.puppyTimer = nil;
 }
 
 

@@ -9,6 +9,7 @@
 #import "SLVAddSloverViewController.h"
 #import "SLVContactTableViewCell.h"
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface SLVAddSloverViewController ()
 
@@ -106,37 +107,37 @@
 			NSMutableArray *foundContacts = [[NSMutableArray alloc] init];
 			
 			for (PFUser *user in foundUsers) {
-				SLVContact *contact = [[SLVContact alloc] init];
-				
-				contact.username = [user objectForKey:@"username"];
-				
-				NSString *pictureUrl = [user objectForKey:@"pictureUrl"];
-				if (pictureUrl) {
-					contact.picture = [UIImage imageWithData:[NSData dataWithContentsOfURL:[NSURL URLWithString:pictureUrl]]];
-				} else {
-					contact.picture = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
-				}
-				
-				NSString *fullName = @"";
-				NSString *firstName = [user objectForKey:@"firstName"];
-				
-				if (firstName) {
-					fullName = [fullName stringByAppendingString:firstName];
-				}
-				
-				NSString *lastName = [user objectForKey:@"lastName"];
-				
-				if (lastName) {
-					if (![fullName isEqualToString:@""]) {
-						fullName = [fullName stringByAppendingString:@" "];
+				if ([user objectForKey:@"phoneNumber"] && ![[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
+					SLVContact *contact = [[SLVContact alloc] init];
+					
+					contact.username = [user objectForKey:@"username"];
+					
+					NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
+					if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+						contact.pictureUrl = [NSURL URLWithString:[user objectForKey:@"pictureUrl"]];
 					}
 					
-					fullName = [fullName stringByAppendingString:lastName];
+					NSString *fullName = @"";
+					NSString *firstName = [user objectForKey:@"firstName"];
+					
+					if (firstName) {
+						fullName = [fullName stringByAppendingString:firstName];
+					}
+					
+					NSString *lastName = [user objectForKey:@"lastName"];
+					
+					if (lastName) {
+						if (![fullName isEqualToString:@""]) {
+							fullName = [fullName stringByAppendingString:@" "];
+						}
+						
+						fullName = [fullName stringByAppendingString:lastName];
+					}
+					
+					contact.fullName = fullName;
+					
+					[foundContacts addObject:contact];
 				}
-				
-				contact.fullName = fullName;
-				
-				[foundContacts addObject:contact];
 			}
 			
 			self.sloversFound = [NSArray arrayWithArray:foundContacts];
@@ -250,7 +251,7 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 100;
+	return 70;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
@@ -283,7 +284,11 @@
 	cell.subtitleLabel.text = contact.username;
 	cell.subtitleLabel.textColor = BLUE;
 	
-	cell.pictureImageView.image = contact.picture;
+	if (contact.pictureUrl) {
+		[cell.pictureImageView setImageWithURL:contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+	} else {
+		cell.pictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+	}
 	cell.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
 	cell.pictureImageView.clipsToBounds = YES;
 	

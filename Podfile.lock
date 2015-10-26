@@ -51,6 +51,7 @@ PODS:
   - GoogleSymbolUtilities (1.0.0)
   - GoogleUtilities (1.0.1):
     - GoogleSymbolUtilities (~> 1.0)
+  - iCarousel (1.8.2)
   - JSONModel (1.1.0)
   - libPhoneNumber-iOS (0.8.5)
   - Parse (1.7.5.3):
@@ -60,15 +61,22 @@ PODS:
     - FBSDKCoreKit (~> 4.0)
     - FBSDKLoginKit (~> 4.0)
     - Parse (~> 1.7.5.3)
+  - SDWebImage (3.7.3):
+    - SDWebImage/Core (= 3.7.3)
+  - SDWebImage/Core (3.7.3)
+  - UIActivityIndicator-for-SDWebImage (1.2):
+    - SDWebImage (~> 3.7)
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
   - CustomBadge (~> 3.0)
   - Google/Analytics (~> 1.0.0)
+  - iCarousel (~> 1.8)
   - JSONModel
   - libPhoneNumber-iOS (~> 0.8)
   - Parse (~> 1.7)
   - ParseFacebookUtilsV4 (~> 1.7)
+  - UIActivityIndicator-for-SDWebImage
 
 SPEC CHECKSUMS:
   AFNetworking: 05edc0ac4c4c8cf57bcf4b84be5b0744b6d8e71e
@@ -81,9 +89,12 @@ SPEC CHECKSUMS:
   GoogleNetworkingUtilities: 292992ab31b7b4ba32809a0e8b40e324cdfb2c0c
   GoogleSymbolUtilities: a7b0feed1fe667c8d5e647177938d0ecd62d6948
   GoogleUtilities: e3475cd4d45134221d2f3f3626095a1c49b62041
+  iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   libPhoneNumber-iOS: b8ccd23576379caca37c7cbdd554addf384459ed
   Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881
   ParseFacebookUtilsV4: ea5db22e87b91cbf99b9d156642e2b97a4db7d51
+  SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
+  UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 
-COCOAPODS: 0.37.2
+COCOAPODS: 0.39.0

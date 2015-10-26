@@ -10,6 +10,8 @@
 #import "SLVConfirmationCodeViewController.h"
 #import <CoreTelephony/CTTelephonyNetworkInfo.h>
 #import <CoreTelephony/CTCarrier.h>
+#import "SLVRegisterViewController.h"
+#import "SLVUsernameViewController.h"
 
 @interface SLVPhoneNumberViewController ()
 
@@ -40,7 +42,15 @@
 	[self observeKeyboard];
 	[self initTapToDismiss];
 	
-	[self loadBackButton];
+	NSInteger numberOfViewControllers = self.navigationController.viewControllers.count;
+	
+	if ((numberOfViewControllers >= 2) && ([[self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2] isKindOfClass:[SLVRegisterViewController class]] || [[self.navigationController.viewControllers objectAtIndex:numberOfViewControllers - 2] isKindOfClass:[SLVUsernameViewController class]])) {
+		self.navigationItem.hidesBackButton = YES;
+	} else {
+		[self loadBackButton];
+	}
+	
+	self.navigationItem.hidesBackButton = YES;
 	
 	[self selectDefaultCountry];
 }

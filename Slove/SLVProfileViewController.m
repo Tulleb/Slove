@@ -2,14 +2,15 @@
 //  SLVProfileViewController.m
 //  Slove
 //
-//  Created by Guillaume Bellut on 09/08/2015.
+//  Created by Guillaume Bellut on 29/08/2015.
 //  Copyright (c) 2015 Tulleb's Corp. All rights reserved.
 //
 
 #import "SLVProfileViewController.h"
-#import "SLVSloveSentPopupViewController.h"
-#import "SLVInteractionPopupViewController.h"
-#import "SLVAddressBookContact.h"
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import "SLVConstructionPopupViewController.h"
+#import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
 @interface SLVProfileViewController ()
 
@@ -17,93 +18,93 @@
 
 @implementation SLVProfileViewController
 
-- (id)initWithContact:(SLVContact *)contact {
-	self = [super init];
-	
-	if (self) {
-		self.contact = contact;
-	}
-	
-	return self;
-}
-
 - (void)viewDidLoad {
+	self.appName = @"profile";
+	
     [super viewDidLoad];
 	
-	if (self.contact.username && ![self.contact.username isEqualToString:@""]) {
-		self.title = self.contact.username;
-	} else {
-		self.title = self.contact.fullName;
+	PFUser *currentUser = [PFUser currentUser];
+	
+	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/profil_banniere"];
+	self.levelImageView.image = [UIImage imageNamed:@"Assets/Image/niveau_profil_debutant"];
+	self.counterImageView.image = [UIImage imageNamed:@"Assets/Box/compteur_slove"];
+	self.topBarImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
+	self.bottomBarImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
+	self.profilePictureLayerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
+	self.pictoImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
+	self.profilePictureImageView.image = [UIImage imageNamed:@"Assets/Avatar/avatar_user"];
+	
+	self.profilePictureImageView.contentMode = UIViewContentModeScaleAspectFill;
+	self.profilePictureImageView.clipsToBounds = YES;
+	
+	NSString *profilePictureUrl = [currentUser objectForKey:@"pictureUrl"];
+	if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+		[self.profilePictureImageView setImageWithURL:[NSURL URLWithString:profilePictureUrl] placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	}
 	
-	self.spiraleImageView.image = [UIImage imageNamed:@"Assets/Button/bt_spirale_rotation"];
-	self.bubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_slove"];
-	self.bubblePicto.image = [UIImage imageNamed:@"Assets/Image/picto_tap_2secondes"];
+	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
+	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
+	
+	NSNumber *sloveCounter = [currentUser objectForKey:@"sloveCounter"];
+	if ([sloveCounter intValue] < 100) {
+		self.counterLabel.text = [NSString stringWithFormat:@"***%03d", [sloveCounter intValue]];
+	} else if ([sloveCounter intValue] < 1000) {
+		self.counterLabel.text = [NSString stringWithFormat:@"**%04d", [sloveCounter intValue]];
+	} else if ([sloveCounter intValue] < 10000) {
+		self.counterLabel.text = [NSString stringWithFormat:@"*%05d", [sloveCounter intValue]];
+	} else {
+		self.counterLabel.text = [NSString stringWithFormat:@"%d", [sloveCounter intValue]];
+	}
+	
+	self.counterLabel.textColor = WHITE;
+	self.counterLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	
+	NSString *fullName = @"";
+	NSString *firstName = [currentUser objectForKey:@"firstName"];
+	
+	if (firstName) {
+		fullName = [fullName stringByAppendingString:firstName];
+	}
+	
+	NSString *lastName = [currentUser objectForKey:@"lastName"];
+	
+	if (lastName) {
+		if (![fullName isEqualToString:@""]) {
+			fullName = [fullName stringByAppendingString:@" "];
+		}
+		
+		fullName = [fullName stringByAppendingString:lastName];
+	}
+	
+	self.fullNameLabel.text = fullName;
+	self.fullNameLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+	
+	self.usernameLabel.text = [currentUser objectForKey:@"username"];
+	self.usernameLabel.textColor = BLUE;
+	self.usernameLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL];
+	
+	[self.uploadProfilePictureButton setTitleColor:BLUE forState:UIControlStateNormal];
+	[self.disconnectButton setTitleColor:WHITE forState:UIControlStateNormal];
 	
 	[self loadBackButton];
-	
-	// To call viewWillAppear after return from Slove Sent popup
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(didDismissSloveSentPopup)
-												 name:NOTIFICATION_SLOVE_SENT_POPUP_DISMISSED
-											   object:nil];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
-	[super viewWillAppear:animated];
+	[super viewWillAppear:YES];
 	
-	if (self.contact) {
-		if (self.contact.picture) {
-			self.pictureImageView.hidden = NO;
-			self.pictureImageView.image = self.contact.picture;
-			self.pictureImageView.contentMode = UIViewContentModeScaleAspectFill;
-			self.pictureImageView.clipsToBounds = YES;
-		} else {
-			self.pictureImageView.hidden = YES;
-		}
+	if (![USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] || ![[USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] boolValue]) {
+		SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
+		
+		[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
+		
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
 	}
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
-	
-	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
-		[self disableElementsForTutorial];
-		self.bubbleView.hidden = NO;
-		
-		[UIView animateWithDuration:ANIMATION_DURATION animations:^{
-			self.bubbleView.alpha = 1;
-		}];
-		
-	} else if (!self.bubbleView.hidden) {
-		[self enableElementsForTutorial];
-		self.bubbleView.hidden = YES;
-		
-		[self.navigationController popToRootViewControllerAnimated:YES];
-	}
-}
-
-- (void)viewDidDisappear:(BOOL)animated {
-	self.navigationController.navigationBarHidden = NO;
-	
-	[super viewDidDisappear:animated];
 }
 
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 	
-	self.spiraleYConstraint.constant = -(self.navigationController.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height) / 2;
-	self.bubbleLabelTopLayoutConstraint.constant = SCREEN_HEIGHT * 0.07;
-}
-
-- (void)viewDidLayoutSubviews {
-	[super viewDidLayoutSubviews];
-	
-	UIImage *_maskingImage = [UIImage imageNamed:@"Assets/Layer/layer_profile_picture"];
-	CALayer *_maskingLayer = [CALayer layer];
-	_maskingLayer.frame = self.pictureImageView.bounds;
-	[_maskingLayer setContents:(id)[_maskingImage CGImage]];
-	[self.pictureImageView.layer setMask:_maskingLayer];
+	self.bottomDictonnectButtonLayoutConstraint.constant = SLOVE_BUTTON_SIZE;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -111,117 +112,83 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)animateImages {
-	[self rotateSpirale];
+- (IBAction)uploadProfilePictureAction:(id)sender {
+	UIImagePickerController *imagePickerController = [[UIImagePickerController alloc] init];
+	imagePickerController.delegate = self;
+	imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
 	
-	[self loadCircle];
+	[self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
-- (IBAction)sloveAction:(id)sender {
-	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {		
-		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
-			[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
-		}];
-	} else if (!self.contact.username) {
-		if(![MFMessageComposeViewController canSendText]) {
-			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
-			[self presentViewController:errorPopup animated:YES completion:nil];
-			
-			return;
-		}
-		
-		NSMutableArray *recipents = [[NSMutableArray alloc] init];
-		SLVAddressBookContact *addressBookContact = (SLVAddressBookContact *)self.contact;
-		for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
-			[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
-		}
-		
-		NSString *message = [NSString stringWithFormat:@"%@%@", NSLocalizedString(@"label_smsInvite", nil), [ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
-		
-		MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
-		messageController.messageComposeDelegate = self;
-		[messageController setRecipients:recipents];
-		[messageController setBody:message];
-		
-		[self presentViewController:messageController animated:YES completion:nil];
-	} else {
-		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
-						   withParameters:@{@"username" : self.contact.username}
-									block:^(id object, NSError *error){
-										if (!error) {
-											[SLVTools playSound:SLOVER_SOUND];
-											
-											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
-											
-											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-										} else {
-											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
-											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-											
-											SLVLog(@"%@%@", SLV_ERROR, error.description);
-											[ParseErrorHandlingController handleParseError:error];
-										}
-									}];
+- (IBAction)disconnectAction:(id)sender {
+	if ([FBSDKAccessToken currentAccessToken]) {
+		[FBSDKAccessToken setCurrentAccessToken:nil];
 	}
-}
-
-- (void)didDismissSloveSentPopup {
-	if (!IS_IOS7) {
-		[self viewDidAppear:YES];
-	}
-}
-
-- (void)rotateSpirale {
-	self.spiraleAngle += 18 * TIMER_FREQUENCY * (1 + MAX(ApplicationDelegate.currentNavigationController.sloveClickDuration, ApplicationDelegate.currentNavigationController.sloveClickDecelerationDuration) * 15);
-	[UIView animateWithDuration:TIMER_FREQUENCY
-						  delay:0
-						options:UIViewAnimationOptionCurveLinear
-					 animations:^{
-						 self.spiraleImageView.transform = CGAffineTransformMakeRotation(degreesToRadians(self.spiraleAngle));
-					 }
-					 completion:^(BOOL success) {
-						 [self rotateSpirale];
-					 }];
-}
-
-- (void)loadCircle {
-	self.circleImageView.image = [UIImage imageNamed:@"Assets/Animation/Envoi_Slove/animenvoi48"];
 	
-	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
-	NSString *prefixImageName = @"Assets/Animation/Envoi_Slove/animenvoi";
-	
-	for (int i = 1; i <= 48; i++) {
-		if (i < 10) {
-			[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"0%d", i]]] atIndex:i - 1];
+	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
+		if (!error) {
+			[ApplicationDelegate userDisconnected];
 		} else {
-			[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%d", i]]] atIndex:i - 1];
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
 		}
-	}
+	}];
+}
+
+- (void)goBack:(id)sender {
+	[super goToHome];
+}
+
+
+#pragma mark - UIImagePickerControllerDelegate
+
+- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info {
+	UIImage *image = [info objectForKey:UIImagePickerControllerOriginalImage];
+	NSURL *imagePath = [info objectForKey:UIImagePickerControllerReferenceURL];
+	NSString *imageName = [imagePath lastPathComponent];
+	NSString *imageExtension = [imageName substringFromIndex:[imageName length] - 3];
+	NSString *imageFullName = [NSString stringWithFormat:@"%@.%@", imageName, imageExtension];
 	
-	self.circleImageView.animationImages = animatedImages;
-	self.circleImageView.animationDuration = 2;
-	self.circleImageView.animationRepeatCount = 1;
-}
-
-- (void)disableElementsForTutorial {
-	ApplicationDelegate.currentNavigationController.activityButton.userInteractionEnabled = NO;
-	ApplicationDelegate.currentNavigationController.homeButton.userInteractionEnabled = NO;
-	ApplicationDelegate.currentNavigationController.settingsButton.userInteractionEnabled = NO;
-	self.navigationItem.leftBarButtonItem.enabled = NO;
-}
-
-- (void)enableElementsForTutorial {
-	ApplicationDelegate.currentNavigationController.activityButton.userInteractionEnabled = YES;
-	ApplicationDelegate.currentNavigationController.homeButton.userInteractionEnabled = YES;
-	ApplicationDelegate.currentNavigationController.settingsButton.userInteractionEnabled = YES;
-	self.navigationItem.leftBarButtonItem.enabled = YES;
-}
-
-#pragma mark - MFMessageComposeViewControllerDelegate
-
-- (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
+	NSData* data = UIImageJPEGRepresentation(image, 1);
+	PFFile *imageFile = [PFFile fileWithName:imageFullName data:data];
+	
+	[self.uploadProgressBar showByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	
+	[imageFile saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+		[self.uploadProgressBar hideByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:^{
+			self.uploadProgressBar.progress = 0;
+		}];
+		
+		if (succeeded) {
+			PFUser *user = [PFUser currentUser];
+			
+			user[@"pictureUrl"] = imageFile.url;
+			
+			[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
+				if (error) {
+					SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_upload_image_error", nil) buttonsTitle:nil andDismissButton:YES];
+					[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+					
+					SLVLog(@"%@%@", SLV_ERROR, error.description);
+					[ParseErrorHandlingController handleParseError:error];
+				} else {
+					NSString *profilePictureUrl = [[PFUser currentUser] objectForKey:@"pictureUrl"];
+					if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
+						[self.profilePictureImageView setImageWithURL:[NSURL URLWithString:profilePictureUrl] placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+					}
+				}
+			}];
+		} else {
+			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_upload_image_error", nil) buttonsTitle:nil andDismissButton:YES];
+			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+			
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	} progressBlock:^(int percentDone) {
+		self.uploadProgressBar.progress = percentDone / 100.0;
+	}];
+	
 	[self dismissViewControllerAnimated:YES completion:nil];
 }
 

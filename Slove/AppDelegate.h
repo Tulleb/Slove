@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import "SLVNavigationController.h"
 #import <Parse/PFUser.h>
+#import <Parse/PFPush.h>
 #import "SLVCountryCodeData.h"
 #import <AVFoundation/AVFoundation.h>
 #import "SLVContact.h"
@@ -22,13 +23,18 @@
 @property (strong, nonatomic) NSArray *countryCodeDatas;
 @property (nonatomic, strong) SLVCountryCodeData *userCountryCodeData;
 @property (nonatomic, strong) AVAudioPlayer *audioPlayer;
-@property (nonatomic, strong) SLVContact *sloverToSlove;
+@property (nonatomic, strong) NSArray *sloverToSlove; // first item is the contact / second is the picture
 @property (nonatomic, strong) NSMutableDictionary *parseConfig;
 @property (nonatomic) BOOL userIsConnected;
 @property (strong, nonatomic) NSMutableArray *queuedPopups;
 @property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
 @property (nonatomic, strong) SLVInteractionPopupViewController *compatibleVersionPopup;
 @property (nonatomic) BOOL applicationJustStarted;
+@property (nonatomic) BOOL needToRefreshContacts;
+@property (nonatomic) NSArray *levels;
+@property (nonatomic) NSArray *puppyPictures;
+@property (nonatomic, strong) PFPush *puppyPush;
+@property (nonatomic, strong) NSTimer *puppyTimer;
 
 - (void)userConnected;
 - (void)userDisconnected;
