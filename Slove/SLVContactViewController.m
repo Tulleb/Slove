@@ -46,6 +46,7 @@
 	
 	self.levelCarousel.type = iCarouselTypeCustom;
 	self.levelCarousel.userInteractionEnabled = NO;
+	self.levelCarousel.hidden = [self.contact.username isEqualToString:PUPPY_USERNAME];
 	
 	if (self.contact.pictureUrl) {
 		[self.pictureImageView setImageWithURL:self.contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];

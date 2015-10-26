@@ -370,6 +370,7 @@
 			}
 				
 			case kLevel: {
+				cell.logoImageView.image = [UIImage imageNamed:@"Assets/Image/pastille_level"];
 				break;
 			}
 				
