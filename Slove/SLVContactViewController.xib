@@ -56,7 +56,7 @@
                         <outlet property="delegate" destination="-1" id="Fav-Lh-eP6"/>
                     </connections>
                 </view>
-                <view hidden="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38U-vq-rUj">
+                <view hidden="YES" userInteractionEnabled="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="38U-vq-rUj">
                     <rect key="frame" x="8" y="363" width="584" height="177"/>
                     <subviews>
                         <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iWY-nQ-VeG">

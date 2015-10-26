@@ -447,6 +447,8 @@
 					   withParameters:nil
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSArray *follows = [datas objectForKey:@"follows"];
 										
@@ -578,6 +580,8 @@
 					   withParameters:@{@"phoneNumbers" : phoneNumbers}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSArray *registeredContacts = [datas objectForKey:@"registeredContacts"];
 										
@@ -639,6 +643,8 @@
 					   withParameters:@{@"facebookIds" : facebookIds}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSArray *registeredContacts = [datas objectForKey:@"registeredFriends"];
 										

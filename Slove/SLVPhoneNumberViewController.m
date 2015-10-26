@@ -94,10 +94,8 @@
 					   withParameters:@{@"phoneNumber" : self.formatedPhoneNumber}
 								block:^(id object, NSError *error){
 									if (!error) {
-										if ([object objectForKey:@"body"]) {
-											SLVLog(@"Received message: '%@'", [object objectForKey:@"body"]);
-										}
-										
+										SLVLog(@"Received data from server: %@", object);
+																				
 										[self.navigationController pushViewController:[[SLVConfirmationCodeViewController alloc] initWithPhoneNumber:self.formatedPhoneNumber] animated:YES];
 									} else {
 										self.errorLabel.hidden = NO;

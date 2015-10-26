@@ -79,6 +79,8 @@
 						   withParameters:params
 									block:^(id object, NSError *error){
 										if (!error) {
+											SLVLog(@"Received data from server: %@", object);
+											
 											NSDictionary *datas = object;
 											NSArray *activities = [datas objectForKey:@"activities"];
 											

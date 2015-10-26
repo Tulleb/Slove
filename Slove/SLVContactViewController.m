@@ -75,20 +75,22 @@
 	
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self disableElementsForTutorial];
-		self.bubbleView.hidden = NO;
-		
-		[UIView animateWithDuration:ANIMATION_DURATION animations:^{
-			self.bubbleView.alpha = 1;
-		}];
-		
+		[self.bubbleView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 	} else if (!self.bubbleView.hidden) {
 		[self enableElementsForTutorial];
 		self.bubbleView.hidden = YES;
 		
 		[self.navigationController popToRootViewControllerAnimated:YES];
+	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
+		if (![[USER_DEFAULTS objectForKey:KEY_PUPPY_NO_LEVEL_DISPLAYED] boolValue]) {
+			SLVInteractionPopupViewController *warningPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_no_level_available", nil) buttonsTitle:nil andDismissButton:YES];
+			[self.navigationController presentViewController:warningPopup animated:YES completion:^{
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_PUPPY_NO_LEVEL_DISPLAYED];
+			}];
+		}
+	} else {
+		[self checkLevel];
 	}
-	
-	[self checkLevel];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -200,6 +202,8 @@
 						   withParameters:@{@"username" : self.contact.username}
 									block:^(id object, NSError *error){
 										if (!error) {
+											SLVLog(@"Received data from server: %@", object);
+											
 											[SLVTools playSound:SLOVER_SOUND_PATH];
 											
 											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
@@ -222,6 +226,8 @@
 					   withParameters:@{@"username" : self.contact.username}
 								block:^(id object, NSError *error){
 									if (!error) {
+										SLVLog(@"Received data from server: %@", object);
+										
 										NSDictionary *datas = object;
 										NSNumber *level = [datas objectForKey:@"level"];
 										
@@ -233,12 +239,14 @@
 											NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
 											NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
 											
-											if (!currentLevel || ([currentLevel intValue] != self.contact.currentLevel.number)) {
+											if ((!currentLevel && ([level intValue] > 0)) || ([currentLevel intValue] != self.contact.currentLevel.number)) {
 												SLVLog(@"Level up %d with %@!", self.contact.currentLevel.number, self.contact.username);
 												
-												[USER_DEFAULTS setObject:level forKey:levelKey];
-												
 												[self startLevelAnimation];
+											}
+											
+											if (!currentLevel) {
+												[USER_DEFAULTS setObject:level forKey:levelKey];
 											}
 										}
 									} else {
