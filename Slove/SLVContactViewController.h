@@ -25,8 +25,10 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *bubbleLabelTopLayoutConstraint;
 @property (strong, nonatomic) IBOutlet iCarousel *levelCarousel;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *levelCarouselBottomLayoutConstraint;
+@property (strong, nonatomic) IBOutlet UIImageView *fireworkImageView;
 @property (strong, nonatomic) UIImage *pictureImage;
 @property (nonatomic) float spiraleAngle;
+@property (nonatomic) int levelNumberBuffer;
 
 - (id)initWithContact:(SLVContact *)contact andPicture:(UIImage *)picture;
 - (IBAction)sloveAction:(id)sender;

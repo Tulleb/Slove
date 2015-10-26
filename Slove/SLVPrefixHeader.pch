@@ -148,6 +148,7 @@
 #define FOLLOW_SLOVER_FUNCTION						@"addFollow"
 #define SEND_SLOVE_FUNCTION							@"sendSlove"
 #define GET_ACTIVITIES								@"getActivities"
+#define GET_LEVEL									@"getLevel"
 
 #pragma mark - Puppy
 #define PUPPY_USERNAME			@"puppey"

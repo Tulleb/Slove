@@ -88,16 +88,7 @@
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
 	
-	NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
-	NSNumber *level = [USER_DEFAULTS objectForKey:levelKey];
-	
-	if (level && [level intValue] != self.contact.currentLevel.number) {
-		self.contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[level intValue]];
-		
-		[USER_DEFAULTS removeObjectForKey:levelKey];
-		
-		[self startLevelAnimation];
-	}
+	[self checkLevel];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -139,6 +130,7 @@
 	[self rotateSpirale];
 	
 	[self loadCircle];
+	[self loadFirework];
 }
 
 - (IBAction)sloveAction:(id)sender {
@@ -225,9 +217,48 @@
 	}
 }
 
+- (void)checkLevel {
+	[PFCloud callFunctionInBackground:GET_LEVEL
+					   withParameters:@{@"username" : self.contact.username}
+								block:^(id object, NSError *error){
+									if (!error) {
+										NSDictionary *datas = object;
+										NSNumber *level = [datas objectForKey:@"level"];
+										
+										if (level) {
+											self.levelNumberBuffer = self.contact.currentLevel.number;
+											
+											self.contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[level intValue]];
+											
+											NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
+											NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
+											
+											if (!currentLevel || ([currentLevel intValue] != self.contact.currentLevel.number)) {
+												SLVLog(@"Level up %d with %@!", self.contact.currentLevel.number, self.contact.username);
+												
+												[USER_DEFAULTS setObject:level forKey:levelKey];
+												
+												[self startLevelAnimation];
+											}
+										}
+									} else {
+										SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
+										[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+										
+										SLVLog(@"%@%@", SLV_ERROR, error.description);
+										[ParseErrorHandlingController handleParseError:error];
+									}
+								}];
+}
+
 - (void)startLevelAnimation {
-	[[[self.levelCarousel itemViewAtIndex:self.contact.currentLevel.number] viewWithTag:LOCKER_IMAGE_VIEW_TAG] hideByFadingWithDuration:LONG_ANIMATION_DURATION AndCompletion:nil];
+	for (int i = self.levelNumberBuffer; i <= self.contact.currentLevel.number; i++) {
+		[[[self.levelCarousel itemViewAtIndex:i] viewWithTag:LOCKER_IMAGE_VIEW_TAG] hideByFadingWithDuration:LONG_ANIMATION_DURATION AndCompletion:nil];
+	}
+	
 	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number duration:VERY_LONG_ANIMATION_DURATION];
+	
+	[self.fireworkImageView startAnimating];
 }
 
 - (void)didDismissSloveSentPopup {
@@ -264,8 +295,23 @@
 	}
 	
 	self.circleImageView.animationImages = animatedImages;
-	self.circleImageView.animationDuration = 2;
+	self.circleImageView.animationDuration = VERY_LONG_ANIMATION_DURATION;
 	self.circleImageView.animationRepeatCount = 1;
+}
+
+- (void)loadFirework {
+	self.fireworkImageView.image = [UIImage imageNamed:@"Assets/Animation/firework/feudartifice-v10001"];
+	
+	NSMutableArray *animatedImages = [[NSMutableArray alloc] init];
+	NSString *prefixImageName = @"Assets/Animation/firework/feudartifice-v100";
+	
+	for (int i = 1; i <= 32; i++) {
+		[animatedImages insertObject:[UIImage imageNamed:[prefixImageName stringByAppendingString:[NSString stringWithFormat:@"%02d", i]]] atIndex:i - 1];
+	}
+	
+	self.fireworkImageView.animationImages = animatedImages;
+	self.fireworkImageView.animationDuration = VERY_LONG_ANIMATION_DURATION;
+	self.fireworkImageView.animationRepeatCount = 1;
 }
 
 - (void)disableElementsForTutorial {
