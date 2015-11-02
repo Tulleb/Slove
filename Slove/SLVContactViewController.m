@@ -246,15 +246,15 @@
 											NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, self.contact.username];
 											NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
 											
-											if ((!currentLevel && ([level intValue] > 0)) || ([currentLevel intValue] != self.contact.currentLevel.number)) {
+											if ((!currentLevel && (self.contact.currentLevel.number > 0)) || ([currentLevel intValue] != self.contact.currentLevel.number)) {
 												SLVLog(@"Level up %d with %@!", self.contact.currentLevel.number, self.contact.username);
 												
 												[self startLevelAnimation];
+												
+												
 											}
 											
-											if (!currentLevel) {
-												[USER_DEFAULTS setObject:level forKey:levelKey];
-											}
+											[USER_DEFAULTS setObject:level forKey:levelKey];
 										}
 									} else {
 										SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];

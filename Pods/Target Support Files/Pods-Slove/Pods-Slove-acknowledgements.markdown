@@ -175,6 +175,10 @@ The MIT License in plain English: http://www.touch-code-magazine.com/JSONModel/M
 
 See https://www.parse.com/about/terms
 
+## ParseCrashReporting
+
+See https://www.parse.com/about/terms
+
 ## ParseFacebookUtilsV4
 
 See https://www.parse.com/about/terms

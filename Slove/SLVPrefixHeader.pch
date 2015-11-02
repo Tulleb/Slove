@@ -105,6 +105,7 @@
 #pragma mark - User key
 #define USER_DEFAULTS							[NSUserDefaults standardUserDefaults]
 #define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
+#define KEY_CACHED_CONTACTS						@"cachedContacts"
 #define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
 #define	KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
 #define	KEY_PUPPY_NO_LEVEL_DISPLAYED			@"puppyNoLevel"

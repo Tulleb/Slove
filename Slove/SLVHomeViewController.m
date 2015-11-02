@@ -40,7 +40,7 @@
 	self.pullImageView.image = [UIImage imageNamed:@"Assets/Image/fleche_refresh"];
 	
 	self.refreshControl = [[UIRefreshControl alloc] init];
-	[self.refreshControl addTarget:self action:@selector(loadContacts) forControlEvents:UIControlEventValueChanged];
+	[self.refreshControl addTarget:self action:@selector(reloadContacts) forControlEvents:UIControlEventValueChanged];
 	[self.contactTableView addSubview:self.refreshControl];
 	
 	UIButton *addSloverButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
@@ -56,14 +56,14 @@
 												 name:NOTIFICATION_SLOVED_POPUP_DISMISSED
 											   object:nil];
 	
-	[self loadContacts];
+	[self loadContactsFromCache];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
 	if (ApplicationDelegate.needToRefreshContacts) {
-		[self loadContacts];
+		[self reloadContacts];
 		
 		ApplicationDelegate.needToRefreshContacts = NO;
 	}
@@ -135,7 +135,16 @@
 	}
 }
 
-- (void)loadContacts {
+- (void)loadContactsFromCache {
+	NSString *key = [NSString stringWithFormat:@"%@-%@", KEY_CACHED_CONTACTS, [PFUser currentUser].username];
+	
+	NSArray *cachedContacts = [USER_DEFAULTS objectForKey:key];
+	if (!cachedContacts) {
+		[self reloadContacts];
+	}
+}
+
+- (void)reloadContacts {
 	if (!self.isAlreadyLoading) {
 		self.isAlreadyLoading = YES;
 		
@@ -157,7 +166,7 @@
 		
 		[self checkAddressBookAccessAuthorization];
 		[self checkFacebookFriendsAuthorization];
-		[self loadFollowedContacts];
+//		[self loadFollowedContacts];
 		
 		[self loadSynchronizedContacts];
 	}
@@ -168,7 +177,7 @@
 		self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
 		
 		[self loadAddressBookFromAddressBookRef:self.addressBookRef];
-		[self synchronizeContacts];
+//		[self synchronizeContacts];
 		
 		return;
 	} else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied) {
@@ -507,6 +516,19 @@
 								}];
 }
 
+- (void)loadPuppy {
+	SLVAddressBookContact *puppy = [[SLVAddressBookContact alloc] init];
+	puppy.fullName = NSLocalizedString(@"stranger_username", nil);
+	puppy.username = PUPPY_USERNAME;
+	puppy.picture = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH]];
+	
+	NSMutableArray *synchronizedContactsBuffer = [[NSMutableArray alloc] initWithArray:self.synchronizedContacts];
+	
+	[synchronizedContactsBuffer insertObject:puppy atIndex:0];
+	
+	self.synchronizedContacts = [[NSArray alloc] initWithArray:synchronizedContactsBuffer];
+}
+
 - (void)loadSynchronizedContacts {
 	if (!(self.addressBookContactsReady && self.facebookContactsReady && self.followedContactsReady)) {
 		// TODO: fix issue that stop the performSelector when called from soloButtonPressed:
@@ -520,16 +542,7 @@
 	[self addContactsToSynchronizedContacts:self.facebookContacts];
 	[self addContactsToSynchronizedContacts:self.followedContacts];
 	
-	SLVAddressBookContact *puppy = [[SLVAddressBookContact alloc] init];
-	puppy.fullName = NSLocalizedString(@"stranger_username", nil);
-	puppy.username = PUPPY_USERNAME;
-	puppy.picture = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH]];
-	
-	NSMutableArray *synchronizedContactsBuffer = [[NSMutableArray alloc] initWithArray:self.synchronizedContacts];
-	
-	[synchronizedContactsBuffer insertObject:puppy atIndex:0];
-	
-	self.synchronizedContacts = [[NSArray alloc] initWithArray:synchronizedContactsBuffer];
+//	[self loadPuppy];
 	
 	self.fullSynchronizedContacts = self.synchronizedContacts;
 	
@@ -733,6 +746,8 @@
 	SLVLog(@"User is trying to share Slove!");
 	
 	NSString *shareText = NSLocalizedString(@"label_share_with_friends", nil);
+	shareText = [shareText stringByReplacingOccurrencesOfString:@"[app_url]" withString:[ApplicationDelegate.parseConfig objectForKey:@"download_app_url"]];
+	
 	UIImage *shareImage = [UIImage imageNamed:@"Assets/App Icon/Logo_Slove_App_1024"];
 	NSURL *shareUrl = [NSURL URLWithString:[ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
 	
@@ -919,7 +934,9 @@
 	}
 	
 	if (contact.pictureUrl) {
-		[cell.pictureImageView setImageWithURL:contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
+		[cell.pictureImageView setImageWithURL:contact.pictureUrl placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+			[SLVTools saveImage:image withName:contact.username];
+		} usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	} else if ([contact isKindOfClass:[SLVAddressBookContact class]] && ((SLVAddressBookContact *)contact).picture) {
 		cell.pictureImageView.image = ((SLVAddressBookContact *)contact).picture;
 	} else {
@@ -990,7 +1007,8 @@
 
 - (void)textFieldDidChange:(UITextField *)textField {
 	if (textField == self.searchTextField) {
-		NSString *text = textField.text;
+		NSString *text = [textField.text stringByTrimmingCharactersInSet:
+		[NSCharacterSet whitespaceCharacterSet]];
 		
 		if(text.length == 0) {
 			self.unsynchronizedContacts = self.fullUnsynchronizedContacts;

@@ -56,6 +56,9 @@ PODS:
   - libPhoneNumber-iOS (0.8.5)
   - Parse (1.7.5.3):
     - Bolts/Tasks (>= 1.2.0)
+  - ParseCrashReporting (1.7.5.3):
+    - Bolts/Tasks (>= 1.2.0)
+    - Parse (~> 1.7.5.3)
   - ParseFacebookUtilsV4 (1.7.5.3):
     - Bolts/Tasks (>= 1.2.0)
     - FBSDKCoreKit (~> 4.0)
@@ -75,6 +78,7 @@ DEPENDENCIES:
   - JSONModel
   - libPhoneNumber-iOS (~> 0.8)
   - Parse (~> 1.7)
+  - ParseCrashReporting
   - ParseFacebookUtilsV4 (~> 1.7)
   - UIActivityIndicator-for-SDWebImage
 
@@ -93,6 +97,7 @@ SPEC CHECKSUMS:
   JSONModel: ec77e9865236a7a09d9cf7668df6b4b328d9ec1d
   libPhoneNumber-iOS: b8ccd23576379caca37c7cbdd554addf384459ed
   Parse: 373adbb1ad2e34d383542c3b28f678c49ebe4881
+  ParseCrashReporting: 36d2e2770d7502d943b81c013acd5193946ced46
   ParseFacebookUtilsV4: ea5db22e87b91cbf99b9d156642e2b97a4db7d51
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c

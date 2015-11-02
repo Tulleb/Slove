@@ -17,6 +17,7 @@
 #import "Reachability.h"
 #import "SLVLevel.h"
 #import "SLVAddressBookContact.h"
+#import <ParseCrashReporting/ParseCrashReporting.h>
 
 @interface AppDelegate ()
 
@@ -32,11 +33,14 @@
 	// [Optional] Power your app with Local Datastore. For more info, go to
 	// https://parse.com/docs/ios_guide#localdatastore/iOS
 	[Parse enableLocalDatastore];
+	
+	// Enable Crash Reporting
+	[ParseCrashReporting enable];
  
 	// Initialize Parse.
 	[Parse setApplicationId:@"bNqrmF49ncJ0LYgfGIFZmReRkqKLFWtuCt2XJQFy"
 				  clientKey:@"pJ5C1IkUz8hKdXd5pb3sZyDroMu6XfjhRgNiLO5q"];
- 
+	
 	// [Optional] Track statistics around application opens.
 	[PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
 	
@@ -87,10 +91,13 @@
 	
 	NSDictionary *remoteNotif = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
 	
-	//Accept push notification when app is not open
+	// Accept push notification when app is not open
 	if (remoteNotif) {
 		[self application:application handleRemoteNotification:remoteNotif];
 	}
+	
+	// To test Parse crash reporting
+//	[self performSelector:@selector(crash) withObject:nil afterDelay:5.0];
 	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -742,6 +749,10 @@
 	
 	[self.puppyTimer invalidate];
 	self.puppyTimer = nil;
+}
+
+- (void)crash {
+	[NSException raise:NSGenericException format:@"Everything is ok. This is just a test crash."];
 }
 
 

@@ -9,6 +9,7 @@
 #import "SLVTools.h"
 #import <libPhoneNumber-iOS/NBPhoneNumberUtil.h>
 #import "SLVCountryCodeData.h"
+#import "UIImage+FixOrientation.h"
 
 @implementation SLVTools
 
@@ -64,6 +65,8 @@
 
 + (void)saveImage:(UIImage *)image withName:(NSString *)name {
 	if (image && name && ![name isEqualToString:@""]) {
+		image = [image fixOrientation];
+		
 		NSString *documentsDirectory = [SLVTools applicationDocumentsDirectory];
 		
 		NSError *error;

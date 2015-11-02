@@ -163,6 +163,7 @@
 			PFUser *user = [PFUser currentUser];
 			
 			user[@"pictureUrl"] = imageFile.url;
+			user[@"picture"] = imageFile;
 			
 			[user saveInBackgroundWithBlock:^(BOOL succeeded, NSError *error) {
 				if (error) {

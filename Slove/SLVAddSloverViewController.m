@@ -235,7 +235,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	[textField resignFirstResponder];
 	
-	[self lookForSloversContaining:textField.text];
+	[self lookForSloversContaining:[textField.text stringByTrimmingCharactersInSet:
+												  [NSCharacterSet whitespaceCharacterSet]]];
 	
 	return YES;
 }
