@@ -7,8 +7,6 @@
 //
 
 #import "SLVProfileViewController.h"
-#import <FBSDKCoreKit/FBSDKCoreKit.h>
-#import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import "SLVConstructionPopupViewController.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
@@ -28,6 +26,7 @@
 	self.bannerImageView.image = [UIImage imageNamed:@"Assets/Banner/profil_banniere"];
 	self.levelImageView.image = [UIImage imageNamed:@"Assets/Image/niveau_profil_debutant"];
 	self.counterImageView.image = [UIImage imageNamed:@"Assets/Box/compteur_slove"];
+	self.counterDescriptionImageView.image = [UIImage imageNamed:@"Assets/Image/fleche_label_compteur"];
 	self.topBarImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
 	self.bottomBarImageView.image = [UIImage imageNamed:@"Assets/Image/separateur_repertoire"];
 	self.profilePictureLayerImageView.image = [UIImage imageNamed:@"Assets/Layer/masque_profil_repertoire"];
@@ -42,9 +41,6 @@
 		[self.profilePictureImageView setImageWithURL:[NSURL URLWithString:profilePictureUrl] placeholderImage:[UIImage imageNamed:@"Assets/Avatar/avatar_user"] usingActivityIndicatorStyle:UIActivityIndicatorViewStyleWhite];
 	}
 	
-	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt"] forState:UIControlStateNormal];
-	[self.disconnectButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_clic"] forState:UIControlStateHighlighted];
-	
 	NSNumber *sloveCounter = [currentUser objectForKey:@"sloveCounter"];
 	if ([sloveCounter intValue] < 100) {
 		self.counterLabel.text = [NSString stringWithFormat:@"***%03d", [sloveCounter intValue]];
@@ -58,6 +54,9 @@
 	
 	self.counterLabel.textColor = WHITE;
 	self.counterLabel.font = [UIFont fontWithName:DEFAULT_FONT_TITLE size:DEFAULT_FONT_SIZE_VERY_LARGE];
+	
+	self.counterDescriptionLabel.textColor = WHITE;
+	self.counterDescriptionLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_VERY_SMALL];
 	
 	NSString *fullName = @"";
 	NSString *firstName = [currentUser objectForKey:@"firstName"];
@@ -84,9 +83,9 @@
 	self.usernameLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE_SMALL];
 	
 	[self.uploadProfilePictureButton setTitleColor:BLUE forState:UIControlStateNormal];
-	[self.disconnectButton setTitleColor:WHITE forState:UIControlStateNormal];
 	
 	[self loadBackButton];
+	[self loadLogoutButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,7 +103,19 @@
 - (void)viewWillLayoutSubviews {
 	[super viewWillLayoutSubviews];
 	
-	self.bottomDictonnectButtonLayoutConstraint.constant = SLOVE_BUTTON_SIZE;
+	if (IS_3INCH5) {
+		self.leftLevelLayoutConstraint.constant = 13;
+		self.rightCounterLayoutConstraint.constant = 13;
+	} else if (IS_4INCH) {
+		self.leftLevelLayoutConstraint.constant = 13;
+		self.rightCounterLayoutConstraint.constant = 13;
+	} else if (IS_4INCH7) {
+		self.leftLevelLayoutConstraint.constant = 21;
+		self.rightCounterLayoutConstraint.constant = 21;
+	} else if (IS_5INCH5) {
+		self.leftLevelLayoutConstraint.constant = 28;
+		self.rightCounterLayoutConstraint.constant = 28;
+	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -118,21 +129,6 @@
 	imagePickerController.sourceType =  UIImagePickerControllerSourceTypePhotoLibrary;
 	
 	[self presentViewController:imagePickerController animated:YES completion:nil];
-}
-
-- (IBAction)disconnectAction:(id)sender {
-	if ([FBSDKAccessToken currentAccessToken]) {
-		[FBSDKAccessToken setCurrentAccessToken:nil];
-	}
-	
-	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
-		if (!error) {
-			[ApplicationDelegate userDisconnected];
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
 }
 
 - (void)goBack:(id)sender {

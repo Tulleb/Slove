@@ -30,13 +30,13 @@
 	self.queuedPopups = [[NSMutableArray alloc] init];
 	self.applicationJustStarted = YES;
 	
+	// Enable Crash Reporting
+	[ParseCrashReporting enable];
+	
 	// [Optional] Power your app with Local Datastore. For more info, go to
 	// https://parse.com/docs/ios_guide#localdatastore/iOS
 	[Parse enableLocalDatastore];
 	
-	// Enable Crash Reporting
-	[ParseCrashReporting enable];
- 
 	// Initialize Parse.
 	[Parse setApplicationId:@"bNqrmF49ncJ0LYgfGIFZmReRkqKLFWtuCt2XJQFy"
 				  clientKey:@"pJ5C1IkUz8hKdXd5pb3sZyDroMu6XfjhRgNiLO5q"];
@@ -97,7 +97,7 @@
 	}
 	
 	// To test Parse crash reporting
-//	[self performSelector:@selector(crash) withObject:nil afterDelay:5.0];
+//	[self performSelector:@selector(crash) withObject:nil afterDelay:15.0];
 	
 	return [[FBSDKApplicationDelegate sharedInstance] application:application didFinishLaunchingWithOptions:launchOptions];
 }
@@ -110,21 +110,22 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	self.alreadyCheckedCompatibleVersion = NO;
 	
-	if (self.puppyPush && !self.puppyTimer) {
-		//create new uiBackgroundTask
-		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-			[application endBackgroundTask:bgTask];
-			bgTask = UIBackgroundTaskInvalid;
-		}];
-		
-		//and create new timer with async call:
-		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-			//run function methodRunAfterBackground
-			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(rand() % (PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
-			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
-			[[NSRunLoop currentRunLoop] run];
-		});
-	}
+//	// Puppy send slove later (to pass on the back end)
+//	if (self.puppyPush && !self.puppyTimer) {
+//		//create new uiBackgroundTask
+//		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+//			[application endBackgroundTask:bgTask];
+//			bgTask = UIBackgroundTaskInvalid;
+//		}];
+//		
+//		//and create new timer with async call:
+//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+//			//run function methodRunAfterBackground
+//			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(rand() % (PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
+//			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
+//			[[NSRunLoop currentRunLoop] run];
+//		});
+//	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -141,6 +142,7 @@
 	[self checkReachability];
 	[FBSDKAppEvents activateApp];
 	[self loadParseConfig];
+	[self.currentNavigationController refreshSloveCounter];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

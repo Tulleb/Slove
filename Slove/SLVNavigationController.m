@@ -11,6 +11,7 @@
 #import "SLVContactViewController.h"
 #import "SLVActivityViewController.h"
 #import "SLVConnectionViewController.h"
+#import "SLVHomeViewController.h"
 
 @interface SLVNavigationController ()
 
@@ -304,6 +305,9 @@
 	if ([self.viewControllers.firstObject isKindOfClass:[SLVConnectionViewController class]]) {
 		SLVConnectionViewController *rootViewController = self.viewControllers.firstObject;
 		rootViewController.calledFromBackButton = YES;
+	} else if ([self.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
+		self.activityButton.selected = NO;
+		self.profileButton.selected = NO;
 	}
 	
 	return [super popToRootViewControllerAnimated:animated];
@@ -318,13 +322,13 @@
 
 - (void)activityAction:(id)sender {
 	if (!self.activityButton.selected) {
-		self.activityButton.selected = YES;
-		self.profileButton.selected = NO;
-		
 		SLVActivityViewController *activityViewController = [[SLVActivityViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
 		[self pushViewController:activityViewController animated:NO];
+		
+		self.activityButton.selected = YES;
+		self.profileButton.selected = NO;
 	}
 }
 
@@ -364,15 +368,15 @@
 	}
 }
 
-- (void)settingsAction:(id)sender {
+- (void)profileAction:(id)sender {
 	if (!self.profileButton.selected) {
-		self.activityButton.selected = NO;
-		self.profileButton.selected = YES;
-		
 		SLVProfileViewController *parametersViewController = [[SLVProfileViewController alloc] init];
 		
 		[self popToRootViewControllerAnimated:NO];
 		[self pushViewController:parametersViewController animated:NO];
+		
+		self.activityButton.selected = NO;
+		self.profileButton.selected = YES;
 	}
 }
 
@@ -493,7 +497,7 @@
 	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateHighlighted];
 	[self.profileButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_profile_clic"] forState:UIControlStateSelected];
 	self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
-	[self.profileButton addTarget:self action:@selector(settingsAction:) forControlEvents:UIControlEventTouchUpInside];
+	[self.profileButton addTarget:self action:@selector(profileAction:) forControlEvents:UIControlEventTouchUpInside];
 	
 	[self.bottomNavigationBarView addSubview:self.activityButton];
 	[self.bottomNavigationBarView addSubview:self.profileButton];

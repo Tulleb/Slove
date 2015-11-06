@@ -147,10 +147,15 @@
 #define SYNCHRONIZE_ADDRESS_BOOK_CONTACTS_FUNCTION	@"getRegisteredContacts"
 #define SYNCHRONIZE_FACEBOOK_CONTACTS_FUNCTION		@"getRegisteredFriends"
 #define SYNCHRONIZE_FOLLOWED_CONTACTS_FUNCTION		@"getFollows"
+#define SYNCHRONIZE_SLOVERS							@"getSlovers"
 #define FOLLOW_SLOVER_FUNCTION						@"addFollow"
 #define SEND_SLOVE_FUNCTION							@"sendSlove"
 #define GET_ACTIVITIES								@"getActivities"
 #define GET_LEVEL									@"getLevel"
+
+#pragma mark - Parse Object
+#define OBJECT_USER			@"User"
+#define OBJECT_USER_DATA	@"UserData"
 
 #pragma mark - Puppy
 #define PUPPY_USERNAME			@"puppey"
