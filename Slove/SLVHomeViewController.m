@@ -128,6 +128,8 @@
 
 - (void)reloadContacts {
 	if (!self.isAlreadyLoading) {
+		SLVLog(@"Reloading contacts...");
+		
 		[self.searchTextField resignFirstResponder];
 		self.searchTextField.text = @"";
 		
@@ -256,7 +258,7 @@
 			if (granted) {
 				SLVLog(@"User have granted access to his contact list");
 				
-				ApplicationDelegate.needToRefreshContacts = YES;
+				[self reloadContacts];
 			} else {
 				SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
 			}
@@ -271,7 +273,7 @@
 			if ([result.grantedPermissions containsObject:@"user_friends"]) {
 				SLVLog(@"User have granted access to his friend list");
 				
-				ApplicationDelegate.needToRefreshContacts = YES;
+				[self reloadContacts];
 			} else {
 				SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
 			}
@@ -464,8 +466,16 @@
 //				facebookIdsString = [facebookIdsString stringByAppendingString:facebookId];
 //			}
 			
-			NSString *phoneNumbersMD5 = [[phoneNumbers description] MD5];
-			NSString *facebookIdsMD5 = [[facebookIds description] MD5];
+			
+			NSString *phoneNumbersMD5;
+			if ([phoneNumbers count] > 0) {
+				phoneNumbersMD5 = [[phoneNumbers description] MD5];
+			}
+			
+			NSString *facebookIdsMD5;
+			if ([facebookIds count] > 0) {
+				facebookIdsMD5 = [[facebookIds description] MD5];
+			}
 			
 			NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
 			
@@ -473,19 +483,25 @@
 				PFObject *userData = [objects firstObject];
 				NSMutableDictionary *hashKeys = [[NSMutableDictionary alloc] initWithDictionary:[userData objectForKey:@"contactsHash"]];
 				
-				if (![[hashKeys objectForKey:@"phone"] isEqualToString:phoneNumbersMD5]) {
-					[params setObject:phoneNumbers forKey:@"phoneNumbers"];
-					
-					[hashKeys setObject:phoneNumbersMD5 forKey:@"phone"];
+				if (phoneNumbersMD5 && ![[hashKeys objectForKey:@"phone"] isEqualToString:phoneNumbersMD5]) {
+					NSDictionary *phoneDictionary = [NSDictionary dictionaryWithObjectsAndKeys:phoneNumbers, @"contacts", phoneNumbersMD5, @"hash", nil];
+					[params setObject:phoneDictionary forKey:@"phone"];
 				}
 				
-				if (![[hashKeys objectForKey:@"facebook"] isEqualToString:facebookIdsMD5]) {
-					[params setObject:facebookIds forKey:@"facebookIds"];
-					
-					[hashKeys setObject:facebookIdsMD5 forKey:@"facebook"];
+				if (facebookIdsMD5 && ![[hashKeys objectForKey:@"facebook"] isEqualToString:facebookIdsMD5]) {
+					NSDictionary *facebookDictionary = [NSDictionary dictionaryWithObjectsAndKeys:facebookIds, @"contacts", facebookIdsMD5, @"hash", nil];
+					[params setObject:facebookDictionary forKey:@"facebook"];
+				}
+			} else {
+				if (phoneNumbersMD5) {
+					NSDictionary *phoneDictionary = [NSDictionary dictionaryWithObjectsAndKeys:phoneNumbers, @"contacts", phoneNumbersMD5, @"hash", nil];
+					[params setObject:phoneDictionary forKey:@"phone"];
 				}
 				
-				[userData saveInBackground];
+				if (facebookIdsMD5) {
+					NSDictionary *facebookDictionary = [NSDictionary dictionaryWithObjectsAndKeys:facebookIds, @"contacts", facebookIdsMD5, @"hash", nil];
+					[params setObject:facebookDictionary forKey:@"facebook"];
+				}
 			}
 			
 			[PFCloud callFunctionInBackground:SYNCHRONIZE_SLOVERS
