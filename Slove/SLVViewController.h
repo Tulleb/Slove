@@ -14,7 +14,7 @@
 
 + (void)setStyle:(UIView *)view;
 - (void)loadBackButton;
-- (void)goBack:(id)sender;
+- (void)loadLogoutButton;
 - (void)goToHome;
 
 // Subclassed method

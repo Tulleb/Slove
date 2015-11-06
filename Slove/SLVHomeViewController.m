@@ -40,7 +40,7 @@
 	self.pullImageView.image = [UIImage imageNamed:@"Assets/Image/fleche_refresh"];
 	
 	self.refreshControl = [[UIRefreshControl alloc] init];
-	[self.refreshControl addTarget:self action:@selector(loadContacts) forControlEvents:UIControlEventValueChanged];
+	[self.refreshControl addTarget:self action:@selector(reloadContacts) forControlEvents:UIControlEventValueChanged];
 	[self.contactTableView addSubview:self.refreshControl];
 	
 	UIButton *addSloverButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
@@ -56,14 +56,14 @@
 												 name:NOTIFICATION_SLOVED_POPUP_DISMISSED
 											   object:nil];
 	
-	[self loadContacts];
+	[self loadContactsFromCache];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
 	
 	if (ApplicationDelegate.needToRefreshContacts) {
-		[self loadContacts];
+		[self reloadContacts];
 		
 		ApplicationDelegate.needToRefreshContacts = NO;
 	}
@@ -73,9 +73,9 @@
 	[super viewDidAppear:animated];
 	
 	if (ApplicationDelegate.sloverToSlove) {
-		if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
+		if ([ApplicationDelegate.sloverToSlove count] == 2) {
 			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:[ApplicationDelegate.sloverToSlove firstObject] andPicture:[ApplicationDelegate.sloverToSlove lastObject]] animated:YES];
-		} else {
+		} else if ([ApplicationDelegate.sloverToSlove count] == 1) {
 			[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:[ApplicationDelegate.sloverToSlove firstObject] andPicture:nil] animated:YES];
 		}
 		
@@ -116,27 +116,21 @@
 	}
 }
 
-- (void)needToReloadContacts {
-	if (!self.isAlreadyLoading) {
-		self.pullTopLayoutConstraint.constant = 150;
-		
-		[UIView animateWithDuration:LONG_ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseInOut animations:^{
-			self.pullImageView.alpha = 1;
-			[self.view layoutIfNeeded];
-		} completion:^(BOOL isFinished) {
-			[UIView animateWithDuration:SHORT_ANIMATION_DURATION animations:^{
-				self.pullImageView.alpha = 0;
-			} completion:^(BOOL isFinished) {
-				self.pullTopLayoutConstraint.constant = 8;
-				
-				[self.view layoutIfNeeded];
-			}];
-		}];
+// TODO: end this function
+- (void)loadContactsFromCache {
+	NSString *key = [NSString stringWithFormat:@"%@-%@", KEY_CACHED_CONTACTS, [PFUser currentUser].username];
+	
+	NSArray *cachedContacts = [USER_DEFAULTS objectForKey:key];
+	if (!cachedContacts) {
+		[self reloadContacts];
 	}
 }
 
-- (void)loadContacts {
+- (void)reloadContacts {
 	if (!self.isAlreadyLoading) {
+		[self.searchTextField resignFirstResponder];
+		self.searchTextField.text = @"";
+		
 		self.isAlreadyLoading = YES;
 		
 		if (![self.refreshControl isRefreshing]) {
@@ -144,20 +138,17 @@
 		}
 		
 		self.synchronizedContacts = [[NSArray alloc] init];
-		self.unsynchronizedContacts = [[NSArray alloc] init];
+		self.addressBookContacts = [[NSArray alloc] init];
 		self.fullSynchronizedContacts = [[NSArray alloc] init];
-		self.fullUnsynchronizedContacts = [[NSArray alloc] init];
+		self.fullAddressBookContacts = [[NSArray alloc] init];
 		self.addressBookContacts = [[NSArray alloc] init];
 		self.facebookContacts = [[NSArray alloc] init];
-		self.followedContacts = [[NSArray alloc] init];
 		
 		self.addressBookContactsReady = NO;
 		self.facebookContactsReady = NO;
-		self.followedContactsReady = NO;
 		
 		[self checkAddressBookAccessAuthorization];
 		[self checkFacebookFriendsAuthorization];
-		[self loadFollowedContacts];
 		
 		[self loadSynchronizedContacts];
 	}
@@ -168,15 +159,8 @@
 		self.addressBookRef = ABAddressBookCreateWithOptions(NULL, NULL);
 		
 		[self loadAddressBookFromAddressBookRef:self.addressBookRef];
-		[self synchronizeContacts];
-		
-		return;
 	} else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusDenied) {
 		SLVLog(@"%@Address book access not granted", SLV_WARNING);
-		
-		self.addressBookContactsReady = YES;
-		
-		return;
 	} else {
 		SLVLog(@"%@Address book access never asked", SLV_WARNING);
 		
@@ -192,11 +176,9 @@
 			
 			[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
 		}
-		
-		self.addressBookContactsReady = YES;
-		
-		return;
 	}
+	
+	self.addressBookContactsReady = YES;
 }
 
 - (void)checkFacebookFriendsAuthorization {
@@ -274,7 +256,7 @@
 			if (granted) {
 				SLVLog(@"User have granted access to his contact list");
 				
-				[self needToReloadContacts];
+				ApplicationDelegate.needToRefreshContacts = YES;
 			} else {
 				SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
 			}
@@ -284,12 +266,12 @@
 
 - (void)askFacebookFriends {
 	FBSDKLoginManager *loginManager = [[FBSDKLoginManager alloc] init];
-	[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
+	[loginManager logInWithReadPermissions:[NSArray arrayWithObjects:@"user_friends", nil] fromViewController:self handler:^(FBSDKLoginManagerLoginResult *result, NSError *error) {
 		if (!error) {
 			if ([result.grantedPermissions containsObject:@"user_friends"]) {
 				SLVLog(@"User have granted access to his friend list");
 				
-				[self needToReloadContacts];
+				ApplicationDelegate.needToRefreshContacts = YES;
 			} else {
 				SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
 			}
@@ -372,10 +354,9 @@
 		}
 	}
 	
-	self.unsynchronizedContacts = [addressBookBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
+	self.addressBookContacts = [addressBookBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
 		return [a.fullName caseInsensitiveCompare:b.fullName];
 	}];
-	self.fullUnsynchronizedContacts = self.unsynchronizedContacts;
 }
 
 - (void)loadFriends {
@@ -431,7 +412,7 @@
 			
 			self.facebookContacts = [NSArray arrayWithArray:friends];
 			
-			[self synchronizeFriends];
+			self.facebookContactsReady = YES;
 		}
 		
 		if (error) {
@@ -442,84 +423,7 @@
 	}];
 }
 
-- (void)loadFollowedContacts {
-	[PFCloud callFunctionInBackground:SYNCHRONIZE_FOLLOWED_CONTACTS_FUNCTION
-					   withParameters:nil
-								block:^(id object, NSError *error){
-									if (!error) {
-										SLVLog(@"Received data from server: %@", object);
-										
-										NSDictionary *datas = object;
-										NSArray *follows = [datas objectForKey:@"follows"];
-										
-										if (follows && [follows count] > 0) {
-											NSMutableArray *followedContactsBuffer = [[NSMutableArray alloc] init];
-											
-											for (NSDictionary *user in follows) {
-												SLVContact *contact = [[SLVContact alloc] init];
-												
-												NSString *username = [user objectForKey:@"username"];
-												
-												contact.username = username;
-												
-												NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
-												NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
-												
-												if (currentLevel) {
-													contact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
-												}
-												
-												NSString *profilePictureUrl = [user objectForKey:@"pictureUrl"];
-												if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-													contact.pictureUrl = [NSURL URLWithString:profilePictureUrl];
-												}
-												
-												NSString *fullName = @"";
-												NSString *firstName = [user objectForKey:@"firstName"];
-												
-												if (firstName) {
-													fullName = [fullName stringByAppendingString:firstName];
-												}
-												
-												NSString *lastName = [user objectForKey:@"lastName"];
-												
-												if (lastName) {
-													if (![fullName isEqualToString:@""]) {
-														fullName = [fullName stringByAppendingString:@" "];
-													}
-													
-													fullName = [fullName stringByAppendingString:lastName];
-												}
-												
-												contact.fullName = fullName;
-												
-												[followedContactsBuffer addObject:contact];
-											}
-											
-											self.followedContacts = [NSArray arrayWithArray:followedContactsBuffer];
-										}
-									} else {
-										SLVLog(@"%@%@", SLV_ERROR, error.description);
-										[ParseErrorHandlingController handleParseError:error];
-									}
-									
-									self.followedContactsReady = YES;
-								}];
-}
-
-- (void)loadSynchronizedContacts {
-	if (!(self.addressBookContactsReady && self.facebookContactsReady && self.followedContactsReady)) {
-		// TODO: fix issue that stop the performSelector when called from soloButtonPressed:
-		
-		[self performSelector:@selector(loadSynchronizedContacts) withObject:nil afterDelay:1];
-		
-		return;
-	}
-	
-	[self addContactsToSynchronizedContacts:self.addressBookContacts];
-	[self addContactsToSynchronizedContacts:self.facebookContacts];
-	[self addContactsToSynchronizedContacts:self.followedContacts];
-	
+- (void)loadPuppy {
 	SLVAddressBookContact *puppy = [[SLVAddressBookContact alloc] init];
 	puppy.fullName = NSLocalizedString(@"stranger_username", nil);
 	puppy.username = PUPPY_USERNAME;
@@ -530,9 +434,175 @@
 	[synchronizedContactsBuffer insertObject:puppy atIndex:0];
 	
 	self.synchronizedContacts = [[NSArray alloc] initWithArray:synchronizedContactsBuffer];
+}
+
+- (void)loadSynchronizedContacts {
+	if (!(self.addressBookContactsReady && self.facebookContactsReady)) {
+		// TODO: fix issue that stop the performSelector when called from soloButtonPressed:
+		
+		[self performSelector:@selector(loadSynchronizedContacts) withObject:nil afterDelay:1];
+		
+		return;
+	}
 	
-	self.fullSynchronizedContacts = self.synchronizedContacts;
+	PFQuery *query = [PFQuery queryWithClassName:OBJECT_USER_DATA];
+	[query whereKey:@"user" equalTo:[PFUser currentUser]];
+	[query findObjectsInBackgroundWithBlock:^(NSArray * _Nullable objects, NSError * _Nullable error) {
+		if (!error) {
+			SLVLog(@"Received data from server: %@", objects);
+			
+			NSArray *phoneNumbers = [self phoneNumbers];
+			NSArray *facebookIds = [self facebookIds];
+			
+//			NSString *phoneNumbersString;
+//			for (NSString *phoneNumber in phoneNumbers) {
+//				phoneNumbersString = [phoneNumbersString stringByAppendingString:phoneNumber];
+//			}
+//			
+//			NSString *facebookIdsString;
+//			for (NSString *facebookId in facebookIds) {
+//				facebookIdsString = [facebookIdsString stringByAppendingString:facebookId];
+//			}
+			
+			NSString *phoneNumbersMD5 = [[phoneNumbers description] MD5];
+			NSString *facebookIdsMD5 = [[facebookIds description] MD5];
+			
+			NSMutableDictionary *params = [[NSMutableDictionary alloc] init];
+			
+			if ([objects count] == 1) {
+				PFObject *userData = [objects firstObject];
+				NSMutableDictionary *hashKeys = [[NSMutableDictionary alloc] initWithDictionary:[userData objectForKey:@"contactsHash"]];
+				
+				if (![[hashKeys objectForKey:@"phone"] isEqualToString:phoneNumbersMD5]) {
+					[params setObject:phoneNumbers forKey:@"phoneNumbers"];
+					
+					[hashKeys setObject:phoneNumbersMD5 forKey:@"phone"];
+				}
+				
+				if (![[hashKeys objectForKey:@"facebook"] isEqualToString:facebookIdsMD5]) {
+					[params setObject:facebookIds forKey:@"facebookIds"];
+					
+					[hashKeys setObject:facebookIdsMD5 forKey:@"facebook"];
+				}
+				
+				[userData saveInBackground];
+			}
+			
+			[PFCloud callFunctionInBackground:SYNCHRONIZE_SLOVERS
+							   withParameters:params
+										block:^(id object, NSError *error){
+											if (!error) {
+												SLVLog(@"Received data from server: %@", object);
+												
+												NSArray *slovers = [object objectForKey:@"slovers"];
+												
+												NSMutableArray *synchronizedContactBuffer = [[NSMutableArray alloc] init];
+												
+												for (PFUser *user in slovers) {
+													NSString *username = user.username;
+													
+													if (![username isEqualToString:[PFUser currentUser].username]) {
+														SLVContact *slover = [[SLVContact alloc] init];
+														
+														slover.username = username;
+														
+														slover.phoneNumber = [user objectForKey:@"phoneNumber"];
+														
+														NSString *pictureUrlString = [user objectForKey:@"pictureUrl"];
+														if (pictureUrlString && ![pictureUrlString isEqualToString:@""]) {
+															slover.pictureUrl = [NSURL URLWithString:pictureUrlString];
+															
+															SDWebImageManager *manager = [SDWebImageManager sharedManager];
+															[manager downloadImageWithURL:slover.pictureUrl
+																				  options:0
+																				 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+																					 SLVLog(@"Downloading '%@' profile picture: %f%", slover.username, (receivedSize / expectedSize) * 100);
+																				 }
+																				completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+																					if (image) {
+																						SLVLog(@"Download of '%@' profile picture complete!", slover.username);
+																					}
+																				}];
+														}
+														
+														NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
+														NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
+														
+														if (currentLevel) {
+															slover.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
+														}
+														
+														for (SLVAddressBookContact *addressBookContact in self.addressBookContacts) {
+															for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
+																if ([[phoneNumberDic objectForKey:@"formatedPhoneNumber"] isEqualToString:slover.phoneNumber]) {
+																	SLVLog(@"Synchonizing address book contact '%@' with '%@'", addressBookContact.fullName, slover.username);
+																	
+																	slover.fullName = addressBookContact.fullName;
+																	
+																	self.addressBookContacts = [self removeContact:addressBookContact FromContacts:self.addressBookContacts];
+																}
+															}
+														}
+														
+														for (SLVFacebookFriend *facebookContact in self.facebookContacts) {
+															if ([facebookContact.facebookId isEqualToString:[user objectForKey:@"facebookId"]]) {
+																SLVLog(@"Synchonizing facebook contact '%@' with '%@'", facebookContact.fullName, slover.username);
+																
+																slover.fullName = facebookContact.fullName;
+																
+																self.facebookContacts = [self removeContact:facebookContact FromContacts:self.facebookContacts];
+															}
+														}
+														
+														if (!slover.fullName || [slover.fullName isEqualToString:@""]) {
+															slover.fullName = @"";
+															
+															NSString *firstName = [user objectForKey:@"firstName"];
+															NSString *lastName = [user objectForKey:@"lastName"];
+															
+															if (firstName) {
+																slover.fullName = firstName;
+															}
+															
+															if (lastName) {
+																if (![slover.fullName isEqualToString:@""]) {
+																	slover.fullName = [slover.fullName stringByAppendingString:@" "];
+																}
+																
+																slover.fullName = [slover.fullName stringByAppendingString:lastName];
+															}
+														}
+														
+														[synchronizedContactBuffer addObject:slover];
+													}
+												}
+												
+												self.fullAddressBookContacts = self.addressBookContacts;
+												
+												self.synchronizedContacts = [synchronizedContactBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
+													return [a.fullName caseInsensitiveCompare:b.fullName];
+												}];
+												
+												self.fullSynchronizedContacts = self.synchronizedContacts;
+											} else {
+												SLVLog(@"%@%@", SLV_ERROR, error.description);
+												[ParseErrorHandlingController handleParseError:error];
+											}
+											
+											[self loadSynchronizedContactsIsEnding];
+										}];
+		} else {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+			
+			[self loadSynchronizedContactsIsEnding];
+		}
+	}];
 	
+//	[self loadPuppy];
+}
+
+- (void)loadSynchronizedContactsIsEnding {
 	if ([self.loadingIndicator isAnimating]) {
 		[self.loadingIndicator stopAnimating];
 	}
@@ -547,106 +617,19 @@
 	self.isAlreadyLoading = NO;
 }
 
-- (void)addContactsToSynchronizedContacts:(NSArray *)contactsToAdd {
-	NSMutableArray *synchronizedContactsBuffer = [NSMutableArray arrayWithArray:self.synchronizedContacts];
-	
-	for (SLVContact *contactToAdd in contactsToAdd) {
-		BOOL shouldAddContact = YES;
-		
-		for (SLVContact *contact in self.synchronizedContacts) {
-			if ([contactToAdd.username isEqualToString:contact.username]) {
-				shouldAddContact = NO;
-				break;
-			}
-		}
-		
-		if (shouldAddContact) {
-			[synchronizedContactsBuffer addObject:contactToAdd];
-		}
-	}
-	
-	self.synchronizedContacts = [synchronizedContactsBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
-		return [a.fullName caseInsensitiveCompare:b.fullName];
-	}];
-}
-
-- (void)synchronizeContacts {
-	if ([self.unsynchronizedContacts count] == 0) {
-		self.addressBookContactsReady = YES;
-		
-		return;
-	}
-	
+- (NSArray *)phoneNumbers {
 	NSMutableArray *phoneNumbers = [[NSMutableArray alloc] init];
 	
-	for (SLVAddressBookContact *addressBookContact in self.unsynchronizedContacts) {
+	for (SLVAddressBookContact *addressBookContact in self.addressBookContacts) {
 		for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
 			[phoneNumbers addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
 		}
 	}
 	
-	[PFCloud callFunctionInBackground:SYNCHRONIZE_ADDRESS_BOOK_CONTACTS_FUNCTION
-					   withParameters:@{@"phoneNumbers" : phoneNumbers}
-								block:^(id object, NSError *error){
-									if (!error) {
-										SLVLog(@"Received data from server: %@", object);
-										
-										NSDictionary *datas = object;
-										NSArray *registeredContacts = [datas objectForKey:@"registeredContacts"];
-										
-										if (registeredContacts && [registeredContacts count] > 0) {
-											NSMutableArray *addressBookContactsBuffer = [[NSMutableArray alloc] init];
-											
-											for (NSDictionary *registeredContact in registeredContacts) {
-												NSString *username = [registeredContact objectForKey:@"username"];
-												
-												if (![username isEqualToString:[PFUser currentUser].username]) {
-													for (SLVAddressBookContact *addressBookContact in self.unsynchronizedContacts) {
-														for (NSDictionary *phoneNumberDic in addressBookContact.phoneNumbers) {
-															if ([[phoneNumberDic objectForKey:@"formatedPhoneNumber"] isEqualToString:[registeredContact objectForKey:@"phoneNumber"]]) {
-																addressBookContact.username = username;
-																
-																NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
-																NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
-																
-																if (currentLevel) {
-																	addressBookContact.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
-																}
-																
-																NSString *profilePictureUrl = [registeredContact objectForKey:@"pictureUrl"];
-																if (profilePictureUrl && ![profilePictureUrl isEqualToString:@""]) {
-																	addressBookContact.pictureUrl = [NSURL URLWithString:profilePictureUrl];
-																}
-																
-																SLVLog(@"Contact '%@' synchronized with username '%@'", addressBookContact.fullName, addressBookContact.username);
-																
-																[addressBookContactsBuffer addObject:addressBookContact];
-																
-																[self removeContactFromUnsynchronizedContacts:addressBookContact];
-															}
-														}
-													}
-												}
-											}
-											
-											self.addressBookContacts = [self cleanAfterSynchronize:addressBookContactsBuffer];;
-										}
-									} else {
-										SLVLog(@"%@%@", SLV_ERROR, error.description);
-										[ParseErrorHandlingController handleParseError:error];
-									}
-									
-									self.addressBookContactsReady = YES;
-								}];
+	return [[NSArray alloc] initWithArray:[phoneNumbers sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
 }
 
-- (void)synchronizeFriends {
-	if ([self.facebookContacts count] == 0) {
-		self.facebookContactsReady = YES;
-		
-		return;
-	}
-	
+- (NSArray *)facebookIds {
 	NSMutableArray *facebookIds = [[NSMutableArray alloc] init];
 	
 	for (SLVFacebookFriend *friend in self.facebookContacts) {
@@ -655,72 +638,13 @@
 		}
 	}
 	
-	[PFCloud callFunctionInBackground:SYNCHRONIZE_FACEBOOK_CONTACTS_FUNCTION
-					   withParameters:@{@"facebookIds" : facebookIds}
-								block:^(id object, NSError *error){
-									if (!error) {
-										SLVLog(@"Received data from server: %@", object);
-										
-										NSDictionary *datas = object;
-										NSArray *registeredContacts = [datas objectForKey:@"registeredFriends"];
-										
-										if (registeredContacts && [registeredContacts count] > 0) {
-											for (NSDictionary *registeredContact in registeredContacts) {
-												NSString *username = [registeredContact objectForKey:@"username"];
-												
-												if (![username isEqualToString:[PFUser currentUser].username]) {
-													
-													for (SLVFacebookFriend *friend in self.facebookContacts) {
-														if ([friend.facebookId isEqualToString:[registeredContact objectForKey:@"facebookId"]]) {
-															friend.username = username;
-															
-															NSString *levelKey = [NSString stringWithFormat:@"%@-%@", KEY_CONTACT_LEVELUP, username];
-															NSNumber *currentLevel = [USER_DEFAULTS objectForKey:levelKey];
-															
-															if (currentLevel) {
-																friend.currentLevel = [ApplicationDelegate.levels objectAtIndex:[currentLevel intValue]];
-															}
-															
-															NSString *pictureURLString = [registeredContact objectForKey:@"pictureUrl"];
-															
-															if (pictureURLString && ![pictureURLString isEqualToString:@""]) {
-																friend.pictureUrl = [NSURL URLWithString:pictureURLString];
-															}
-															
-															SLVLog(@"Contact '%@' synchronized with username '%@'", friend.fullName, friend.username);
-														}
-													}
-												}
-											}
-											
-											self.facebookContacts = [self cleanAfterSynchronize:self.facebookContacts];
-										}
-									} else {
-										SLVLog(@"%@%@", SLV_ERROR, error.description);
-										[ParseErrorHandlingController handleParseError:error];
-									}
-									
-									self.facebookContactsReady = YES;
-								}];
+	return [[NSArray alloc] initWithArray:[facebookIds sortedArrayUsingSelector:@selector(localizedCaseInsensitiveCompare:)]];
 }
 
-- (NSArray *)cleanAfterSynchronize:(NSArray *)arrayToClean {
-	NSMutableArray *arrayBuffer = [[NSMutableArray alloc] initWithArray:arrayToClean];
-	
-	for (SLVContact *contact in arrayBuffer) {
-		if (!contact.username || [contact.username isEqualToString:@""]) {
-			[arrayBuffer removeObject:contact];
-		}
-	}
-	
-	return [[NSArray alloc] initWithArray:arrayBuffer];
-}
-
-- (void)removeContactFromUnsynchronizedContacts:(SLVContact *)contact {
-	NSMutableArray *unsynchronizedContactsBuffer = [NSMutableArray arrayWithArray:self.unsynchronizedContacts];
-	[unsynchronizedContactsBuffer removeObject:contact];
-	self.unsynchronizedContacts = [NSArray arrayWithArray:unsynchronizedContactsBuffer];
-	self.fullUnsynchronizedContacts = self.unsynchronizedContacts;
+- (NSArray *)removeContact:(SLVContact *)contact FromContacts:(NSArray *)contacts {
+	NSMutableArray *contactsBuffer = [NSMutableArray arrayWithArray:contacts];
+	[contactsBuffer removeObject:contact];
+	return [NSArray arrayWithArray:contactsBuffer];
 }
 
 - (void)showAddSloverView:(UIButton *)button {
@@ -733,6 +657,8 @@
 	SLVLog(@"User is trying to share Slove!");
 	
 	NSString *shareText = NSLocalizedString(@"label_share_with_friends", nil);
+	shareText = [shareText stringByReplacingOccurrencesOfString:@"[app_url]" withString:[ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
+	
 	UIImage *shareImage = [UIImage imageNamed:@"Assets/App Icon/Logo_Slove_App_1024"];
 	NSURL *shareUrl = [NSURL URLWithString:[ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
 	
@@ -750,7 +676,7 @@
 }
 
 - (void)inviteBySMS:(UIButton *)button {
-	SLVAddressBookContact *addressBookContact = [self.unsynchronizedContacts objectAtIndex:button.tag];
+	SLVAddressBookContact *addressBookContact = [self.addressBookContacts objectAtIndex:button.tag];
 	
 	if(![MFMessageComposeViewController canSendText]) {
 		SLVLog(@"%@This device can't send SMS", SLV_WARNING);
@@ -773,7 +699,8 @@
 		[recipents addObject:[phoneNumberDic objectForKey:@"formatedPhoneNumber"]];
 	}
 	
-	NSString *message = [NSString stringWithFormat:@"%@ %@", NSLocalizedString(@"label_smsInvite", nil), [ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
+	NSString *message = NSLocalizedString(@"label_share_with_friends", nil);
+	message = [message stringByReplacingOccurrencesOfString:@"[app_url]" withString:[ApplicationDelegate.parseConfig objectForKey:PARSE_DOWNLOAD_APP_URL]];
 	
 	MFMessageComposeViewController *messageController = [[MFMessageComposeViewController alloc] init];
 	messageController.messageComposeDelegate = self;
@@ -832,7 +759,7 @@
 	if (([self.synchronizedContacts count] > 0) && (section == 0)) {
 		return [self.synchronizedContacts count];
 	}
-	return [self.unsynchronizedContacts count];
+	return [self.addressBookContacts count];
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -866,13 +793,13 @@
 	
 	if (isSynchronized) {
 		contact = [self.synchronizedContacts objectAtIndex:indexPath.row];
-	} else if ([self.unsynchronizedContacts count] > 0) {
-		contact = [self.unsynchronizedContacts objectAtIndex:indexPath.row];
+	} else if ([self.addressBookContacts count] > 0) {
+		contact = [self.addressBookContacts objectAtIndex:indexPath.row];
 		cell.subtitleImageView.image = nil;
 		cell.subtitleLabel.textColor = nil;
 		[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_ajout_contact"] forState:UIControlStateNormal];
 		cell.selectionButton.tag = indexPath.row;
-		[cell.selectionButton addTarget:self action:@selector(inviteAction:) forControlEvents:UIControlEventTouchUpInside];
+		[cell.selectionButton addTarget:self action:@selector(inviteBySMS:) forControlEvents:UIControlEventTouchUpInside];
 	} else {
 		return cell;
 	}
@@ -990,10 +917,11 @@
 
 - (void)textFieldDidChange:(UITextField *)textField {
 	if (textField == self.searchTextField) {
-		NSString *text = textField.text;
+		NSString *text = [textField.text stringByTrimmingCharactersInSet:
+		[NSCharacterSet whitespaceCharacterSet]];
 		
 		if(text.length == 0) {
-			self.unsynchronizedContacts = self.fullUnsynchronizedContacts;
+			self.addressBookContacts = self.fullAddressBookContacts;
 			self.synchronizedContacts = self.fullSynchronizedContacts;
 		} else {
 			NSMutableArray *filteredContacts = [[NSMutableArray alloc] init];
@@ -1010,14 +938,14 @@
 			
 			filteredContacts = [[NSMutableArray alloc] init];
 			
-			for (SLVAddressBookContact *contact in self.fullUnsynchronizedContacts) {
+			for (SLVAddressBookContact *contact in self.fullAddressBookContacts) {
 				NSRange fullNameRange = [contact.fullName rangeOfString:text options:NSCaseInsensitiveSearch];
 				if(fullNameRange.location != NSNotFound) {
 					[filteredContacts addObject:contact];
 				}
 			}
 			
-			self.unsynchronizedContacts = filteredContacts;
+			self.addressBookContacts = filteredContacts;
 		}
 		
 		[self.contactTableView reloadData];

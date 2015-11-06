@@ -8,6 +8,8 @@
 
 #import "SLVViewController.h"
 #import <Google/Analytics.h>
+#import <FBSDKCoreKit/FBSDKCoreKit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
 
 @interface SLVViewController ()
 
@@ -109,7 +111,7 @@
 }
 
 - (void)loadBackButton {
-	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 80, 30)];
+	UIButton *backButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
 	[backButton setTitle:NSLocalizedString(@"button_back", nil) forState:UIControlStateNormal];
 	[backButton setTitleEdgeInsets:UIEdgeInsetsMake(0, 5, 0, 0)];
 	[backButton setTitleColor:BLUE forState:UIControlStateNormal];
@@ -118,14 +120,44 @@
 	backButton.titleLabel.adjustsFontSizeToFitWidth = YES;
 	[backButton setImage:[UIImage imageNamed:@"Assets/Button/fleche_retour"] forState:UIControlStateNormal];
 	[backButton setImageEdgeInsets:UIEdgeInsetsMake(0, 0, 0, 0)];
-	[backButton addTarget:self action:@selector(goBack:) forControlEvents:UIControlEventTouchUpInside];
+	[backButton addTarget:self action:@selector(backAction:) forControlEvents:UIControlEventTouchUpInside];
 	backButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentLeft;
 	UIBarButtonItem *backButtonItem = [[UIBarButtonItem alloc] initWithCustomView:backButton];
 	self.navigationItem.leftBarButtonItem = backButtonItem;
 }
 
-- (void)goBack:(id)sender {
+- (void)loadLogoutButton {
+	UIButton *logoutButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 100, 30)];
+	[logoutButton setTitle:NSLocalizedString(@"button_disconnect", nil) forState:UIControlStateNormal];
+	[logoutButton setTitleColor:BLUE forState:UIControlStateNormal];
+	[logoutButton setTitleColor:DARK_GRAY forState:UIControlStateHighlighted];
+	logoutButton.titleLabel.font = [UIFont fontWithName:DEFAULT_FONT size:DEFAULT_FONT_SIZE];
+	logoutButton.titleLabel.adjustsFontSizeToFitWidth = YES;
+	[logoutButton setImage:[UIImage imageNamed:@"Assets/Button/logout"] forState:UIControlStateNormal];
+	[logoutButton addTarget:self action:@selector(disconnectAction:) forControlEvents:UIControlEventTouchUpInside];
+	logoutButton.titleEdgeInsets = UIEdgeInsetsMake(0, -logoutButton.imageView.frame.size.width, 0, logoutButton.imageView.frame.size.width);
+	logoutButton.imageEdgeInsets = UIEdgeInsetsMake(5, logoutButton.titleLabel.frame.size.width, 0, -logoutButton.titleLabel.frame.size.width);
+	UIBarButtonItem *logoutButtonItem = [[UIBarButtonItem alloc] initWithCustomView:logoutButton];
+	self.navigationItem.rightBarButtonItem = logoutButtonItem;
+}
+
+- (void)backAction:(id)sender {
 	[self.navigationController popViewControllerAnimated:YES];
+}
+
+- (void)disconnectAction:(id)sender {
+	if ([FBSDKAccessToken currentAccessToken]) {
+		[FBSDKAccessToken setCurrentAccessToken:nil];
+	}
+	
+	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
+		if (!error) {
+			[ApplicationDelegate userDisconnected];
+		} else {
+			SLVLog(@"%@%@", SLV_ERROR, error.description);
+			[ParseErrorHandlingController handleParseError:error];
+		}
+	}];
 }
 
 - (void)goToHome {

@@ -16,10 +16,11 @@
 @property (strong, nonatomic) IBOutlet UIView *counterView;
 @property (strong, nonatomic) IBOutlet UIImageView *counterImageView;
 @property (strong, nonatomic) IBOutlet UILabel *counterLabel;
+@property (strong, nonatomic) IBOutlet UILabel *counterDescriptionLabel;
+@property (strong, nonatomic) IBOutlet UIImageView *counterDescriptionImageView;
 @property (strong, nonatomic) IBOutlet UIView *bodyView;
 @property (strong, nonatomic) IBOutlet UIImageView *topBarImageView;
 @property (strong, nonatomic) IBOutlet UIImageView *bottomBarImageView;
-@property (strong, nonatomic) IBOutlet UIButton *disconnectButton;
 @property (strong, nonatomic) IBOutlet UIButton *uploadProfilePictureButton;
 @property (strong, nonatomic) IBOutlet UIProgressView *uploadProgressBar;
 @property (strong, nonatomic) IBOutlet UIView *contactView;
@@ -28,9 +29,9 @@
 @property (strong, nonatomic) IBOutlet UILabel *fullNameLabel;
 @property (strong, nonatomic) IBOutlet UILabel *usernameLabel;
 @property (strong, nonatomic) IBOutlet UIImageView *pictoImageView;
-@property (strong, nonatomic) IBOutlet NSLayoutConstraint *bottomDictonnectButtonLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *leftLevelLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *rightCounterLayoutConstraint;
 
 - (IBAction)uploadProfilePictureAction:(id)sender;
-- (IBAction)disconnectAction:(id)sender;
 
 @end

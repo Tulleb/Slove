@@ -12,6 +12,7 @@
 #import "SLVOldActivityTableViewCell.h"
 #import "SLVHomeViewController.h"
 #import "SLVSlovedPopupViewController.h"
+#import "SLVContactViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 
 @interface SLVActivityViewController ()
@@ -414,7 +415,7 @@
 	id section = [self.sectionOrder objectAtIndex:indexPath.section];
 	SLVActivity *activity = [[self.activities objectForKey:section] objectAtIndex:indexPath.row];
 	
-	if (activity && activity.type == kSloved) {
+	if (activity) {
 		UIViewController *rootViewController = self.navigationController.viewControllers.firstObject;
 		if ([rootViewController isKindOfClass:[SLVHomeViewController class]]) {
 			SLVHomeViewController *homeViewController = (SLVHomeViewController *)rootViewController;
@@ -423,20 +424,25 @@
 			
 			if (contact) {
 				if (contact.pictureUrl) {
-					dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_BACKGROUND, 0), ^(void) {
-						NSData *data = [NSData dataWithContentsOfURL:contact.pictureUrl];
-						UIImage *image = [UIImage imageWithData:data];
-						
-						dispatch_sync(dispatch_get_main_queue(), ^(void) {
-							SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact andPicture:image];
-							
-							[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
-						});
-					});
+					SDWebImageManager *manager = [SDWebImageManager sharedManager];
+					[manager downloadImageWithURL:contact.pictureUrl
+										  options:0
+										 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+											 SLVLog(@"Downloading '%@' profile picture: %f%", contact.username, (receivedSize / expectedSize) * 100);
+										 }
+										completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+											if (image) {
+												ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:contact, image, nil];
+												
+												[self.navigationController popToRootViewControllerAnimated:YES];
+											}
+										}];
 				} else {
-					SLVSlovedPopupViewController *slovedViewController = [[SLVSlovedPopupViewController alloc] initWithContact:contact andPicture:[UIImage imageNamed:@"Assets/Avatar/avatar_user_big"]];
+					SLVLog(@"No cached picture found for %@, loading default avatar picture", contact.username);
 					
-					[self.navigationController presentViewController:slovedViewController animated:YES completion:nil];
+					ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:contact, nil];
+					
+					[self.navigationController popToRootViewControllerAnimated:YES];
 				}
 			}
 		}

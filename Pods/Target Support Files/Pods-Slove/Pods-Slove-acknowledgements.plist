@@ -238,6 +238,14 @@ The MIT License in plain English: http://www.touch-code-magazine.com/JSONModel/M
 			<key>FooterText</key>
 			<string>See https://www.parse.com/about/terms</string>
 			<key>Title</key>
+			<string>ParseCrashReporting</string>
+			<key>Type</key>
+			<string>PSGroupSpecifier</string>
+		</dict>
+		<dict>
+			<key>FooterText</key>
+			<string>See https://www.parse.com/about/terms</string>
+			<key>Title</key>
 			<string>ParseFacebookUtilsV4</string>
 			<key>Type</key>
 			<string>PSGroupSpecifier</string>

@@ -39,6 +39,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>ParseCrashReporting.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>ParseFacebookUtilsV4.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -72,22 +77,37 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>04BC179E45FE930E8A116EF38AC85350</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>09FA060F1A0492FB25232F489AC4E573</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>2602F3D0DAC534568B6AD7EEA0DD1959</key>
+		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5DD3867EE779F83D2BF777B783742DBF</key>
+		<key>41ECE539F9095BC08AB34E2AD8A31A5D</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>61DFD15E1A174FFE8DBFED89F10AA3F7</key>
+		<key>4E286D373D75563CE26E479A68203892</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>5366B7F679CF2BA31EA583EA35CA2D90</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>587C2888E38FFACD0382C9DDCF3C6498</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -97,12 +117,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>88780A69F616EFDFAB8622239E2EC600</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>941B45EFD43947BD125FF2854124AB81</key>
+		<key>81D7FE2A0FD9258247B1232874B837DA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -112,17 +127,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>9F3A3DAF2523F0F6FEC26AC469CD4639</key>
+		<key>960A6BC377BC3426655C94898BD5BCAA</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>C46FA09AEE466127AEE9BE4787738780</key>
-		<dict>
-			<key>primary</key>
-			<true/>
-		</dict>
-		<key>C8D5127E98DA500721D42EF4C07BEE9C</key>
+		<key>A48601FEE4437A924848DB48369BA809</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -132,7 +142,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>F21523DE0EE1E35B265242490D97EE4C</key>
+		<key>DBDDB4FFB08B9CE13C3842D452303563</key>
 		<dict>
 			<key>primary</key>
 			<true/>

@@ -15,8 +15,8 @@
 + (NSString *)generateId;
 + (NSString*)applicationDocumentsDirectory;
 + (void)removeFile:(NSString *)fileName;
-+ (void)saveImage:(UIImage *)image withName:(NSString *)name;
-+ (UIImage *)loadImageWithName:(NSString *)name;
++ (void)saveImage:(UIImage *)image withName:(NSString *)name; // Try to use SDWebImage instead
++ (UIImage *)loadImageWithName:(NSString *)name; // Try to use SDWebImage instead
 + (NSString *)trimUsername:(NSString *)username;
 + (NSString *)validateUsername:(NSString *)username;
 + (NSString *)usernameIsFilled:(NSString *)username;

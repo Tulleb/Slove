@@ -46,6 +46,8 @@
 	[self initTapToDismiss];
 	
 	[self loadBackButton];
+	
+	[self lookForSloversContaining:@""];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -107,7 +109,16 @@
 			NSMutableArray *foundContacts = [[NSMutableArray alloc] init];
 			
 			for (PFUser *user in foundUsers) {
-				if ([user objectForKey:@"phoneNumber"] && ![[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
+				BOOL userAlreadyInContact = NO;
+				
+				for (SLVContact *contact in self.homeViewController.fullSynchronizedContacts) {
+					if ([user.username isEqualToString:contact.username]) {
+						userAlreadyInContact = YES;
+						break;
+					}
+				}
+				
+				if (!userAlreadyInContact && ![user.username isEqualToString:[PFUser currentUser].username] && [user objectForKey:@"phoneNumber"] && ![[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
 					SLVContact *contact = [[SLVContact alloc] init];
 					
 					contact.username = [user objectForKey:@"username"];
@@ -235,7 +246,8 @@
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	[textField resignFirstResponder];
 	
-	[self lookForSloversContaining:textField.text];
+	[self lookForSloversContaining:[textField.text stringByTrimmingCharactersInSet:
+												  [NSCharacterSet whitespaceCharacterSet]]];
 	
 	return YES;
 }

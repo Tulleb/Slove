@@ -31,7 +31,7 @@
 
 - (void)activityAction:(id)sender;
 - (void)sloveAction:(id)sender;
-- (void)settingsAction:(id)sender;
+- (void)profileAction:(id)sender;
 - (void)hideBottomNavigationBar;
 - (void)showBottomNavigationBar;
 - (void)refreshSloveCounter;
