@@ -50,7 +50,7 @@
 	[super viewWillAppear:animated];
 }
 
-- (void)goBack:(id)sender {
+- (void)backAction:(id)sender {
 	[super goToHome];
 }
 

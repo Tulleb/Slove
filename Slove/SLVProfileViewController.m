@@ -131,7 +131,7 @@
 	[self presentViewController:imagePickerController animated:YES completion:nil];
 }
 
-- (void)goBack:(id)sender {
+- (void)backAction:(id)sender {
 	[super goToHome];
 }
 
