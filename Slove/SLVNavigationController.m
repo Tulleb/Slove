@@ -314,9 +314,6 @@
 }
 
 - (void)homeAction:(id)sender {
-	self.activityButton.selected = NO;
-	self.profileButton.selected = NO;
-	
 	[self popToRootViewControllerAnimated:YES];
 }
 
