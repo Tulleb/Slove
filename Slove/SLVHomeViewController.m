@@ -515,9 +515,9 @@
 												NSMutableArray *synchronizedContactBuffer = [[NSMutableArray alloc] init];
 												
 												for (PFUser *user in slovers) {
-													NSString *username = user.username;
+													NSString *username = [user objectForKey:@"username"];
 													
-													if (![username isEqualToString:[PFUser currentUser].username]) {
+													if (![username isEqualToString:[[PFUser currentUser] objectForKey:@"username"]]) {
 														SLVContact *slover = [[SLVContact alloc] init];
 														
 														slover.username = username;
