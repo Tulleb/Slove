@@ -532,8 +532,10 @@
 															[manager downloadImageWithURL:slover.pictureUrl
 																				  options:0
 																				 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
-																					 float prct = receivedSize / expectedSize * 100;
-																					 SLVLog(@"Downloading '%@' profile picture: %f%", slover.username, prct);
+																					 if (expectedSize > 0) {
+																						 float prct = 100.0 * receivedSize / expectedSize;
+																						 SLVLog(@"Downloading '%@' profile picture: %.02f%%", slover.username, prct);
+																					 }
 																				 }
 																				completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
 																					if (image) {
