@@ -91,6 +91,8 @@
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:YES];
 	
+	ApplicationDelegate.currentNavigationController.profileButton.selected = YES;
+	
 	if (![USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] || ![[USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] boolValue]) {
 		SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
 		
@@ -98,6 +100,12 @@
 		
 		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
 	}
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	ApplicationDelegate.currentNavigationController.profileButton.selected = NO;
 }
 
 - (void)viewWillLayoutSubviews {

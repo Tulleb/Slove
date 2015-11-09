@@ -67,10 +67,6 @@
 		
 		ApplicationDelegate.needToRefreshContacts = NO;
 	}
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
 	
 	if (ApplicationDelegate.sloverToSlove) {
 		if ([ApplicationDelegate.sloverToSlove count] == 2) {
@@ -83,6 +79,11 @@
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self startTutorial];
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -111,9 +112,9 @@
 }
 
 - (void)didDismissSlovedPopup {
-	if (!IS_IOS7) {
-		[self viewDidAppear:YES];
-	}
+//	if (!IS_IOS7) {
+//		[self viewDidAppear:YES];
+//	}
 }
 
 // TODO: end this function

@@ -174,7 +174,7 @@
 #pragma mark - Custom methods
 
 - (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
-	SLVLog(@"Received a push notification");
+	SLVLog(@"Received a push notification: %@", userInfo);
 	
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
@@ -232,7 +232,10 @@
 		} else {
 			SLVLog(@"%@Couldn't init Slover data", SLV_ERROR);
 		}
-	} else {
+	}
+	// TODO: Handle level up push
+	
+	else {
 		[PFPush handlePush:userInfo];
 	}
 }

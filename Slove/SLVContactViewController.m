@@ -71,6 +71,12 @@
 	[self.levelCarousel scrollToItemAtIndex:self.contact.currentLevel.number animated:NO];
 }
 
+- (void)viewWillAppear:(BOOL)animated {
+	[super viewWillAppear:animated];
+	
+	[self.levelCarousel showByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+}
+
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
