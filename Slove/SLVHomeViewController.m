@@ -563,13 +563,15 @@
 															}
 														}
 														
-														for (SLVFacebookFriend *facebookContact in self.facebookContacts) {
-															if ([facebookContact.facebookId isEqualToString:[user objectForKey:@"facebookId"]]) {
-																SLVLog(@"Synchonizing facebook contact '%@' with '%@'", facebookContact.fullName, slover.username);
-																
-																slover.fullName = facebookContact.fullName;
-																
-																self.facebookContacts = [self removeContact:facebookContact FromContacts:self.facebookContacts];
+														if (!slover.fullName || [slover.fullName isEqualToString:@""]) {
+															for (SLVFacebookFriend *facebookContact in self.facebookContacts) {
+																if ([facebookContact.facebookId isEqualToString:[user objectForKey:@"facebookId"]]) {
+																	SLVLog(@"Synchonizing facebook contact '%@' with '%@'", facebookContact.fullName, slover.username);
+																	
+																	slover.fullName = facebookContact.fullName;
+																	
+																	self.facebookContacts = [self removeContact:facebookContact FromContacts:self.facebookContacts];
+																}
 															}
 														}
 														
