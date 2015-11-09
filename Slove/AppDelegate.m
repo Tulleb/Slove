@@ -174,14 +174,27 @@
 #pragma mark - Custom methods
 
 - (void)application:(UIApplication *)application handleRemoteNotification:(NSDictionary *)userInfo {
+	SLVLog(@"Received a push notification");
+	
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
 	if (sloverDic) {
-		NSError *error;
-		SLVContact *slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
+		SLVContact *slover;
 		
-		if (error) {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
+		if ([self.currentNavigationController.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
+			SLVHomeViewController *homeViewController = (SLVHomeViewController *)self.currentNavigationController.viewControllers.firstObject;
+			
+			slover = [homeViewController contactForUsername:[sloverDic objectForKey:@"username"]];
 		} else {
+			NSError *error;
+			slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
+			
+			if (error) {
+				SLVLog(@"%@%@", SLV_ERROR, error.description);
+				return;
+			}
+		}
+		
+		if (slover) {
 			if (slover.username && [slover.username isEqualToString:PUPPY_USERNAME]) {
 				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:(rand() % 12 + 1)];
 				
@@ -216,12 +229,12 @@
 				
 				[self.queuedPopups addObject:presentedViewController];
 			}
+		} else {
+			SLVLog(@"%@Couldn't init Slover data", SLV_ERROR);
 		}
 	} else {
 		[PFPush handlePush:userInfo];
 	}
-	
-	SLVLog(@"Received a push notification");
 }
 
 - (void)checkReachability {
