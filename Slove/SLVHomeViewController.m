@@ -615,7 +615,9 @@
 										}];
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
+			
+			SLVInteractionPopupViewController *disconnectPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_pull_again", nil) buttonsTitle:nil andDismissButton:YES];
+			[ApplicationDelegate.currentNavigationController presentViewController:disconnectPopup animated:YES completion:nil];
 			
 			[self loadSynchronizedContactsIsEnding];
 		}

@@ -18,6 +18,8 @@
 #import "SLVLevel.h"
 #import "SLVAddressBookContact.h"
 #import <ParseCrashReporting/ParseCrashReporting.h>
+#import "SLVContactViewController.h"
+#import <SDWebImage/UIImageView+WebCache.h>
 
 @interface AppDelegate ()
 
@@ -177,6 +179,8 @@
 	SLVLog(@"Received a push notification: %@", userInfo);
 	
 	NSDictionary *sloverDic = [userInfo objectForKey:@"slover"];
+	NSDictionary *levelUpDic = [userInfo objectForKey:@"levelUp"];
+	
 	if (sloverDic) {
 		SLVContact *slover;
 		
@@ -232,8 +236,54 @@
 		} else {
 			SLVLog(@"%@Couldn't init Slover data", SLV_ERROR);
 		}
+	} else if (levelUpDic) {
+		SLVContact *slover;
+		NSString *otherUsername;
+		
+		if (![PFUser currentUser] || ![PFUser currentUser].username) {
+			SLVLog(@"%@Couldn't level up, no current user found");
+			
+			return;
+		}
+		
+		if ([[PFUser currentUser].username isEqualToString:[levelUpDic objectForKey:@"user1"]]) {
+			otherUsername = [levelUpDic objectForKey:@"user2"];
+		} else {
+			otherUsername = [levelUpDic objectForKey:@"user1"];
+		}
+		
+		if ([self.currentNavigationController.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
+			SLVHomeViewController *homeViewController = (SLVHomeViewController *)self.currentNavigationController.viewControllers.firstObject;
+			
+			slover = [homeViewController contactForUsername:otherUsername];
+		} else {
+			slover = [[SLVContact alloc] init];
+			
+			slover.username = otherUsername;
+		}
+		
+		if (slover) {
+			if (slover.pictureUrl) {
+				SDWebImageManager *manager = [SDWebImageManager sharedManager];
+				[manager downloadImageWithURL:slover.pictureUrl
+									  options:0
+									 progress:^(NSInteger receivedSize, NSInteger expectedSize) {
+										 SLVLog(@"Downloading '%@' profile picture: %f%", slover.username, (receivedSize / expectedSize) * 100);
+									 }
+									completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
+										if (image) {
+											[self.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:slover andPicture:image] animated:YES];
+										}
+									}];
+			} else {
+				SLVLog(@"No cached picture found for %@, loading default avatar picture", slover.username);
+				
+				[self.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:slover andPicture:nil] animated:YES];
+			}
+		} else {
+			SLVLog(@"%@Couldn't init Slover data", SLV_ERROR);
+		}
 	}
-	// TODO: Handle level up push
 	
 	else {
 		[PFPush handlePush:userInfo];
