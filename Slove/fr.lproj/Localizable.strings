@@ -1,5 +1,5 @@
 "label_your_username" = "Votre nom d'utilisateur";
-"popup_body_smsInvite" = "Votre appareil ne peut pas envoyer de SMS";
+"button_disconnect" = "Déconnexion";
 "title_add_slover" = "Ajouter un Slover";
 "subtitle_sloved" = "Vous venez de recevoir un Slove de ";
 "label_tutorial_profile" = "Maintenez le bouton appuyé 2 secondes pour envoyer votre premier Slove";
@@ -10,7 +10,7 @@
 "label_tutorial_slove_sent" = "Félicitations ! Vous venez d'envoyer votre premier Slove :)";
 "label_banner_confirmation" = "\"Embrassez la mariée !\"";
 "button_already_have_account" = "J'ai déjà un compte";
-"button_disconnect" = "Déconnexion";
+"popup_body_smsInvite" = "Votre appareil ne peut pas envoyer de SMS";
 "label_received_gift" = "+[number] [slove] pour vous :)";
 "error_password_length" = "Votre mot de passe doit contenir au moins 6 caractères";
 "button_profile" = "Profil";
@@ -66,6 +66,7 @@
 "error_email_taken" = "Cet email est déjà utilisé";
 "placeholder_username" = "Nom d'utilisateur";
 "popup_already_sloved_recently" = "Vous avez déjà Slové cet utilisateur récemment… Patience :)";
+"popup_body_pull_again" = "Merci de tirer votre liste de contacts vers le bas afin de la recharger à nouveau";
 "error_disconnected" = "Oups ! Il semble que vous avez été déconnecté. Identifiez-vous à nouveau…";
 "error_password_empty" = "Vous n'avez pas entré de mot de passe";
 "title_home" = "Amis";
