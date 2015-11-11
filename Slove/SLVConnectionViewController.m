@@ -83,7 +83,7 @@
 		if (self.calledFromBackButton) {
 			self.calledFromBackButton = NO;
 		} else {
-			[self performSelector:@selector(fetchCurrentUser) withObject:nil afterDelay:MINIMUM_ANIMATION_DURATION];
+			[self fetchCurrentUser];
 		}
 	}
 }
@@ -94,6 +94,8 @@
 	if (currentUser) {
 		[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 			if (!error) {
+				ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
+				
 				if ([FBSDKAccessToken currentAccessToken]) {
 					[self loggedWithFacebook];
 				} else if ([PFUser currentUser]) {
@@ -103,15 +105,14 @@
 				SLVLog(@"%@%@", SLV_ERROR, error.description);
 				[ParseErrorHandlingController handleParseError:error];
 				
-				ApplicationDelegate.applicationJustStarted = NO;
-				
 				[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 			}
 		}];
 	} else {
-		ApplicationDelegate.applicationJustStarted = NO;
-		
-		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+		if (!ApplicationDelegate.shouldLetLoadingScreen) {
+			ApplicationDelegate.shouldLetLoadingScreen = NO;
+			[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+		}
 	}
 }
 
@@ -165,8 +166,6 @@
 																[ApplicationDelegate userConnected];
 															}
 														}
-														
-														ApplicationDelegate.applicationJustStarted = NO;
 													}];
 	}
 }
@@ -180,8 +179,6 @@
 	} else {
 		[ApplicationDelegate userConnected];
 	}
-	
-	ApplicationDelegate.applicationJustStarted = NO;
 }
 
 - (void)getInformationsFromFacebook {
@@ -344,7 +341,8 @@
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
 	ApplicationDelegate.currentNavigationController.loaderImageView.hidden = NO;
-	ApplicationDelegate.applicationJustStarted = YES;
+	ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
+	ApplicationDelegate.shouldLetLoadingScreen = YES;
 	
 	[self loggedWithFacebook];
 }
