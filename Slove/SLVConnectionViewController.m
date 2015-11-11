@@ -340,11 +340,13 @@
 #pragma mark - FBSDKLoginButtonDelegate
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
-	ApplicationDelegate.currentNavigationController.loaderImageView.hidden = NO;
-	ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
-	ApplicationDelegate.shouldLetLoadingScreen = YES;
-	
-	[self loggedWithFacebook];
+	if (result.token) {
+		ApplicationDelegate.currentNavigationController.loaderImageView.hidden = NO;
+		ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
+		ApplicationDelegate.shouldLetLoadingScreen = YES;
+		
+		[self loggedWithFacebook];
+	}
 }
 
 - (void)loginButtonDidLogOut:(FBSDKLoginButton *)loginButton {

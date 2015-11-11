@@ -354,14 +354,15 @@
 - (void)userDisconnecting {
 	SLVLog(@"User trying to disconnect");
 	
-	ApplicationDelegate.shouldLetLoadingScreen = YES;
-	[self disconnectingUserTransition];
+	[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	[self.currentNavigationController hideBottomNavigationBar];
 	
 	if ([PFUser currentUser]) {
 		[PFUser logOutInBackgroundWithBlock:^(NSError *error) {
 			if (error) {
 				SLVLog(@"%@%@", SLV_ERROR, error.description);
 				
+				[self.currentNavigationController showBottomNavigationBar];
 				[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 			} else {
 				if ([FBSDKAccessToken currentAccessToken]) {
@@ -377,6 +378,9 @@
 }
 
 - (void)userDisconnected {
+	ApplicationDelegate.shouldLetLoadingScreen = YES;
+	[self disconnectingUserTransition];
+	
 	self.userIsConnected = NO;
 	
 	SLVLog(@"User is disconnected");
@@ -387,6 +391,7 @@
 - (void)disconnectingUserTransition {
 	if (self.userIsConnected) {
 		self.currentNavigationController = nil;
+		ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 		[self.currentNavigationController hideBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
