@@ -29,15 +29,16 @@
 @property (strong, nonatomic) NSMutableArray *queuedPopups;
 @property (nonatomic) BOOL alreadyCheckedCompatibleVersion;
 @property (nonatomic, strong) SLVInteractionPopupViewController *compatibleVersionPopup;
-@property (nonatomic) BOOL applicationJustStarted;
+@property (nonatomic) BOOL nextLoadingViewWithoutAnimation;
 @property (nonatomic) BOOL needToRefreshContacts;
+@property (nonatomic) BOOL shouldLetLoadingScreen;
 @property (nonatomic) NSArray *levels;
 @property (nonatomic) NSArray *puppyPictures;
 @property (nonatomic, strong) PFPush *puppyPush;
 @property (nonatomic, strong) NSTimer *puppyTimer;
 
 - (void)userConnected;
-- (void)userDisconnected;
+- (void)userDisconnecting;
 
 @end
 

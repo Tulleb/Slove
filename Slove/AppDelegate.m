@@ -30,7 +30,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
 	self.queuedPopups = [[NSMutableArray alloc] init];
-	self.applicationJustStarted = YES;
+	self.nextLoadingViewWithoutAnimation = YES;
 	
 	// Enable Crash Reporting
 	[ParseCrashReporting enable];
@@ -319,11 +319,9 @@
 		} else {
 			SLVLog(@"Couldn't pop because view is busy");
 		}
-	} else {
-		SLVLog(@"No popup to pop");
 	}
 	
-	[self performSelector:@selector(popQueuedPopup) withObject:nil afterDelay:5];
+	[self performSelector:@selector(popQueuedPopup) withObject:nil afterDelay:2];
 }
 
 - (void)loadUserDefaults {
@@ -345,41 +343,54 @@
 		[self.currentNavigationController showBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
 		
-		[self performSelector:@selector(hideLoadingScreen) withObject:nil afterDelay:LONG_ANIMATION_DURATION];
+		[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 	}
 
 	self.userIsConnected = YES;
 }
 
-- (void)userDisconnected {
-	SLVLog(@"User disconnected from Slove");
+- (void)userDisconnecting {
+	SLVLog(@"User trying to disconnect");
+	
+	[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	[self.currentNavigationController hideBottomNavigationBar];
 	
 	if ([PFUser currentUser]) {
 		[PFUser logOutInBackgroundWithBlock:^(NSError *error) {
 			if (error) {
 				SLVLog(@"%@%@", SLV_ERROR, error.description);
+				
+				[self.currentNavigationController showBottomNavigationBar];
+				[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+			} else {
+				if ([FBSDKAccessToken currentAccessToken]) {
+					[FBSDKAccessToken setCurrentAccessToken:nil];
+				}
+				
+				[self userDisconnected];
 			}
-			
-			[self disconnectingUserTransition];
 		}];
 	} else {
-		[self disconnectingUserTransition];
+		[self userDisconnected];
 	}
-	
-	self.userIsConnected = NO;
 }
 
-- (void)hideLoadingScreen {
-	self.applicationJustStarted = NO;
+- (void)userDisconnected {
+	ApplicationDelegate.shouldLetLoadingScreen = YES;
+	[self disconnectingUserTransition];
+	
+	self.userIsConnected = NO;
+	
+	SLVLog(@"User is disconnected");
 	
 	[ApplicationDelegate.currentNavigationController.loaderImageView hideByZoomingInWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 }
 
 - (void)disconnectingUserTransition {
 	if (self.userIsConnected) {
-		SLVConnectionViewController *connectionViewController = [[SLVConnectionViewController alloc] init];
-		
-		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:connectionViewController];
+		self.currentNavigationController = nil;
+		ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
+		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];
 		[self.currentNavigationController hideBottomNavigationBar];
 		self.window.rootViewController = self.currentNavigationController;
 	}

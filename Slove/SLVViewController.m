@@ -146,18 +146,7 @@
 }
 
 - (void)disconnectAction:(id)sender {
-	if ([FBSDKAccessToken currentAccessToken]) {
-		[FBSDKAccessToken setCurrentAccessToken:nil];
-	}
-	
-	[PFUser logOutInBackgroundWithBlock:^(NSError * error) {
-		if (!error) {
-			[ApplicationDelegate userDisconnected];
-		} else {
-			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
-		}
-	}];
+	[ApplicationDelegate userDisconnecting];
 }
 
 - (void)goToHome {

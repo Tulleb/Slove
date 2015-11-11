@@ -34,7 +34,8 @@
 	[super viewWillAppear:animated];
 	
 	if (self.firstLoad) {
-		if (ApplicationDelegate.applicationJustStarted) {
+		if (ApplicationDelegate.nextLoadingViewWithoutAnimation) {
+			ApplicationDelegate.nextLoadingViewWithoutAnimation = NO;
 			self.loaderImageView.hidden = NO;
 		} else {
 			[self.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];

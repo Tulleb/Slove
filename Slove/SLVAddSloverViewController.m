@@ -108,17 +108,14 @@
 			
 			NSMutableArray *foundContacts = [[NSMutableArray alloc] init];
 			
+			NSMutableArray *hiddenUsers = [NSMutableArray arrayWithObjects:[PFUser currentUser].username, @"apple", @"test", PUPPY_USERNAME, nil];
+			
+			for (SLVContact *contact in self.homeViewController.fullSynchronizedContacts) {
+				[hiddenUsers addObject:contact.username];
+			}
+			
 			for (PFUser *user in foundUsers) {
-				BOOL userAlreadyInContact = NO;
-				
-				for (SLVContact *contact in self.homeViewController.fullSynchronizedContacts) {
-					if ([user.username isEqualToString:contact.username]) {
-						userAlreadyInContact = YES;
-						break;
-					}
-				}
-				
-				if (!userAlreadyInContact && ![user.username isEqualToString:[PFUser currentUser].username] && [user objectForKey:@"phoneNumber"] && ![[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
+				if (![hiddenUsers containsObject:user.username] && [user objectForKey:@"phoneNumber"] && ![[user objectForKey:@"phoneNumber"] isEqualToString:@""]) {
 					SLVContact *contact = [[SLVContact alloc] init];
 					
 					contact.username = [user objectForKey:@"username"];

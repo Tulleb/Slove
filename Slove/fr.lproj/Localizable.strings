@@ -1,5 +1,5 @@
 "label_your_username" = "Votre nom d'utilisateur";
-"button_disconnect" = "Déconnexion";
+"popup_body_smsInvite" = "Votre appareil ne peut pas envoyer de SMS";
 "title_add_slover" = "Ajouter un Slover";
 "subtitle_sloved" = "Vous venez de recevoir un Slove de ";
 "label_tutorial_profile" = "Maintenez le bouton appuyé 2 secondes pour envoyer votre premier Slove";
@@ -10,7 +10,7 @@
 "label_tutorial_slove_sent" = "Félicitations ! Vous venez d'envoyer votre premier Slove :)";
 "label_banner_confirmation" = "\"Embrassez la mariée !\"";
 "button_already_have_account" = "J'ai déjà un compte";
-"popup_body_smsInvite" = "Votre appareil ne peut pas envoyer de SMS";
+"button_disconnect" = "Déconnexion";
 "label_received_gift" = "+[number] [slove] pour vous :)";
 "error_password_length" = "Votre mot de passe doit contenir au moins 6 caractères";
 "button_profile" = "Profil";
@@ -53,6 +53,7 @@
 "error_username_taken" = "Ce nom d'utilisateur est déjà pris ! 💔";
 "error_email_invalid" = "Vous êtes sûr(e) que c'est une adresse email ?";
 "popup_body_slover_followed" = "Vous suivez désormais [username] !";
+"popup_body_reachability" = "Vous n'êtes pas connecté à Internet";
 "label_your_confirmation_number" = "Votre numéro de confirmation";
 "placeholder_password" = "Mot de passe";
 "Pop-up_SloveTimeLeft" = "Vous venez de Slover cette personne. Patientez [time] avant de pouvoir la Slover à nouveau…";
