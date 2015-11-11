@@ -48,6 +48,14 @@
 
 - (void)viewWillAppear:(BOOL)animated {
 	[super viewWillAppear:animated];
+	
+	ApplicationDelegate.currentNavigationController.activityButton.selected = YES;
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+	[super viewWillDisappear:animated];
+	
+	ApplicationDelegate.currentNavigationController.activityButton.selected = NO;
 }
 
 - (void)backAction:(id)sender {
@@ -432,17 +440,13 @@
 										 }
 										completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, BOOL finished, NSURL *imageURL) {
 											if (image) {
-												ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:contact, image, nil];
-												
-												[self.navigationController popToRootViewControllerAnimated:YES];
+												[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:contact andPicture:image] animated:YES];
 											}
 										}];
 				} else {
 					SLVLog(@"No cached picture found for %@, loading default avatar picture", contact.username);
 					
-					ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:contact, nil];
-					
-					[self.navigationController popToRootViewControllerAnimated:YES];
+					[self.navigationController pushViewController:[[SLVContactViewController alloc] initWithContact:contact andPicture:nil] animated:YES];
 				}
 			}
 		}

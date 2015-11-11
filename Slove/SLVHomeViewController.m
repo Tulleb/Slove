@@ -67,10 +67,6 @@
 		
 		ApplicationDelegate.needToRefreshContacts = NO;
 	}
-}
-
-- (void)viewDidAppear:(BOOL)animated {
-	[super viewDidAppear:animated];
 	
 	if (ApplicationDelegate.sloverToSlove) {
 		if ([ApplicationDelegate.sloverToSlove count] == 2) {
@@ -83,6 +79,11 @@
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self startTutorial];
 	}
+}
+
+- (void)viewDidAppear:(BOOL)animated {
+	[super viewDidAppear:animated];
+	
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -111,9 +112,9 @@
 }
 
 - (void)didDismissSlovedPopup {
-	if (!IS_IOS7) {
-		[self viewDidAppear:YES];
-	}
+//	if (!IS_IOS7) {
+//		[self viewDidAppear:YES];
+//	}
 }
 
 // TODO: end this function
@@ -563,13 +564,15 @@
 															}
 														}
 														
-														for (SLVFacebookFriend *facebookContact in self.facebookContacts) {
-															if ([facebookContact.facebookId isEqualToString:[user objectForKey:@"facebookId"]]) {
-																SLVLog(@"Synchonizing facebook contact '%@' with '%@'", facebookContact.fullName, slover.username);
-																
-																slover.fullName = facebookContact.fullName;
-																
-																self.facebookContacts = [self removeContact:facebookContact FromContacts:self.facebookContacts];
+														if (!slover.fullName || [slover.fullName isEqualToString:@""]) {
+															for (SLVFacebookFriend *facebookContact in self.facebookContacts) {
+																if ([facebookContact.facebookId isEqualToString:[user objectForKey:@"facebookId"]]) {
+																	SLVLog(@"Synchonizing facebook contact '%@' with '%@'", facebookContact.fullName, slover.username);
+																	
+																	slover.fullName = facebookContact.fullName;
+																	
+																	self.facebookContacts = [self removeContact:facebookContact FromContacts:self.facebookContacts];
+																}
 															}
 														}
 														
@@ -612,7 +615,9 @@
 										}];
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
-			[ParseErrorHandlingController handleParseError:error];
+			
+			SLVInteractionPopupViewController *disconnectPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_pull_again", nil) buttonsTitle:nil andDismissButton:YES];
+			[ApplicationDelegate.currentNavigationController presentViewController:disconnectPopup animated:YES completion:nil];
 			
 			[self loadSynchronizedContactsIsEnding];
 		}

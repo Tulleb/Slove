@@ -12,6 +12,7 @@
 #import "SLVActivityViewController.h"
 #import "SLVConnectionViewController.h"
 #import "SLVHomeViewController.h"
+#import "SLVContactViewController.h"
 
 @interface SLVNavigationController ()
 
@@ -283,7 +284,7 @@
 }
 
 - (UIViewController *)popViewControllerAnimated:(BOOL)animated {
-	if (self.sloveViewIsMoved) {
+	if (self.sloveViewIsMoved && !([self.viewControllers count] >= 2 && [[self.viewControllers objectAtIndex:[self.viewControllers count] - 2] isKindOfClass:[SLVContactViewController class]])) {
 		[self animateSloveButton:YES];
 		[self moveSloveViewBottom];
 	}
@@ -305,9 +306,6 @@
 	if ([self.viewControllers.firstObject isKindOfClass:[SLVConnectionViewController class]]) {
 		SLVConnectionViewController *rootViewController = self.viewControllers.firstObject;
 		rootViewController.calledFromBackButton = YES;
-	} else if ([self.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
-		self.activityButton.selected = NO;
-		self.profileButton.selected = NO;
 	}
 	
 	return [super popToRootViewControllerAnimated:animated];
@@ -323,9 +321,6 @@
 		
 		[self popToRootViewControllerAnimated:NO];
 		[self pushViewController:activityViewController animated:NO];
-		
-		self.activityButton.selected = YES;
-		self.profileButton.selected = NO;
 	}
 }
 
@@ -371,9 +366,6 @@
 		
 		[self popToRootViewControllerAnimated:NO];
 		[self pushViewController:parametersViewController animated:NO];
-		
-		self.activityButton.selected = NO;
-		self.profileButton.selected = YES;
 	}
 }
 

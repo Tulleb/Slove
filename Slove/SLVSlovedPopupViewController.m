@@ -107,14 +107,12 @@
 }
 
 - (IBAction)leftAction:(id)sender {
-	ApplicationDelegate.sloverToSlove = [[NSArray alloc] initWithObjects:self.slover, self.pictureImage, nil];
-	
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
 		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED
 															object:nil
 														  userInfo:nil];
 		
-		[self.navigationController popToRootViewControllerAnimated:NO];
+		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
 	}];
 }
 
