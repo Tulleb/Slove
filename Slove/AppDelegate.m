@@ -319,11 +319,9 @@
 		} else {
 			SLVLog(@"Couldn't pop because view is busy");
 		}
-	} else {
-		SLVLog(@"No popup to pop");
 	}
 	
-	[self performSelector:@selector(popQueuedPopup) withObject:nil afterDelay:5];
+	[self performSelector:@selector(popQueuedPopup) withObject:nil afterDelay:2];
 }
 
 - (void)loadUserDefaults {
