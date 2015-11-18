@@ -793,6 +793,8 @@
 										   initWithTarget:self
 										   action:@selector(hideKeyboard)];
 	
+	tapGesture.delegate = self;
+	
 	[self.view addGestureRecognizer:tapGesture];
 }
 
@@ -1036,6 +1038,18 @@
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
 	[textField resignFirstResponder];
+	
+	return YES;
+}
+
+
+#pragma mark - UIGestureRecognizerDelegate
+
+- (BOOL)gestureRecognizer:(UIGestureRecognizer *)gestureRecognizer shouldReceiveTouch:(UITouch *)touch {
+	if ([touch.view isDescendantOfView:self.contactTableView]) {
+		// Don't let selections of auto-complete entries fire the gesture recognizer
+		return NO;
+	}
 	
 	return YES;
 }
