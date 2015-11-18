@@ -171,6 +171,8 @@
 									if (!error) {
 										SLVLog(@"Received data from server: %@", object);
 										
+										ApplicationDelegate.needToRefreshContacts = YES;
+										
 										NSString *popupBodySloverFollowed = NSLocalizedString(@"popup_body_slover_followed", nil);
 										
 										popupBodySloverFollowed = [popupBodySloverFollowed stringByReplacingOccurrencesOfString:@"[username]"
