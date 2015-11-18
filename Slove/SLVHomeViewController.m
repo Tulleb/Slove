@@ -57,6 +57,9 @@
 											   object:nil];
 	
 	[self loadContactsFromCache];
+	
+	[self observeKeyboard];
+	[self initTapToDismiss];
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -360,6 +363,8 @@
 	self.addressBookContacts = [addressBookBuffer sortedArrayUsingComparator:^(SLVContact *a, SLVContact *b) {
 		return [a.fullName caseInsensitiveCompare:b.fullName];
 	}];
+	
+	self.fullAddressBookContacts = self.addressBookContacts;
 }
 
 - (void)loadFriends {
@@ -742,6 +747,59 @@
 	}
 	
 	return nil;
+}
+
+- (void)observeKeyboard {
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillShow:) name:UIKeyboardWillChangeFrameNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(keyboardWillHide:) name:UIKeyboardWillHideNotification object:nil];
+}
+
+- (void)keyboardWillShow:(NSNotification *)notification {
+	if (!self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		CGRect keyboardFrame = [kbFrame CGRectValue];
+		
+		CGFloat height = keyboardFrame.size.height;
+		
+		self.keyboardLayoutConstraint.constant += height;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = YES;
+	}
+}
+
+- (void)keyboardWillHide:(NSNotification *)notification {
+	if (self.keyboardIsVisible) {
+		NSDictionary *info = [notification userInfo];
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		
+		self.keyboardLayoutConstraint.constant = 8;
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
+		
+		self.keyboardIsVisible = NO;
+	}
+}
+
+- (void)initTapToDismiss {
+	UITapGestureRecognizer * tapGesture = [[UITapGestureRecognizer alloc]
+										   initWithTarget:self
+										   action:@selector(hideKeyboard)];
+	
+	[self.view addGestureRecognizer:tapGesture];
+}
+
+- (void)hideKeyboard {
+	for (UITextField *textField in self.searchView.subviews) {
+		[textField resignFirstResponder];
+	}
 }
 
 

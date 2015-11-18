@@ -21,12 +21,14 @@
 @property (strong, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 @property (strong, nonatomic) IBOutlet UIImageView *pullImageView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pullTopLayoutConstraint;
+@property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSArray *addressBookContacts;
 @property (strong, nonatomic) NSArray *facebookContacts;
 @property (strong, nonatomic) NSArray *fullAddressBookContacts;
 @property (strong, nonatomic) NSArray *synchronizedContacts;
 @property (strong, nonatomic) NSArray *fullSynchronizedContacts;
+@property (nonatomic) BOOL keyboardIsVisible;
 @property (nonatomic) BOOL isAlreadyLoading;
 @property (nonatomic) BOOL addressBookContactsReady;
 @property (nonatomic) BOOL facebookContactsReady;
