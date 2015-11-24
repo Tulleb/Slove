@@ -17,6 +17,9 @@
                 <outlet property="searchImageView" destination="qIf-rr-CCP" id="ybf-Nt-XT6"/>
                 <outlet property="searchTextField" destination="kLw-2D-P1a" id="jqE-iM-5YD"/>
                 <outlet property="searchView" destination="WUG-sa-XZV" id="6lf-aT-vmN"/>
+                <outlet property="tutorialBubbleImageView" destination="PMb-VC-4LH" id="e71-64-U7y"/>
+                <outlet property="tutorialBubbleLabel" destination="ASh-Ne-9Gh" id="9rc-xP-hWf"/>
+                <outlet property="tutorialView" destination="ICv-Kw-FcK" id="TZy-Wv-amj"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -87,18 +90,53 @@
                         <constraint firstAttribute="width" secondItem="Wjj-uM-oF3" secondAttribute="height" multiplier="1:1" id="ZLs-6z-7jO"/>
                     </constraints>
                 </imageView>
+                <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ICv-Kw-FcK">
+                    <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                    <subviews>
+                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="PMb-VC-4LH">
+                            <rect key="frame" x="20" y="31" width="560" height="537"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="PMb-VC-4LH" secondAttribute="height" multiplier="24:23" id="y28-Gt-wue"/>
+                            </constraints>
+                        </imageView>
+                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label_tutorial_slove_count" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ASh-Ne-9Gh">
+                            <rect key="frame" x="50" y="92" width="500" height="376"/>
+                            <constraints>
+                                <constraint firstAttribute="width" secondItem="ASh-Ne-9Gh" secondAttribute="height" multiplier="4:3" constant="-1.3333333333333144" id="SoU-nW-YVl"/>
+                            </constraints>
+                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                            <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                            <nil key="highlightedColor"/>
+                        </label>
+                    </subviews>
+                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstAttribute="trailing" secondItem="ASh-Ne-9Gh" secondAttribute="trailing" constant="50" id="82Z-9q-0xw"/>
+                        <constraint firstItem="PMb-VC-4LH" firstAttribute="leading" secondItem="ICv-Kw-FcK" secondAttribute="leading" constant="20" id="Gbu-p0-EtD"/>
+                        <constraint firstItem="ASh-Ne-9Gh" firstAttribute="leading" secondItem="ICv-Kw-FcK" secondAttribute="leading" constant="50" id="Ifm-TL-zzS"/>
+                        <constraint firstAttribute="trailing" secondItem="PMb-VC-4LH" secondAttribute="trailing" constant="20" id="IzG-A9-lXc"/>
+                        <constraint firstItem="ASh-Ne-9Gh" firstAttribute="centerY" secondItem="PMb-VC-4LH" secondAttribute="centerY" constant="-20" id="Xvs-WX-rQV"/>
+                        <constraint firstItem="ASh-Ne-9Gh" firstAttribute="centerX" secondItem="PMb-VC-4LH" secondAttribute="centerX" id="Xw5-gV-bNj"/>
+                        <constraint firstItem="PMb-VC-4LH" firstAttribute="centerX" secondItem="ICv-Kw-FcK" secondAttribute="centerX" id="i0X-bc-Vjt"/>
+                        <constraint firstItem="PMb-VC-4LH" firstAttribute="centerY" secondItem="ICv-Kw-FcK" secondAttribute="centerY" id="rAa-gx-wwj"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstAttribute="bottom" secondItem="ICv-Kw-FcK" secondAttribute="bottom" id="5Er-9T-l5p"/>
                 <constraint firstAttribute="centerY" secondItem="Gsm-xj-cQx" secondAttribute="centerY" constant="62" id="Apw-Vs-ZYf"/>
                 <constraint firstAttribute="centerX" secondItem="Lx0-ET-2jz" secondAttribute="centerX" id="Bsf-Hc-e4c"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="top" secondItem="WUG-sa-XZV" secondAttribute="bottom" id="D7R-AQ-xd0"/>
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="D7u-ey-NFt"/>
                 <constraint firstAttribute="bottom" secondItem="xJv-gE-cQk" secondAttribute="bottom" id="FSR-vn-U9m"/>
+                <constraint firstAttribute="trailing" secondItem="ICv-Kw-FcK" secondAttribute="trailing" id="PT1-U2-BUe"/>
                 <constraint firstItem="WUG-sa-XZV" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="TYX-Da-s9y"/>
                 <constraint firstAttribute="trailing" secondItem="WUG-sa-XZV" secondAttribute="trailing" id="dYn-Ia-dQO"/>
                 <constraint firstAttribute="trailing" secondItem="xJv-gE-cQk" secondAttribute="trailing" id="e5R-QA-yRE"/>
+                <constraint firstItem="ICv-Kw-FcK" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="emb-wB-RVJ"/>
                 <constraint firstItem="Wjj-uM-oF3" firstAttribute="top" secondItem="WUG-sa-XZV" secondAttribute="bottom" constant="8" id="jZg-Nx-0Vo"/>
+                <constraint firstItem="ICv-Kw-FcK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="jcu-jv-gRW"/>
                 <constraint firstItem="Wjj-uM-oF3" firstAttribute="centerX" secondItem="i5M-Pr-FkT" secondAttribute="centerX" id="jfp-AH-qJ5"/>
                 <constraint firstAttribute="centerY" secondItem="Lx0-ET-2jz" secondAttribute="centerY" constant="34" id="kHu-go-TGM"/>
                 <constraint firstItem="xJv-gE-cQk" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pKZ-dy-vWM"/>

@@ -18,6 +18,8 @@
 #import "SLVAddSloverViewController.h"
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
+#define TABLE_CELL_HEIGHT	70
+
 @interface SLVHomeViewController ()
 
 @end
@@ -43,6 +45,12 @@
 	[self.refreshControl addTarget:self action:@selector(reloadContacts) forControlEvents:UIControlEventValueChanged];
 	[self.contactTableView addSubview:self.refreshControl];
 	
+	self.tutorialBubbleImageView.image = [UIImage imageNamed:@"Assets/Image/infobulle_tuto"];
+	self.tutorialBubbleLabel.text = [self.tutorialBubbleLabel.text stringByReplacingOccurrencesOfString:@"[count]" withString:[[[PFUser currentUser] objectForKey:@"sloveCredit"] stringValue]];
+	
+	UITapGestureRecognizer *singleFingerTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(tutorialViewTapped:)];
+	[self.tutorialView addGestureRecognizer:singleFingerTap];
+
 	UIButton *addSloverButton = [[UIButton alloc] initWithFrame:CGRectMake(0, 0, 60, 30)];
 	[addSloverButton setImage:[UIImage imageNamed:@"Assets/Button/bt_inviter_amis"] forState:UIControlStateNormal];
 	[addSloverButton setImage:[UIImage imageNamed:@"Assets/Button/bt_inviter_amis_clic"] forState:UIControlStateHighlighted];
@@ -79,6 +87,9 @@
 		}
 		
 		ApplicationDelegate.sloverToSlove = nil;
+	} else if (ApplicationDelegate.tutorialSloveSent) {
+		[ApplicationDelegate disableNavigationElements];
+		[self.tutorialView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self startTutorial];
 	}
@@ -804,6 +815,14 @@
 	}
 }
 
+- (void)tutorialViewTapped:(id)sender {
+	[self.tutorialView hideByFadingWithDuration:ANIMATION_DURATION AndCompletion:^{
+		ApplicationDelegate.tutorialSloveSent = NO;
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
+		[ApplicationDelegate enableNavigationElements];
+	}];
+}
+
 
 #pragma mark - UITableViewDelegate
 
@@ -828,7 +847,7 @@
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 70;
+	return TABLE_CELL_HEIGHT;
 }
 
 - (CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section {
@@ -841,9 +860,26 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	if (([self.synchronizedContacts count] > 0) && (section == 0)) {
-		return [self.synchronizedContacts count];
+		if (section == ([tableView numberOfSections] - 1)) {
+			if ((([self.synchronizedContacts count] + 1) * TABLE_CELL_HEIGHT) >= tableView.frame.size.height) {
+				return [self.synchronizedContacts count] + 1;
+			} else {
+				return [self.synchronizedContacts count];
+			}
+		} else {
+			return [self.synchronizedContacts count];
+		}
 	}
-	return [self.addressBookContacts count];
+	
+	if (section == ([tableView numberOfSections] - 1)) {
+		if ((([self.addressBookContacts count] + 1) * TABLE_CELL_HEIGHT) >= tableView.frame.size.height) {
+			return [self.addressBookContacts count] + 1;
+		} else {
+			return [self.addressBookContacts count];
+		}
+	} else {
+		return [self.addressBookContacts count];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -868,9 +904,18 @@
 	
 	[SLVViewController setStyle:cell];
 	
+	if ((isSynchronized && (indexPath.row == [self.synchronizedContacts count])) || (!isSynchronized && (indexPath.row == [self.addressBookContacts count]))) {
+		cell.hidden = YES;
+			
+		return cell;
+	} else {
+		cell.hidden = NO;
+	}
+	
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];
 	[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Image/fleche_go_profil"] forState:UIControlStateNormal];
+	cell.selectionButton.userInteractionEnabled = NO;
 	cell.subtitleLabel.textColor = BLUE;
 	
 	SLVContact *contact;
@@ -882,6 +927,7 @@
 		cell.subtitleImageView.image = nil;
 		cell.subtitleLabel.textColor = nil;
 		[cell.selectionButton setBackgroundImage:[UIImage imageNamed:@"Assets/Button/bt_ajout_contact"] forState:UIControlStateNormal];
+		cell.selectionButton.userInteractionEnabled = YES;
 		cell.selectionButton.tag = indexPath.row;
 		[cell.selectionButton addTarget:self action:@selector(inviteBySMS:) forControlEvents:UIControlEventTouchUpInside];
 	} else {

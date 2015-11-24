@@ -22,6 +22,9 @@
 @property (strong, nonatomic) IBOutlet UIImageView *pullImageView;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *pullTopLayoutConstraint;
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *keyboardLayoutConstraint;
+@property (strong, nonatomic) IBOutlet UIView *tutorialView;
+@property (strong, nonatomic) IBOutlet UIImageView *tutorialBubbleImageView;
+@property (strong, nonatomic) IBOutlet UILabel *tutorialBubbleLabel;
 @property (strong, nonatomic) UIRefreshControl *refreshControl;
 @property (strong, nonatomic) NSArray *addressBookContacts;
 @property (strong, nonatomic) NSArray *facebookContacts;

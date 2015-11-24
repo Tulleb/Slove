@@ -32,6 +32,7 @@
 @property (nonatomic) BOOL nextLoadingViewWithoutAnimation;
 @property (nonatomic) BOOL needToRefreshContacts;
 @property (nonatomic) BOOL shouldLetLoadingScreen;
+@property (nonatomic) BOOL tutorialSloveSent;
 @property (nonatomic) NSArray *levels;
 @property (nonatomic) NSArray *puppyPictures;
 @property (nonatomic, strong) PFPush *puppyPush;
@@ -39,6 +40,8 @@
 
 - (void)userConnected;
 - (void)userDisconnecting;
+- (void)disableNavigationElements;
+- (void)enableNavigationElements;
 
 @end
 

@@ -793,10 +793,11 @@
 				}
 			}];
 		}
-		
-		if (!self.alreadyCheckedCompatibleVersion) {
-			[self checkCompatibleVersion];
-		}
+
+		// Disabled because of Apple policy
+//		if (!self.alreadyCheckedCompatibleVersion) {
+//			[self checkCompatibleVersion];
+//		}
 	}];
 }
 
@@ -832,6 +833,22 @@
 
 - (void)crash {
 	[NSException raise:NSGenericException format:@"Everything is ok. This is just a test crash."];
+}
+
+- (void)disableNavigationElements {
+	ApplicationDelegate.currentNavigationController.activityButton.enabled = NO;
+	ApplicationDelegate.currentNavigationController.homeButton.enabled = NO;
+	ApplicationDelegate.currentNavigationController.profileButton.enabled = NO;
+	self.currentNavigationController.topViewController.navigationItem.leftBarButtonItem.enabled = NO;
+	self.currentNavigationController.topViewController.navigationItem.rightBarButtonItem.enabled = NO;
+}
+
+- (void)enableNavigationElements {
+	ApplicationDelegate.currentNavigationController.activityButton.enabled = YES;
+	ApplicationDelegate.currentNavigationController.homeButton.enabled = YES;
+	ApplicationDelegate.currentNavigationController.profileButton.enabled = YES;
+	self.currentNavigationController.topViewController.navigationItem.leftBarButtonItem.enabled = YES;
+	self.currentNavigationController.topViewController.navigationItem.rightBarButtonItem.enabled = YES;
 }
 
 

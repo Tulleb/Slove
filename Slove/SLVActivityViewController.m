@@ -66,9 +66,6 @@
 	if (!self.isAlreadyLoading) {
 		self.isAlreadyLoading = YES;
 		
-		self.sectionOrder = nil;
-		self.activities = nil;
-		
 		NSDictionary *params;
 		NSDate *lastRefresh = [USER_DEFAULTS objectForKey:KEY_LAST_ACTIVITY_REFRESH];
 		
@@ -94,6 +91,9 @@
 											NSArray *activities = [datas objectForKey:@"activities"];
 											
 											if (activities && [activities count] > 0) {
+												self.sectionOrder = [[NSArray alloc] init];
+												self.activities = [[NSDictionary alloc] init];
+												
 												for (NSDictionary *activity in activities) {
 													SLVActivity *parsedActivity = [[SLVActivity alloc] init];
 													
@@ -352,24 +352,36 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
 	NSArray *activitiesForSection = [self.activities objectForKey:[self.sectionOrder objectAtIndex:section]];
 	
-	return [activitiesForSection count];
+	if (section == ([tableView numberOfSections] - 1)) {
+		return [activitiesForSection count] + 2;
+	} else {
+		return [activitiesForSection count];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
 	NSArray *activitiesForSection = [self.activities objectForKey:[self.sectionOrder objectAtIndex:indexPath.section]];
 	
+	static NSString *newActivityIdentifier = @"NewActivityCell";
+	SLVNewActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:newActivityIdentifier];
+	if (!cell) {
+		[tableView registerNib:[UINib nibWithNibName:@"SLVNewActivityTableViewCell" bundle:nil] forCellReuseIdentifier:newActivityIdentifier];
+		cell = [tableView dequeueReusableCellWithIdentifier:newActivityIdentifier];
+	}
+	
+	[SLVViewController setStyle:cell];
+	
+	if (indexPath.row >= [activitiesForSection count]) {
+		cell.hidden = YES;
+		
+		return cell;
+	} else {
+		cell.hidden = NO;
+	}
+	
 	SLVActivity *activity = [activitiesForSection objectAtIndex:indexPath.row];
 	
 	if ([[self tableView:tableView titleForHeaderInSection:indexPath.section] isEqualToString:NSLocalizedString(@"label_new_header", nil)]) {
-		static NSString *newActivityIdentifier = @"NewActivityCell";
-		SLVNewActivityTableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:newActivityIdentifier];
-		if (!cell) {
-			[tableView registerNib:[UINib nibWithNibName:@"SLVNewActivityTableViewCell" bundle:nil] forCellReuseIdentifier:newActivityIdentifier];
-			cell = [tableView dequeueReusableCellWithIdentifier:newActivityIdentifier];
-		}
-		
-		[SLVViewController setStyle:cell];
-		
 		cell.selectionStyle = UITableViewCellSelectionStyleNone;
 		
 		switch (activity.type) {

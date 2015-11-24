@@ -102,3 +102,4 @@
 "popup_body_facebookAccess" = "Slovy a besoin d'accèder à votre liste d'amis Facebook";
 "label_terms_of_service" = "J'accepte les CGU";
 "label_search" = "Rechercher";
+"label_tutorial_slove_count" = "Vous pourrez envoyer [count] Sloves chaque jour : utilisez-les consciemment :)";
