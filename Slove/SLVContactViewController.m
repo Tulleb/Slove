@@ -222,7 +222,24 @@
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 										} else {
-											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
+											NSString *errorLabel = NSLocalizedString(error.localizedDescription, nil);
+											
+											NSData *data = [error.localizedDescription dataUsingEncoding:NSUTF8StringEncoding];
+											NSDictionary *localizedErrorDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+											
+											NSString *errorCode = [localizedErrorDictionary objectForKey:@"message"];
+											
+											if (errorCode) {
+												errorLabel = NSLocalizedString(errorCode, nil);
+												
+												if ([errorCode isEqualToString:@"error_not_enough_slove"]) {
+													NSNumber *secondsRemaining = [localizedErrorDictionary objectForKey:@"secondsRemaining"];
+													int hoursRemaining = ([secondsRemaining intValue] / 60 / 60) + 1;
+													errorLabel = [errorLabel stringByReplacingOccurrencesOfString:@"[timer]" withString:[NSString stringWithFormat:@"%dh", hoursRemaining]];
+												}
+											}
+											
+											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:errorLabel buttonsTitle:nil andDismissButton:YES];
 											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
