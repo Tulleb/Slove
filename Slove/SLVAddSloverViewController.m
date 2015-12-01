@@ -11,6 +11,8 @@
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import "UIImageView+UIActivityIndicatorForSDWebImage.h"
 
+#define TABLE_CELL_HEIGHT	70
+
 @interface SLVAddSloverViewController ()
 
 @end
@@ -264,11 +266,15 @@
 #pragma mark - UITableViewDelegate
 
 - (CGFloat)tableView:(UITableView *)tableView heightForRowAtIndexPath:(NSIndexPath *)indexPath {
-	return 70;
+	return TABLE_CELL_HEIGHT;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-	return [self.sloversFound count];
+	if ((([self.sloversFound count] + 1) * TABLE_CELL_HEIGHT) > tableView.frame.size.height) {
+		return [self.sloversFound count] + 1;
+	} else {
+		return [self.sloversFound count];
+	}
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
@@ -280,6 +286,14 @@
 	}
 	
 	[SLVViewController setStyle:cell];
+	
+	if (indexPath.row == [self.sloversFound count]) {
+		cell.hidden = YES;
+		
+		return cell;
+	} else {
+		cell.hidden = NO;
+	}
 	
 	cell.selectionStyle = UITableViewCellSelectionStyleNone;
 	cell.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeur_rouge"];

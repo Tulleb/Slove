@@ -80,11 +80,11 @@
 - (void)viewDidAppear:(BOOL)animated {
 	[super viewDidAppear:animated];
 	
-	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
-		[self disableElementsForTutorial];
+	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue] && !ApplicationDelegate.tutorialSloveSent) {
+		[ApplicationDelegate disableNavigationElements];
 		[self.bubbleView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
 	} else if (!self.bubbleView.hidden) {
-		[self enableElementsForTutorial];
+		[ApplicationDelegate enableNavigationElements];
 		self.bubbleView.hidden = YES;
 		
 		[self.navigationController popToRootViewControllerAnimated:YES];
@@ -146,7 +146,7 @@
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
-			[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
+			ApplicationDelegate.tutorialSloveSent = YES;
 		}];
 	} else if (!self.contact.username) {
 		if(![MFMessageComposeViewController canSendText]) {
@@ -197,9 +197,7 @@
 						ApplicationDelegate.puppyPush = push;
 						
 						SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-						[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
-							[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
-						}];
+						[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 					} else {
 						SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
 						[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
@@ -224,7 +222,24 @@
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 										} else {
-											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
+											NSString *errorLabel = NSLocalizedString(error.localizedDescription, nil);
+											
+											NSData *data = [error.localizedDescription dataUsingEncoding:NSUTF8StringEncoding];
+											NSDictionary *localizedErrorDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+											
+											NSString *errorCode = [localizedErrorDictionary objectForKey:@"message"];
+											
+											if (errorCode) {
+												errorLabel = NSLocalizedString(errorCode, nil);
+												
+												if ([errorCode isEqualToString:@"error_not_enough_slove"]) {
+													NSNumber *secondsRemaining = [localizedErrorDictionary objectForKey:@"secondsRemaining"];
+													int hoursRemaining = ([secondsRemaining intValue] / 60 / 60) + 1;
+													errorLabel = [errorLabel stringByReplacingOccurrencesOfString:@"[timer]" withString:[NSString stringWithFormat:@"%dh", hoursRemaining]];
+												}
+											}
+											
+											SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:errorLabel buttonsTitle:nil andDismissButton:YES];
 											[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -335,19 +350,6 @@
 	self.fireworkImageView.animationRepeatCount = 1;
 }
 
-- (void)disableElementsForTutorial {
-	ApplicationDelegate.currentNavigationController.activityButton.userInteractionEnabled = NO;
-	ApplicationDelegate.currentNavigationController.homeButton.userInteractionEnabled = NO;
-	ApplicationDelegate.currentNavigationController.profileButton.userInteractionEnabled = NO;
-	self.navigationItem.leftBarButtonItem.enabled = NO;
-}
-
-- (void)enableElementsForTutorial {
-	ApplicationDelegate.currentNavigationController.activityButton.userInteractionEnabled = YES;
-	ApplicationDelegate.currentNavigationController.homeButton.userInteractionEnabled = YES;
-	ApplicationDelegate.currentNavigationController.profileButton.userInteractionEnabled = YES;
-	self.navigationItem.leftBarButtonItem.enabled = YES;
-}
 
 #pragma mark - MFMessageComposeViewControllerDelegate
 
@@ -445,7 +447,7 @@
 
 - (CATransform3D)carousel:(iCarousel *)carousel itemTransformForOffset:(CGFloat)offset baseTransform:(CATransform3D)transform {
 	CGFloat distance = SCREEN_HEIGHT / 4; //number of pixels to move the items away from camera
-	CGFloat z = - fminf(1.0f, fabs(offset)) * distance;
+	CGFloat z = -fabs(offset) * distance;
 	return CATransform3DTranslate(transform, offset * carousel.itemWidth, ABS(offset) * -20, z);
 }
 
