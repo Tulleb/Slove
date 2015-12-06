@@ -761,7 +761,7 @@
 		} else {
 			[self.parseConfig setObject:currentPushedMessage forKey:PARSE_PUSHED_MESSAGE];
 			
-			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];;
+			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];
 			
 			if (!lastPushedMessage || ![lastPushedMessage isEqualToString:currentPushedMessage]) {
 				SLVInteractionPopupViewController *pushedMessagePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:@"Slove Team" body:currentPushedMessage buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];

@@ -136,7 +136,9 @@
 }
 
 - (void)animateImages {
-	[self rotateSpirale];
+	if (!IS_IOS7) {
+		[self rotateSpirale];
+	}
 	
 	[self loadCircle];
 	[self loadFirework];
