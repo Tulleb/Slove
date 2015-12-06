@@ -67,8 +67,8 @@
 	[self loadLevels];
 	[self loadPuppeyPictures];
 	
-	if (![USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]) {
-		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
+	if (![USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH]) {
+		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
 	}
 	
 	if (IS_IOS7) {
@@ -112,22 +112,22 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	self.alreadyCheckedCompatibleVersion = NO;
 	
-//	// Puppy send slove later (to pass on the back end)
-//	if (self.puppyPush && !self.puppyTimer) {
-//		//create new uiBackgroundTask
-//		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-//			[application endBackgroundTask:bgTask];
-//			bgTask = UIBackgroundTaskInvalid;
-//		}];
-//		
-//		//and create new timer with async call:
-//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//			//run function methodRunAfterBackground
-//			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(rand() % (PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
-//			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
-//			[[NSRunLoop currentRunLoop] run];
-//		});
-//	}
+	// Puppy send slove later (to pass on the back end)
+	if (self.puppyPush && !self.puppyTimer) {
+		//create new uiBackgroundTask
+		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+			[application endBackgroundTask:bgTask];
+			bgTask = UIBackgroundTaskInvalid;
+		}];
+		
+		//and create new timer with async call:
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			//run function methodRunAfterBackground
+			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
+			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
+			[[NSRunLoop currentRunLoop] run];
+		});
+	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -200,9 +200,9 @@
 		
 		if (slover) {
 			if (slover.username && [slover.username isEqualToString:PUPPY_USERNAME]) {
-				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:(rand() % 12 + 1)];
+				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:arc4random_uniform(12)];
 				
-				[USER_DEFAULTS setObject:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH] forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
+				[USER_DEFAULTS setObject:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH] forKey:KEY_PUPPY_PREVIOUS_PROFILE_PICTURE_PATH];
 				[USER_DEFAULTS setObject:newPuppyPicturePath forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
 				
 				self.needToRefreshContacts = YES;

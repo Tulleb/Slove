@@ -621,6 +621,8 @@
 													return [a.fullName caseInsensitiveCompare:b.fullName];
 												}];
 												
+//												[self loadPuppy];
+												
 												self.fullSynchronizedContacts = self.synchronizedContacts;
 											} else {
 												SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -638,8 +640,6 @@
 			[self loadSynchronizedContactsIsEnding];
 		}
 	}];
-	
-//	[self loadPuppy];
 }
 
 - (void)loadSynchronizedContactsIsEnding {

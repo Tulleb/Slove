@@ -107,7 +107,7 @@
 #define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
 #define KEY_CACHED_CONTACTS						@"cachedContacts"
 #define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
-#define	KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
+#define	KEY_PUPPY_PREVIOUS_PROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
 #define	KEY_PUPPY_NO_LEVEL_DISPLAYED			@"puppyNoLevel"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
@@ -158,7 +158,7 @@
 #define OBJECT_USER_DATA	@"UserData"
 
 #pragma mark - Puppy
-#define PUPPY_USERNAME			@"puppey"
+#define PUPPY_USERNAME			@"puppy"
 #define PUPPY_MIN_RETURN_DELAY	(60 * 5)
 #define PUPPY_MAX_RETURN_DELAY	(60 * 15)
 

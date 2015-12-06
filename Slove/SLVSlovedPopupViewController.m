@@ -62,7 +62,7 @@
 	if ([self.slover.username isEqualToString:PUPPY_USERNAME]) {
 		self.unknownPuppyImageView = [[UIImageView alloc] initWithFrame:self.pictureImageView.frame];
 		
-		self.unknownPuppyImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]];
+		self.unknownPuppyImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_PROFILE_PICTURE_PATH]];
 		
 		[self.view insertSubview:self.unknownPuppyImageView aboveSubview:self.pictureImageView];
 	}
