@@ -115,34 +115,50 @@
 		NSValue *kbFrame = [info objectForKey:UIKeyboardFrameEndUserInfoKey];
 		CGRect keyboardFrame = [kbFrame CGRectValue];
 		
-		CGFloat height = keyboardFrame.size.height;
+		self.keyboardHeight = keyboardFrame.size.height;
 		
-		if (self.bodyView.frame.origin.y - height >= 0) {
-			NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		if (self.bodyView.frame.origin.y - self.keyboardHeight < 0 && !self.screenIsTooSmall) {
+			self.screenIsTooSmall = YES;
 			
-			self.keyboardLayoutConstraint.constant += height;
-			
-			[UIView animateWithDuration:animationDuration animations:^{
-				[self.view layoutIfNeeded];
-			}];
-		} else {
-			if (!self.screenIsTooSmall) {
-				self.screenIsTooSmall = YES;
-				
-				// We have to repeat this once because this function is called after shouldBeginEditing
-				if ([self.emailField isFirstResponder]) {
-					self.keyboardLayoutConstraint.constant = self.bodyView.frame.size.height - self.emailField.frame.origin.y - self.emailField.frame.size.height;
-				} else if ([self.usernameField isFirstResponder]) {
-					self.keyboardLayoutConstraint.constant = self.bodyView.frame.size.height - self.usernameField.frame.origin.y - self.usernameField.frame.size.height;
-				} else if ([self.passwordField isFirstResponder]) {
-					self.keyboardLayoutConstraint.constant = self.bodyView.frame.size.height - self.passwordField.frame.origin.y - self.passwordField.frame.size.height;
-				}
-				
-				[UIView animateWithDuration:ANIMATION_DURATION animations:^{
-					[self.view layoutIfNeeded];
-				}];
+			// We have to repeat this once because this function is called after shouldBeginEditing
+			if ([self.emailField isFirstResponder]) {
+				[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+				self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																	  attribute:NSLayoutAttributeBottom
+																	  relatedBy:NSLayoutRelationEqual
+																		 toItem:self.emailField
+																	  attribute:NSLayoutAttributeBottom
+																	 multiplier:1
+																	   constant:60 + self.keyboardHeight];
+				[self.bodyView addConstraint:self.keyboardLayoutConstraint];
+			} else if ([self.usernameField isFirstResponder]) {
+				[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+				self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																			 attribute:NSLayoutAttributeBottom
+																			 relatedBy:NSLayoutRelationEqual
+																				toItem:self.usernameField
+																			 attribute:NSLayoutAttributeBottom
+																			multiplier:1
+																			  constant:20 + self.keyboardHeight];
+				[self.bodyView addConstraint:self.keyboardLayoutConstraint];
+			} else if ([self.passwordField isFirstResponder]) {
+				[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+				self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																			 attribute:NSLayoutAttributeBottom
+																			 relatedBy:NSLayoutRelationEqual
+																				toItem:self.passwordField
+																			 attribute:NSLayoutAttributeBottom
+																			multiplier:1
+																			  constant:20 + self.keyboardHeight];
+				[self.bodyView addConstraint:self.keyboardLayoutConstraint];
 			}
+		} else if (!self.screenIsTooSmall) {
+			self.keyboardLayoutConstraint.constant += self.keyboardHeight;
 		}
+		
+		[UIView animateWithDuration:SHORT_ANIMATION_DURATION animations:^{
+			[self.view layoutIfNeeded];
+		}];
 		
 		self.keyboardIsVisible = YES;
 	}
@@ -152,15 +168,21 @@
 	if (self.keyboardIsVisible) {
 		NSDictionary *info = [notification userInfo];
 		
-		if (!self.screenIsTooSmall) {
-			NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
-			
-			self.keyboardLayoutConstraint.constant = 8;
-			
-			[UIView animateWithDuration:animationDuration animations:^{
-				[self.view layoutIfNeeded];
-			}];
-		}
+		NSTimeInterval animationDuration = [[info objectForKey:UIKeyboardAnimationDurationUserInfoKey] doubleValue];
+		
+		[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+		self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																	 attribute:NSLayoutAttributeBottom
+																	 relatedBy:NSLayoutRelationEqual
+																		toItem:self.registerButton
+																	 attribute:NSLayoutAttributeBottom
+																	multiplier:1
+																	  constant:8];
+		[self.bodyView addConstraint:self.keyboardLayoutConstraint];
+		
+		[UIView animateWithDuration:animationDuration animations:^{
+			[self.view layoutIfNeeded];
+		}];
 		
 		self.keyboardIsVisible = NO;
 	}
@@ -221,14 +243,38 @@
 	
 	if (self.screenIsTooSmall) {
 		if (textField == self.emailField) {
-			self.keyboardLayoutConstraint.constant = self.bodyView.frame.size.height - self.emailField.frame.origin.y - self.emailField.frame.size.height;
+			[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+			self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																	  attribute:NSLayoutAttributeBottom
+																	  relatedBy:NSLayoutRelationEqual
+																		 toItem:self.emailField
+																	  attribute:NSLayoutAttributeBottom
+																	 multiplier:1
+																	   constant:60 + self.keyboardHeight];
+			[self.bodyView addConstraint:self.keyboardLayoutConstraint];
 		} else if (textField == self.usernameField) {
-			self.keyboardLayoutConstraint.constant = self.bodyView.frame.size.height - self.usernameField.frame.origin.y - self.usernameField.frame.size.height;
+			[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+			self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																		 attribute:NSLayoutAttributeBottom
+																		 relatedBy:NSLayoutRelationEqual
+																			toItem:self.usernameField
+																		 attribute:NSLayoutAttributeBottom
+																		multiplier:1
+																		  constant:20 + self.keyboardHeight];
+			[self.bodyView addConstraint:self.keyboardLayoutConstraint];
 		} else if (textField == self.passwordField) {
-			self.keyboardLayoutConstraint.constant = self.bodyView.frame.size.height - self.passwordField.frame.origin.y - self.passwordField.frame.size.height;
+			[self.bodyView removeConstraint:self.keyboardLayoutConstraint];
+			self.keyboardLayoutConstraint = [NSLayoutConstraint constraintWithItem:self.bodyView
+																		 attribute:NSLayoutAttributeBottom
+																		 relatedBy:NSLayoutRelationEqual
+																			toItem:self.passwordField
+																		 attribute:NSLayoutAttributeBottom
+																		multiplier:1
+																		  constant:20 + self.keyboardHeight];
+			[self.bodyView addConstraint:self.keyboardLayoutConstraint];
 		}
 		
-		[UIView animateWithDuration:ANIMATION_DURATION animations:^{
+		[UIView animateWithDuration:SHORT_ANIMATION_DURATION animations:^{
 			[self.view layoutSubviews];
 		}];
 	}

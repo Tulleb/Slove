@@ -23,6 +23,7 @@
 @property (strong, nonatomic) IBOutlet UILabel *errorLabel;
 @property (nonatomic) BOOL keyboardIsVisible;
 @property (nonatomic) BOOL screenIsTooSmall;
+@property (nonatomic) CGFloat keyboardHeight;
 
 - (IBAction)conditionsAction:(id)sender;
 - (IBAction)registerAction:(id)sender;
