@@ -90,7 +90,9 @@
 	[super viewDidAppear:animated];
 	
 	if (self.unknownPuppyImageView) {
-		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:nil];
+		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:^{
+			ApplicationDelegate.needToRefreshContacts = YES;
+		}];
 	}
 }
 

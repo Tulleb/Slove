@@ -190,8 +190,6 @@
 			self.addressBookPopup.priority = kPriorityHigh;
 			
 			[ApplicationDelegate.queuedPopups addObject:self.addressBookPopup];
-			
-			[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
 		}
 	}
 	
@@ -208,14 +206,20 @@
 	}
 	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-								  initWithGraphPath:@"/me/permissions/user_friends"
-								  parameters:nil
+								  initWithGraphPath:@"me/permissions/user_friends"
+								  parameters:@{@"fields": @""}
 								  HTTPMethod:@"GET"];
 	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
 										  id result,
 										  NSError *error) {
 		if (result) {
 			NSArray *data = [result objectForKey:@"data"];
+			
+			if (!data || [data count] == 0) {
+				self.facebookContactsReady = YES;
+				
+				return;
+			}
 			
 			for (NSDictionary *permissionDic in data) {
 				if ([[permissionDic objectForKey:@"permission"] isEqualToString:@"user_friends"] && [[permissionDic objectForKey:@"status"] isEqualToString:@"granted"]) {
@@ -234,8 +238,6 @@
 						self.facebookPopup.priority = kPriorityHigh;
 						
 						[ApplicationDelegate.queuedPopups addObject:self.facebookPopup];
-						
-						[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
 					}
 					
 					self.facebookContactsReady = YES;
@@ -621,7 +623,9 @@
 													return [a.fullName caseInsensitiveCompare:b.fullName];
 												}];
 												
-//												[self loadPuppy];
+												if (PUPPY_IS_ENABLED) {
+													[self loadPuppy];
+												}
 												
 												self.fullSynchronizedContacts = self.synchronizedContacts;
 											} else {
@@ -1030,8 +1034,22 @@
 	
 	if (popup == self.addressBookPopup) {
 		[self askAddressBookAccess];
+		
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
 	} else if (popup == self.facebookPopup) {
 		[self askFacebookFriends];
+		
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
+	}
+}
+
+- (void)dismissButtonPressed:(SLVInteractionPopupViewController *)popup {
+	self.popupIsDisplayed = NO;
+	
+	if (popup == self.addressBookPopup) {
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
+	} else if (popup == self.facebookPopup) {
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
 	}
 }
 

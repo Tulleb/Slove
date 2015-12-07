@@ -182,10 +182,12 @@
 					NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
 					
 					if ([sloveCounter intValue] > 0) {
-						[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
-						[currentUser saveInBackground];
-						
-						[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+						if (PUPPY_DECREMENTS_SLOVE) {
+							[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
+							[currentUser saveInBackground];
+							
+							[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+						}
 						
 						NSDictionary *data = @{
 											   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],

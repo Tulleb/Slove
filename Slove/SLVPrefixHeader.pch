@@ -158,8 +158,10 @@
 #define OBJECT_USER_DATA	@"UserData"
 
 #pragma mark - Puppy
+#define PUPPY_IS_ENABLED		YES
 #define PUPPY_USERNAME			@"puppy"
 #define PUPPY_MIN_RETURN_DELAY	(60 * 5)
 #define PUPPY_MAX_RETURN_DELAY	(60 * 15)
+#define PUPPY_DECREMENTS_SLOVE	NO
 
 #endif
