@@ -179,33 +179,17 @@
 		} else {
 			[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *currentUser,  NSError *error) {
 				if (!error) {
-					NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
+					NSDictionary *data = @{@"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
+										   @"badge" : @"Increment",
+										   @"sound" : SLOVED_SOUND_PATH,
+										   @"slover" : @{@"username" : PUPPY_USERNAME}};
+					PFPush *push = [[PFPush alloc] init];
+					[push setChannels:@[[currentUser objectForKey:@"username"]]];
+					[push setData:data];
+					ApplicationDelegate.puppyPush = push;
 					
-					if ([sloveCounter intValue] > 0) {
-						if (PUPPY_DECREMENTS_SLOVE) {
-							[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
-							[currentUser saveInBackground];
-							
-							[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-						}
-						
-						NSDictionary *data = @{
-											   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
-											   @"badge" : @"Increment",
-											   @"sound" : SLOVED_SOUND_PATH,
-											   @"slover" : @{@"username" : PUPPY_USERNAME}
-											   };
-						PFPush *push = [[PFPush alloc] init];
-						[push setChannels:@[[currentUser objectForKey:@"username"]]];
-						[push setData:data];
-						ApplicationDelegate.puppyPush = push;
-						
-						SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-						[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
-					} else {
-						SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
-						[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-					}
+					SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
+					[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 				} else {
 					SLVLog(@"%@%@", SLV_ERROR, error.description);
 					[ParseErrorHandlingController handleParseError:error];
