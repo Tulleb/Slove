@@ -313,14 +313,14 @@
 												
 												[self startLevelAnimation];
 												
-												[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
-																										   action:@"Unlocked"
-																											label:@"Relation level"
+												[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
+																										   action:@"Level up"
+																											label:@"Level"
 																											value:level] build]];
 												
 												NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
 												[eventProperties setValue:level forKey:@"Value"];
-												[[Amplitude instance] logEvent:@"[Achievement] Unlocked relation level" withEventProperties:eventProperties];
+												[[Amplitude instance] logEvent:@"[Animation] Level up" withEventProperties:eventProperties];
 											}
 											
 											[USER_DEFAULTS setObject:level forKey:levelKey];

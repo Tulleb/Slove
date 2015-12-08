@@ -359,14 +359,16 @@
 			profileViewController.circleImageView.hidden = YES;
 			[profileViewController.circleImageView stopAnimating];
 			
-			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
-																	   action:@"Slove wheel"
-																		label:@"Duration"
-																		value:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration]] build]];
-			
-			NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
-			[eventProperties setValue:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration] forKey:@"Value"];
-			[[Amplitude instance] logEvent:@"[Animation] Slove wheel duration" withEventProperties:eventProperties];
+			if (!IS_IOS7) {
+				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
+																		   action:@"Slove wheel"
+																			label:@"Duration"
+																			value:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration]] build]];
+				
+				NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+				[eventProperties setValue:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration] forKey:@"Value"];
+				[[Amplitude instance] logEvent:@"[Animation] Slove wheel duration" withEventProperties:eventProperties];
+			}
 		} else {
 			[self homeAction:self.sloveButton];
 		}

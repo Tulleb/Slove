@@ -10,6 +10,7 @@
 #import "SLVSloveSentPopupViewController.h"
 #import "SLVContactViewController.h"
 #import "SLVAddressBookContact.h"
+#import "SLVHomeViewController.h"
 
 
 @interface SLVSlovedPopupViewController ()
@@ -83,6 +84,13 @@
 	}
 	
 	[SLVTools playSound:SLOVED_SOUND_PATH];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved displayed"];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -100,6 +108,17 @@
 		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:^{
 			ApplicationDelegate.needToRefreshContacts = YES;
 		}];
+	}
+	
+	if ([self.navigationController.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
+		SLVHomeViewController *homeViewController = (SLVHomeViewController *)self.navigationController.viewControllers.firstObject;
+		
+		SLVInteractionPopupViewController *ratingPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
+		
+		ratingPopup.delegate = homeViewController;
+		ratingPopup.priority = kPriorityLow;
+		
+		[ApplicationDelegate.queuedPopups addObject:ratingPopup];
 	}
 }
 
