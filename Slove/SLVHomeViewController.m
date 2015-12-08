@@ -851,13 +851,6 @@
 	[messageController setBody:message];
 	
 	[self presentViewController:messageController animated:YES completion:nil];
-	
-	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
-															   action:@"SMS invite"
-																label:@"Displayed"
-																value:@1] build]];
-	
-	[[Amplitude instance] logEvent:@"[Contact] SMS invite displayed"];
 }
 
 - (SLVContact *)contactForUsername:(NSString *)username {

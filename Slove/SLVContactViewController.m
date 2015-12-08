@@ -96,11 +96,6 @@
 		
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
-		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"View"
-															  action:@"Puppy"
-															   label:@"Displayed"
-															   value:@1] build]];
-		
 		[[Amplitude instance] logEvent:@"[View] Puppy view displayed"];
 		
 		if (![[USER_DEFAULTS objectForKey:KEY_PUPPY_NO_LEVEL_DISPLAYED] boolValue]) {

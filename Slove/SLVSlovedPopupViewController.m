@@ -83,13 +83,6 @@
 	}
 	
 	[SLVTools playSound:SLOVED_SOUND_PATH];
-	
-	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
-															   action:@"Sloved"
-																label:@"Displayed"
-																value:@1] build]];
-	
-	[[Amplitude instance] logEvent:@"[Popup] Sloved displayed"];
 }
 
 - (void)viewDidLayoutSubviews {

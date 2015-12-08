@@ -37,6 +37,11 @@
 	[self.tracker set:kGAIScreenName value:NSStringFromClass(self.class)];
 	[self.tracker send:[[GAIDictionaryBuilder createScreenView] build]];
 	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"View"
+															   action:NSStringFromClass(self.class)
+																label:self.title
+																value:@1] build]];
+	
 	[[Amplitude instance] logEvent:[NSString stringWithFormat:@"[View] %@", NSStringFromClass(self.class)]];
 	
 	[self animateImages];

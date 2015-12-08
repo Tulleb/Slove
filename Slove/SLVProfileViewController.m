@@ -198,7 +198,7 @@
 			[ParseErrorHandlingController handleParseError:error];
 			
 			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Profile"
-																	   action:@"Uploaded picture"
+																	   action:@"Upload picture"
 																		label:@"Failed"
 																		value:@1] build]];
 			
