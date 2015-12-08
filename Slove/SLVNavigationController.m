@@ -28,6 +28,11 @@
 	[self loadBottomNavigationBar];
 	
 	self.firstLoad = YES;
+	
+	self.tracker = [[GAI sharedInstance] defaultTracker];
+	if ([PFUser currentUser]) {
+		[self.tracker set:kGAIUserId value:[PFUser currentUser].username];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -353,6 +358,15 @@
 			
 			profileViewController.circleImageView.hidden = YES;
 			[profileViewController.circleImageView stopAnimating];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
+																	   action:@"Slove wheel"
+																		label:@"Duration"
+																		value:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration]] build]];
+			
+			NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+			[eventProperties setValue:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration] forKey:@"Value"];
+			[[Amplitude instance] logEvent:@"[Animation] Slove wheel duration" withEventProperties:eventProperties];
 		} else {
 			[self homeAction:self.sloveButton];
 		}

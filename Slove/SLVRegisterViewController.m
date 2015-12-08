@@ -212,6 +212,13 @@
 		if (!error) {
 			SLVPhoneNumberViewController *viewController = [[SLVPhoneNumberViewController alloc] init];
 			[self.navigationController pushViewController:viewController animated:YES];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Register"
+																	   action:@"Register view"
+																		label:@"Succeed"
+																		value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Register] Register view succeed"];
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];

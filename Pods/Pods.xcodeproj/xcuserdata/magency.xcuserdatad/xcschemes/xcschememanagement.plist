@@ -9,6 +9,11 @@
 			<key>isShown</key>
 			<false/>
 		</dict>
+		<key>Amplitude-iOS.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
 		<key>Bolts.xcscheme</key>
 		<dict>
 			<key>isShown</key>
@@ -25,6 +30,11 @@
 			<false/>
 		</dict>
 		<key>FBSDKLoginKit.xcscheme</key>
+		<dict>
+			<key>isShown</key>
+			<false/>
+		</dict>
+		<key>FMDB.xcscheme</key>
 		<dict>
 			<key>isShown</key>
 			<false/>
@@ -77,7 +87,7 @@
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
-		<key>04BC179E45FE930E8A116EF38AC85350</key>
+		<key>0860DCBD8CFF50FE9D4A0633F994C443</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -87,12 +97,22 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
+		<key>0BEC65344EF1492CEAA5C8AA02DFBF65</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>41ECE539F9095BC08AB34E2AD8A31A5D</key>
+		<key>258877879FA4AB539CF671926C4260B0</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>31220F941F599F93FC6F0371C79A2686</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>410B25DF16EA5C5B3E2698F74F9625FB</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -102,12 +122,12 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>5366B7F679CF2BA31EA583EA35CA2D90</key>
+		<key>6855363F111B7FFB2282DE7CBC76A531</key>
 		<dict>
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>587C2888E38FFACD0382C9DDCF3C6498</key>
+		<key>78C81F4C6480A52BBA02FA77546A76F1</key>
 		<dict>
 			<key>primary</key>
 			<true/>
@@ -137,7 +157,7 @@
 			<key>primary</key>
 			<true/>
 		</dict>
-		<key>D5EEE78AC8944F71EBD84A7256BD920B</key>
+		<key>B53DF583949C0313F8655A28EF6EB07D</key>
 		<dict>
 			<key>primary</key>
 			<true/>

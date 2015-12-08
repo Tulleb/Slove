@@ -39,7 +39,7 @@
 @property (nonatomic, strong) NSTimer *puppyTimer;
 
 - (void)userConnected;
-- (void)userDisconnecting;
+- (void)disconnectUser;
 - (void)disableNavigationElements;
 - (void)enableNavigationElements;
 

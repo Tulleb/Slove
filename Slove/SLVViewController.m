@@ -7,7 +7,6 @@
 //
 
 #import "SLVViewController.h"
-#import <Google/Analytics.h>
 #import <FBSDKCoreKit/FBSDKCoreKit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 
@@ -31,9 +30,14 @@
 	
 	[super viewWillAppear:animated];
 	
-	id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
-	[tracker set:kGAIScreenName value:NSStringFromClass(self.class)];
-	[tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+	self.tracker = [[GAI sharedInstance] defaultTracker];
+	if ([PFUser currentUser]) {
+		[self.tracker set:kGAIUserId value:[PFUser currentUser].username];
+	}
+	[self.tracker set:kGAIScreenName value:NSStringFromClass(self.class)];
+	[self.tracker send:[[GAIDictionaryBuilder createScreenView] build]];
+	
+	[[Amplitude instance] logEvent:[NSString stringWithFormat:@"[View] %@", NSStringFromClass(self.class)]];
 	
 	[self animateImages];
 }
@@ -146,7 +150,7 @@
 }
 
 - (void)disconnectAction:(id)sender {
-	[ApplicationDelegate userDisconnecting];
+	[ApplicationDelegate disconnectUser];
 }
 
 - (void)goToHome {

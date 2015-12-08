@@ -83,12 +83,26 @@
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue] && !ApplicationDelegate.tutorialSloveSent) {
 		[ApplicationDelegate disableNavigationElements];
 		[self.bubbleView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																   action:@"Unlocked"
+																	label:@"Tutorial - Have to Slove back"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial have to Slove back"];
 	} else if (!self.bubbleView.hidden) {
 		[ApplicationDelegate enableNavigationElements];
 		self.bubbleView.hidden = YES;
 		
 		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"View"
+															  action:@"Puppy"
+															   label:@"Displayed"
+															   value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[View] Puppy view displayed"];
+		
 		if (![[USER_DEFAULTS objectForKey:KEY_PUPPY_NO_LEVEL_DISPLAYED] boolValue]) {
 			SLVInteractionPopupViewController *warningPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_no_level_available", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:warningPopup animated:YES completion:^{
@@ -150,6 +164,13 @@
 		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
 			ApplicationDelegate.tutorialSloveSent = YES;
 		}];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+															  action:@"Sent"
+															   label:@"Tutorial"
+															   value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Slove] Sent tutorial Slove"];
 	} else if (!self.contact.username) {
 		if(![MFMessageComposeViewController canSendText]) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
@@ -172,10 +193,24 @@
 		[messageController setBody:message];
 		
 		[self presentViewController:messageController animated:YES completion:nil];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																   action:@"Sent"
+																	label:@"User not on slove"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Slove] Sent to user not on Slove"];
 	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
 		if (ApplicationDelegate.puppyPush) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_already_sloved_recently", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																	   action:@"Sent"
+															   label:@"Already sent (Puppy)"
+															   value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Slove] Already sent (Puppy)"];
 		} else {
 			[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *currentUser,  NSError *error) {
 				if (!error) {
@@ -195,6 +230,13 @@
 					[ParseErrorHandlingController handleParseError:error];
 				}
 			}];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																	   action:@"Sent"
+															   label:@"Succeed (Puppy)"
+															   value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Slove] Sent (Puppy)"];
 		}
 	} else {
 		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
@@ -209,6 +251,13 @@
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+											
+											[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																									   action:@"Sent"
+																										label:@"Succeed"
+																										value:@1] build]];
+											
+											[[Amplitude instance] logEvent:@"[Slove] Sent succeed"];
 										} else {
 											NSString *errorLabel = NSLocalizedString(error.localizedDescription, nil);
 											
@@ -232,6 +281,15 @@
 											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
 											[ParseErrorHandlingController handleParseError:error];
+											
+											[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																									   action:@"Sent"
+																										label:@"Error"
+																										value:@1] build]];
+											
+											NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+											[eventProperties setValue:errorCode forKey:@"Value"];
+											[[Amplitude instance] logEvent:@"[Slove] Sent error" withEventProperties:eventProperties];
 										}
 									}];
 	}
@@ -260,7 +318,14 @@
 												
 												[self startLevelAnimation];
 												
+												[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																										   action:@"Unlocked"
+																											label:@"Relation level"
+																											value:level] build]];
 												
+												NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+												[eventProperties setValue:level forKey:@"Value"];
+												[[Amplitude instance] logEvent:@"[Achievement] Unlocked relation level" withEventProperties:eventProperties];
 											}
 											
 											[USER_DEFAULTS setObject:level forKey:levelKey];

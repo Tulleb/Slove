@@ -7,10 +7,13 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <Google/Analytics.h>
+#import "Amplitude.h"
 
 @interface SLVViewController : UIViewController
 
 @property (nonatomic, strong) NSString * appName;
+@property (nonatomic, strong) id<GAITracker> tracker;
 
 + (void)setStyle:(UIView *)view;
 - (void)loadBackButton;

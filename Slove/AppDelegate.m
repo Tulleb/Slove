@@ -20,6 +20,7 @@
 #import <ParseCrashReporting/ParseCrashReporting.h>
 #import "SLVContactViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "Amplitude.h"
 
 @interface AppDelegate ()
 
@@ -49,6 +50,8 @@
 	[PFFacebookUtils initializeFacebookWithApplicationLaunchOptions:launchOptions];
 
 	[FBSDKLoginButton class];
+	
+	[[Amplitude instance] initializeApiKey:@"3cb378d906720486d487f4b7993a0374"];
 	
 	// Configure tracker from GoogleService-Info.plist.
 	NSError *configureError;
@@ -145,6 +148,7 @@
 	[FBSDKAppEvents activateApp];
 	[self loadParseConfig];
 	[self.currentNavigationController refreshSloveCounter];
+	[self facebookSessionRequest];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -182,6 +186,18 @@
 	NSDictionary *levelUpDic = [userInfo objectForKey:@"levelUp"];
 	
 	if (sloverDic) {
+		id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+		if ([PFUser currentUser]) {
+			[tracker set:kGAIUserId value:[PFUser currentUser].username];
+		}
+		
+		[tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Push"
+															  action:@"Slove"
+															   label:@"Opened"
+															   value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Push] Slove opened"];
+		
 		SLVContact *slover;
 		
 		if ([self.currentNavigationController.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
@@ -237,6 +253,18 @@
 			SLVLog(@"%@Couldn't init Slover data", SLV_ERROR);
 		}
 	} else if (levelUpDic) {
+		id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+		if ([PFUser currentUser]) {
+			[tracker set:kGAIUserId value:[PFUser currentUser].username];
+		}
+		
+		[tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Push"
+																   action:@"Level up"
+																	label:@"Opened"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Push] Level up opened"];
+		
 		SLVContact *slover;
 		NSString *otherUsername;
 		
@@ -337,6 +365,8 @@
 	currentInstallation.channels = @[@"global", [PFUser currentUser].username];
 	[currentInstallation saveEventually];
 	
+	[[Amplitude instance] setUserId:[PFUser currentUser].username];
+	
 	if (!self.userIsConnected) {
 		self.currentNavigationController = nil;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
@@ -349,7 +379,7 @@
 	self.userIsConnected = YES;
 }
 
-- (void)userDisconnecting {
+- (void)disconnectUser {
 	SLVLog(@"User trying to disconnect");
 	
 	[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
@@ -378,6 +408,8 @@
 - (void)userDisconnected {
 	ApplicationDelegate.shouldLetLoadingScreen = YES;
 	[self disconnectingUserTransition];
+	
+	[[Amplitude instance] setUserId:nil];
 	
 	self.userIsConnected = NO;
 	
@@ -849,6 +881,27 @@
 	ApplicationDelegate.currentNavigationController.profileButton.enabled = YES;
 	self.currentNavigationController.topViewController.navigationItem.leftBarButtonItem.enabled = YES;
 	self.currentNavigationController.topViewController.navigationItem.rightBarButtonItem.enabled = YES;
+}
+
+- (void)facebookSessionRequest {
+	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me"
+																   parameters:@{@"fields": @""}];
+	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+		if (!error) {
+			SLVLog(@"The facebook session request succeed");
+		} else if ([[error userInfo][@"error"][@"type"] isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+			SLVLog(@"%@The facebook session was invalidated", SLV_WARNING);
+			[self disconnectUser];
+			
+			[[Amplitude instance] logEvent:@"[Error] Facebook session invalidated"];
+		} else {
+			SLVLog(@"%@Facebook session request error: %@", SLV_ERROR, error);
+			
+			NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+			[eventProperties setValue:error.localizedDescription forKey:@"Value"];
+			[[Amplitude instance] logEvent:@"[Error] Facebook session error" withEventProperties:eventProperties];
+		}
+	}];
 }
 
 

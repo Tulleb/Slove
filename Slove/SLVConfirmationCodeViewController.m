@@ -73,6 +73,13 @@
 										SLVLog(@"Received data from server: %@", object);
 										
 										[ApplicationDelegate userConnected];
+										
+										[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Register"
+																								   action:@"Confirmation code view"
+																									label:@"Succeed"
+																									value:@1] build]];
+										
+										[[Amplitude instance] logEvent:@"[Register] Confirmation code succeed"];
 									} else {
 										self.errorLabel.hidden = NO;
 										self.errorLabel.text = NSLocalizedString(error.localizedDescription, nil);

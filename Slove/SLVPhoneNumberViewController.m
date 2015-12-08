@@ -97,6 +97,13 @@
 										SLVLog(@"Received data from server: %@", object);
 																				
 										[self.navigationController pushViewController:[[SLVConfirmationCodeViewController alloc] initWithPhoneNumber:self.formatedPhoneNumber] animated:YES];
+										
+										[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Register"
+																								   action:@"Phone number view"
+																									label:@"Succeed"
+																									value:@1] build]];
+										
+										[[Amplitude instance] logEvent:@"[Register] Phone number view succeed"];
 									} else {
 										self.errorLabel.hidden = NO;
 										self.errorLabel.text = NSLocalizedString(error.localizedDescription, nil);

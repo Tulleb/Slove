@@ -185,6 +185,13 @@
 										self.followedPopup.delegate = self;
 										
 										[self.navigationController presentViewController:self.followedPopup animated:YES completion:nil];
+										
+										[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+																								   action:@"Follow"
+																									label:@"Succeed"
+																									value:@1] build]];
+										
+										[[Amplitude instance] logEvent:@"[Contact] Follow succeed"];
 									} else {
 										SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(error.localizedDescription, nil) buttonsTitle:nil andDismissButton:YES];
 										
@@ -192,6 +199,15 @@
 										
 										SLVLog(@"%@%@", SLV_ERROR, error.description);
 										[ParseErrorHandlingController handleParseError:error];
+										
+										[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+																								   action:@"Follow"
+																									label:@"Failed"
+																									value:@1] build]];
+										
+										NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+										[eventProperties setValue:error.localizedDescription forKey:@"Value"];
+										[[Amplitude instance] logEvent:@"[Contact] Follow failed" withEventProperties:eventProperties];
 									}
 								}];
 }

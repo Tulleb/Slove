@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <CustomBadge/CustomBadge.h>
 #import "SLVProfileViewController.h"
+#import <Google/Analytics.h>
 
 @interface SLVNavigationController : UINavigationController <UIGestureRecognizerDelegate>
 
@@ -28,6 +29,7 @@
 @property (nonatomic) float sloveClickDuration;
 @property (nonatomic) float sloveClickDecelerationDuration;
 @property (nonatomic) BOOL firstLoad;
+@property (nonatomic, strong) id<GAITracker> tracker;
 
 - (void)activityAction:(id)sender;
 - (void)sloveAction:(id)sender;

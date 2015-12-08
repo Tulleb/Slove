@@ -53,6 +53,13 @@
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.disablingView.hidden = NO;
 		self.bubbleView.hidden = NO;
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																   action:@"Unlocked"
+																	label:@"Tutorial - Sloved by team"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial Sloved by team"];
 	}
 }
 
@@ -76,6 +83,13 @@
 	}
 	
 	[SLVTools playSound:SLOVED_SOUND_PATH];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved displayed"];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -116,10 +130,24 @@
 		
 		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
 	}];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Returned"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved returned"];
 }
 
 - (IBAction)rightAction:(id)sender {
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Thanked"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved thanked"];
 }
 
 @end

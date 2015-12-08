@@ -183,12 +183,28 @@
 					}
 				}
 			}];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Profile"
+																	   action:@"Upload picture"
+																		label:@"Succeed"
+																		value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Profile] Upload picture succeed"];
 		} else {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_upload_image_error", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
 			
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Profile"
+																	   action:@"Uploaded picture"
+																		label:@"Failed"
+																		value:@1] build]];
+			
+			NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+			[eventProperties setValue:error.localizedDescription forKey:@"Value"];
+			[[Amplitude instance] logEvent:@"[Profile] Upload picture failed" withEventProperties:eventProperties];
 		}
 	} progressBlock:^(int percentDone) {
 		self.uploadProgressBar.progress = percentDone / 100.0;

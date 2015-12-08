@@ -35,6 +35,13 @@
 	
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.bubbleView.hidden = NO;
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																   action:@"Unlocked"
+																	label:@"Tutorial - Slove sent to the team"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial Slove sent to the team"];
 	}
 }
 
@@ -42,6 +49,13 @@
 	[super viewWillAppear:animated];
 	
 	[SLVTools playSound:SLOVER_SOUND_PATH];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Slove sent"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Slove sent displayed"];
 }
 
 - (void)didReceiveMemoryWarning {
