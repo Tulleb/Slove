@@ -103,7 +103,10 @@
 		
 		self.keyboardHeight = keyboardFrame.size.height;
 		
-		if (self.view.frame.origin.y - self.keyboardHeight < 0 && !self.screenIsTooSmall) {
+		CGRect lastTextFieldFrame = self.passwordField.frame;
+		float remainingSpace = SCREEN_HEIGHT - self.view.frame.origin.y - (lastTextFieldFrame.origin.y + lastTextFieldFrame.size.height) - self.keyboardHeight;
+		
+		if (remainingSpace < 0 && !self.screenIsTooSmall) {
 			self.screenIsTooSmall = YES;
 			
 			// We have to repeat this once because this function is called after shouldBeginEditing

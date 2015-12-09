@@ -103,3 +103,4 @@
 "popup_body_facebookAccess" = "Slovy a besoin d'accèder à votre liste d'amis Facebook";
 "label_terms_of_service" = "J'accepte les CGU";
 "label_search" = "Rechercher";
+"error_username_firstLetter" = "Le premier caractère de votre nom d'utilisateur doit être une lettre";

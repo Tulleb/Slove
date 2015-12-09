@@ -38,6 +38,7 @@
 @property (strong, nonatomic) SLVInteractionPopupViewController *addressBookPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *facebookPopup;
 @property (strong, nonatomic) SLVInteractionPopupViewController *settingsPopup;
+@property (strong, nonatomic) SLVInteractionPopupViewController *pushNotificationPopup;
 @property (nonatomic) BOOL readyToDownload;
 @property (nonatomic) BOOL pictureDownloaded;
 @property (nonatomic) ABAddressBookRef addressBookRef;

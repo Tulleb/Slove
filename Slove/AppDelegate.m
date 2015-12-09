@@ -74,18 +74,6 @@
 		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
 	}
 	
-	if (IS_IOS7) {
-		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-	} else {
-		UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-														UIUserNotificationTypeBadge |
-														UIUserNotificationTypeSound);
-		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-																				 categories:nil];
-		[application registerUserNotificationSettings:settings];
-		[application registerForRemoteNotifications];
-	}
-	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
 	
 	self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVConnectionViewController alloc] init]];

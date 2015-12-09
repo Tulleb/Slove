@@ -111,8 +111,9 @@
 #define	KEY_PUPPY_NO_LEVEL_DISPLAYED			@"puppyNoLevel"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
-#define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
-#define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
+#define	KEY_ASKED_CONTACT_BOOK					@"alreadyAskedForContactBook"
+#define	KEY_ASKED_FACEBOOK_FRIENDS				@"alreadyAskedForFacebookFriends"
+#define	KEY_ASKED_PUSH_NOTIFICATION				@"alreadyAskedForPushNotification"
 #define	KEY_LAST_ACTIVITY_REFRESH				@"lastActivityRefresh"
 #define	KEY_CONTACT_LEVELUP						@"contactLevelUp"
 #define	KEY_RETURNED_SLOVE_COUNT				@"returnedSloveCount"
@@ -143,6 +144,7 @@
 #pragma mark - Username
 #define USERNAME_EMPTY_PREFIX			@"empty#"
 #define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
+#define USERNAME_LETTER_CHARACTERS		@"abcdefghijklmnopqrstuvwxyz"
 
 #pragma mark - PFCloud
 #define PHONENUMBER_SEND_FUNCTION					@"sendPhoneCode"

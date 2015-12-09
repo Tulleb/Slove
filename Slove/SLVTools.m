@@ -144,6 +144,11 @@
 		return validationString;
 	}
 	
+	validationString = [self usernameDoesntStartsWithLetter:username];
+	if (validationString) {
+		return validationString;
+	}
+	
 	return nil;
 }
 
@@ -183,6 +188,18 @@
 	}
 	
 	return nil;
+}
+
++ (NSString *)usernameDoesntStartsWithLetter:(NSString *)username {
+	NSCharacterSet *alphaSet = [NSCharacterSet characterSetWithCharactersInString:USERNAME_LETTER_CHARACTERS];
+	
+	NSString *firstCharacter = [username substringToIndex:1];
+	
+	if ([[firstCharacter stringByTrimmingCharactersInSet:alphaSet] isEqualToString:@""]) {
+		return nil;
+	} else {
+		return @"error_username_firstLetter";
+	}
 }
 
 + (NSString *)validateEmail:(NSString *)email {
