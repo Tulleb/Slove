@@ -133,9 +133,7 @@
 }
 
 - (void)didDismissSlovedPopup {
-//	if (!IS_IOS7) {
-//		[self viewDidAppear:YES];
-//	}
+	
 }
 
 // TODO: end this function
@@ -385,12 +383,15 @@
 	
 	for (int i = 0; i < contactCount; i++) {
 		ABRecordRef contact = CFArrayGetValueAtIndex(contacts, i);
+		
 		CFTypeRef firstName = ABRecordCopyValue(contact, kABPersonFirstNameProperty);
-		CFTypeRef lastName = ABRecordCopyValue(contact, kABPersonLastNameProperty);
-		CFTypeRef organization = ABRecordCopyValue(contact, kABPersonOrganizationProperty);
 		NSString *firstNameString = (NSString *)CFBridgingRelease(firstName);
+		
+		CFTypeRef lastName = ABRecordCopyValue(contact, kABPersonLastNameProperty);
 		NSString *lastNameString = (NSString *)CFBridgingRelease(lastName);
-		NSString *organizationString = (NSString *)CFBridgingRelease(organization);
+		
+//		CFTypeRef organization = ABRecordCopyValue(contact, kABPersonOrganizationProperty);
+//		NSString *organizationString = (NSString *)CFBridgingRelease(organization);
 		
 		NSString *fullName = @"";
 		if (firstName) {
@@ -403,13 +404,13 @@
 			
 			fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@"%@", lastNameString]];
 		}
-		if (organizationString) {
-			if (![fullName isEqualToString:@""]) {
-				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
-			} else {
-				fullName = [fullName stringByAppendingString:organizationString];
-			}
-		}
+//		if (organizationString) {
+//			if (![fullName isEqualToString:@""]) {
+//				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
+//			} else {
+//				fullName = [fullName stringByAppendingString:organizationString];
+//			}
+//		}
 		
 		if (![fullName isEqualToString:@""]) {
 			CFDataRef imageData = ABPersonCopyImageData(contact);

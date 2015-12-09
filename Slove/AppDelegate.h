@@ -33,6 +33,9 @@
 @property (nonatomic) BOOL needToRefreshContacts;
 @property (nonatomic) BOOL shouldLetLoadingScreen;
 @property (nonatomic) BOOL tutorialSloveSent;
+@property (nonatomic) BOOL ratingReturnedASloveFlag;
+@property (nonatomic) BOOL ratingSlovedBack;
+@property (nonatomic) int ratingNumberFlag;
 @property (nonatomic) NSArray *levels;
 @property (nonatomic) NSArray *puppyPictures;
 @property (nonatomic, strong) PFPush *puppyPush;

@@ -109,17 +109,6 @@
 			ApplicationDelegate.needToRefreshContacts = YES;
 		}];
 	}
-	
-	if ([self.navigationController.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
-		SLVHomeViewController *homeViewController = (SLVHomeViewController *)self.navigationController.viewControllers.firstObject;
-		
-		SLVInteractionPopupViewController *ratingPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
-		
-		ratingPopup.delegate = homeViewController;
-		ratingPopup.priority = kPriorityLow;
-		
-		[ApplicationDelegate.queuedPopups addObject:ratingPopup];
-	}
 }
 
 - (void)didReceiveMemoryWarning {
@@ -136,11 +125,13 @@
 
 - (IBAction)leftAction:(id)sender {
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
+		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
+		
+		ApplicationDelegate.ratingReturnedASloveFlag = YES;
+		
 		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED
 															object:nil
 														  userInfo:nil];
-		
-		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
 	}];
 	
 	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"

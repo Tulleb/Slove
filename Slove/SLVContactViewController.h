@@ -11,7 +11,7 @@
 #import <MessageUI/MessageUI.h>
 #import <iCarousel/iCarousel.h>
 
-@interface SLVContactViewController : SLVViewController <MFMessageComposeViewControllerDelegate, iCarouselDataSource, iCarouselDelegate>
+@interface SLVContactViewController : SLVViewController <MFMessageComposeViewControllerDelegate, iCarouselDataSource, iCarouselDelegate, SLVInteractionPopupDelegate>
 
 @property (strong, nonatomic) SLVContact *contact;
 @property (strong, nonatomic) IBOutlet UIImageView *pictureImageView;
@@ -27,6 +27,7 @@
 @property (strong, nonatomic) IBOutlet NSLayoutConstraint *levelCarouselBottomLayoutConstraint;
 @property (strong, nonatomic) IBOutlet UIImageView *fireworkImageView;
 @property (strong, nonatomic) UIImage *pictureImage;
+@property (strong, nonatomic) SLVInteractionPopupViewController *ratingPopup;
 @property (nonatomic) float spiraleAngle;
 @property (nonatomic) int levelNumberBuffer;
 

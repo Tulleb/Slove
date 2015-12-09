@@ -115,6 +115,9 @@
 #define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
 #define	KEY_LAST_ACTIVITY_REFRESH				@"lastActivityRefresh"
 #define	KEY_CONTACT_LEVELUP						@"contactLevelUp"
+#define	KEY_RETURNED_SLOVE_COUNT				@"returnedSloveCount"
+#define	KEY_ASKED_FOR_RATING_ONCE				@"ratingOnce"
+#define	KEY_ASKED_FOR_RATING_TWICE				@"ratingTwice"
 
 #pragma mark - Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"

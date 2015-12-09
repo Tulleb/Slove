@@ -106,6 +106,31 @@
 		}
 	} else {
 		[self checkLevel];
+		
+		if (ApplicationDelegate.ratingSlovedBack) {
+			ApplicationDelegate.ratingReturnedASloveFlag = NO;
+			ApplicationDelegate.ratingSlovedBack = NO;
+			
+			NSNumber *returnedSloveCount = [USER_DEFAULTS objectForKey:KEY_RETURNED_SLOVE_COUNT];
+			
+			if (!returnedSloveCount) {
+				returnedSloveCount = [NSNumber numberWithInt:0];
+			}
+			
+			int value = [returnedSloveCount intValue] + 1;
+			
+			[USER_DEFAULTS setObject:[NSNumber numberWithInt:value] forKey:KEY_RETURNED_SLOVE_COUNT];
+			
+			if (value >= 3 && ![[USER_DEFAULTS objectForKey:KEY_ASKED_FOR_RATING_ONCE] boolValue]) {
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_FOR_RATING_ONCE];
+				
+				[self displayRatingPopup];
+			} else if (value >= 13 && ![[USER_DEFAULTS objectForKey:KEY_ASKED_FOR_RATING_TWICE] boolValue]) {
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_FOR_RATING_TWICE];
+				
+				[self displayRatingPopup];
+			}
+		}
 	}
 }
 
@@ -246,6 +271,10 @@
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+											
+											if (ApplicationDelegate.ratingReturnedASloveFlag) {
+												ApplicationDelegate.ratingSlovedBack = YES;
+											}
 											
 											[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
 																									   action:@"Sent"
@@ -398,6 +427,22 @@
 	self.fireworkImageView.animationRepeatCount = 1;
 }
 
+- (void)displayRatingPopup {
+	self.ratingPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_rating_title", nil) body:NSLocalizedString(@"popup_rating_body", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_appstore", nil), nil] andDismissButton:YES];
+	
+	self.ratingPopup.delegate = self;
+	self.ratingPopup.priority = kPriorityLow;
+	
+	[ApplicationDelegate.queuedPopups addObject:self.ratingPopup];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Rating"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Rating displayed"];
+}
+
 
 #pragma mark - MFMessageComposeViewControllerDelegate
 
@@ -497,6 +542,33 @@
 	CGFloat distance = SCREEN_HEIGHT / 4; //number of pixels to move the items away from camera
 	CGFloat z = -fabs(offset) * distance;
 	return CATransform3DTranslate(transform, offset * carousel.itemWidth, ABS(offset) * -20, z);
+}
+
+
+#pragma mark - SLVInteractionPopupDelegate
+
+- (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.ratingPopup) {
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1023675203&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"]];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Rating"
+																	label:@"Accepted"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Rating sent to Appstore"];
+	}
+}
+
+- (void)dismissButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.ratingPopup) {
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Rating"
+																	label:@"Dismissed"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Rating dismissed"];
+	}
 }
 
 @end

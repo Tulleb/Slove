@@ -204,7 +204,9 @@
 			SLVHomeViewController *homeViewController = (SLVHomeViewController *)self.currentNavigationController.viewControllers.firstObject;
 			
 			slover = [homeViewController contactForUsername:[sloverDic objectForKey:@"username"]];
-		} else {
+		}
+		
+		if (!slover) {
 			NSError *error;
 			slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
 			

@@ -300,6 +300,10 @@
 		rootViewController.calledFromBackButton = YES;
 	}
 	
+	if ([self.topViewController isKindOfClass:[SLVContactViewController class]] && !ApplicationDelegate.ratingSlovedBack) {
+		ApplicationDelegate.ratingReturnedASloveFlag = NO;
+	}
+	
 	return [super popViewControllerAnimated:animated];
 }
 
@@ -363,7 +367,7 @@
 				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
 																		   action:@"Slove wheel"
 																			label:@"Duration"
-																			value:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration]] build]];
+																			value:[NSNumber numberWithInt:(int)self.sloveClickDecelerationDuration]] build]];
 				
 				NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
 				[eventProperties setValue:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration] forKey:@"Value"];
