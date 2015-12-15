@@ -108,7 +108,7 @@
 		[self checkLevel];
 		
 		if (ApplicationDelegate.ratingSlovedBack) {
-			ApplicationDelegate.ratingReturnedASloveFlag = NO;
+			ApplicationDelegate.ratingReturnedASlove = NO;
 			ApplicationDelegate.ratingSlovedBack = NO;
 			
 			NSNumber *returnedSloveCount = [USER_DEFAULTS objectForKey:KEY_RETURNED_SLOVE_COUNT];
@@ -270,9 +270,11 @@
 											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 											
+											ApplicationDelegate.sloveWasSent = YES;
+											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
 											
-											if (ApplicationDelegate.ratingReturnedASloveFlag) {
+											if (ApplicationDelegate.ratingReturnedASlove) {
 												ApplicationDelegate.ratingSlovedBack = YES;
 											}
 											

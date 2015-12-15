@@ -127,7 +127,7 @@
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
 		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
 		
-		ApplicationDelegate.ratingReturnedASloveFlag = YES;
+		ApplicationDelegate.ratingReturnedASlove = YES;
 		
 		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED
 															object:nil

@@ -301,7 +301,7 @@
 	}
 	
 	if ([self.topViewController isKindOfClass:[SLVContactViewController class]] && !ApplicationDelegate.ratingSlovedBack) {
-		ApplicationDelegate.ratingReturnedASloveFlag = NO;
+		ApplicationDelegate.ratingReturnedASlove = NO;
 	}
 	
 	return [super popViewControllerAnimated:animated];
@@ -635,6 +635,7 @@
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
 			NSNumber *sloveCount = object[@"sloveNumber"];
+			NSNumber *sloveCredit = object[@"sloveCredit"];
 			NSString *sloveCountString = [NSString stringWithFormat:@"%d", [sloveCount intValue]];
 			self.sloveCounterBadge.badgeText = sloveCountString;
 			[self.sloveCounterBadge setNeedsDisplay];
@@ -649,6 +650,25 @@
 			
 			
 			[self.sloveView setNeedsUpdateConstraints];
+			
+			if (ApplicationDelegate.sloveWasSent == YES) {
+				ApplicationDelegate.sloveWasSent = NO;
+				
+				if ([sloveCount intValue] == 0) {
+					NSString *popupBodyText = NSLocalizedString(@"popup_body_lastSlove", nil);
+					
+					if ([sloveCredit intValue] < [[ApplicationDelegate.parseConfig objectForKey:PARSE_SLOVE_MAX_CREDIT] intValue]) {
+						popupBodyText = [popupBodyText stringByAppendingString:[NSString stringWithFormat:@"\n%@", NSLocalizedString(@"popup_body_oneMoreSlove", nil)]];
+						popupBodyText = [popupBodyText stringByReplacingOccurrencesOfString:@"[number]" withString:[NSString stringWithFormat:@"%d", [sloveCredit intValue] + 1]];
+					}
+					
+					SLVInteractionPopupViewController *lastSlovePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_lastSlove", nil) body:popupBodyText buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+					
+					lastSlovePopup.priority = kPriorityHigh;
+					
+					[ApplicationDelegate.queuedPopups addObject:lastSlovePopup];
+				}
+			}
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];

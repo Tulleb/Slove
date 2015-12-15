@@ -126,6 +126,7 @@
 #define PARSE_COMPATIBLE_VERSION	@"compatible_version"
 #define PARSE_DOWNLOAD_APP_URL		@"download_app_url"
 #define PARSE_PUSHED_MESSAGE		@"pushed_message"
+#define PARSE_SLOVE_MAX_CREDIT		@"slove_max_credit"
 
 #pragma mark - Navigation
 #define SLOVE_BUTTON_SIZE			75

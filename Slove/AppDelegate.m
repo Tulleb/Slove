@@ -816,6 +816,13 @@
 			}];
 		}
 
+		NSString *sloveMaxCredit = config[PARSE_SLOVE_MAX_CREDIT];
+		if (!sloveMaxCredit) {
+			SLVLog(@"%@Couldn't find slove max credit", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:sloveMaxCredit forKey:PARSE_SLOVE_MAX_CREDIT];
+		}
+		
 		// Disabled because of Apple policy
 //		if (!self.alreadyCheckedCompatibleVersion) {
 //			[self checkCompatibleVersion];
