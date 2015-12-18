@@ -126,6 +126,8 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	[self.currentNavigationController refreshActivityCounter];
+	
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 //	if (currentInstallation.badge != 0) {	// this check is currently not working with Parse
 		currentInstallation.badge = 0;

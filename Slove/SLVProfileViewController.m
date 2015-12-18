@@ -93,13 +93,13 @@
 	
 	ApplicationDelegate.currentNavigationController.profileButton.selected = YES;
 	
-	if (![USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] || ![[USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] boolValue]) {
-		SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
-		
-		[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
-		
-		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
-	}
+//	if (![USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] || ![[USER_DEFAULTS objectForKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED] boolValue]) {
+//		SLVConstructionPopupViewController *constructionPopup = [[SLVConstructionPopupViewController alloc] init];
+//		
+//		[self.navigationController presentViewController:constructionPopup animated:YES completion:nil];
+//		
+//		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_SETTINGS_CONSTRUCTION_DISPLAYED];
+//	}
 }
 
 - (void)viewWillDisappear:(BOOL)animated {

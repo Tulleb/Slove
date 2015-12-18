@@ -50,6 +50,8 @@
 	[super viewWillAppear:animated];
 	
 	ApplicationDelegate.currentNavigationController.activityButton.selected = YES;
+	
+	[ApplicationDelegate.currentNavigationController refreshActivityCounter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
