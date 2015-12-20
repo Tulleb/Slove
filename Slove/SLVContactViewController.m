@@ -534,7 +534,13 @@
 	} else if (option == iCarouselOptionFadeMax) {
 		return 0;
 	} else if (option == iCarouselOptionFadeRange) {
-		return 5;
+		if (IS_3INCH5) {
+			return 3;
+		} else if (IS_4INCH) {
+			return 3;
+		} else if (IS_4INCH7) {
+			return 5;
+		}
 	} else if (option == iCarouselOptionFadeMinAlpha) {
 		return 0;
 	}
