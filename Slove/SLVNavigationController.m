@@ -480,7 +480,7 @@
 	self.profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
 	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:RED withInsetColor:WHITE withFrameColor:RED withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
-	self.activityCounterBadge = [CustomBadge customBadgeWithString:@"8" withStyle:[BadgeStyle freeStyleWithTextColor:BLUE withInsetColor:WHITE withFrameColor:BLUE withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
+	self.activityCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:BLUE withInsetColor:WHITE withFrameColor:BLUE withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	

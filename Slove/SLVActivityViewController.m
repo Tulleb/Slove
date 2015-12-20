@@ -114,10 +114,6 @@
 													parsedActivity.value = [activity objectForKey:@"activityValue"];
 													parsedActivity.relatedUser = [activity objectForKey:@"relatedUser"];
 													
-													if ([activities indexOfObject:activity] == 0) {
-														parsedActivity.isNew = YES;
-													}
-													
 													BOOL sectionAlreadyExists = NO;
 													for (id section in self.sectionOrder) {
 														if ([section isKindOfClass:[NSDate class]] && [SLVTools isSameDay:section thatDay:parsedActivity.createdAt]) {
@@ -318,8 +314,15 @@
 		NSDate *sectionDate = (NSDate *)sectionObject;
 		
 		NSDateFormatter *shortDayFormatter = [[NSDateFormatter alloc] init];
-		[shortDayFormatter setDateFormat:@"EEEE"];
 		[shortDayFormatter setTimeZone:[NSTimeZone localTimeZone]];
+		
+		NSInteger days = [SLVTools daysBetweenDate:sectionDate andDate:[NSDate date]];
+		
+		if (days < 7) {
+			[shortDayFormatter setDateFormat:@"EEEE"];
+		} else {
+			[shortDayFormatter setDateFormat:@"EEEE dd MMMM"];
+		}
 		
 		return [shortDayFormatter stringFromDate:sectionDate];
 	}
