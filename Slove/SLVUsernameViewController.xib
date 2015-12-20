@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="8191" systemVersion="14F27" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="9531" systemVersion="14F1509" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
@@ -21,26 +21,6 @@
             <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder_username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="frY-nd-WA2" customClass="SLVTextField">
-                    <rect key="frame" x="147" y="134" width="307" height="72"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="30" id="1pJ-rL-d0g"/>
-                        <constraint firstAttribute="width" constant="200" id="L1F-Eb-Lay"/>
-                        <constraint firstAttribute="width" secondItem="frY-nd-WA2" secondAttribute="height" multiplier="307:72" id="c5i-rH-jl4"/>
-                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="72" id="jiJ-NE-4wy"/>
-                    </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="send"/>
-                    <variation key="default">
-                        <mask key="constraints">
-                            <exclude reference="1pJ-rL-d0g"/>
-                            <exclude reference="L1F-Eb-Lay"/>
-                        </mask>
-                    </variation>
-                    <connections>
-                        <outlet property="delegate" destination="-1" id="LIM-1R-g6t"/>
-                    </connections>
-                </textField>
                 <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="T8P-3e-0Vc">
                     <rect key="frame" x="0.0" y="0.0" width="600" height="126"/>
                     <constraints>
@@ -70,10 +50,42 @@
                     <color key="textColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
                 </label>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="label_enter_username" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7a5-Ut-u03">
+                    <rect key="frame" x="8" y="134" width="584" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="FoY-wm-cVp"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                    <nil key="highlightedColor"/>
+                </label>
+                <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="placeholder_username" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="frY-nd-WA2" customClass="SLVTextField">
+                    <rect key="frame" x="147" y="172" width="307" height="72"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="30" id="1pJ-rL-d0g"/>
+                        <constraint firstAttribute="width" constant="200" id="L1F-Eb-Lay"/>
+                        <constraint firstAttribute="width" secondItem="frY-nd-WA2" secondAttribute="height" multiplier="307:72" id="c5i-rH-jl4"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="72" id="jiJ-NE-4wy"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                    <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no" returnKeyType="send"/>
+                    <variation key="default">
+                        <mask key="constraints">
+                            <exclude reference="1pJ-rL-d0g"/>
+                            <exclude reference="L1F-Eb-Lay"/>
+                        </mask>
+                    </variation>
+                    <connections>
+                        <outlet property="delegate" destination="-1" id="LIM-1R-g6t"/>
+                    </connections>
+                </textField>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="7a5-Ut-u03" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="3KO-ui-xUy"/>
+                <constraint firstItem="frY-nd-WA2" firstAttribute="top" secondItem="7a5-Ut-u03" secondAttribute="bottom" constant="8" id="3q1-w8-DL3"/>
                 <constraint firstItem="frY-nd-WA2" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="7He-w4-X1H"/>
+                <constraint firstAttribute="trailing" secondItem="7a5-Ut-u03" secondAttribute="trailing" constant="8" id="9bS-I5-TFN"/>
                 <constraint firstAttribute="trailing" secondItem="T8P-3e-0Vc" secondAttribute="trailing" id="B5C-00-1y4"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="bMp-im-g2D" secondAttribute="trailing" constant="8" id="Eyh-rB-P4d"/>
                 <constraint firstItem="frY-nd-WA2" firstAttribute="top" secondItem="T8P-3e-0Vc" secondAttribute="bottom" constant="8" id="F77-Zf-wk4"/>
@@ -86,10 +98,16 @@
                 <constraint firstItem="T8P-3e-0Vc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" priority="250" id="mTf-Qz-a03"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="frY-nd-WA2" secondAttribute="trailing" constant="8" id="nRL-QL-4kZ"/>
                 <constraint firstItem="T8P-3e-0Vc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="pHI-LL-T5Q"/>
+                <constraint firstItem="7a5-Ut-u03" firstAttribute="top" secondItem="T8P-3e-0Vc" secondAttribute="bottom" constant="8" id="rGK-AC-Row"/>
                 <constraint firstAttribute="centerX" secondItem="bMp-im-g2D" secondAttribute="centerX" id="tFq-gs-tIM"/>
                 <constraint firstAttribute="trailing" secondItem="QsE-H1-Xlb" secondAttribute="trailing" constant="8" id="ucG-We-dW0"/>
                 <constraint firstItem="bMp-im-g2D" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="zjZ-GJ-fpL"/>
             </constraints>
+            <variation key="default">
+                <mask key="constraints">
+                    <exclude reference="F77-Zf-wk4"/>
+                </mask>
+            </variation>
         </view>
     </objects>
 </document>

@@ -92,6 +92,7 @@
 		C4F2CECF1B92101E000AC390 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CECD1B92101E000AC390 /* SLVProfileViewController.xib */; };
 		C4F849911B9E301F00E3C53D /* SLVActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */; };
 		C4F849921B9E301F00E3C53D /* SLVActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */; };
+		C4FD50BA1C275B5700CB332C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C4FD50B91C275B5700CB332C /* Settings.bundle */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -244,6 +245,7 @@
 		C4F8498E1B9E301F00E3C53D /* SLVActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVActivityViewController.h; sourceTree = "<group>"; };
 		C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVActivityViewController.m; sourceTree = "<group>"; };
 		C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVActivityViewController.xib; sourceTree = "<group>"; };
+		C4FD50B91C275B5700CB332C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -303,6 +305,7 @@
 		C44224DA1B5BE7D600389210 = {
 			isa = PBXGroup;
 			children = (
+				C4FD50B91C275B5700CB332C /* Settings.bundle */,
 				C44224E51B5BE7D600389210 /* Slove */,
 				C44224FF1B5BE7D600389210 /* SloveTests */,
 				C44224E41B5BE7D600389210 /* Products */,
@@ -746,6 +749,7 @@
 				C4E9C0F31B9641730071C084 /* SLVSloveSentPopupViewController.xib in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
+				C4FD50BA1C275B5700CB332C /* Settings.bundle in Resources */,
 				C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
 				C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */,

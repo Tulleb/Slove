@@ -90,11 +90,6 @@
 																	value:@1] build]];
 		
 		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial have to Slove back"];
-	} else if (!self.bubbleView.hidden) {
-		[ApplicationDelegate enableNavigationElements];
-		self.bubbleView.hidden = YES;
-		
-		[self.navigationController popToRootViewControllerAnimated:YES];
 	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
 		[[Amplitude instance] logEvent:@"[View] Puppy view displayed"];
 		
@@ -377,8 +372,11 @@
 }
 
 - (void)didDismissSloveSentPopup {
-	if (!IS_IOS7) {
-		[self viewDidAppear:YES];
+	if (!self.bubbleView.hidden) {
+		[ApplicationDelegate enableNavigationElements];
+		self.bubbleView.hidden = YES;
+		
+		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
 }
 
@@ -531,6 +529,14 @@
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
 	if (option == iCarouselOptionSpacing) {
 		return value * 2;
+	} else if (option == iCarouselOptionFadeMin) {
+		return 0;
+	} else if (option == iCarouselOptionFadeMax) {
+		return 0;
+	} else if (option == iCarouselOptionFadeRange) {
+		return 5;
+	} else if (option == iCarouselOptionFadeMinAlpha) {
+		return 0;
 	}
 	
 	return value;
