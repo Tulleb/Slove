@@ -38,6 +38,7 @@
 		C46980631BADA52200F90477 /* UIView+Animation.m in Sources */ = {isa = PBXBuildFile; fileRef = C46980621BADA52200F90477 /* UIView+Animation.m */; };
 		C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */; };
 		C479669A1BE80D5100448276 /* UIImage+FixOrientation.m in Sources */ = {isa = PBXBuildFile; fileRef = C47966991BE80D5100448276 /* UIImage+FixOrientation.m */; };
+		C49209531C14F598006B5F40 /* UILabel+MultiLineAutoSize.m in Sources */ = {isa = PBXBuildFile; fileRef = C49209521C14F598006B5F40 /* UILabel+MultiLineAutoSize.m */; };
 		C498E82E1B640F8E002B0A4E /* SLVRegisterViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */; };
 		C498E82F1B640F8E002B0A4E /* SLVRegisterViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */; };
 		C498E8321B64F1FE002B0A4E /* ParseErrorHandlingController.m in Sources */ = {isa = PBXBuildFile; fileRef = C498E8311B64F1FE002B0A4E /* ParseErrorHandlingController.m */; };
@@ -91,6 +92,7 @@
 		C4F2CECF1B92101E000AC390 /* SLVProfileViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F2CECD1B92101E000AC390 /* SLVProfileViewController.xib */; };
 		C4F849911B9E301F00E3C53D /* SLVActivityViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */; };
 		C4F849921B9E301F00E3C53D /* SLVActivityViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */; };
+		C4FD50BA1C275B5700CB332C /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = C4FD50B91C275B5700CB332C /* Settings.bundle */; };
 		E1FECD583C3B847E5E34B1E4 /* libPods-Slove.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 542FEC3E7BA50C32603B925F /* libPods-Slove.a */; };
 /* End PBXBuildFile section */
 
@@ -161,6 +163,8 @@
 		C46E645B1B9FA4C00079A600 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		C47966981BE80D5100448276 /* UIImage+FixOrientation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+FixOrientation.h"; sourceTree = "<group>"; };
 		C47966991BE80D5100448276 /* UIImage+FixOrientation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+FixOrientation.m"; sourceTree = "<group>"; };
+		C49209511C14F598006B5F40 /* UILabel+MultiLineAutoSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UILabel+MultiLineAutoSize.h"; sourceTree = "<group>"; };
+		C49209521C14F598006B5F40 /* UILabel+MultiLineAutoSize.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UILabel+MultiLineAutoSize.m"; sourceTree = "<group>"; };
 		C498E82B1B640F8E002B0A4E /* SLVRegisterViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVRegisterViewController.h; sourceTree = "<group>"; };
 		C498E82C1B640F8E002B0A4E /* SLVRegisterViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVRegisterViewController.m; sourceTree = "<group>"; };
 		C498E82D1B640F8E002B0A4E /* SLVRegisterViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVRegisterViewController.xib; sourceTree = "<group>"; };
@@ -241,6 +245,7 @@
 		C4F8498E1B9E301F00E3C53D /* SLVActivityViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SLVActivityViewController.h; sourceTree = "<group>"; };
 		C4F8498F1B9E301F00E3C53D /* SLVActivityViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SLVActivityViewController.m; sourceTree = "<group>"; };
 		C4F849901B9E301F00E3C53D /* SLVActivityViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SLVActivityViewController.xib; sourceTree = "<group>"; };
+		C4FD50B91C275B5700CB332C /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -300,6 +305,7 @@
 		C44224DA1B5BE7D600389210 = {
 			isa = PBXGroup;
 			children = (
+				C4FD50B91C275B5700CB332C /* Settings.bundle */,
 				C44224E51B5BE7D600389210 /* Slove */,
 				C44224FF1B5BE7D600389210 /* SloveTests */,
 				C44224E41B5BE7D600389210 /* Products */,
@@ -413,6 +419,8 @@
 				C44225201B5BF20A00389210 /* NSString+Tools.m */,
 				C47966981BE80D5100448276 /* UIImage+FixOrientation.h */,
 				C47966991BE80D5100448276 /* UIImage+FixOrientation.m */,
+				C49209511C14F598006B5F40 /* UILabel+MultiLineAutoSize.h */,
+				C49209521C14F598006B5F40 /* UILabel+MultiLineAutoSize.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -741,6 +749,7 @@
 				C4E9C0F31B9641730071C084 /* SLVSloveSentPopupViewController.xib in Resources */,
 				C442252B1B5BF5DB00389210 /* SLVViewController.xib in Resources */,
 				C44225311B5BF76100389210 /* SLVConnectionViewController.xib in Resources */,
+				C4FD50BA1C275B5700CB332C /* Settings.bundle in Resources */,
 				C469805E1BAD7B6100F90477 /* illu_spashscreen.png in Resources */,
 				C4C9274E1B66ABC4000ABA7A /* SLVFacebookInviteViewController.xib in Resources */,
 				C46E645C1B9FA4C00079A600 /* GoogleService-Info.plist in Resources */,
@@ -842,6 +851,7 @@
 				C4A48DB51B61575100CEBA25 /* TimeoutAFHTTPRequestSerializer.m in Sources */,
 				C4A48DA31B61519000CEBA25 /* SLVPhoneNumberViewController.m in Sources */,
 				C4631E4F1BCF050200CF645E /* SLVLevel.m in Sources */,
+				C49209531C14F598006B5F40 /* UILabel+MultiLineAutoSize.m in Sources */,
 				C442252A1B5BF5DB00389210 /* SLVViewController.m in Sources */,
 				C4F2CECE1B92101E000AC390 /* SLVProfileViewController.m in Sources */,
 				C498E83B1B64F2C8002B0A4E /* SLVLogInViewController.m in Sources */,

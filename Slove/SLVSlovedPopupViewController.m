@@ -10,6 +10,7 @@
 #import "SLVSloveSentPopupViewController.h"
 #import "SLVContactViewController.h"
 #import "SLVAddressBookContact.h"
+#import "SLVHomeViewController.h"
 
 
 @interface SLVSlovedPopupViewController ()
@@ -53,6 +54,13 @@
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		self.disablingView.hidden = NO;
 		self.bubbleView.hidden = NO;
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																   action:@"Unlocked"
+																	label:@"Tutorial - Sloved by team"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial Sloved by team"];
 	}
 }
 
@@ -62,7 +70,7 @@
 	if ([self.slover.username isEqualToString:PUPPY_USERNAME]) {
 		self.unknownPuppyImageView = [[UIImageView alloc] initWithFrame:self.pictureImageView.frame];
 		
-		self.unknownPuppyImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]];
+		self.unknownPuppyImageView.image = [UIImage imageNamed:[USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_PROFILE_PICTURE_PATH]];
 		
 		[self.view insertSubview:self.unknownPuppyImageView aboveSubview:self.pictureImageView];
 	}
@@ -76,6 +84,13 @@
 	}
 	
 	[SLVTools playSound:SLOVED_SOUND_PATH];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved displayed"];
 }
 
 - (void)viewDidLayoutSubviews {
@@ -90,7 +105,9 @@
 	[super viewDidAppear:animated];
 	
 	if (self.unknownPuppyImageView) {
-		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:nil];
+		[self.unknownPuppyImageView hideByFadingWithDuration:VERY_LONG_ANIMATION_DURATION AndCompletion:^{
+			ApplicationDelegate.needToRefreshContacts = YES;
+		}];
 	}
 }
 
@@ -108,16 +125,32 @@
 
 - (IBAction)leftAction:(id)sender {
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:^{
+		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
+		
+		ApplicationDelegate.ratingReturnedASlove = YES;
+		
 		[[NSNotificationCenter defaultCenter] postNotificationName:NOTIFICATION_SLOVED_POPUP_DISMISSED
 															object:nil
 														  userInfo:nil];
-		
-		[ApplicationDelegate.currentNavigationController pushViewController:[[SLVContactViewController alloc] initWithContact:self.slover andPicture:self.pictureImage] animated:YES];
 	}];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Returned"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved returned"];
 }
 
 - (IBAction)rightAction:(id)sender {
 	[[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Sloved"
+																label:@"Thanked"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Sloved thanked"];
 }
 
 @end

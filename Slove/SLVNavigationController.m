@@ -28,6 +28,11 @@
 	[self loadBottomNavigationBar];
 	
 	self.firstLoad = YES;
+	
+	self.tracker = [[GAI sharedInstance] defaultTracker];
+	if ([PFUser currentUser]) {
+		[self.tracker set:kGAIUserId value:[PFUser currentUser].username];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -164,6 +169,29 @@
 																   multiplier:1
 																	 constant:0]];
 	
+	[self.activityCounterBadge addConstraint:self.activityBadgeConstraint];
+	[self.activityCounterBadge addConstraint:[NSLayoutConstraint constraintWithItem:self.activityCounterBadge
+																	attribute:NSLayoutAttributeHeight
+																	relatedBy:NSLayoutRelationEqual
+																	   toItem:nil
+																	attribute:NSLayoutAttributeNotAnAttribute
+																   multiplier:1
+																	 constant:30]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.activityCounterBadge
+																			 attribute:NSLayoutAttributeLeading
+																			 relatedBy:NSLayoutRelationEqual
+																	   toItem:self.bottomNavigationBarView
+																			 attribute:NSLayoutAttributeLeading
+																   multiplier:1
+																			  constant:75]];
+	[self.bottomNavigationBarView addConstraint:[NSLayoutConstraint constraintWithItem:self.bottomNavigationBarView
+																			 attribute:NSLayoutAttributeBottom
+																			 relatedBy:NSLayoutRelationEqual
+																	   toItem:self.activityCounterBadge
+																			 attribute:NSLayoutAttributeBottom
+																   multiplier:1
+																			  constant:15]];
+	
 	[self.sloveView addConstraint:[NSLayoutConstraint constraintWithItem:self.sloveView
 																 attribute:NSLayoutAttributeHeight
 																 relatedBy:NSLayoutRelationEqual
@@ -295,6 +323,10 @@
 		rootViewController.calledFromBackButton = YES;
 	}
 	
+	if ([self.topViewController isKindOfClass:[SLVContactViewController class]] && !ApplicationDelegate.ratingSlovedBack) {
+		ApplicationDelegate.ratingReturnedASlove = NO;
+	}
+	
 	return [super popViewControllerAnimated:animated];
 }
 
@@ -353,6 +385,17 @@
 			
 			profileViewController.circleImageView.hidden = YES;
 			[profileViewController.circleImageView stopAnimating];
+			
+			if (!IS_IOS7) {
+				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
+																		   action:@"Slove wheel"
+																			label:@"Duration"
+																			value:[NSNumber numberWithInt:(int)self.sloveClickDecelerationDuration]] build]];
+				
+				NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+				[eventProperties setValue:[NSNumber numberWithFloat:self.sloveClickDecelerationDuration] forKey:@"Value"];
+				[[Amplitude instance] logEvent:@"[Animation] Slove wheel duration" withEventProperties:eventProperties];
+			}
 		} else {
 			[self homeAction:self.sloveButton];
 		}
@@ -437,6 +480,7 @@
 	self.profileButton = [UIButton buttonWithType:UIButtonTypeCustom];
 	self.sloveView = [[UIView alloc] init];
 	self.sloveCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:RED withInsetColor:WHITE withFrameColor:RED withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
+	self.activityCounterBadge = [CustomBadge customBadgeWithString:@"" withStyle:[BadgeStyle freeStyleWithTextColor:BLUE withInsetColor:WHITE withFrameColor:BLUE withFrame:YES withShadow:NO withShining:NO withFontType:BadgeStyleFontTypeHelveticaNeueMedium]];
 	
 	self.bottomNavigationBarView.backgroundColor = CLEAR;
 	
@@ -489,8 +533,12 @@
 	self.profileButton.contentHorizontalAlignment = UIControlContentHorizontalAlignmentRight;
 	[self.profileButton addTarget:self action:@selector(profileAction:) forControlEvents:UIControlEventTouchUpInside];
 	
+	self.sloveCounterBadge.alpha = 0;
+	self.activityCounterBadge.hidden = YES;
+	
 	[self.bottomNavigationBarView addSubview:self.activityButton];
 	[self.bottomNavigationBarView addSubview:self.profileButton];
+	[self.bottomNavigationBarView addSubview:self.activityCounterBadge];
 	
 	[self.view addSubview:self.bottomNavigationBarView];
 	[self.view addSubview:self.homeButton];
@@ -508,6 +556,7 @@
 	self.activityButton.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveView.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveButton.translatesAutoresizingMaskIntoConstraints = NO;
+	self.activityCounterBadge.translatesAutoresizingMaskIntoConstraints = NO;
 	self.sloveCounterBadge.translatesAutoresizingMaskIntoConstraints = NO;
 	self.profileButton.translatesAutoresizingMaskIntoConstraints = NO;
 	
@@ -525,6 +574,14 @@
 															 attribute:NSLayoutAttributeLeading
 															multiplier:1
 															  constant:SLOVE_BUTTON_SIZE];
+	
+	self.activityBadgeConstraint = [NSLayoutConstraint constraintWithItem:self.activityCounterBadge
+																attribute:NSLayoutAttributeWidth
+																relatedBy:NSLayoutRelationEqual
+																   toItem:nil
+																attribute:NSLayoutAttributeNotAnAttribute
+															   multiplier:1
+																 constant:30];
 }
 
 - (void)loadSloveButtonAnimation:(BOOL)reversed {
@@ -575,6 +632,7 @@
 															   constant:-(self.navigationBar.frame.size.height + [UIApplication sharedApplication].statusBarFrame.size.height)];
 	
 	[UIView animateWithDuration:ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+		self.sloveCounterBadge.alpha = 1;
 		[self.view layoutIfNeeded];
 	} completion:nil];
 	
@@ -592,6 +650,7 @@
 															   constant:SLOVE_VIEW_BOTTOM_CONSTANT];
 	
 	[UIView animateWithDuration:ANIMATION_DURATION delay:0 options:UIViewAnimationOptionCurveEaseOut animations:^{
+		self.sloveCounterBadge.alpha = 0;
 		[self.view layoutIfNeeded];
 	} completion:nil];
 	
@@ -615,6 +674,7 @@
 	[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *object,  NSError *error) {
 		if (!error) {
 			NSNumber *sloveCount = object[@"sloveNumber"];
+			NSNumber *sloveCredit = object[@"sloveCredit"];
 			NSString *sloveCountString = [NSString stringWithFormat:@"%d", [sloveCount intValue]];
 			self.sloveCounterBadge.badgeText = sloveCountString;
 			[self.sloveCounterBadge setNeedsDisplay];
@@ -629,11 +689,58 @@
 			
 			
 			[self.sloveView setNeedsUpdateConstraints];
+			
+			if (ApplicationDelegate.sloveWasSent == YES) {
+				ApplicationDelegate.sloveWasSent = NO;
+				
+				if ([sloveCount intValue] == 0) {
+					NSString *popupBodyText = NSLocalizedString(@"popup_body_lastSlove", nil);
+					
+					if ([sloveCredit intValue] < [[ApplicationDelegate.parseConfig objectForKey:PARSE_SLOVE_MAX_CREDIT] intValue]) {
+						popupBodyText = [popupBodyText stringByAppendingString:[NSString stringWithFormat:@"\n%@", NSLocalizedString(@"popup_body_oneMoreSlove", nil)]];
+						popupBodyText = [popupBodyText stringByReplacingOccurrencesOfString:@"[number]" withString:[NSString stringWithFormat:@"%d", [sloveCredit intValue] + 1]];
+					}
+					
+					SLVInteractionPopupViewController *lastSlovePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_lastSlove", nil) body:popupBodyText buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+					
+					lastSlovePopup.priority = kPriorityHigh;
+					
+					[ApplicationDelegate.queuedPopups addObject:lastSlovePopup];
+				}
+			}
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}
 	}];
+}
+
+- (void)refreshActivityCounter {
+	if ([self.topViewController isKindOfClass:[SLVActivityViewController class]]) {
+		[self.activityCounterBadge hideByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+	} else {
+		long activityCount = [PFInstallation currentInstallation].badge;
+		if (activityCount > 0) {
+			NSString *activityCountString = [NSString stringWithFormat:@"%ld", activityCount];
+			self.activityCounterBadge.badgeText = activityCountString;
+			[self.activityCounterBadge setNeedsDisplay];
+			[self.activityCounterBadge removeConstraint:self.activityBadgeConstraint];
+			self.activityBadgeConstraint = [NSLayoutConstraint constraintWithItem:self.activityCounterBadge
+																		attribute:NSLayoutAttributeWidth
+																		relatedBy:NSLayoutRelationEqual
+																		   toItem:nil
+																		attribute:NSLayoutAttributeNotAnAttribute
+																	   multiplier:1
+																		 constant:30 + 5 * ([activityCountString length] - 1)];
+			
+			
+			[self.sloveView setNeedsUpdateConstraints];
+			
+			[self.activityCounterBadge showByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+		} else {
+			[self.activityCounterBadge hideByFadingWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
+		}
+	}
 }
 
 @end

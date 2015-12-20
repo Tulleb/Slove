@@ -34,6 +34,7 @@
 	self.subtitleLowerLabel.textColor = WHITE;
 	
 	self.facebookLoginButton.readPermissions = @[@"public_profile", @"email", @"user_friends"];
+	self.facebookLoginButton.loginBehavior = FBSDKLoginBehaviorSystemAccount;
 	
 	self.titleImageView.image = [UIImage imageNamed:@"Assets/Image/logo_txt_accueil"];
 	self.subtitleImageView.image = [UIImage imageNamed:@"Assets/Image/coeurs_trio_accueil"];
@@ -341,7 +342,8 @@
 
 - (void)loginButton:(FBSDKLoginButton *)loginButton didCompleteWithResult:(FBSDKLoginManagerLoginResult *)result error:(NSError *)error {
 	if (result.token) {
-		ApplicationDelegate.currentNavigationController.loaderImageView.hidden = NO;
+		
+		[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
 		ApplicationDelegate.nextLoadingViewWithoutAnimation = YES;
 		ApplicationDelegate.shouldLetLoadingScreen = YES;
 		

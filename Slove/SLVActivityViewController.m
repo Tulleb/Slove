@@ -50,6 +50,8 @@
 	[super viewWillAppear:animated];
 	
 	ApplicationDelegate.currentNavigationController.activityButton.selected = YES;
+	
+	[ApplicationDelegate.currentNavigationController refreshActivityCounter];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
@@ -111,10 +113,6 @@
 													parsedActivity.createdAt = [dateFormatter dateFromString:[activity objectForKey:@"createdAt"]];
 													parsedActivity.value = [activity objectForKey:@"activityValue"];
 													parsedActivity.relatedUser = [activity objectForKey:@"relatedUser"];
-													
-													if ([activities indexOfObject:activity] == 0) {
-														parsedActivity.isNew = YES;
-													}
 													
 													BOOL sectionAlreadyExists = NO;
 													for (id section in self.sectionOrder) {
@@ -316,8 +314,15 @@
 		NSDate *sectionDate = (NSDate *)sectionObject;
 		
 		NSDateFormatter *shortDayFormatter = [[NSDateFormatter alloc] init];
-		[shortDayFormatter setDateFormat:@"EEEE"];
 		[shortDayFormatter setTimeZone:[NSTimeZone localTimeZone]];
+		
+		NSInteger days = [SLVTools daysBetweenDate:sectionDate andDate:[NSDate date]];
+		
+		if (days < 7) {
+			[shortDayFormatter setDateFormat:@"EEEE"];
+		} else {
+			[shortDayFormatter setDateFormat:@"EEEE dd MMMM"];
+		}
 		
 		return [shortDayFormatter stringFromDate:sectionDate];
 	}

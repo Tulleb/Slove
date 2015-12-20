@@ -68,6 +68,10 @@
 	
 	[self observeKeyboard];
 	[self initTapToDismiss];
+	
+	if (!([USER_DEFAULTS objectForKey:KEY_ASKED_PUSH_NOTIFICATION] && [[USER_DEFAULTS objectForKey:KEY_ASKED_PUSH_NOTIFICATION] boolValue])) {
+		[self displayPushNotificationPopup];
+	}
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -90,6 +94,13 @@
 	} else if (ApplicationDelegate.tutorialSloveSent) {
 		[ApplicationDelegate disableNavigationElements];
 		[self.tutorialView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																   action:@"Unlocked"
+																	label:@"Tutorial - Daily credit"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial daily credit"];
 	} else if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue]) {
 		[self startTutorial];
 	}
@@ -126,9 +137,7 @@
 }
 
 - (void)didDismissSlovedPopup {
-//	if (!IS_IOS7) {
-//		[self viewDidAppear:YES];
-//	}
+	
 }
 
 // TODO: end this function
@@ -181,9 +190,7 @@
 	} else {
 		SLVLog(@"%@Address book access never asked", SLV_WARNING);
 		
-		if (!([USER_DEFAULTS objectForKey:KEY_ASK_CONTACT_BOOK] && [[USER_DEFAULTS objectForKey:KEY_ASK_CONTACT_BOOK] boolValue]) && !self.popupIsDisplayed) {
-			self.popupIsDisplayed = YES;
-			
+		if (!([USER_DEFAULTS objectForKey:KEY_ASKED_CONTACT_BOOK] && [[USER_DEFAULTS objectForKey:KEY_ASKED_CONTACT_BOOK] boolValue])) {
 			self.addressBookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_addressBookAccess", nil) body:NSLocalizedString(@"popup_body_addressBookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 			
 			self.addressBookPopup.delegate = self;
@@ -191,7 +198,12 @@
 			
 			[ApplicationDelegate.queuedPopups addObject:self.addressBookPopup];
 			
-			[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_CONTACT_BOOK];
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																	   action:@"Custom access address book"
+																		label:@"Displayed"
+																		value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Popup] Custom access address book displayed"];
 		}
 	}
 	
@@ -208,14 +220,20 @@
 	}
 	
 	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc]
-								  initWithGraphPath:@"/me/permissions/user_friends"
-								  parameters:nil
+								  initWithGraphPath:@"me/permissions/user_friends"
+								  parameters:@{@"fields": @""}
 								  HTTPMethod:@"GET"];
 	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection,
 										  id result,
 										  NSError *error) {
 		if (result) {
 			NSArray *data = [result objectForKey:@"data"];
+			
+			if (!data || [data count] == 0) {
+				self.facebookContactsReady = YES;
+				
+				return;
+			}
 			
 			for (NSDictionary *permissionDic in data) {
 				if ([[permissionDic objectForKey:@"permission"] isEqualToString:@"user_friends"] && [[permissionDic objectForKey:@"status"] isEqualToString:@"granted"]) {
@@ -225,9 +243,7 @@
 				} else {
 					SLVLog(@"%@Facebook friends access not granted", SLV_WARNING);
 					
-					if (!([USER_DEFAULTS objectForKey:KEY_ASK_FACEBOOK_FRIENDS] && [[USER_DEFAULTS objectForKey:KEY_ASK_FACEBOOK_FRIENDS] boolValue]) && !self.popupIsDisplayed) {
-						self.popupIsDisplayed = YES;
-						
+					if (!([USER_DEFAULTS objectForKey:KEY_ASKED_FACEBOOK_FRIENDS] && [[USER_DEFAULTS objectForKey:KEY_ASKED_FACEBOOK_FRIENDS] boolValue])) {
 						self.facebookPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_facebookAccess", nil) body:NSLocalizedString(@"popup_body_facebookAccess", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_confirm", nil), nil] andDismissButton:YES];
 						
 						self.facebookPopup.delegate = self;
@@ -235,7 +251,13 @@
 						
 						[ApplicationDelegate.queuedPopups addObject:self.facebookPopup];
 						
-						[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASK_FACEBOOK_FRIENDS];
+						
+						[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																				   action:@"Custom access facebook friends"
+																					label:@"Displayed"
+																					value:@1] build]];
+						
+						[[Amplitude instance] logEvent:@"[Popup] Custom access facebook friends displayed"];
 					}
 					
 					self.facebookContactsReady = YES;
@@ -255,9 +277,22 @@
 }
 
 - (void)showSettingManipulation {
-	SLVInteractionPopupViewController *popupViewController = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_go_to_settings", nil) buttonsTitle:nil andDismissButton:YES];
+	if (IS_IOS7) {
+		self.settingsPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_go_to_settings", nil) buttonsTitle:nil andDismissButton:YES];
+	} else {
+		self.settingsPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_go_to_settings", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_settings", nil), nil] andDismissButton:YES];
+	}
 	
-	[self.navigationController presentViewController:popupViewController animated:YES completion:nil];
+	self.settingsPopup.delegate = self;
+	
+	[self.navigationController presentViewController:self.settingsPopup animated:YES completion:nil];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Setting access address book"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Setting access address book displayed"];
 }
 
 - (void)askAddressBookAccess {
@@ -269,15 +304,37 @@
 		[self showSettingManipulation];
 	} else if (ABAddressBookGetAuthorizationStatus() == kABAuthorizationStatusNotDetermined) {
 		SLVLog(@"Asking address book access to the user");
+		
 		ABAddressBookRequestAccessWithCompletion(self.addressBookRef, ^(bool granted, CFErrorRef error) {
 			if (granted) {
 				SLVLog(@"User have granted access to his contact list");
 				
 				[self reloadContacts];
+				
+				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																		   action:@"Apple access address book"
+																			label:@"Accepted"
+																			value:@1] build]];
+				
+				[[Amplitude instance] logEvent:@"[Popup] Apple access address book accepted"];
 			} else {
 				SLVLog(@"%@User didn't grant access to his contact list", SLV_WARNING);
+				
+				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																		   action:@"Apple access address book"
+																			label:@"Dismissed"
+																			value:@1] build]];
+				
+				[[Amplitude instance] logEvent:@"[Popup] Apple access address book declined"];
 			}
 		});
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Apple access address book"
+																	label:@"Displayed"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Apple access address book displayed"];
 	}
 }
 
@@ -289,14 +346,35 @@
 				SLVLog(@"User have granted access to his friend list");
 				
 				[self reloadContacts];
+				
+				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																		   action:@"Facebook access facebook friends"
+																			label:@"Accepted"
+																			value:@1] build]];
+				
+				[[Amplitude instance] logEvent:@"[Popup] Facebook access facebook friends accepted"];
 			} else {
 				SLVLog(@"%@User didn't grant access to his friend list", SLV_WARNING);
+				
+				[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																		   action:@"Facebook access facebook friends"
+																			label:@"Dismissed"
+																			value:@1] build]];
+				
+				[[Amplitude instance] logEvent:@"[Popup] Facebook access facebook friends declined"];
 			}
 		} else {
 			SLVLog(@"%@%@", SLV_ERROR, error.description);
 			[ParseErrorHandlingController handleParseError:error];
 		}
 	}];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Facebook access facebook friends"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Facebook access facebook friends displayed"];
 }
 
 - (void)loadAddressBookFromAddressBookRef:(ABAddressBookRef)addressBookRef {
@@ -309,12 +387,15 @@
 	
 	for (int i = 0; i < contactCount; i++) {
 		ABRecordRef contact = CFArrayGetValueAtIndex(contacts, i);
+		
 		CFTypeRef firstName = ABRecordCopyValue(contact, kABPersonFirstNameProperty);
-		CFTypeRef lastName = ABRecordCopyValue(contact, kABPersonLastNameProperty);
-		CFTypeRef organization = ABRecordCopyValue(contact, kABPersonOrganizationProperty);
 		NSString *firstNameString = (NSString *)CFBridgingRelease(firstName);
+		
+		CFTypeRef lastName = ABRecordCopyValue(contact, kABPersonLastNameProperty);
 		NSString *lastNameString = (NSString *)CFBridgingRelease(lastName);
-		NSString *organizationString = (NSString *)CFBridgingRelease(organization);
+		
+//		CFTypeRef organization = ABRecordCopyValue(contact, kABPersonOrganizationProperty);
+//		NSString *organizationString = (NSString *)CFBridgingRelease(organization);
 		
 		NSString *fullName = @"";
 		if (firstName) {
@@ -327,13 +408,13 @@
 			
 			fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@"%@", lastNameString]];
 		}
-		if (organizationString) {
-			if (![fullName isEqualToString:@""]) {
-				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
-			} else {
-				fullName = [fullName stringByAppendingString:organizationString];
-			}
-		}
+//		if (organizationString) {
+//			if (![fullName isEqualToString:@""]) {
+//				fullName = [fullName stringByAppendingString:[NSString stringWithFormat:@" (%@)", organizationString]];
+//			} else {
+//				fullName = [fullName stringByAppendingString:organizationString];
+//			}
+//		}
 		
 		if (![fullName isEqualToString:@""]) {
 			CFDataRef imageData = ABPersonCopyImageData(contact);
@@ -621,6 +702,10 @@
 													return [a.fullName caseInsensitiveCompare:b.fullName];
 												}];
 												
+												if (PUPPY_IS_ENABLED) {
+													[self loadPuppy];
+												}
+												
 												self.fullSynchronizedContacts = self.synchronizedContacts;
 											} else {
 												SLVLog(@"%@%@", SLV_ERROR, error.description);
@@ -638,8 +723,6 @@
 			[self loadSynchronizedContactsIsEnding];
 		}
 	}];
-	
-//	[self loadPuppy];
 }
 
 - (void)loadSynchronizedContactsIsEnding {
@@ -653,6 +736,33 @@
 	if ([self.refreshControl isRefreshing]) {
 		[self.refreshControl endRefreshing];
 	}
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+															   action:@"Load"
+																label:@"Address Book"
+																value:[NSNumber numberWithInteger:[self.fullAddressBookContacts count]]] build]];
+	
+	NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+	[eventProperties setValue:[NSNumber numberWithInteger:[self.fullAddressBookContacts count]] forKey:@"Value"];
+	[[Amplitude instance] logEvent:@"[Contact] Load address book" withEventProperties:eventProperties];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+															   action:@"Load"
+																label:@"Facebook"
+																value:[NSNumber numberWithInteger:[self.facebookContacts count]]] build]];
+	
+	eventProperties = [NSMutableDictionary dictionary];
+	[eventProperties setValue:[NSNumber numberWithInteger:[self.facebookContacts count]] forKey:@"Value"];
+	[[Amplitude instance] logEvent:@"[Contact] Load facebook" withEventProperties:eventProperties];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+															   action:@"Load"
+																label:@"Synchronized"
+																value:[NSNumber numberWithInteger:[self.fullSynchronizedContacts count]]] build]];
+	
+	eventProperties = [NSMutableDictionary dictionary];
+	[eventProperties setValue:[NSNumber numberWithInteger:[self.fullSynchronizedContacts count]] forKey:@"Value"];
+	[[Amplitude instance] logEvent:@"[Contact] Load synchronized" withEventProperties:eventProperties];
 	
 	self.isAlreadyLoading = NO;
 }
@@ -721,15 +831,9 @@
 	if(![MFMessageComposeViewController canSendText]) {
 		SLVLog(@"%@This device can't send SMS", SLV_WARNING);
 		
-		if (!self.popupIsDisplayed) {
-			self.popupIsDisplayed = YES;
-			
-			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
-			
-			errorPopup.delegate = self;
-			
-			[self presentViewController:errorPopup animated:YES completion:nil];
-		}
+		SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+		
+		[self presentViewController:errorPopup animated:YES completion:nil];
 		
 		return;
 	}
@@ -748,6 +852,14 @@
 	[messageController setBody:message];
 	
 	[self presentViewController:messageController animated:YES completion:nil];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+															   action:@"SMS invite"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Contact] SMS invite displayed"];
+
 }
 
 - (SLVContact *)contactForUsername:(NSString *)username {
@@ -821,6 +933,15 @@
 		[USER_DEFAULTS setObject:[NSNumber numberWithBool:NO] forKey:KEY_FIRST_TIME_TUTORIAL];
 		[ApplicationDelegate enableNavigationElements];
 	}];
+}
+
+- (void)displayPushNotificationPopup {
+	self.pushNotificationPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_pushNotification", nil) body:NSLocalizedString(@"popup_body_pushNotification", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
+	
+	self.pushNotificationPopup.delegate = self;
+	self.pushNotificationPopup.priority = kPriorityHigh;
+	
+	[ApplicationDelegate.queuedPopups addObject:self.pushNotificationPopup];
 }
 
 
@@ -1026,12 +1147,80 @@
 #pragma mark - SLVInteractionPopupDelegate
 
 - (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup {
-	self.popupIsDisplayed = NO;
-	
 	if (popup == self.addressBookPopup) {
 		[self askAddressBookAccess];
+		
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_CONTACT_BOOK];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Custom access address book"
+																	label:@"Accepted"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Custom access address book accepted"];
 	} else if (popup == self.facebookPopup) {
 		[self askFacebookFriends];
+		
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_FACEBOOK_FRIENDS];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Custom access facebook friends"
+																	label:@"Accepted"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Custom access facebook friends accepted"];
+	} else if (popup == self.settingsPopup) {
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:UIApplicationOpenSettingsURLString]];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Setting access address book"
+																	label:@"Accepted"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Setting access address book accepted"];
+	} else if (popup == self.pushNotificationPopup) {
+		if (IS_IOS7) {
+			[[UIApplication sharedApplication] registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
+		} else {
+			UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
+															UIUserNotificationTypeBadge |
+															UIUserNotificationTypeSound);
+			UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
+																					 categories:nil];
+			[[UIApplication sharedApplication] registerUserNotificationSettings:settings];
+			[[UIApplication sharedApplication] registerForRemoteNotifications];
+		}
+		
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_PUSH_NOTIFICATION];
+	}
+}
+
+- (void)dismissButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.addressBookPopup) {
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_CONTACT_BOOK];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Custom access address book"
+																	label:@"Dismissed"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Custom access address book dismissed"];
+	} else if (popup == self.facebookPopup) {
+		[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_FACEBOOK_FRIENDS];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Custom access facebook friends"
+																	label:@"Dismissed"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Custom access facebook friends dismissed"];
+	} else if (popup == self.settingsPopup) {
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Setting access address book"
+																	label:@"Dismissed"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Setting access address book dissmissed"];
 	}
 }
 
@@ -1040,6 +1229,22 @@
 
 - (void)messageComposeViewController:(MFMessageComposeViewController *)controller didFinishWithResult:(MessageComposeResult)result {
 	[self dismissViewControllerAnimated:YES completion:nil];
+	
+	if (result == MessageComposeResultSent) {
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+																   action:@"SMS invite"
+																	label:@"Sent"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Contact] SMS invite sent"];
+	} else if (result == MessageComposeResultCancelled) {
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Contact"
+																   action:@"SMS invite"
+																	label:@"Cancelled"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Contact] SMS invite cancelled"];
+	}
 }
 
 

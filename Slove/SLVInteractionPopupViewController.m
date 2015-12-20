@@ -7,6 +7,7 @@
 //
 
 #import "SLVInteractionPopupViewController.h"
+#import "UILabel+MultiLineAutoSize.h"
 
 @interface SLVInteractionPopupViewController ()
 
@@ -75,6 +76,12 @@
 	[super viewWillLayoutSubviews];
 	
 	self.rightBorderConstraint.constant = self.popupImageView.frame.size.width * 0.09;
+}
+
+- (void)viewDidLayoutSubviews {
+	[super viewDidLayoutSubviews];
+	
+	[self.bodyLabel adjustFontSizeToFit];
 }
 
 - (void)didReceiveMemoryWarning {

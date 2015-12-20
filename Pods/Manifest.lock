@@ -1,43 +1,48 @@
 PODS:
-  - AFNetworking (2.6.1):
-    - AFNetworking/NSURLConnection (= 2.6.1)
-    - AFNetworking/NSURLSession (= 2.6.1)
-    - AFNetworking/Reachability (= 2.6.1)
-    - AFNetworking/Security (= 2.6.1)
-    - AFNetworking/Serialization (= 2.6.1)
-    - AFNetworking/UIKit (= 2.6.1)
-  - AFNetworking/NSURLConnection (2.6.1):
+  - AFNetworking (2.6.3):
+    - AFNetworking/NSURLConnection (= 2.6.3)
+    - AFNetworking/NSURLSession (= 2.6.3)
+    - AFNetworking/Reachability (= 2.6.3)
+    - AFNetworking/Security (= 2.6.3)
+    - AFNetworking/Serialization (= 2.6.3)
+    - AFNetworking/UIKit (= 2.6.3)
+  - AFNetworking/NSURLConnection (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/NSURLSession (2.6.1):
+  - AFNetworking/NSURLSession (2.6.3):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (2.6.1)
-  - AFNetworking/Security (2.6.1)
-  - AFNetworking/Serialization (2.6.1)
-  - AFNetworking/UIKit (2.6.1):
+  - AFNetworking/Reachability (2.6.3)
+  - AFNetworking/Security (2.6.3)
+  - AFNetworking/Serialization (2.6.3)
+  - AFNetworking/UIKit (2.6.3):
     - AFNetworking/NSURLConnection
     - AFNetworking/NSURLSession
-  - Bolts (1.4.0):
-    - Bolts/AppLinks (= 1.4.0)
-    - Bolts/Tasks (= 1.4.0)
-  - Bolts/AppLinks (1.4.0):
+  - Amplitude-iOS (3.2.1):
+    - FMDB/standard (~> 2.5)
+  - Bolts (1.5.0):
+    - Bolts/AppLinks (= 1.5.0)
+    - Bolts/Tasks (= 1.5.0)
+  - Bolts/AppLinks (1.5.0):
     - Bolts/Tasks
-  - Bolts/Tasks (1.4.0)
+  - Bolts/Tasks (1.5.0)
   - CustomBadge (3.0.0)
-  - FBSDKCoreKit (4.7.1):
+  - FBSDKCoreKit (4.8.0):
     - Bolts (~> 1.1)
-    - FBSDKCoreKit/arc (= 4.7.1)
-    - FBSDKCoreKit/no-arc (= 4.7.1)
-  - FBSDKCoreKit/arc (4.7.1):
+    - FBSDKCoreKit/arc (= 4.8.0)
+    - FBSDKCoreKit/no-arc (= 4.8.0)
+  - FBSDKCoreKit/arc (4.8.0):
     - Bolts (~> 1.1)
-  - FBSDKCoreKit/no-arc (4.7.1):
+  - FBSDKCoreKit/no-arc (4.8.0):
     - Bolts (~> 1.1)
     - FBSDKCoreKit/arc
-  - FBSDKLoginKit (4.7.1):
+  - FBSDKLoginKit (4.8.0):
     - FBSDKCoreKit
+  - FMDB/common (2.5)
+  - FMDB/standard (2.5):
+    - FMDB/common
   - Google/Analytics (1.0.7):
     - Google/Core
     - GoogleAnalytics (~> 3.12)
@@ -45,7 +50,7 @@ PODS:
     - GoogleNetworkingUtilities (~> 1.0)
     - GoogleSymbolUtilities (~> 1.0)
     - GoogleUtilities (~> 1.0)
-  - GoogleAnalytics (3.13.0)
+  - GoogleAnalytics (3.14.0)
   - GoogleNetworkingUtilities (1.0.0):
     - GoogleSymbolUtilities (~> 1.0)
   - GoogleSymbolUtilities (1.0.3)
@@ -53,16 +58,16 @@ PODS:
     - GoogleSymbolUtilities (~> 1.0.0)
   - iCarousel (1.8.2)
   - JSONModel (1.1.2)
-  - libPhoneNumber-iOS (0.8.8)
-  - Parse (1.9.1):
-    - Bolts/Tasks (>= 1.4.0)
-  - ParseCrashReporting (1.9.1):
-    - Bolts/Tasks (>= 1.4.0)
-    - Parse (~> 1.9.1)
-  - ParseFacebookUtilsV4 (1.9.0):
-    - Bolts/Tasks (>= 1.3.0)
-    - FBSDKCoreKit (~> 4.7)
-    - FBSDKLoginKit (~> 4.7)
+  - libPhoneNumber-iOS (0.8.10)
+  - Parse (1.10.0):
+    - Bolts/Tasks (~> 1.5)
+  - ParseCrashReporting (1.9.2):
+    - Bolts/Tasks (~> 1.5)
+    - Parse (~> 1.9)
+  - ParseFacebookUtilsV4 (1.9.1):
+    - Bolts/Tasks (>= 1.5)
+    - FBSDKCoreKit (~> 4.8)
+    - FBSDKLoginKit (~> 4.8)
     - Parse (~> 1.9)
   - SDWebImage (3.7.3):
     - SDWebImage/Core (= 3.7.3)
@@ -72,6 +77,7 @@ PODS:
 
 DEPENDENCIES:
   - AFNetworking (~> 2.5)
+  - Amplitude-iOS
   - CustomBadge (~> 3.0)
   - Google/Analytics (~> 1.0.0)
   - iCarousel (~> 1.8)
@@ -83,22 +89,24 @@ DEPENDENCIES:
   - UIActivityIndicator-for-SDWebImage
 
 SPEC CHECKSUMS:
-  AFNetworking: 8e4e60500beb8bec644cf575beee72990a76d399
-  Bolts: 0e9bce58b9b9f5e8a7a4d47b16d2fabec289072b
+  AFNetworking: cb8d14a848e831097108418f5d49217339d4eb60
+  Amplitude-iOS: d4217c0912e3ef7bddb8f5abeb4acffa57d8dfc5
+  Bolts: 722ab9a4f8b50fc4ed1b9998a5a7a2b3f16d80b4
   CustomBadge: c60738d213e7ef019b0bf1caa7948333f280ea9b
-  FBSDKCoreKit: 9141b70960a37930850370495fe565f4a27ac141
-  FBSDKLoginKit: c11ed3c2833472db3bb4a4aecf27af4a6f69b173
+  FBSDKCoreKit: 66a935d17b6e00b6b64e604f2eb9b72c9ab7deb8
+  FBSDKLoginKit: d893fcbb98d854496925e9ff73c67b896982d3c4
+  FMDB: 96e8f1bcc1329e269330f99770ad4285d9003e52
   Google: 875f5a8ade86dd02e36586e4a54814843938c7f6
-  GoogleAnalytics: fcf1f1cad57ae1a9a53520018f0f680ceeeb8b49
+  GoogleAnalytics: 9be1afdb8deeac4bb5f13ca7f7d3b9db2a1f43dc
   GoogleNetworkingUtilities: 292992ab31b7b4ba32809a0e8b40e324cdfb2c0c
   GoogleSymbolUtilities: 82ad9f93d3615244b3f4ce440f5ab2515e8b4f56
   GoogleUtilities: 8ed9134debe11719097881711464752900668f10
   iCarousel: 67c8a43da5a46795b56aadfc96cd36a16f6149b2
   JSONModel: 216584d0311b053ff714f1d6cb700dbf890847bc
-  libPhoneNumber-iOS: fe877b7c44c270a9da2082d3e2892d5316f6a2f9
-  Parse: 54a965c8c19a6dde90284ab654dbcc77ef8c001b
-  ParseCrashReporting: c5ea641e698d576f081f080dff06877ef831d30a
-  ParseFacebookUtilsV4: aadebfaaaf4a45bf0a0992863bf48c8fc49189e3
+  libPhoneNumber-iOS: 7bfd00f843fdcd82b5182b463e8eb3b27579f41d
+  Parse: 90b2544822200f84b18bfacc4e8b0a3a6c3584a2
+  ParseCrashReporting: 33b760facc649d4fd99eef8f35dcda6a406099e5
+  ParseFacebookUtilsV4: eab9b4ade12f0800b4d30f6b808bca55ce17a0e9
   SDWebImage: 1d2b1a1efda1ade1b00b6f8498865f8ddedc8a84
   UIActivityIndicator-for-SDWebImage: 7bf7ebbf0ed1747dedc0d6e949c4603a6d0f9e0c
 

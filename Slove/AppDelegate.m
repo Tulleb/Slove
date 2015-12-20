@@ -20,6 +20,7 @@
 #import <ParseCrashReporting/ParseCrashReporting.h>
 #import "SLVContactViewController.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "Amplitude.h"
 
 @interface AppDelegate ()
 
@@ -50,6 +51,8 @@
 
 	[FBSDKLoginButton class];
 	
+	[[Amplitude instance] initializeApiKey:@"3cb378d906720486d487f4b7993a0374"];
+	
 	// Configure tracker from GoogleService-Info.plist.
 	NSError *configureError;
 	[[GGLContext sharedInstance] configureWithError:&configureError];
@@ -66,21 +69,10 @@
 	[self loadDefaultCountryCodeData];
 	[self loadLevels];
 	[self loadPuppeyPictures];
+	[self loadBundleSettings];
 	
-	if (![USER_DEFAULTS objectForKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH]) {
-		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
-	}
-	
-	if (IS_IOS7) {
-		[application registerForRemoteNotificationTypes: (UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound | UIRemoteNotificationTypeAlert)];
-	} else {
-		UIUserNotificationType userNotificationTypes = (UIUserNotificationTypeAlert |
-														UIUserNotificationTypeBadge |
-														UIUserNotificationTypeSound);
-		UIUserNotificationSettings *settings = [UIUserNotificationSettings settingsForTypes:userNotificationTypes
-																				 categories:nil];
-		[application registerUserNotificationSettings:settings];
-		[application registerForRemoteNotifications];
+	if (![USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH]) {
+		[USER_DEFAULTS setObject:@"Assets/Avatar/avatar_user_big" forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
 	}
 	
 	self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
@@ -112,22 +104,22 @@
 - (void)applicationDidEnterBackground:(UIApplication *)application {
 	self.alreadyCheckedCompatibleVersion = NO;
 	
-//	// Puppy send slove later (to pass on the back end)
-//	if (self.puppyPush && !self.puppyTimer) {
-//		//create new uiBackgroundTask
-//		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
-//			[application endBackgroundTask:bgTask];
-//			bgTask = UIBackgroundTaskInvalid;
-//		}];
-//		
-//		//and create new timer with async call:
-//		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-//			//run function methodRunAfterBackground
-//			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(rand() % (PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
-//			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
-//			[[NSRunLoop currentRunLoop] run];
-//		});
-//	}
+	// Puppy send slove later (to pass on the back end)
+	if (self.puppyPush && !self.puppyTimer) {
+		//create new uiBackgroundTask
+		__block UIBackgroundTaskIdentifier bgTask = [application beginBackgroundTaskWithExpirationHandler:^{
+			[application endBackgroundTask:bgTask];
+			bgTask = UIBackgroundTaskInvalid;
+		}];
+		
+		//and create new timer with async call:
+		dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+			//run function methodRunAfterBackground
+			self.puppyTimer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(PUPPY_MAX_RETURN_DELAY - PUPPY_MIN_RETURN_DELAY) + PUPPY_MIN_RETURN_DELAY) target:self selector:@selector(sendPuppyPush) userInfo:nil repeats:NO];
+			[[NSRunLoop currentRunLoop] addTimer:self.puppyTimer forMode:NSDefaultRunLoopMode];
+			[[NSRunLoop currentRunLoop] run];
+		});
+	}
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application {
@@ -135,6 +127,8 @@
 }
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
+	[self.currentNavigationController refreshActivityCounter];
+	
 	PFInstallation *currentInstallation = [PFInstallation currentInstallation];
 //	if (currentInstallation.badge != 0) {	// this check is currently not working with Parse
 		currentInstallation.badge = 0;
@@ -145,6 +139,7 @@
 	[FBSDKAppEvents activateApp];
 	[self loadParseConfig];
 	[self.currentNavigationController refreshSloveCounter];
+	[self facebookSessionRequest];
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {
@@ -182,13 +177,27 @@
 	NSDictionary *levelUpDic = [userInfo objectForKey:@"levelUp"];
 	
 	if (sloverDic) {
+		id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+		if ([PFUser currentUser]) {
+			[tracker set:kGAIUserId value:[PFUser currentUser].username];
+		}
+		
+		[tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Push"
+															  action:@"Slove"
+															   label:@"Opened"
+															   value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Push] Slove opened"];
+		
 		SLVContact *slover;
 		
 		if ([self.currentNavigationController.viewControllers.firstObject isKindOfClass:[SLVHomeViewController class]]) {
 			SLVHomeViewController *homeViewController = (SLVHomeViewController *)self.currentNavigationController.viewControllers.firstObject;
 			
 			slover = [homeViewController contactForUsername:[sloverDic objectForKey:@"username"]];
-		} else {
+		}
+		
+		if (!slover) {
 			NSError *error;
 			slover = [[SLVContact alloc] initWithDictionary:sloverDic error:&error];
 			
@@ -200,9 +209,9 @@
 		
 		if (slover) {
 			if (slover.username && [slover.username isEqualToString:PUPPY_USERNAME]) {
-				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:(rand() % 12 + 1)];
+				NSString *newPuppyPicturePath = [self.puppyPictures objectAtIndex:arc4random_uniform(12)];
 				
-				[USER_DEFAULTS setObject:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH] forKey:KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH];
+				[USER_DEFAULTS setObject:[USER_DEFAULTS objectForKey:KEY_PUPPY_PROFILE_PICTURE_PATH] forKey:KEY_PUPPY_PREVIOUS_PROFILE_PICTURE_PATH];
 				[USER_DEFAULTS setObject:newPuppyPicturePath forKey:KEY_PUPPY_PROFILE_PICTURE_PATH];
 				
 				self.needToRefreshContacts = YES;
@@ -237,6 +246,18 @@
 			SLVLog(@"%@Couldn't init Slover data", SLV_ERROR);
 		}
 	} else if (levelUpDic) {
+		id<GAITracker> tracker = [[GAI sharedInstance] defaultTracker];
+		if ([PFUser currentUser]) {
+			[tracker set:kGAIUserId value:[PFUser currentUser].username];
+		}
+		
+		[tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Push"
+																   action:@"Level up"
+																	label:@"Opened"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Push] Level up opened"];
+		
 		SLVContact *slover;
 		NSString *otherUsername;
 		
@@ -337,6 +358,8 @@
 	currentInstallation.channels = @[@"global", [PFUser currentUser].username];
 	[currentInstallation saveEventually];
 	
+	[[Amplitude instance] setUserId:[PFUser currentUser].username];
+	
 	if (!self.userIsConnected) {
 		self.currentNavigationController = nil;
 		self.currentNavigationController = [[SLVNavigationController alloc] initWithRootViewController:[[SLVHomeViewController alloc] init]];
@@ -349,7 +372,7 @@
 	self.userIsConnected = YES;
 }
 
-- (void)userDisconnecting {
+- (void)disconnectUser {
 	SLVLog(@"User trying to disconnect");
 	
 	[ApplicationDelegate.currentNavigationController.loaderImageView showByZoomingOutWithDuration:SHORT_ANIMATION_DURATION AndCompletion:nil];
@@ -378,6 +401,8 @@
 - (void)userDisconnected {
 	ApplicationDelegate.shouldLetLoadingScreen = YES;
 	[self disconnectingUserTransition];
+	
+	[[Amplitude instance] setUserId:nil];
 	
 	self.userIsConnected = NO;
 	
@@ -761,7 +786,7 @@
 		} else {
 			[self.parseConfig setObject:currentPushedMessage forKey:PARSE_PUSHED_MESSAGE];
 			
-			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];;
+			NSString *lastPushedMessage = [USER_DEFAULTS objectForKey:KEY_LAST_PUSHED_MESSAGE];
 			
 			if (!lastPushedMessage || ![lastPushedMessage isEqualToString:currentPushedMessage]) {
 				SLVInteractionPopupViewController *pushedMessagePopup = [[SLVInteractionPopupViewController alloc] initWithTitle:@"Slove Team" body:currentPushedMessage buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
@@ -794,11 +819,46 @@
 			}];
 		}
 
+		NSString *sloveMaxCredit = config[PARSE_SLOVE_MAX_CREDIT];
+		if (!sloveMaxCredit) {
+			SLVLog(@"%@Couldn't find slove max credit", SLV_ERROR);
+		} else {
+			[self.parseConfig setObject:sloveMaxCredit forKey:PARSE_SLOVE_MAX_CREDIT];
+		}
+		
 		// Disabled because of Apple policy
 //		if (!self.alreadyCheckedCompatibleVersion) {
 //			[self checkCompatibleVersion];
 //		}
 	}];
+}
+
+- (void)loadBundleSettings {
+	NSString *settingsBundle = [[NSBundle mainBundle] pathForResource:@"Settings" ofType:@"bundle"];
+	if(!settingsBundle) {
+		SLVLog(@"%@Could not find Settings.bundle", SLV_ERROR);
+		return;
+	}
+	
+	NSDictionary *settings = [NSDictionary dictionaryWithContentsOfFile:[settingsBundle stringByAppendingPathComponent:@"Root.plist"]];
+	NSArray *preferences = [settings objectForKey:@"PreferenceSpecifiers"];
+	
+	NSMutableDictionary *defaultsToRegister = [[NSMutableDictionary alloc] initWithCapacity:[preferences count]];
+	for(NSDictionary *prefSpecification in preferences) {
+		NSString *key = [prefSpecification objectForKey:@"Key"];
+		
+		if(key && [[prefSpecification allKeys] containsObject:@"DefaultValue"]) {
+			[defaultsToRegister setObject:[prefSpecification objectForKey:@"DefaultValue"] forKey:key];
+		}
+	}
+	
+	[[NSUserDefaults standardUserDefaults] registerDefaults:defaultsToRegister];
+	
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+
+	[defaults setValue:[[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleShortVersionString"] forKey:@"versionNumber"];
+	
+	[defaults synchronize];
 }
 
 - (void)checkCompatibleVersion {
@@ -849,6 +909,27 @@
 	ApplicationDelegate.currentNavigationController.profileButton.enabled = YES;
 	self.currentNavigationController.topViewController.navigationItem.leftBarButtonItem.enabled = YES;
 	self.currentNavigationController.topViewController.navigationItem.rightBarButtonItem.enabled = YES;
+}
+
+- (void)facebookSessionRequest {
+	FBSDKGraphRequest *request = [[FBSDKGraphRequest alloc] initWithGraphPath:@"me"
+																   parameters:@{@"fields": @""}];
+	[request startWithCompletionHandler:^(FBSDKGraphRequestConnection *connection, id result, NSError *error) {
+		if (!error) {
+			SLVLog(@"The facebook session request succeed");
+		} else if ([[error userInfo][@"error"][@"type"] isEqualToString: @"OAuthException"]) { // Since the request failed, we can check if it was due to an invalid session
+			SLVLog(@"%@The facebook session was invalidated", SLV_WARNING);
+			[self disconnectUser];
+			
+			[[Amplitude instance] logEvent:@"[Error] Facebook session invalidated"];
+		} else {
+			SLVLog(@"%@Facebook session request error: %@", SLV_ERROR, error);
+			
+			NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+			[eventProperties setValue:error.localizedDescription forKey:@"Value"];
+			[[Amplitude instance] logEvent:@"[Error] Facebook session error" withEventProperties:eventProperties];
+		}
+	}];
 }
 
 

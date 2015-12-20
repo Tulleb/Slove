@@ -83,12 +83,16 @@
 	if ([[USER_DEFAULTS objectForKey:KEY_FIRST_TIME_TUTORIAL] boolValue] && !ApplicationDelegate.tutorialSloveSent) {
 		[ApplicationDelegate disableNavigationElements];
 		[self.bubbleView showByFadingWithDuration:ANIMATION_DURATION AndCompletion:nil];
-	} else if (!self.bubbleView.hidden) {
-		[ApplicationDelegate enableNavigationElements];
-		self.bubbleView.hidden = YES;
 		
-		[self.navigationController popToRootViewControllerAnimated:YES];
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Achievement"
+																   action:@"Unlocked"
+																	label:@"Tutorial - Have to Slove back"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Achievement] Unlocked tutorial have to Slove back"];
 	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
+		[[Amplitude instance] logEvent:@"[View] Puppy view displayed"];
+		
 		if (![[USER_DEFAULTS objectForKey:KEY_PUPPY_NO_LEVEL_DISPLAYED] boolValue]) {
 			SLVInteractionPopupViewController *warningPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_no_level_available", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:warningPopup animated:YES completion:^{
@@ -97,6 +101,31 @@
 		}
 	} else {
 		[self checkLevel];
+		
+		if (ApplicationDelegate.ratingSlovedBack) {
+			ApplicationDelegate.ratingReturnedASlove = NO;
+			ApplicationDelegate.ratingSlovedBack = NO;
+			
+			NSNumber *returnedSloveCount = [USER_DEFAULTS objectForKey:KEY_RETURNED_SLOVE_COUNT];
+			
+			if (!returnedSloveCount) {
+				returnedSloveCount = [NSNumber numberWithInt:0];
+			}
+			
+			int value = [returnedSloveCount intValue] + 1;
+			
+			[USER_DEFAULTS setObject:[NSNumber numberWithInt:value] forKey:KEY_RETURNED_SLOVE_COUNT];
+			
+			if (value >= 3 && ![[USER_DEFAULTS objectForKey:KEY_ASKED_FOR_RATING_ONCE] boolValue]) {
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_FOR_RATING_ONCE];
+				
+				[self displayRatingPopup];
+			} else if (value >= 13 && ![[USER_DEFAULTS objectForKey:KEY_ASKED_FOR_RATING_TWICE] boolValue]) {
+				[USER_DEFAULTS setObject:[NSNumber numberWithBool:YES] forKey:KEY_ASKED_FOR_RATING_TWICE];
+				
+				[self displayRatingPopup];
+			}
+		}
 	}
 }
 
@@ -136,7 +165,9 @@
 }
 
 - (void)animateImages {
-	[self rotateSpirale];
+	if (!IS_IOS7) {
+		[self rotateSpirale];
+	}
 	
 	[self loadCircle];
 	[self loadFirework];
@@ -148,6 +179,13 @@
 		[self.navigationController presentViewController:presentedViewController animated:YES completion:^{
 			ApplicationDelegate.tutorialSloveSent = YES;
 		}];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+															  action:@"Sent"
+															   label:@"Tutorial"
+															   value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Slove] Sent tutorial Slove"];
 	} else if (!self.contact.username) {
 		if(![MFMessageComposeViewController canSendText]) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_body_smsInvite", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_ok", nil), nil] andDismissButton:NO];
@@ -170,43 +208,50 @@
 		[messageController setBody:message];
 		
 		[self presentViewController:messageController animated:YES completion:nil];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																   action:@"Sent"
+																	label:@"User not on slove"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Slove] Sent to user not on Slove"];
 	} else if ([self.contact.username isEqualToString:PUPPY_USERNAME]) {
 		if (ApplicationDelegate.puppyPush) {
 			SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"popup_already_sloved_recently", nil) buttonsTitle:nil andDismissButton:YES];
 			[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																	   action:@"Sent"
+															   label:@"Already sent (Puppy)"
+															   value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Slove] Already sent (Puppy)"];
 		} else {
 			[[PFUser currentUser] fetchInBackgroundWithBlock:^(PFObject *currentUser,  NSError *error) {
 				if (!error) {
-					NSNumber *sloveCounter = [currentUser objectForKey:@"sloveNumber"];
+					NSDictionary *data = @{@"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
+										   @"badge" : @"Increment",
+										   @"sound" : SLOVED_SOUND_PATH,
+										   @"slover" : @{@"username" : PUPPY_USERNAME}};
+					PFPush *push = [[PFPush alloc] init];
+					[push setChannels:@[[currentUser objectForKey:@"username"]]];
+					[push setData:data];
+					ApplicationDelegate.puppyPush = push;
 					
-					if ([sloveCounter intValue] > 0) {
-						[currentUser setObject:[NSNumber numberWithInt:[sloveCounter intValue] - 1] forKey:@"sloveNumber"];
-						[currentUser saveInBackground];
-						
-						[ApplicationDelegate.currentNavigationController refreshSloveCounter];
-						
-						NSDictionary *data = @{
-											   @"alert" : [NSString stringWithFormat:@"♥ New Slove from %@ ♥", PUPPY_USERNAME],
-											   @"badge" : @"Increment",
-											   @"sound" : SLOVED_SOUND_PATH,
-											   @"slover" : @{@"username" : PUPPY_USERNAME}
-											   };
-						PFPush *push = [[PFPush alloc] init];
-						[push setChannels:@[[currentUser objectForKey:@"username"]]];
-						[push setData:data];
-						ApplicationDelegate.puppyPush = push;
-						
-						SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
-						[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
-					} else {
-						SLVInteractionPopupViewController *errorPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_title_error", nil) body:NSLocalizedString(@"error_not_enough_slove", nil) buttonsTitle:nil andDismissButton:YES];
-						[self.navigationController presentViewController:errorPopup animated:YES completion:nil];
-					}
+					SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
+					[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 				} else {
 					SLVLog(@"%@%@", SLV_ERROR, error.description);
 					[ParseErrorHandlingController handleParseError:error];
 				}
 			}];
+			
+			[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																	   action:@"Sent"
+															   label:@"Succeed (Puppy)"
+															   value:@1] build]];
+			
+			[[Amplitude instance] logEvent:@"[Slove] Sent (Puppy)"];
 		}
 	} else {
 		[PFCloud callFunctionInBackground:SEND_SLOVE_FUNCTION
@@ -220,7 +265,20 @@
 											SLVSloveSentPopupViewController *presentedViewController = [[SLVSloveSentPopupViewController alloc] init];
 											[self.navigationController presentViewController:presentedViewController animated:YES completion:nil];
 											
+											ApplicationDelegate.sloveWasSent = YES;
+											
 											[ApplicationDelegate.currentNavigationController refreshSloveCounter];
+											
+											if (ApplicationDelegate.ratingReturnedASlove) {
+												ApplicationDelegate.ratingSlovedBack = YES;
+											}
+											
+											[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																									   action:@"Sent"
+																										label:@"Succeed"
+																										value:@1] build]];
+											
+											[[Amplitude instance] logEvent:@"[Slove] Sent succeed"];
 										} else {
 											NSString *errorLabel = NSLocalizedString(error.localizedDescription, nil);
 											
@@ -244,6 +302,15 @@
 											
 											SLVLog(@"%@%@", SLV_ERROR, error.description);
 											[ParseErrorHandlingController handleParseError:error];
+											
+											[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Slove"
+																									   action:@"Sent"
+																										label:@"Error"
+																										value:@1] build]];
+											
+											NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+											[eventProperties setValue:errorCode forKey:@"Value"];
+											[[Amplitude instance] logEvent:@"[Slove] Sent error" withEventProperties:eventProperties];
 										}
 									}];
 	}
@@ -272,7 +339,14 @@
 												
 												[self startLevelAnimation];
 												
+												[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Animation"
+																										   action:@"Level up"
+																											label:@"Level"
+																											value:level] build]];
 												
+												NSMutableDictionary *eventProperties = [NSMutableDictionary dictionary];
+												[eventProperties setValue:level forKey:@"Value"];
+												[[Amplitude instance] logEvent:@"[Animation] Level up" withEventProperties:eventProperties];
 											}
 											
 											[USER_DEFAULTS setObject:level forKey:levelKey];
@@ -298,8 +372,11 @@
 }
 
 - (void)didDismissSloveSentPopup {
-	if (!IS_IOS7) {
-		[self viewDidAppear:YES];
+	if (!self.bubbleView.hidden) {
+		[ApplicationDelegate enableNavigationElements];
+		self.bubbleView.hidden = YES;
+		
+		[self.navigationController popToRootViewControllerAnimated:YES];
 	}
 }
 
@@ -348,6 +425,22 @@
 	self.fireworkImageView.animationImages = animatedImages;
 	self.fireworkImageView.animationDuration = VERY_LONG_ANIMATION_DURATION;
 	self.fireworkImageView.animationRepeatCount = 1;
+}
+
+- (void)displayRatingPopup {
+	self.ratingPopup = [[SLVInteractionPopupViewController alloc] initWithTitle:NSLocalizedString(@"popup_rating_title", nil) body:NSLocalizedString(@"popup_rating_body", nil) buttonsTitle:[NSArray arrayWithObjects:NSLocalizedString(@"button_appstore", nil), nil] andDismissButton:YES];
+	
+	self.ratingPopup.delegate = self;
+	self.ratingPopup.priority = kPriorityLow;
+	
+	[ApplicationDelegate.queuedPopups addObject:self.ratingPopup];
+	
+	[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+															   action:@"Rating"
+																label:@"Displayed"
+																value:@1] build]];
+	
+	[[Amplitude instance] logEvent:@"[Popup] Rating displayed"];
 }
 
 
@@ -436,6 +529,20 @@
 - (CGFloat)carousel:(iCarousel *)carousel valueForOption:(iCarouselOption)option withDefault:(CGFloat)value {
 	if (option == iCarouselOptionSpacing) {
 		return value * 2;
+	} else if (option == iCarouselOptionFadeMin) {
+		return 0;
+	} else if (option == iCarouselOptionFadeMax) {
+		return 0;
+	} else if (option == iCarouselOptionFadeRange) {
+		if (IS_3INCH5) {
+			return 3;
+		} else if (IS_4INCH) {
+			return 3;
+		} else if (IS_4INCH7) {
+			return 5;
+		}
+	} else if (option == iCarouselOptionFadeMinAlpha) {
+		return 0;
 	}
 	
 	return value;
@@ -449,6 +556,33 @@
 	CGFloat distance = SCREEN_HEIGHT / 4; //number of pixels to move the items away from camera
 	CGFloat z = -fabs(offset) * distance;
 	return CATransform3DTranslate(transform, offset * carousel.itemWidth, ABS(offset) * -20, z);
+}
+
+
+#pragma mark - SLVInteractionPopupDelegate
+
+- (void)soloButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.ratingPopup) {
+		[[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"itms-apps://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=1023675203&onlyLatestVersion=true&pageNumber=0&sortOrdering=1&type=Purple+Software"]];
+		
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Rating"
+																	label:@"Accepted"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Rating sent to Appstore"];
+	}
+}
+
+- (void)dismissButtonPressed:(SLVInteractionPopupViewController *)popup {
+	if (popup == self.ratingPopup) {
+		[self.tracker send:[[GAIDictionaryBuilder createEventWithCategory:@"Popup"
+																   action:@"Rating"
+																	label:@"Dismissed"
+																	value:@1] build]];
+		
+		[[Amplitude instance] logEvent:@"[Popup] Rating dismissed"];
+	}
 }
 
 @end

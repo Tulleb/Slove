@@ -107,14 +107,18 @@
 #define	KEY_FIRST_TIME_TUTORIAL					@"firstTimeTutorial"
 #define KEY_CACHED_CONTACTS						@"cachedContacts"
 #define	KEY_PUPPY_PROFILE_PICTURE_PATH			@"puppyProfilePicturePath"
-#define	KEY_PUPPY_PREVIOUS_ROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
+#define	KEY_PUPPY_PREVIOUS_PROFILE_PICTURE_PATH	@"puppyPreviousProfilePicturePath"
 #define	KEY_PUPPY_NO_LEVEL_DISPLAYED			@"puppyNoLevel"
 #define	KEY_SETTINGS_CONSTRUCTION_DISPLAYED		@"settingsConstructionDisplayed"
 #define	KEY_LAST_PUSHED_MESSAGE					@"lastPushedMessage"
-#define	KEY_ASK_CONTACT_BOOK					@"alreadyAskForContactBook"
-#define	KEY_ASK_FACEBOOK_FRIENDS				@"alreadyAskForFacebookFriends"
+#define	KEY_ASKED_CONTACT_BOOK					@"alreadyAskedForContactBook"
+#define	KEY_ASKED_FACEBOOK_FRIENDS				@"alreadyAskedForFacebookFriends"
+#define	KEY_ASKED_PUSH_NOTIFICATION				@"alreadyAskedForPushNotification"
 #define	KEY_LAST_ACTIVITY_REFRESH				@"lastActivityRefresh"
 #define	KEY_CONTACT_LEVELUP						@"contactLevelUp"
+#define	KEY_RETURNED_SLOVE_COUNT				@"returnedSloveCount"
+#define	KEY_ASKED_FOR_RATING_ONCE				@"ratingOnce"
+#define	KEY_ASKED_FOR_RATING_TWICE				@"ratingTwice"
 
 #pragma mark - Parse config
 #define PARSE_FIRST_SLOVE_USERNAME	@"first_slove_username"
@@ -122,6 +126,7 @@
 #define PARSE_COMPATIBLE_VERSION	@"compatible_version"
 #define PARSE_DOWNLOAD_APP_URL		@"download_app_url"
 #define PARSE_PUSHED_MESSAGE		@"pushed_message"
+#define PARSE_SLOVE_MAX_CREDIT		@"slove_max_credit"
 
 #pragma mark - Navigation
 #define SLOVE_BUTTON_SIZE			75
@@ -140,6 +145,7 @@
 #pragma mark - Username
 #define USERNAME_EMPTY_PREFIX			@"empty#"
 #define USERNAME_ACCEPTED_CHARACTERS	@"abcdefghijklmnopqrstuvwxyz0123456789_"
+#define USERNAME_LETTER_CHARACTERS		@"abcdefghijklmnopqrstuvwxyz"
 
 #pragma mark - PFCloud
 #define PHONENUMBER_SEND_FUNCTION					@"sendPhoneCode"
@@ -158,7 +164,8 @@
 #define OBJECT_USER_DATA	@"UserData"
 
 #pragma mark - Puppy
-#define PUPPY_USERNAME			@"puppey"
+#define PUPPY_IS_ENABLED		YES
+#define PUPPY_USERNAME			@"puppy"
 #define PUPPY_MIN_RETURN_DELAY	(60 * 5)
 #define PUPPY_MAX_RETURN_DELAY	(60 * 15)
 
